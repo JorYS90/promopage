@@ -1,0 +1,23 @@
+# =====================================================================
+# OVERRIDE LOCAL (exemplo) — copie pra docker-compose.override.yml
+# =====================================================================
+# Esse arquivo é IGNORADO pelo git (cada dev tem o seu).
+# Carregado automaticamente pelo Docker Compose junto do principal.
+# Use pra mudar coisas só pro seu ambiente de DEV (sem afetar produção).
+#
+# Caso mais comum: conflito de porta com outro projeto que já roda no
+# mesmo PC (ex: CRM, n8n, outro app). Muda a porta do web aqui.
+#
+# Pra usar:
+#   cp docker-compose.override.yml.example docker-compose.override.yml
+#   # edita o arquivo, troca a porta se quiser
+#   docker compose up -d --build
+
+services:
+  web:
+    # !override SUBSTITUI a lista `ports` do compose principal (senão
+    # Compose v2 SOMA as duas listas e tenta bindar as 2 portas).
+    ports: !override
+      # PROD usa 8080 (Caddy faz reverse_proxy 80/443 -> 8080).
+      # LOCAL muda pra alguma porta livre (3010, 8088, o que preferir).
+      - "3010:80"

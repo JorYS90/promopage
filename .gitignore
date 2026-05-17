@@ -10,6 +10,9 @@ dist/
 # Claude Code — configs locais do dev (cada um tem o seu)
 .claude/settings.local.json
 
+# Docker Compose override local — cada dev resolve seus conflitos de porta
+docker-compose.override.yml
+
 # Uploads de usuário (NÃO commitar)
 backend/uploads/*
 !backend/uploads/.gitkeep

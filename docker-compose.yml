@@ -36,9 +36,16 @@ services:
       - api_projetos:/app/projetos  # encartes salvos
       - api_backups:/app/backups    # backups locais
       - api_logs:/app/logs
-    # Health check — docker reinicia se API morrer
+    # Health check — docker reinicia se API morrer.
+    # Usa node nativo (fetch é built-in em Node 18+) em vez de wget/curl,
+    # pois a imagem node:slim não vem com eles instalados.
     healthcheck:
-      test: ["CMD-SHELL", "wget -q -O- http://localhost:4010/api/health || exit 1"]
+      test:
+        - CMD-SHELL
+        - >-
+          node -e "fetch('http://localhost:4010/api/health')
+            .then(r => process.exit(r.ok ? 0 : 1))
+            .catch(() => process.exit(1))"
       interval: 30s
       timeout: 5s
       retries: 3
