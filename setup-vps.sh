@@ -22,6 +22,21 @@ fi
 DEPLOY_USER="${DEPLOY_USER:-promopage}"
 SSH_PUB_KEY="${SSH_PUB_KEY:-}"  # opcional: passa via env pra autoconfigurar
 
+# --- Detecta a porta REAL do SSH (evita lockout em VPS com porta custom) ---
+# Ordem: env SSH_PORT > sshd -T (config efetiva) > /etc/ssh/sshd_config > falha
+SSH_PORT="${SSH_PORT:-}"
+if [ -z "$SSH_PORT" ]; then
+  SSH_PORT=$(sshd -T 2>/dev/null | awk '/^port /{print $2; exit}')
+  if [ -z "$SSH_PORT" ]; then
+    SSH_PORT=$(awk '/^[[:space:]]*Port[[:space:]]+[0-9]+/{print $2; exit}' /etc/ssh/sshd_config 2>/dev/null)
+  fi
+fi
+if [ -z "$SSH_PORT" ]; then
+  echo -e "${RED}✗ Não consegui detectar a porta do SSH. Rode com: SSH_PORT=22022 $0${NC}"
+  exit 1
+fi
+echo -e "${YELLOW}⚠ SSH detectado na porta ${SSH_PORT} — UFW vai liberar ESSA porta (não a 22)${NC}"
+
 echo -e "${CYAN}━━━ 1. Atualizando sistema ━━━${NC}"
 apt update -y && apt upgrade -y
 
@@ -51,15 +66,15 @@ if [ -n "$SSH_PUB_KEY" ]; then
   echo -e "${GREEN}✓ Chave SSH adicionada${NC}"
 fi
 
-echo -e "${CYAN}━━━ 5. Firewall (UFW) ━━━${NC}"
+echo -e "${CYAN}━━━ 5. Firewall (UFW) — liberando porta SSH ${SSH_PORT} ━━━${NC}"
 ufw --force reset >/dev/null
 ufw default deny incoming
 ufw default allow outgoing
-ufw allow 22/tcp comment 'SSH'
+ufw allow ${SSH_PORT}/tcp comment "SSH (port ${SSH_PORT})"
 ufw allow 80/tcp comment 'HTTP'
 ufw allow 443/tcp comment 'HTTPS'
 ufw --force enable
-ufw status
+ufw status numbered
 
 echo -e "${CYAN}━━━ 6. SSH hardening ━━━${NC}"
 # Desabilita login com senha (só chave) — só faz se SSH_PUB_KEY foi setada
