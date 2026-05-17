@@ -15,6 +15,7 @@ const { Router } = require('express');
 const { z } = require('zod');
 const service = require('./service');
 const { requireAuth } = require('./middleware');
+const { enviarReset } = require('../lib/email');
 
 const router = Router();
 
@@ -120,18 +121,31 @@ router.get('/me', requireAuth, (req, res) => {
   res.json({ user: req.user });
 });
 
-router.post('/password/forgot', (req, res) => {
+router.post('/password/forgot', async (req, res) => {
   const parse = forgotSchema.safeParse(req.body);
   if (!parse.success) return res.status(400).json({ error: 'Email inválido' });
-  const { token, enviado } = service.gerarResetSenha(parse.data.email);
-  // EM PROD: aqui enviamos email com o token. Pra dev, retornamos no response
-  // (com warning) pra facilitar testes. NUNCA exponha o token em produção.
-  if (process.env.NODE_ENV !== 'production' && token) {
-    return res.json({
-      ok: true,
-      _dev_token: token,
-      _aviso: 'Token retornado só em DEV. Em PROD seria enviado por email.',
-    });
+  const { token } = service.gerarResetSenha(parse.data.email);
+
+  // Em prod com email configurado: dispara reset por email.
+  // Em dev (sem RESEND_API_KEY): backend loga, e devolvemos o token no response
+  // pra facilitar testes manuais sem precisar configurar email.
+  if (token) {
+    const baseUrl = (process.env.APP_BASE_URL || `http://localhost:${process.env.PORT || 4010}`).replace(/\/+$/, '');
+    const link = `${baseUrl}/?reset=${encodeURIComponent(token)}`;
+    try {
+      await enviarReset({ to: parse.data.email, token, link });
+    } catch (err) {
+      // Não vaza falha pro cliente (evita enumeration). Loga server-side.
+      console.error('[password/forgot] falha ao enviar email:', err.message);
+    }
+    if (process.env.NODE_ENV !== 'production') {
+      return res.json({
+        ok: true,
+        _dev_token: token,
+        _dev_link: link,
+        _aviso: 'Token retornado só em DEV. Em PROD seria enviado APENAS por email.',
+      });
+    }
   }
   res.json({ ok: true });
 });
