@@ -144,6 +144,23 @@ docker compose logs -f
 
 Acessa **https://seudominio.com.br** ✓
 
+#### 2.8 Sincronizar assets de template (uma vez, no primeiro deploy)
+
+O `backend/uploads/` (imagens de templates pré-cadastrados) é grande demais pro Git
+(~2.7GB com 4000+ imagens) e fica fora do repo. Pra subir essa primeira leva:
+
+**No seu PC (não na VPS):**
+```bash
+./upload-assets.sh
+```
+
+O script lê `.env.deploy`, tar.gz dos uploads, scp pra VPS, e extrai dentro do volume
+Docker `promopage_api_uploads`. É **idempotente** (usa `cp -n`): rode quantas vezes
+quiser, não sobrescreve uploads novos feitos no painel.
+
+> 💡 Long-term: pra deixar a VPS recriável sem precisar re-subir assets, considere
+> migrar uploads pra S3/R2 (ver seção "Próximos passos"). Custo ~$0.50/mês.
+
 ---
 
 ### Opção B — Railway / Render (mais simples, mais caro)
