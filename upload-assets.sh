@@ -86,12 +86,15 @@ $SSH bash <<REMOTE
 set -e
 mkdir -p /tmp/promopage-assets-extract
 tar xzf ${REMOTE_TAR} -C /tmp/promopage-assets-extract
-# cp -n = no clobber: não sobrescreve arquivos que o volume já tem
-# (preserva uploads feitos por usuários na VPS entre execuções).
+# Usa tar pipe em vez de \`cp -rn /src/. /dst/\` — busybox cp (alpine) tem
+# bug silencioso com a sintaxe \`/src/.\` (sai com exit 0 mas não copia nada).
+# tar -k (busybox: --keep-old-files) skipa arquivos que já existem no destino,
+# tornando isso idempotente — preserva uploads feitos no painel da VPS entre
+# execuções. stderr suprimido pq "File exists" warnings poluem output.
 docker run --rm \
   -v promopage_api_uploads:/dst \
-  -v /tmp/promopage-assets-extract/uploads:/src \
-  alpine sh -c 'cp -rn /src/. /dst/ && chown -R 1001:1001 /dst'
+  -v /tmp/promopage-assets-extract/uploads:/src:ro \
+  alpine sh -c '(cd /src && tar cf - .) | (cd /dst && tar xkf - 2>/dev/null || true) && chown -R 1001:1001 /dst'
 rm -rf /tmp/promopage-assets-extract ${REMOTE_TAR}
 echo "[VPS] extração concluída"
 REMOTE
