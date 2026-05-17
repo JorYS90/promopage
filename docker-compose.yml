@@ -1,0 +1,93 @@
+# =============================================
+# Encarte Builder / PromoPage — docker-compose
+# =============================================
+# Sobe API (Node) + Web (Nginx servindo Vite build) + volumes persistentes.
+#
+# Primeiro uso:
+#   1. cp backend/.env.example backend/.env
+#   2. Edite backend/.env (gere JWT_SECRET forte, defina CORS_ORIGIN)
+#   3. docker compose up -d --build
+#   4. Acesse http://localhost (web) — API em http://localhost/api/health
+#
+# Logs:    docker compose logs -f api
+# Stop:    docker compose down
+# Rebuild: docker compose up -d --build
+# Backup:  docker compose exec api npm run backup
+
+services:
+  api:
+    build: ./backend
+    container_name: promopage-api
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      # Override quando o user esquece de definir no .env
+      NODE_ENV: production
+      PORT: 4010
+    volumes:
+      - api_data:/app/data          # SQLite + JSONs
+      - api_uploads:/app/uploads    # imagens enviadas
+      - api_projetos:/app/projetos  # encartes salvos
+      - api_backups:/app/backups    # backups locais
+      - api_logs:/app/logs
+    # Health check — docker reinicia se API morrer
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O- http://localhost:4010/api/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    # Não expõe porta pra host — só pro nginx (na mesma network)
+    expose:
+      - "4010"
+
+  web:
+    build: ./frontend
+    container_name: promopage-web
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_started
+    ports:
+      - "80:80"
+      # Pra HTTPS, descomente e configure cert (ver README de deploy)
+      # - "443:443"
+
+  # Job de BACKUP diário — roda às 3h da manhã via cron interno
+  # Sem isso, você precisa configurar cron NO HOST. Esse container faz tudo dentro.
+  backup:
+    build: ./backend
+    container_name: promopage-backup
+    restart: unless-stopped
+    depends_on:
+      - api
+    volumes:
+      - api_data:/app/data:ro       # leitura do banco (só leitura mesmo)
+      - api_backups:/app/backups    # escreve aqui
+    # Loop infinito: dorme até 03:00 e roda backup. Simples e confiável.
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        while true; do
+          # Calcula segundos até as 03:00 do próximo dia
+          NOW=$$(date +%s)
+          NEXT=$$(date -d "tomorrow 03:00" +%s 2>/dev/null || date -d "03:00 +1 day" +%s)
+          SLEEP=$$((NEXT - NOW))
+          echo "[backup] próximo backup em $$SLEEP segundos (03:00)"
+          sleep $$SLEEP
+          echo "[backup] executando..."
+          node scripts/backup-db.js || echo "[backup] FALHOU"
+        done
+
+volumes:
+  api_data:
+    driver: local
+  api_uploads:
+    driver: local
+  api_projetos:
+    driver: local
+  api_backups:
+    driver: local
+  api_logs:
+    driver: local

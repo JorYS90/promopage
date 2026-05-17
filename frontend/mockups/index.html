@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Mockups - Encarte Builder</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+    h1 {
+      font-size: 32px; font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .sub { color: #888; margin-bottom: 40px; font-size: 16px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #52525b;
+      box-shadow: 0 20px 40px -10px rgba(168, 85, 247, 0.2);
+    }
+    .preview {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+      font-weight: 800;
+      letter-spacing: -2px;
+    }
+    .nome { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .desc { font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 12px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 10px; font-weight: 600;
+      padding: 4px 10px; border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    /* Cards individuais */
+    .c1 .preview { background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); color: #a855f7; }
+    .c1 .tag { background: rgba(168,85,247,0.15); color: #a855f7; }
+    .c2 .preview { background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%); color: #2563eb; }
+    .c2 .tag { background: rgba(37,99,235,0.15); color: #60a5fa; }
+    .c3 .preview {
+      background: linear-gradient(135deg, #fb923c 0%, #ec4899 50%, #a855f7 100%);
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    .c3 .tag { background: rgba(251,146,60,0.15); color: #fb923c; }
+    .arrow {
+      display: inline-block;
+      transition: transform 0.2s;
+      margin-left: 4px;
+    }
+    .card:hover .arrow { transform: translateX(4px); }
+    .footer {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid #27272a;
+      color: #71717a;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Escolha o Visual</h1>
+    <p class="sub">3 propostas pro Encarte Builder. Clica em cada uma pra ver o layout completo.</p>
+
+    <div class="grid">
+      <a href="dark-studio.html" class="card c1">
+        <div class="preview">A</div>
+        <div class="nome">Dark Studio</div>
+        <p class="desc">Inspirado em Figma/Linear. Fundo escuro profundo com vidro fosco (glassmorphism), accent roxo neon, tipografia compacta. Profissional e moderno.</p>
+        <div class="tags">
+          <span class="tag">Dark</span>
+          <span class="tag">Glass</span>
+          <span class="tag">Neon</span>
+        </div>
+      </a>
+
+      <a href="cloud-light.html" class="card c2">
+        <div class="preview">B</div>
+        <div class="nome">Cloud Light</div>
+        <p class="desc">Inspirado em Notion/Apple. Fundo branco com cards elevados, sombras sutis, bastante respiro entre elementos. Clean e amigável pro usuário.</p>
+        <div class="tags">
+          <span class="tag">Light</span>
+          <span class="tag">Soft</span>
+          <span class="tag">Pro</span>
+        </div>
+      </a>
+
+      <a href="vibrant-pro.html" class="card c3">
+        <div class="preview">C</div>
+        <div class="nome">Vibrant Pro</div>
+        <p class="desc">Inspirado em Canva/Notion. Gradientes vibrantes, header destacado, cards com cor de acento, tipografia bold. Energético e criativo, ideal pro varejo.</p>
+        <div class="tags">
+          <span class="tag">Gradient</span>
+          <span class="tag">Bold</span>
+          <span class="tag">Creative</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="footer">
+      <strong>Como funciona:</strong> cada mockup mostra a tela inteira do editor com o estilo aplicado.
+      Use o canvas central, sidebar à esquerda e topbar — tudo idêntico em estrutura ao app atual,
+      só muda visual. Depois que escolher, eu aplico de verdade no projeto.
+    </div>
+  </div>
+</body>
+</html>

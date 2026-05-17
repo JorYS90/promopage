@@ -1,0 +1,35 @@
+node_modules/
+dist/
+.DS_Store
+.env
+.env.local
+.env.*.local
+.env.deploy
+.vite/
+
+# Claude Code — configs locais do dev (cada um tem o seu)
+.claude/settings.local.json
+
+# Uploads de usuário (NÃO commitar)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Projetos salvos (dados de usuário)
+backend/projetos/*
+!backend/projetos/.gitkeep
+
+# Banco SQLite + WAL/SHM (dados sensíveis: usuários, hashes, sessões)
+backend/data/saas.db
+backend/data/saas.db-shm
+backend/data/saas.db-wal
+backend/data/backups-imagens/
+
+# Backups locais
+backend/backups/
+
+# Logs
+*.log
+backend/logs/
+
+# Sistema
+Thumbs.db

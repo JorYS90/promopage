@@ -1,0 +1,87 @@
+[
+  {
+    "nome": "Temas Grátis",
+    "criadoEm": "2026-05-02T02:10:27.926Z",
+    "padrao": true
+  },
+  {
+    "nome": "Datas Comemorativas",
+    "criadoEm": "2026-05-02T02:10:27.926Z",
+    "padrao": true
+  },
+  {
+    "nome": "Açougue",
+    "criadoEm": "2026-05-02T02:10:27.926Z",
+    "padrao": true
+  },
+  {
+    "nome": "Hortifruti",
+    "criadoEm": "2026-05-02T02:10:27.926Z",
+    "padrao": true
+  },
+  {
+    "nome": "Bebidas",
+    "criadoEm": "2026-05-02T02:10:27.926Z",
+    "padrao": true
+  },
+  {
+    "nome": "Padaria",
+    "criadoEm": "2026-05-02T02:10:27.926Z",
+    "padrao": true
+  },
+  {
+    "nome": "Mercearia",
+    "criadoEm": "2026-05-02T02:10:27.926Z",
+    "padrao": true
+  },
+  {
+    "nome": "Limpeza",
+    "criadoEm": "2026-05-02T02:10:27.926Z",
+    "padrao": true
+  },
+  {
+    "nome": "Sazonais",
+    "criadoEm": "2026-05-02T02:10:27.926Z",
+    "padrao": true
+  },
+  {
+    "nome": "Meus Temas",
+    "criadoEm": "2026-05-02T02:10:27.926Z",
+    "padrao": true
+  },
+  {
+    "nome": "DIA DAS MAES",
+    "criadoEm": "2026-05-02T02:13:46.797Z",
+    "padrao": false
+  },
+  {
+    "nome": "VINHOS",
+    "criadoEm": "2026-05-02T18:27:08.562Z",
+    "padrao": false
+  },
+  {
+    "nome": "Pizza",
+    "criadoEm": "2026-05-03T12:44:25.309Z",
+    "padrao": false
+  },
+  {
+    "nome": "Hortaliças",
+    "criadoEm": "2026-05-03T20:42:37.438Z",
+    "padrao": false
+  },
+  {
+    "nome": "Queijo",
+    "criadoEm": "2026-05-06T12:21:30.853Z",
+    "padrao": false
+  },
+  {
+    "nome": "Hamburgueria",
+    "criadoEm": "2026-05-06T16:32:35.567Z",
+    "padrao": false
+  },
+  {
+    "nome": "Restaurante",
+    "criadoEm": "2026-05-07T18:55:30.382Z",
+    "padrao": false
+  }
+]

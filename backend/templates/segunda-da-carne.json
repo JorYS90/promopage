@@ -1,0 +1,39 @@
+{
+  "nome": "Segunda da carne",
+  "categoria": "Açougue",
+  "premium": false,
+  "novo": false,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1777821512318-sZ7iLt.png",
+    "imagemTitulo": "/uploads/1777821516017-Dz8Yg5.png",
+    "posicaoTitulo": "direita",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#58070a",
+    "faixaSuperior": "#850a10",
+    "textoEsquerdo": "",
+    "textoDireito": "*Imagens Meramente Ilustrativas"
+  },
+  "paleta": {
+    "primaria": "#67373a",
+    "secundaria": "#850a10",
+    "fundoBox": "#a4565a",
+    "fundoBoxSecundario": "#850a10",
+    "textoNome": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#f2f2f2",
+    "tagPreco": "#67373a",
+    "balaoOferta": "/uploads/1777821557066-X_u7OD.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#0e0b08"
+  },
+  "criadoEm": "2026-05-03T16:19:42.065Z",
+  "gratis": false
+}

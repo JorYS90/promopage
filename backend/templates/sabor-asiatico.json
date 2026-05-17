@@ -1,0 +1,39 @@
+{
+  "nome": "Sabor Asiático",
+  "categoria": "Restaurante",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1778506410494-xXpj5n.png",
+    "imagemTitulo": "/uploads/1778506731677-vpbDrj.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#7f5206",
+    "faixaSuperior": "#bfa77d",
+    "textoEsquerdo": "",
+    "textoDireito": "*Imagens Meramente Ilustrativas"
+  },
+  "paleta": {
+    "primaria": "#ffffff",
+    "secundaria": "#bfa77d",
+    "fundoBox": "#f0f0f0",
+    "fundoBoxSecundario": "#bfa77d",
+    "textoNome": "#1f2937",
+    "textoPreco": "#000000",
+    "textoPrecoDestaque": "#000000",
+    "tagPreco": "#ffffff",
+    "balaoOferta": "/uploads/1778506437690-zf-mhA.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-11T13:38:55.301Z",
+  "gratis": false
+}

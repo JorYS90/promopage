@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./deploy.sh*)",
+      "Bash(ssh promopage@*)",
+      "Bash(scp *promopage@*)",
+      "Bash(git push*)",
+      "Bash(git pull*)",
+      "Bash(git status)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(docker compose ps)",
+      "Bash(docker compose logs*)",
+      "Bash(docker compose up*)",
+      "Bash(docker compose down)",
+      "Bash(docker compose restart*)",
+      "Bash(docker compose exec*)",
+      "Bash(docker compose build*)",
+      "Bash(curl *health*)",
+      "Bash(curl http://localhost*)"
+    ]
+  }
+}

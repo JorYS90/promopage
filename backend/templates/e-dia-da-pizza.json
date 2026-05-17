@@ -1,0 +1,39 @@
+{
+  "nome": "É dia da Pizza",
+  "categoria": "Pizza",
+  "premium": false,
+  "novo": false,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1777811714842-DfNFAg.PNG",
+    "imagemTitulo": "/uploads/1777811734458-G3g53O.PNG",
+    "posicaoTitulo": "esquerda",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#24250e",
+    "faixaSuperior": "#69dd90",
+    "textoEsquerdo": "",
+    "textoDireito": "*Imagens Meramente Ilustrativas"
+  },
+  "paleta": {
+    "primaria": "#737a10",
+    "secundaria": "#69dd90",
+    "fundoBox": "#454719",
+    "fundoBoxSecundario": "#69dd90",
+    "textoNome": "#ffffff",
+    "textoPreco": "#000000",
+    "textoPrecoDestaque": "#1f2937",
+    "tagPreco": "#737a10",
+    "balaoOferta": "/uploads/1778501671089-AFDnFS.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#2c2e10"
+  },
+  "criadoEm": "2026-05-11T12:14:33.468Z",
+  "gratis": false
+}

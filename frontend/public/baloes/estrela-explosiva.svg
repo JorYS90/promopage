@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 150" preserveAspectRatio="none">
+  <defs>
+    <filter id="sh4" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity="0.4"/>
+    </filter>
+    <linearGradient id="g4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="100%" stop-color="#eab308"/>
+    </linearGradient>
+  </defs>
+  <!-- 16-point starburst, horizontal -->
+  <path d="M 300,5
+           L 320,30 L 360,15 L 360,45 L 410,30 L 395,60
+           L 450,55 L 425,80 L 475,90 L 435,105 L 470,130
+           L 420,125 L 425,150 L 380,135 L 360,150 L 350,125
+           L 300,145 L 250,125 L 240,150 L 220,135 L 175,150
+           L 180,125 L 130,130 L 165,105 L 125,90 L 175,80
+           L 150,55 L 205,60 L 190,30 L 240,45 L 240,15 L 280,30 Z"
+        fill="url(#g4)" stroke="#ef0000" stroke-width="3" stroke-linejoin="round"
+        filter="url(#sh4)"/>
+  <!-- centro mais escuro pra dar profundidade -->
+  <ellipse cx="300" cy="80" rx="150" ry="38" fill="rgba(239,0,0,0.06)"/>
+</svg>

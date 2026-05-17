@@ -1,0 +1,37 @@
+{
+  "nome": "Quarta da Padaria",
+  "categoria": "Padaria",
+  "premium": false,
+  "novo": false,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1778683071050-Cxvx8v.png",
+    "imagemTitulo": "/uploads/1778683362994-WNFb7P.png",
+    "posicaoTitulo": "direita",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ba8559",
+    "faixaSuperior": "#7e5b3e"
+  },
+  "paleta": {
+    "primaria": "#fff9f0",
+    "secundaria": "#7e5b3e",
+    "fundoBox": "#eed3b0",
+    "fundoBoxSecundario": "#7e5b3e",
+    "textoNome": "#000000",
+    "textoNomeDestaque": "#000000",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#fff9f0",
+    "balaoOferta": "/uploads/1778683105479-FjVpaq.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-13T14:48:57.561Z"
+}

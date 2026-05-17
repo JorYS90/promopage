@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dark Studio - Mockup</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      background: #0a0a0f;
+      color: #e4e4e7;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .voltar {
+      position: fixed; top: 16px; right: 16px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #fff;
+      padding: 8px 16px; border-radius: 100px;
+      font-size: 12px; font-weight: 600;
+      text-decoration: none;
+      z-index: 100;
+    }
+    .voltar:hover { background: rgba(255,255,255,0.1); }
+
+    /* === LAYOUT === */
+    .app {
+      display: grid;
+      grid-template-columns: 72px 320px 1fr;
+      grid-template-rows: 56px 1fr;
+      height: 100vh;
+      gap: 0;
+      background:
+        radial-gradient(1000px 500px at 20% -10%, rgba(168,85,247,0.15) 0%, transparent 60%),
+        radial-gradient(800px 400px at 100% 100%, rgba(236,72,153,0.10) 0%, transparent 60%),
+        #0a0a0f;
+    }
+
+    /* === TOPBAR === */
+    .topbar {
+      grid-column: 1 / -1;
+      background: rgba(15,15,20,0.6);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center;
+      padding: 0 20px;
+      gap: 16px;
+    }
+    .logo-app {
+      font-weight: 800; font-size: 14px;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nome-projeto {
+      flex: 1; max-width: 280px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: #fff; font-size: 13px;
+      font-family: inherit;
+    }
+    .acoes-topo { margin-left: auto; display: flex; gap: 8px; }
+    .btn-topo {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #e4e4e7;
+      padding: 7px 14px; border-radius: 8px;
+      font-size: 12px; font-weight: 600;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .btn-topo:hover { background: rgba(255,255,255,0.1); }
+    .btn-primary {
+      background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+      border: 0;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(168,85,247,0.4);
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    /* === SIDEBAR ICONS === */
+    .sidebar-icons {
+      background: rgba(15,15,20,0.6);
+      backdrop-filter: blur(24px);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      display: flex; flex-direction: column;
+      padding: 16px 0;
+      gap: 4px;
+    }
+    .icon-btn {
+      width: 56px; height: 56px;
+      margin: 0 8px;
+      background: transparent;
+      border: 0;
+      color: #71717a;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 4px;
+      font-size: 9px; font-weight: 600;
+      transition: all 0.15s;
+    }
+    .icon-btn .ico {
+      font-size: 20px;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .icon-btn:hover {
+      background: rgba(255,255,255,0.05);
+      color: #d4d4d8;
+    }
+    .icon-btn.active {
+      background: linear-gradient(135deg, rgba(168,85,247,0.2) 0%, rgba(236,72,153,0.2) 100%);
+      color: #a855f7;
+    }
+
+    /* === PANEL === */
+    .panel {
+      background: rgba(15,15,20,0.4);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: 24px 20px;
+      overflow-y: auto;
+    }
+    .panel h2 {
+      font-size: 18px; font-weight: 700;
+      letter-spacing: -0.4px;
+      margin-bottom: 4px;
+      color: #fff;
+    }
+    .panel-sub {
+      font-size: 12px; color: #71717a;
+      margin-bottom: 20px;
+    }
+    .grade-temas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .tema-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tema-card:hover {
+      border-color: rgba(168,85,247,0.4);
+      transform: translateY(-2px);
+    }
+    .tema-card.ativo {
+      border-color: #a855f7;
+      box-shadow: 0 0 0 2px rgba(168,85,247,0.2);
+    }
+    .tema-thumb {
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 13px;
+      letter-spacing: -0.3px;
+    }
+    .tema-card:nth-child(2) .tema-thumb { background: linear-gradient(135deg, #16a34a 0%, #84cc16 100%); }
+    .tema-card:nth-child(3) .tema-thumb { background: linear-gradient(135deg, #1e40af 0%, #06b6d4 100%); }
+    .tema-card:nth-child(4) .tema-thumb { background: linear-gradient(135deg, #be185d 0%, #f43f5e 100%); }
+    .tema-card:nth-child(5) .tema-thumb { background: linear-gradient(135deg, #7c2d12 0%, #ea580c 100%); }
+    .tema-card:nth-child(6) .tema-thumb { background: linear-gradient(135deg, #1e3a8a 0%, #6366f1 100%); }
+    .tema-nome {
+      padding: 8px 10px;
+      font-size: 11px; font-weight: 600;
+    }
+
+    /* === CANVAS AREA === */
+    .canvas-area {
+      display: flex; flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+    .config-bar {
+      width: 100%;
+      background: rgba(15,15,20,0.6);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 10px 16px;
+      display: flex; align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      font-size: 12px;
+    }
+    .config-item { display: flex; align-items: center; gap: 6px; }
+    .config-item label { color: #71717a; font-weight: 500; }
+    .config-item select {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      color: #fff;
+      padding: 4px 8px; font-size: 12px;
+      font-family: inherit;
+    }
+    .canvas-wrapper {
+      flex: 1;
+      width: 100%;
+      max-width: 600px;
+      max-height: 600px;
+      aspect-ratio: 1;
+      background: #fde047;
+      border-radius: 16px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.06),
+        0 50px 100px -20px rgba(0,0,0,0.5),
+        0 30px 60px -30px rgba(168,85,247,0.4);
+      display: grid;
+      grid-template-rows: 30% 1fr 12%;
+      overflow: hidden;
+    }
+    .canvas-capa {
+      background: linear-gradient(135deg, #c40000 0%, #ef0000 50%, #ff8a00 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 24px;
+    }
+    .canvas-grid {
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .canvas-card {
+      background: #fff;
+      border-radius: 8px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: space-between;
+      padding: 8px;
+      font-size: 10px; color: #1f2937;
+      font-weight: 700;
+    }
+    .canvas-card .price {
+      background: #ef4444; color: #fff;
+      padding: 4px 10px; border-radius: 100px;
+      font-weight: 800; font-size: 12px;
+    }
+    .canvas-rodape {
+      background: #7f1d1d; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="voltar">← Voltar</a>
+
+  <div class="app">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="logo-app">⚡ Encarte Builder</div>
+      <input type="text" class="nome-projeto" value="Encarte Maio 2026" />
+      <div class="acoes-topo">
+        <button class="btn-topo">📁 Salvar</button>
+        <button class="btn-topo">📥 PDF</button>
+        <button class="btn-topo btn-primary">🚀 Publicar</button>
+      </div>
+    </div>
+
+    <!-- SIDEBAR ICONS -->
+    <div class="sidebar-icons">
+      <button class="icon-btn"><div class="ico">+</div>Produtos</button>
+      <button class="icon-btn active"><div class="ico">🎨</div>Temas</button>
+      <button class="icon-btn"><div class="ico">📅</div>Datas</button>
+      <button class="icon-btn"><div class="ico">©</div>Logo</button>
+      <button class="icon-btn"><div class="ico">🏪</div>Empresa</button>
+      <button class="icon-btn"><div class="ico">T</div>Fontes</button>
+      <button class="icon-btn"><div class="ico">📢</div>Postar</button>
+    </div>
+
+    <!-- PANEL -->
+    <div class="panel">
+      <h2>Temas</h2>
+      <p class="panel-sub">Escolha um modelo pronto pra começar</p>
+      <div class="grade-temas">
+        <div class="tema-card ativo">
+          <div class="tema-thumb">OFERTÃO</div>
+          <div class="tema-nome">Ofertão do Dia</div>
+        </div>
+        <div class="tema-card">
+          <div class="tema-thumb">QUINTA</div>
+          <div class="tema-nome">Quinta Verde</div>
+        </div>
+        <div class="tema-card">
+          <div class="tema-thumb">AZUL</div>
+          <div class="tema-nome">Bebidas Frias</div>
+        </div>
+        <div class="tema-card">
+          <div class="tema-thumb">ROSA</div>
+          <div class="tema-nome">Dia das Mães</div>
+        </div>
+        <div class="tema-card">
+          <div class="tema-thumb">PIZZA</div>
+          <div class="tema-nome">Dia da Pizza</div>
+        </div>
+        <div class="tema-card">
+          <div class="tema-thumb">BLACK</div>
+          <div class="tema-nome">Black Friday</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CANVAS AREA -->
+    <div class="canvas-area">
+      <div class="config-bar">
+        <div class="config-item"><label>Modelo:</label><select><option>Facebook Quadrado</option></select></div>
+        <div class="config-item"><label>Grade:</label><select><option>Automático</option></select></div>
+        <div class="config-item"><label>Texto:</label><select><option>Médio</option></select></div>
+        <div class="config-item"><label>Zoom:</label><select><option>Auto</option></select></div>
+      </div>
+      <div class="canvas-wrapper">
+        <div class="canvas-capa">OFERTÃO DO DIA</div>
+        <div class="canvas-grid">
+          <div class="canvas-card"><span>FILE PEITO</span><span class="price">R$ 13,99</span></div>
+          <div class="canvas-card"><span>FEIJÃO PRETO</span><span class="price">R$ 5,99</span></div>
+          <div class="canvas-card"><span>COCA COLA 2L</span><span class="price">R$ 9,99</span></div>
+          <div class="canvas-card"><span>ARROZ FOLHA</span><span class="price">R$ 23,99</span></div>
+        </div>
+        <div class="canvas-rodape">📞 (43) 99800-8685 · *Imagens Meramente Ilustrativas</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

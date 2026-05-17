@@ -1,0 +1,39 @@
+{
+  "nome": "Cortes Nobres",
+  "categoria": "Açougue",
+  "premium": false,
+  "novo": false,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1778178201797-kzg581.png",
+    "imagemTitulo": "/uploads/1778178286893-_3kiYq.png",
+    "posicaoTitulo": "esquerda",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#4c0202",
+    "faixaSuperior": "#8f221e",
+    "textoEsquerdo": "",
+    "textoDireito": "*Imagens Meramente Ilustrativas"
+  },
+  "paleta": {
+    "primaria": "#000000",
+    "secundaria": "#8f221e",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#8f221e",
+    "textoNome": "#000000",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#000000",
+    "balaoOferta": "/uploads/1778178224170-Tyel4X.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-07T18:39:53.518Z",
+  "gratis": false
+}

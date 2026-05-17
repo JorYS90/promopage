@@ -1,0 +1,37 @@
+{
+  "nome": "Menos ranço mais hamburguer",
+  "categoria": "Hamburgueria",
+  "premium": false,
+  "novo": false,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1778586322343-EP_oLs.png",
+    "imagemTitulo": "/uploads/1778586325006-OA4caW.png",
+    "posicaoTitulo": "direita",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#285477",
+    "faixaSuperior": "#0a161e"
+  },
+  "paleta": {
+    "primaria": "#a78772",
+    "secundaria": "#0a161e",
+    "fundoBox": "#fff0db",
+    "fundoBoxSecundario": "#0a161e",
+    "textoNome": "#000000",
+    "textoNomeDestaque": "#000000",
+    "textoPreco": "#000000",
+    "textoPrecoDestaque": "#121212",
+    "tagPreco": "#a78772",
+    "balaoOferta": "/uploads/1778586483488-UP8n40.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#6f6659"
+  },
+  "criadoEm": "2026-05-12T16:59:59.457Z"
+}

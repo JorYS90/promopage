@@ -1,0 +1,39 @@
+{
+  "nome": "Dia do Hamburguer",
+  "categoria": "Hamburgueria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1778085167185-XO6CSD.png",
+    "imagemTitulo": "/uploads/1778085168962-XXFZOn.png",
+    "posicaoTitulo": "direita",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#570000",
+    "faixaSuperior": "#a80000",
+    "textoEsquerdo": "",
+    "textoDireito": "*Imagens Meramente Ilustrativas"
+  },
+  "paleta": {
+    "primaria": "#570000",
+    "secundaria": "#a80000",
+    "fundoBox": "#000000",
+    "fundoBoxSecundario": "#a80000",
+    "textoNome": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#1f2937",
+    "tagPreco": "#570000",
+    "balaoOferta": "/uploads/1778085217542-RKgN-R.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#000000"
+  },
+  "criadoEm": "2026-05-06T16:33:41.016Z",
+  "gratis": false
+}

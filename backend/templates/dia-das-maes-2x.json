@@ -1,0 +1,33 @@
+{
+  "nome": "DIA DAS MAES 2x",
+  "categoria": "DIA DAS MAES",
+  "premium": false,
+  "novo": false,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1777690099324-_OHfGw.png",
+    "imagemTitulo": "/uploads/1777690113857-_ehnhY.png",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#f000a4",
+    "faixaSuperior": "#8e0161",
+    "textoEsquerdo": "",
+    "textoDireito": "*Imagens Meramente Ilustrativas"
+  },
+  "paleta": {
+    "primaria": "#f000a4",
+    "secundaria": "#8e0161",
+    "fundoBox": "#fb79e3",
+    "fundoBoxSecundario": "#8e0161",
+    "textoNome": "#ffffff",
+    "textoPreco": "#ffffff",
+    "tagPreco": "#f000a4",
+    "balaoOferta": "/uploads/1777690369659-l4jw7w.png"
+  },
+  "criadoEm": "2026-05-02T03:03:25.323Z",
+  "gratis": false
+}

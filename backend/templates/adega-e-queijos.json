@@ -1,0 +1,38 @@
+{
+  "nome": "Adega e Queijos",
+  "categoria": "VINHOS",
+  "premium": false,
+  "novo": false,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1777746414741-F7vbV_.png",
+    "imagemTitulo": "/uploads/1777747332439-3VP-52.png",
+    "posicaoTitulo": "esquerda",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#4e0a11",
+    "faixaSuperior": "#1c0b04",
+    "textoEsquerdo": "",
+    "textoDireito": "*Imagens Meramente Ilustrativas"
+  },
+  "paleta": {
+    "primaria": "#180701",
+    "secundaria": "#1c0b04",
+    "fundoBox": "#93666b",
+    "fundoBoxSecundario": "#1c0b04",
+    "textoNome": "#000000",
+    "textoPreco": "#000000",
+    "tagPreco": "#180701",
+    "balaoOferta": "/uploads/1777746611068-9hmn0e.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#2a0001"
+  },
+  "criadoEm": "2026-05-03T02:59:27.578Z",
+  "gratis": false
+}

@@ -1,0 +1,39 @@
+{
+  "nome": "Frios Premium",
+  "categoria": "Queijo",
+  "premium": false,
+  "novo": false,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1778157853473-M41yHe.png",
+    "imagemTitulo": "/uploads/1778158124039-DI_FGa.png",
+    "posicaoTitulo": "direita",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#112b4a",
+    "faixaSuperior": "#9ab8e0",
+    "textoEsquerdo": "",
+    "textoDireito": "*Imagens Meramente Ilustrativas"
+  },
+  "paleta": {
+    "primaria": "#5d5dfe",
+    "secundaria": "#9ab8e0",
+    "fundoBox": "#fafafa",
+    "fundoBoxSecundario": "#9ab8e0",
+    "textoNome": "#1f2937",
+    "textoPreco": "#000000",
+    "textoPrecoDestaque": "#1f2937",
+    "tagPreco": "#5d5dfe",
+    "balaoOferta": "/uploads/1778157878536-dhkIbN.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-07T12:57:26.062Z",
+  "gratis": false
+}

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cloud Light - Mockup</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      background: #f5f7fb;
+      color: #1e293b;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .voltar {
+      position: fixed; top: 16px; right: 16px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border: 1px solid #e2e8f0;
+      color: #1e293b;
+      padding: 8px 16px; border-radius: 100px;
+      font-size: 12px; font-weight: 600;
+      text-decoration: none;
+      z-index: 100;
+    }
+
+    /* === LAYOUT === */
+    .app {
+      display: grid;
+      grid-template-columns: 80px 320px 1fr;
+      grid-template-rows: 60px 1fr;
+      height: 100vh;
+      background: #f5f7fb;
+    }
+
+    /* === TOPBAR === */
+    .topbar {
+      grid-column: 1 / -1;
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex; align-items: center;
+      padding: 0 24px;
+      gap: 16px;
+    }
+    .logo-app {
+      font-weight: 800; font-size: 15px;
+      color: #2563eb;
+      letter-spacing: -0.5px;
+    }
+    .nome-projeto {
+      flex: 1; max-width: 320px;
+      background: #f1f5f9;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 8px 14px;
+      color: #1e293b; font-size: 13px;
+      font-family: inherit;
+      font-weight: 500;
+    }
+    .nome-projeto:focus {
+      outline: none;
+      background: #fff;
+      border-color: #2563eb;
+    }
+    .acoes-topo { margin-left: auto; display: flex; gap: 8px; }
+    .btn-topo {
+      background: #f1f5f9;
+      border: 0;
+      color: #475569;
+      padding: 8px 16px; border-radius: 10px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      font-family: inherit;
+    }
+    .btn-topo:hover { background: #e2e8f0; }
+    .btn-primary {
+      background: #2563eb;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    }
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+
+    /* === SIDEBAR ICONS === */
+    .sidebar-icons {
+      background: #fff;
+      border-right: 1px solid #e2e8f0;
+      display: flex; flex-direction: column;
+      padding: 12px 0;
+      gap: 4px;
+    }
+    .icon-btn {
+      width: 64px; height: 64px;
+      margin: 0 8px;
+      background: transparent;
+      border: 0;
+      color: #64748b;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 4px;
+      font-size: 10px; font-weight: 600;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .icon-btn .ico {
+      font-size: 22px;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .icon-btn:hover {
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+    .icon-btn.active {
+      background: #eff6ff;
+      color: #2563eb;
+    }
+    .icon-btn.active::before {
+      content: ''; position: absolute;
+      left: 0; width: 3px; height: 32px;
+      background: #2563eb;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* === PANEL === */
+    .panel {
+      background: #fff;
+      border-right: 1px solid #e2e8f0;
+      padding: 24px 20px;
+      overflow-y: auto;
+    }
+    .panel h2 {
+      font-size: 20px; font-weight: 700;
+      letter-spacing: -0.4px;
+      margin-bottom: 4px;
+      color: #0f172a;
+    }
+    .panel-sub {
+      font-size: 13px; color: #64748b;
+      margin-bottom: 20px;
+    }
+    .panel-busca {
+      width: 100%;
+      background: #f1f5f9;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      font-family: inherit;
+    }
+    .panel-busca:focus { outline: none; background: #fff; border-color: #2563eb; }
+    .grade-temas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .tema-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tema-card:hover {
+      border-color: #94a3b8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+    }
+    .tema-card.ativo {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    }
+    .tema-thumb {
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 13px;
+      letter-spacing: -0.3px;
+    }
+    .tema-card:nth-child(2) .tema-thumb { background: linear-gradient(135deg, #16a34a 0%, #84cc16 100%); }
+    .tema-card:nth-child(3) .tema-thumb { background: linear-gradient(135deg, #1e40af 0%, #06b6d4 100%); }
+    .tema-card:nth-child(4) .tema-thumb { background: linear-gradient(135deg, #be185d 0%, #f43f5e 100%); }
+    .tema-card:nth-child(5) .tema-thumb { background: linear-gradient(135deg, #7c2d12 0%, #ea580c 100%); }
+    .tema-card:nth-child(6) .tema-thumb { background: linear-gradient(135deg, #1e3a8a 0%, #6366f1 100%); }
+    .tema-nome {
+      padding: 10px 12px;
+      font-size: 12px; font-weight: 600;
+      color: #1e293b;
+    }
+
+    /* === CANVAS AREA === */
+    .canvas-area {
+      display: flex; flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+    .config-bar {
+      width: 100%;
+      max-width: 720px;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 12px 18px;
+      display: flex; align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .config-item { display: flex; align-items: center; gap: 6px; }
+    .config-item label { color: #64748b; font-weight: 500; }
+    .config-item select {
+      background: transparent;
+      border: 0;
+      color: #1e293b;
+      padding: 4px 6px; font-size: 12px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .canvas-wrapper {
+      width: 100%;
+      max-width: 600px;
+      aspect-ratio: 1;
+      background: #fde047;
+      border-radius: 20px;
+      box-shadow:
+        0 30px 80px -20px rgba(0,0,0,0.15),
+        0 12px 30px -10px rgba(0,0,0,0.08);
+      display: grid;
+      grid-template-rows: 30% 1fr 12%;
+      overflow: hidden;
+    }
+    .canvas-capa {
+      background: linear-gradient(135deg, #c40000 0%, #ef0000 50%, #ff8a00 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 24px;
+    }
+    .canvas-grid {
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .canvas-card {
+      background: #fff;
+      border-radius: 8px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: space-between;
+      padding: 8px;
+      font-size: 10px; color: #1f2937;
+      font-weight: 700;
+    }
+    .canvas-card .price {
+      background: #ef4444; color: #fff;
+      padding: 4px 10px; border-radius: 100px;
+      font-weight: 800; font-size: 12px;
+    }
+    .canvas-rodape {
+      background: #7f1d1d; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="voltar">← Voltar</a>
+
+  <div class="app">
+    <div class="topbar">
+      <div class="logo-app">⚡ Encarte Builder</div>
+      <input type="text" class="nome-projeto" value="Encarte Maio 2026" />
+      <div class="acoes-topo">
+        <button class="btn-topo">📁 Salvar</button>
+        <button class="btn-topo">📥 PDF</button>
+        <button class="btn-topo btn-primary">🚀 Publicar</button>
+      </div>
+    </div>
+
+    <div class="sidebar-icons">
+      <button class="icon-btn"><div class="ico">+</div>Produtos</button>
+      <button class="icon-btn active"><div class="ico">🎨</div>Temas</button>
+      <button class="icon-btn"><div class="ico">📅</div>Datas</button>
+      <button class="icon-btn"><div class="ico">©</div>Logo</button>
+      <button class="icon-btn"><div class="ico">🏪</div>Empresa</button>
+      <button class="icon-btn"><div class="ico">T</div>Fontes</button>
+      <button class="icon-btn"><div class="ico">📢</div>Postar</button>
+    </div>
+
+    <div class="panel">
+      <h2>Temas</h2>
+      <p class="panel-sub">Escolha um modelo pronto pra começar</p>
+      <input type="text" class="panel-busca" placeholder="🔍 Pesquisar..." />
+      <div class="grade-temas">
+        <div class="tema-card ativo">
+          <div class="tema-thumb">OFERTÃO</div>
+          <div class="tema-nome">Ofertão do Dia</div>
+        </div>
+        <div class="tema-card">
+          <div class="tema-thumb">QUINTA</div>
+          <div class="tema-nome">Quinta Verde</div>
+        </div>
+        <div class="tema-card">
+          <div class="tema-thumb">AZUL</div>
+          <div class="tema-nome">Bebidas Frias</div>
+        </div>
+        <div class="tema-card">
+          <div class="tema-thumb">ROSA</div>
+          <div class="tema-nome">Dia das Mães</div>
+        </div>
+        <div class="tema-card">
+          <div class="tema-thumb">PIZZA</div>
+          <div class="tema-nome">Dia da Pizza</div>
+        </div>
+        <div class="tema-card">
+          <div class="tema-thumb">BLACK</div>
+          <div class="tema-nome">Black Friday</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas-area">
+      <div class="config-bar">
+        <div class="config-item"><label>Modelo:</label><select><option>Facebook Quadrado</option></select></div>
+        <div class="config-item"><label>Grade:</label><select><option>Automático</option></select></div>
+        <div class="config-item"><label>Texto:</label><select><option>Médio</option></select></div>
+        <div class="config-item"><label>Zoom:</label><select><option>Auto</option></select></div>
+      </div>
+      <div class="canvas-wrapper">
+        <div class="canvas-capa">OFERTÃO DO DIA</div>
+        <div class="canvas-grid">
+          <div class="canvas-card"><span>FILE PEITO</span><span class="price">R$ 13,99</span></div>
+          <div class="canvas-card"><span>FEIJÃO PRETO</span><span class="price">R$ 5,99</span></div>
+          <div class="canvas-card"><span>COCA COLA 2L</span><span class="price">R$ 9,99</span></div>
+          <div class="canvas-card"><span>ARROZ FOLHA</span><span class="price">R$ 23,99</span></div>
+        </div>
+        <div class="canvas-rodape">📞 (43) 99800-8685 · *Imagens Meramente Ilustrativas</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

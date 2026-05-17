@@ -1,0 +1,37 @@
+{
+  "nome": "Ofertas Relâmpago",
+  "categoria": "Temas Grátis",
+  "premium": false,
+  "novo": false,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1777661150112-taGJd1.png",
+    "imagemTitulo": "/uploads/1778633034625-qaCnH_.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ef0000",
+    "faixaSuperior": "#fbbf24"
+  },
+  "paleta": {
+    "primaria": "#ef0000",
+    "secundaria": "#fbbf24",
+    "fundoBox": "#fde047",
+    "fundoBoxSecundario": "#fbbf24",
+    "textoNome": "#1f2937",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#ef0000",
+    "balaoOferta": "/uploads/1777687888768-k6jfAv.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-13T19:36:02.879Z"
+}

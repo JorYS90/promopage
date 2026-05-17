@@ -1,0 +1,39 @@
+{
+  "nome": "Festival do Queijos & Frios",
+  "categoria": "Queijo",
+  "premium": false,
+  "novo": false,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1778070110124-kQ00i6.png",
+    "imagemTitulo": "/uploads/1778070314833-c4ZLgf.png",
+    "posicaoTitulo": "esquerda",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#9f9e9d",
+    "faixaSuperior": "#575757",
+    "textoEsquerdo": "",
+    "textoDireito": "*Imagens Meramente Ilustrativas"
+  },
+  "paleta": {
+    "primaria": "#e3e2e1",
+    "secundaria": "#575757",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#575757",
+    "textoNome": "#1f2937",
+    "textoPreco": "#000000",
+    "textoPrecoDestaque": "#000000",
+    "tagPreco": "#e3e2e1",
+    "balaoOferta": "/uploads/1778070330865-PECjMT.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-07T19:05:39.041Z",
+  "gratis": false
+}

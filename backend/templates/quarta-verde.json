@@ -1,0 +1,39 @@
+{
+  "nome": "quarta verde",
+  "categoria": "Hortaliças",
+  "premium": false,
+  "novo": false,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1777840960629-18RksI.png",
+    "imagemTitulo": "/uploads/1777841551026-bcEBn1.png",
+    "posicaoTitulo": "esquerda",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#213d17",
+    "faixaSuperior": "#4c9631",
+    "textoEsquerdo": "",
+    "textoDireito": "*Imagens Meramente Ilustrativas"
+  },
+  "paleta": {
+    "primaria": "#4e7028",
+    "secundaria": "#4c9631",
+    "fundoBox": "#c0fe4d",
+    "fundoBoxSecundario": "#4c9631",
+    "textoNome": "#1f2937",
+    "textoPreco": "#000000",
+    "textoPrecoDestaque": "#1f2937",
+    "tagPreco": "#4e7028",
+    "balaoOferta": "/uploads/1777841032319-E6wE6L.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#132707"
+  },
+  "criadoEm": "2026-05-03T20:52:37.269Z",
+  "gratis": false
+}

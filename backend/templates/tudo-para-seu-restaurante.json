@@ -1,0 +1,39 @@
+{
+  "nome": "Tudo Para seu Restaurante",
+  "categoria": "Restaurante",
+  "premium": false,
+  "novo": false,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1778180141456-qQW5VN.png",
+    "imagemTitulo": "/uploads/1778180143377-HG_eA4.png",
+    "posicaoTitulo": "esquerda",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#e3e3e3",
+    "faixaSuperior": "#ababab",
+    "textoEsquerdo": "",
+    "textoDireito": "*Imagens Meramente Ilustrativas"
+  },
+  "paleta": {
+    "primaria": "#e3e3e3",
+    "secundaria": "#ababab",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#ababab",
+    "textoNome": "#000000",
+    "textoPreco": "#000000",
+    "textoPrecoDestaque": "#000000",
+    "tagPreco": "#e3e3e3",
+    "balaoOferta": "/uploads/1778180210097-_lz0-T.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-07T19:17:20.586Z",
+  "gratis": false
+}

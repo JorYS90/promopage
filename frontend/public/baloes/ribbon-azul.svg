@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 150" preserveAspectRatio="none">
+  <defs>
+    <filter id="sh5" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.35"/>
+    </filter>
+    <linearGradient id="g5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1e40af"/>
+    </linearGradient>
+    <linearGradient id="g5b" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e40af"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+  </defs>
+  <!-- Pontas laterais (caudas do ribbon, mais escuras) -->
+  <polygon points="0,40 30,30 30,120 0,110" fill="url(#g5b)" filter="url(#sh5)"/>
+  <polygon points="600,40 570,30 570,120 600,110" fill="url(#g5b)" filter="url(#sh5)"/>
+  <!-- Corpo central com chanfros -->
+  <path d="M 30,15 L 570,15 L 555,75 L 570,135 L 30,135 L 45,75 Z"
+        fill="url(#g5)" stroke="#ffffff" stroke-width="2" filter="url(#sh5)"/>
+</svg>
