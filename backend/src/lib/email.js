@@ -23,6 +23,7 @@ async function enviarEmail({ to, subject, html }) {
   if (result.error) {
     throw new Error(`Resend falhou: ${result.error.message || JSON.stringify(result.error)}`);
   }
+  console.log(`[email] enviado id=${result.data?.id} to=${to} subject="${subject}"`);
   return { id: result.data?.id };
 }
 
