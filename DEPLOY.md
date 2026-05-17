@@ -35,7 +35,7 @@ docker compose up -d --build
 docker compose logs -f api
 ```
 
-Acessa **http://localhost** — frontend abre, API responde em `/api/health`.
+Acessa **http://localhost:8080** — frontend abre, API responde em `/api/health`.
 
 Quando quiser parar: `docker compose down` (volumes ficam preservados).
 
@@ -54,9 +54,9 @@ Quando quiser parar: `docker compose down` (volumes ficam preservados).
 
 #### 2.2 Configurar o domínio
 - No painel DNS do seu registrar (Registro.br, GoDaddy etc), aponte um A record:
-  - `promopage.com.br` → IP da VPS
-  - `www.promopage.com.br` → IP da VPS
-- Espera ~5min pra DNS propagar (testa com `dig promopage.com.br`)
+  - `seudominio.com.br` → IP da VPS
+  - `www.seudominio.com.br` → IP da VPS
+- Espera ~5min pra DNS propagar (testa com `dig seudominio.com.br`)
 
 #### 2.3 Instalar Docker na VPS
 
@@ -82,8 +82,9 @@ adduser promopage
 usermod -aG docker promopage
 su - promopage
 
-# Clona seu repo (ajuste a URL)
-git clone https://github.com/SEU-USER/promopage.git
+# Clona o repo (use HTTPS pra clone público OU SSH se já tiver chave configurada)
+git clone https://github.com/JorYS90/promopage.git
+# git clone git@github.com:JorYS90/promopage.git   # via SSH
 cd promopage
 ```
 
@@ -103,7 +104,7 @@ nano backend/.env
 ```env
 NODE_ENV=production
 JWT_SECRET=COLE_AQUI_O_SECRET_GERADO
-CORS_ORIGIN=https://promopage.com.br,https://www.promopage.com.br
+CORS_ORIGIN=https://seudominio.com.br,https://www.seudominio.com.br
 SECURE_COOKIES=true
 RATE_LIMIT_GLOBAL_MAX=300
 RATE_LIMIT_AUTH_MAX=10
@@ -113,10 +114,13 @@ RATE_LIMIT_AUTH_MAX=10
 
 **Forma mais simples — Caddy automatiza tudo:**
 
-Cria `Caddyfile` na raiz da VPS:
+> ⚠️ **Importante:** o container `web` do docker-compose escuta na porta **8080** do host,
+> deixando 80/443 livres pro Caddy fazer o reverse_proxy + HTTPS. Não troque essa porta.
+
+Cria `Caddyfile` na raiz da VPS (troque o domínio pelo seu):
 ```caddy
-promopage.com.br, www.promopage.com.br {
-    reverse_proxy localhost:80
+seudominio.com.br, www.seudominio.com.br {
+    reverse_proxy localhost:8080
 }
 ```
 
@@ -138,7 +142,7 @@ docker compose up -d --build
 docker compose logs -f
 ```
 
-Acessa **https://promopage.com.br** ✓
+Acessa **https://seudominio.com.br** ✓
 
 ---
 
@@ -181,7 +185,7 @@ docker compose logs -f backup   # job de backup
 docker compose exec api npm run backup
 ```
 
-Backups ficam em `/var/lib/docker/volumes/encarte-builder_api_backups/_data` — 14 últimos preservados.
+Backups ficam em `/var/lib/docker/volumes/promopage_api_backups/_data` — 14 últimos preservados.
 
 ### 3.4 Backup automático (já está rodando!)
 
@@ -191,7 +195,7 @@ O serviço `backup` no docker-compose roda **todo dia às 03:00** e mantém os 1
 ```bash
 crontab -e
 # Cole:
-0 4 * * * docker run --rm -v encarte-builder_api_backups:/data -v ~/.config/rclone:/config/rclone rclone/rclone copy /data b2:meu-bucket-backups
+0 4 * * * docker run --rm -v promopage_api_backups:/data -v ~/.config/rclone:/config/rclone rclone/rclone copy /data b2:meu-bucket-backups
 ```
 
 ### 3.5 Acessar o banco SQLite remotamente
@@ -220,7 +224,7 @@ docker cp promopage-api:/app/data/saas.db ./saas-local.db
 ### 3.6 Monitorar uptime (grátis)
 
 - [UptimeRobot](https://uptimerobot.com) (50 monitores grátis)
-  - URL: `https://promopage.com.br/api/health`
+  - URL: `https://seudominio.com.br/api/health`
   - Alerta no email se cair
 
 ---

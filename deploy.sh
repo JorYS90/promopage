@@ -38,15 +38,16 @@ set -a; source "$SCRIPT_DIR/.env.deploy"; set +a
 : "${VPS_USER:?VPS_USER não definido em .env.deploy}"
 : "${VPS_PATH:?VPS_PATH não definido em .env.deploy}"
 : "${HEALTH_URL:?HEALTH_URL não definido em .env.deploy}"
+VPS_SSH_PORT="${VPS_SSH_PORT:-22}"
 
-SSH="ssh -o ConnectTimeout=10 ${VPS_USER}@${VPS_HOST}"
+SSH="ssh -o ConnectTimeout=10 -p ${VPS_SSH_PORT} ${VPS_USER}@${VPS_HOST}"
 
 # --- 1) testa SSH ---
 echo -e "${CYAN}→ Testando SSH em ${VPS_USER}@${VPS_HOST}...${NC}"
 if ! $SSH "echo ok" >/dev/null 2>&1; then
   echo -e "${RED}✗ SSH falhou.${NC} Verifica:"
-  echo "  - VPS_HOST/VPS_USER no .env.deploy"
-  echo "  - ssh-copy-id ${VPS_USER}@${VPS_HOST} (chave autorizada?)"
+  echo "  - VPS_HOST/VPS_USER/VPS_SSH_PORT no .env.deploy"
+  echo "  - ssh-copy-id -p ${VPS_SSH_PORT} ${VPS_USER}@${VPS_HOST} (chave autorizada?)"
   exit 1
 fi
 echo -e "${GREEN}✓ SSH ok${NC}"
@@ -93,7 +94,7 @@ for i in {1..20}; do
   if [ $i -eq 20 ]; then
     echo -e "${RED}✗ Healthcheck falhou (último HTTP=${CODE}).${NC}"
     echo "  Ver logs:"
-    echo "    ssh ${VPS_USER}@${VPS_HOST} 'cd ${VPS_PATH} && docker compose logs --tail=100 api'"
+    echo "    ssh -p ${VPS_SSH_PORT} ${VPS_USER}@${VPS_HOST} 'cd ${VPS_PATH} && docker compose logs --tail=100 api'"
     exit 1
   fi
   sleep 2
@@ -104,4 +105,4 @@ echo
 echo -e "${GREEN}━━━ Deploy concluído ━━━${NC}"
 $SSH "cd ${VPS_PATH} && docker compose ps"
 echo
-echo -e "${YELLOW}Logs ao vivo:${NC} ssh ${VPS_USER}@${VPS_HOST} 'cd ${VPS_PATH} && docker compose logs -f'"
+echo -e "${YELLOW}Logs ao vivo:${NC} ssh -p ${VPS_SSH_PORT} ${VPS_USER}@${VPS_HOST} 'cd ${VPS_PATH} && docker compose logs -f'"

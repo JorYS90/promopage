@@ -74,7 +74,7 @@ docker stats                   # uso de CPU/RAM por container
 
 ### Backup automático (já configurado)
 - Container `backup` roda todo dia às **03:00** UTC.
-- Mantém os **14 mais recentes** em `/var/lib/docker/volumes/encarte-builder_api_backups/_data`.
+- Mantém os **14 mais recentes** em `/var/lib/docker/volumes/promopage_api_backups/_data`.
 
 ### Backup manual antes de mudança crítica
 ```bash
@@ -83,7 +83,7 @@ ssh promopage@SEU.IP "cd promopage && docker compose exec api npm run backup"
 
 ### Baixar backup pro seu PC
 ```bash
-scp promopage@SEU.IP:/var/lib/docker/volumes/encarte-builder_api_backups/_data/saas-*.db ./
+scp promopage@SEU.IP:/var/lib/docker/volumes/promopage_api_backups/_data/saas-*.db ./
 ```
 
 ### Restaurar backup
@@ -92,7 +92,7 @@ ssh promopage@SEU.IP
 cd promopage
 docker compose stop api
 # COPIA o backup escolhido por cima do banco atual
-docker run --rm -v encarte-builder_api_data:/data -v encarte-builder_api_backups:/backup alpine \
+docker run --rm -v promopage_api_data:/data -v promopage_api_backups:/backup alpine \
   sh -c "cp /backup/saas-AAAA-MM-DD.db /data/saas.db"
 docker compose start api
 ```

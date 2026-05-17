@@ -6,7 +6,7 @@
 #   1. Conecta no VPS recém-criado como root:
 #        ssh root@SEU.IP.DO.VPS
 #   2. Cola o conteúdo desse script OU faz:
-#        curl -O https://raw.githubusercontent.com/SEU-USER/SEU-REPO/main/setup-vps.sh
+#        curl -O https://raw.githubusercontent.com/JorYS90/promopage/main/setup-vps.sh
 #        chmod +x setup-vps.sh
 #        ./setup-vps.sh
 #   3. Segue as instruções no final pra configurar SSH key e clonar o repo.
@@ -104,7 +104,7 @@ echo -e "${YELLOW}Próximos passos:${NC}"
 echo
 echo "1) Como usuário ${DEPLOY_USER}, clona o repo:"
 echo "   su - ${DEPLOY_USER}"
-echo "   git clone https://github.com/SEU-USER/SEU-REPO.git promopage"
+echo "   git clone https://github.com/JorYS90/promopage.git promopage"
 echo "   cd promopage"
 echo
 echo "2) Configura o .env do backend:"
@@ -116,9 +116,9 @@ echo "   # → Setar NODE_ENV=production, CORS_ORIGIN=https://seudominio.com.br,
 echo
 echo "3) Configura Caddy pra HTTPS (root):"
 echo "   nano /etc/caddy/Caddyfile"
-echo "   # Cole:"
+echo "   # Cole (o container web escuta na 8080 pra Caddy poder ficar com 80/443):"
 echo "   seudominio.com.br, www.seudominio.com.br {"
-echo "       reverse_proxy localhost:80"
+echo "       reverse_proxy localhost:8080"
 echo "   }"
 echo "   systemctl reload caddy"
 echo

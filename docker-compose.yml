@@ -7,12 +7,17 @@
 #   1. cp backend/.env.example backend/.env
 #   2. Edite backend/.env (gere JWT_SECRET forte, defina CORS_ORIGIN)
 #   3. docker compose up -d --build
-#   4. Acesse http://localhost (web) — API em http://localhost/api/health
+#   4. Acesse http://localhost:8080 (web) — API em http://localhost:8080/api/health
+#      (em produção, Caddy fica na 80/443 e faz reverse_proxy pra 8080)
 #
 # Logs:    docker compose logs -f api
 # Stop:    docker compose down
 # Rebuild: docker compose up -d --build
 # Backup:  docker compose exec api npm run backup
+
+# Nome explícito do projeto (evita prefixos derivados do nome da pasta,
+# que pode ter espaços ou caracteres especiais e gerar nomes esquisitos).
+name: promopage
 
 services:
   api:
@@ -50,9 +55,10 @@ services:
       api:
         condition: service_started
     ports:
-      - "80:80"
-      # Pra HTTPS, descomente e configure cert (ver README de deploy)
-      # - "443:443"
+      # Porta 8080 do HOST -> 80 do container nginx.
+      # Em produção, Caddy escuta na 80/443 e faz reverse_proxy localhost:8080.
+      # Em dev local, acesse http://localhost:8080
+      - "8080:80"
 
   # Job de BACKUP diário — roda às 3h da manhã via cron interno
   # Sem isso, você precisa configurar cron NO HOST. Esse container faz tudo dentro.
