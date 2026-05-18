@@ -6,8 +6,7 @@ export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, ao
   const [populares, setPopulares] = useState([]);
   const [carregando, setCarregando] = useState(false);
   const [carregandoPopulares, setCarregandoPopulares] = useState(false);
-  const [selecionada, setSelecionada] = useState(null);
-  const [origemSelecionada, setOrigemSelecionada] = useState(null); // 'populares' ou 'busca'
+  const [selecionada, setSelecionada] = useState(null); // índice na lista combinada
   const [enviandoUpload, setEnviandoUpload] = useState(false);
   const inputFileRef = useRef(null);
 
@@ -39,7 +38,6 @@ export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, ao
     if (!q.trim()) return;
     setCarregando(true);
     setSelecionada(null);
-    setOrigemSelecionada(null);
     try {
       const r = await fetch(`/api/produtos/buscar-imagens?q=${encodeURIComponent(q)}&limite=12`);
       const json = await r.json();
@@ -51,22 +49,33 @@ export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, ao
     }
   };
 
-  const selecionarPopular = (i) => {
-    setSelecionada(i);
-    setOrigemSelecionada('populares');
-  };
+  // Lista única combinada: populares primeiro (já ordenadas por uso desc no backend),
+  // depois imagens da internet (já ordenadas por score do domínio). Dedup por URL —
+  // se a mesma URL aparece em populares e na busca web, mostra só uma vez (a popular).
+  // Sem distinção visual: o user só vê "imagens", o sistema cuida da ordenação.
+  const listaCombinada = (() => {
+    const vistas = new Set();
+    const out = [];
+    for (const p of populares) {
+      if (!p.url || vistas.has(p.url)) continue;
+      vistas.add(p.url);
+      out.push({ url: p.url, titulo: '', isPopular: true });
+    }
+    for (const w of imagens) {
+      if (!w.url || vistas.has(w.url)) continue;
+      vistas.add(w.url);
+      out.push({ url: w.url, titulo: w.titulo || '', isPopular: false });
+    }
+    return out;
+  })();
 
-  const selecionarBusca = (i) => {
-    setSelecionada(i);
-    setOrigemSelecionada('busca');
-  };
+  const selecionar = (i) => setSelecionada(i);
 
   const confirmarEscolha = () => {
     if (selecionada === null) return;
-    const url = origemSelecionada === 'populares'
-      ? populares[selecionada].url
-      : imagens[selecionada].url;
-    aoEscolher(url);
+    const item = listaCombinada[selecionada];
+    if (!item) return;
+    aoEscolher(item.url);
     aoFechar();
   };
 
@@ -169,64 +178,37 @@ export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, ao
           />
         </div>
 
-        {/* Seção de IMAGENS POPULARES (mais usadas pelos usuários) */}
-        {populares.length > 0 && (
-          <>
-            <div className="secao-populares-header">
-              <span className="badge-populares">⭐ MAIS USADAS</span>
-              <span className="info">Imagens já escolhidas por outros usuários para "{queryInicial}"</span>
-            </div>
-            <div className="grid-imagens grid-imagens-populares">
-              {populares.map((img, i) => (
-                <div
-                  key={`pop-${i}`}
-                  className={`img-card popular ${origemSelecionada === 'populares' && selecionada === i ? 'selecionada' : ''}`}
-                  onClick={() => selecionarPopular(i)}
-                  title={`${img.usos} uso${img.usos > 1 ? 's' : ''}`}
-                >
-                  <img
-                    src={img.url}
-                    alt=""
-                    onError={(e) => { e.target.parentElement.style.opacity = 0.3; }}
-                  />
-                  <span className="contador-usos">{img.usos}×</span>
-                  {origemSelecionada === 'populares' && selecionada === i && (
-                    <button className="btn-criar" onClick={(e) => { e.stopPropagation(); confirmarEscolha(); }}>
-                      ✓ USAR
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-
-        {/* Seção de IMAGENS DA INTERNET (Bing, Google, etc) */}
+        {/* Status de busca — discreto. Sem distinguir populares vs internet
+            (decisão UX 2026-05-18: user pediu grid uniforme). */}
         <div style={{fontSize:13,color:'#6b7280',margin:'14px 0 8px'}}>
-          🌐 {carregando ? 'Buscando na internet...' : `Imagens da internet (${imagens.length})`}
+          {carregando
+            ? '🔎 Buscando imagens...'
+            : `${listaCombinada.length} imagem${listaCombinada.length === 1 ? '' : 'ns'} encontrada${listaCombinada.length === 1 ? '' : 's'}`}
         </div>
 
+        {/* Grid ÚNICA: populares (do banco) primeiro, internet depois.
+            Internamente continua ordenando por relevância; visualmente uniforme. */}
         <div className="grid-imagens">
-          {imagens.map((img, i) => (
+          {listaCombinada.map((img, i) => (
             <div
-              key={`web-${i}`}
-              className={`img-card ${origemSelecionada === 'busca' && selecionada === i ? 'selecionada' : ''}`}
-              onClick={() => selecionarBusca(i)}
-              title={img.titulo || ''}
+              key={`img-${i}`}
+              className={`img-card ${selecionada === i ? 'selecionada' : ''}`}
+              onClick={() => selecionar(i)}
+              title={img.titulo}
             >
               <img
-                src={`/api/proxy-imagem-direto?url=${encodeURIComponent(img.url)}`}
-                alt={img.titulo || ''}
+                src={img.isPopular ? img.url : `/api/proxy-imagem-direto?url=${encodeURIComponent(img.url)}`}
+                alt={img.titulo}
                 onError={(e) => { e.target.parentElement.style.opacity = 0.3; }}
               />
-              {origemSelecionada === 'busca' && selecionada === i && (
+              {selecionada === i && (
                 <button className="btn-criar" onClick={(e) => { e.stopPropagation(); confirmarEscolha(); }}>
-                  ✓ CRIAR
+                  ✓ USAR
                 </button>
               )}
             </div>
           ))}
-          {!carregando && imagens.length === 0 && populares.length === 0 && (
+          {!carregando && listaCombinada.length === 0 && (
             <div style={{gridColumn:'1/-1',textAlign:'center',padding:30,color:'#9ca3af'}}>
               Nenhuma imagem encontrada. Tente refinar a busca.
             </div>
