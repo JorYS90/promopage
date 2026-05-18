@@ -26,6 +26,7 @@ const { requireAuth, requireRole } = require('./auth/middleware');
 const { buscarBingImages, buscarGoogleImages, buscarOpenFoodFacts, buscarYandexImages, buscarDuckDuckGo, buscarWikimedia, buscarGoogleCSE, statsCSE, downloadImagem, gerarPlaceholderUrl, gerarPlaceholderSVG, primeiraUrlValida, pontuarFonte } = require('./busca-imagens');
 const seedProdutos = require('./seed-produtos');
 const seedImagensPopulares = require('./seed-imagens-populares');
+const cacheImagens = require('./db/cache-imagens');
 
 const ROOT = path.resolve(__dirname, '..');
 const TEMPLATES_DIR = path.join(ROOT, 'templates');
@@ -340,6 +341,18 @@ app.post('/api/produtos/buscar-lote', async (req, res) => {
     // reativação futura, mas não são mais chamadas neste pipeline.
     // ============================================================================
 
+    // 2.5) CACHE PERSISTENTE de buscas externas. Hit aqui = pula scraping/HTTP toda.
+    //      TTL: 30 dias pra hits reais, 1 dia pra placeholders (chance de aparecer).
+    //      Skipa se passos 1/2 (populares/local) já acharam — eles são mais frescos.
+    if (!imagemEncontrada) {
+      const hit = cacheImagens.cacheGet(nomeDigitado);
+      if (hit) {
+        imagemEncontrada = hit.imagem;
+        codigoBarras = hit.codigoBarras || '';
+        fonte = `cache:${hit.fonte}`;
+      }
+    }
+
     // Query com contexto pra desambiguar buscas ambíguas em web search
     // (ex: "Saches Heinz" sozinho retorna paleontologia; com contexto retorna o produto)
     const queryWeb = `${nomeDigitado} produto supermercado`;
@@ -388,6 +401,17 @@ app.post('/api/produtos/buscar-lote', async (req, res) => {
     if (!imagemEncontrada) {
       imagemEncontrada = gerarPlaceholderUrl(nomeDigitado, 'vermelho');
       fonte = 'placeholder';
+    }
+
+    // Persiste no cache se veio de fonte externa OU é placeholder.
+    // Pula 'populares', 'local' e 'cache:*' — esses já vem de fontes internas
+    // que não custam nada repetir (e populares pode mudar quando user troca imagem).
+    if (fonte && !['populares', 'local'].includes(fonte) && !fonte.startsWith('cache:')) {
+      cacheImagens.cacheSet(nomeDigitado, {
+        imagem: imagemEncontrada,
+        codigoBarras,
+        fonte,
+      });
     }
 
     return {
@@ -645,6 +669,10 @@ app.post('/api/produtos/registrar-imagem', (req, res) => {
     imagensDb.registrarUso(nome, imagemUrl, pesoNum);
     if (pesoNum >= 5) {
       console.log(`[banco] registrado "${nome}" com peso ${pesoNum} → ${imagemUrl.slice(0, 80)}`);
+      // Peso >= 5 = ação explícita do usuário (upload/swap). Invalida cache
+      // pra próxima busca pelo termo retornar a imagem nova (via populares),
+      // não a antiga que ainda estaria cacheada.
+      cacheImagens.cacheInvalidate(nome);
     }
     res.json({ ok: true });
   } catch (e) {

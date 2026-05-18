@@ -171,6 +171,19 @@ db.exec(`
     bloqueado_ate TEXT,
     atualizado_em TEXT NOT NULL
   );
+
+  -- Cache persistente de buscas de imagens externas (Bing, OFF, Wikimedia).
+  -- Evita repetir scraping/HTTP em fontes externas pra produtos já consultados.
+  -- TTL gerenciado pelo módulo cache-imagens.js (hit/placeholder = TTLs diferentes).
+  CREATE TABLE IF NOT EXISTS cache_busca_imagens (
+    query_normalizada TEXT PRIMARY KEY,    -- lowercase, trim, espaços colapsados
+    imagem TEXT NOT NULL,                  -- URL externa OU path local /uploads/...
+    codigo_barras TEXT,                    -- só preenchido se fonte = openfoodfacts
+    fonte TEXT NOT NULL,                   -- 'bing','openfoodfacts','wikimedia','placeholder','populares','local'
+    criado_em TEXT NOT NULL,
+    expira_em TEXT NOT NULL                -- ISO date — após isso é considerado miss
+  );
+  CREATE INDEX IF NOT EXISTS idx_cache_busca_expira ON cache_busca_imagens(expira_em);
 `);
 
 // === Migração idempotente: adiciona colunas novas em tabelas existentes ===
