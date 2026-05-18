@@ -85,17 +85,25 @@ async function removerFundoChromaKey(blob, opts = {}) {
   // Se fundo for MUITO uniforme (variação < 5), pode ser um pouco mais permissivo.
   const tolBase = opts.tolerancia ?? (fundo.variacao < 5 ? 28 : 22);
 
+  // NÚCLEO PROTEGIDO: pixels com distância de cor MUITO grande do fundo são
+  // garantidamente parte do produto e nunca podem virar fundo, mesmo cercados.
+  // Threshold 3x maior que tolBase: cobre marrom da Nutella sobre fundo amarelo,
+  // verde sobre branco, etc. Sem isso, a expansão de textura "come" áreas reais.
+  const tolNucleo = opts.tolNucleo ?? Math.max(80, tolBase * 3.5);
+
   const data = ctx.getImageData(0, 0, W, H);
   const px = data.data;
-  const mask = new Uint8Array(W * H); // 0=não testado, 1=fundo, 2=produto
+  // mask: 0=não testado, 1=fundo, 2=produto, 3=produto-protegido (núcleo)
+  const mask = new Uint8Array(W * H);
 
-  const ehFundo = (idx, tol) => {
+  const distanciaCor = (idx) => {
     const i = idx * 4;
     const dr = px[i]     - fundo.r;
     const dg = px[i + 1] - fundo.g;
     const db = px[i + 2] - fundo.b;
-    return Math.sqrt(dr * dr + dg * dg + db * db) <= tol;
+    return Math.sqrt(dr * dr + dg * dg + db * db);
   };
+  const ehFundo = (idx, tol) => distanciaCor(idx) <= tol;
 
   // BFS partindo das 4 bordas
   const fila = [];
@@ -121,31 +129,34 @@ async function removerFundoChromaKey(blob, opts = {}) {
       if (y > 0)     fila.push(idx - W);
       if (y < H - 1) fila.push(idx + W);
     } else {
-      mask[idx] = 2;
+      // Núcleo protegido: cor MUITO diferente do fundo = produto garantido
+      mask[idx] = distanciaCor(idx) > tolNucleo ? 3 : 2;
     }
   }
 
   // 2º PASSE: EXPANSÃO POR TEXTURA — pega pontos da textura do fundo (ex: pontos
   // brancos sobre amarelo) que estão CERCADOS por pixels já marcados como fundo.
-  // Tolerância maior, mas só expande a partir do fundo (não vaza pro produto).
-  const tolExpansao = opts.tolerancia2 ?? Math.max(50, tolBase * 2.2);
-  const passesExpansao = opts.passesExpansao ?? 4;
+  // Conservador: tolerância e passes menores que antes pra não invadir o produto.
+  // Pixels de NÚCLEO PROTEGIDO (mask=3) nunca são convertidos.
+  const tolExpansao = opts.tolerancia2 ?? Math.max(35, tolBase * 1.5);
+  const passesExpansao = opts.passesExpansao ?? 2;
   for (let passo = 0; passo < passesExpansao; passo++) {
     let mudou = false;
     const novaMask = new Uint8Array(mask);
     for (let y = 1; y < H - 1; y++) {
       for (let x = 1; x < W - 1; x++) {
         const idx = y * W + x;
-        if (mask[idx] !== 2) continue; // só mexe em pixels de produto
+        if (mask[idx] !== 2) continue; // só mexe em pixels de produto NÃO-protegidos
         // Conta vizinhos de fundo
         const fundoVizinhos =
           (mask[idx - 1] === 1 ? 1 : 0) +
           (mask[idx + 1] === 1 ? 1 : 0) +
           (mask[idx - W] === 1 ? 1 : 0) +
           (mask[idx + W] === 1 ? 1 : 0);
-        // Pixel cercado por fundo (3+ vizinhos de fundo) E próximo da cor de fundo
-        // com tolerância maior → é parte da textura do fundo
-        if (fundoVizinhos >= 3 && ehFundo(idx, tolExpansao)) {
+        // Exige TODOS os 4 vizinhos serem fundo (mais conservador que antes — 3
+        // de 4 deixava expansão vazar em bordas suaves do produto).
+        // E proximidade da cor do fundo dentro da tolerância de expansão.
+        if (fundoVizinhos >= 4 && ehFundo(idx, tolExpansao)) {
           novaMask[idx] = 1;
           mudou = true;
         }
@@ -157,7 +168,8 @@ async function removerFundoChromaKey(blob, opts = {}) {
 
   // EROSÃO DEFENSIVA: pixels de fundo que tocam pixels de produto viram "transição"
   // (mantêm cor original mas alpha 0). Protege o produto de ter pixels comidos
-  // por causa de bordas anti-aliased.
+  // por causa de bordas anti-aliased. Considera tanto produto comum (2) quanto
+  // núcleo protegido (3).
   const erosao = opts.erosao ?? 1;
   for (let passo = 0; passo < erosao; passo++) {
     const novaMask = new Uint8Array(mask);
@@ -167,17 +179,18 @@ async function removerFundoChromaKey(blob, opts = {}) {
         if (mask[idx] !== 1) continue;
         // Apenas se a maioria dos vizinhos é PRODUTO (não só 1) — protege bordas finas
         const produtoVizinhos =
-          (mask[idx - 1] === 2 ? 1 : 0) +
-          (mask[idx + 1] === 2 ? 1 : 0) +
-          (mask[idx - W] === 2 ? 1 : 0) +
-          (mask[idx + W] === 2 ? 1 : 0);
+          (mask[idx - 1] >= 2 ? 1 : 0) +
+          (mask[idx + 1] >= 2 ? 1 : 0) +
+          (mask[idx - W] >= 2 ? 1 : 0) +
+          (mask[idx + W] >= 2 ? 1 : 0);
         if (produtoVizinhos >= 3) novaMask[idx] = 2; // promove a "produto" - preserva
       }
     }
     mask.set(novaMask);
   }
 
-  // Aplica máscara
+  // Aplica máscara — só pixels marcados como FUNDO (1) viram transparentes.
+  // Produto comum (2) e núcleo protegido (3) permanecem opacos.
   for (let idx = 0; idx < mask.length; idx++) {
     if (mask[idx] === 1) {
       px[idx * 4 + 3] = 0;
