@@ -18,12 +18,14 @@ export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, ao
     }
   }, [aberto, queryInicial]);
 
-  // Busca imagens populares (banco interno) — instantâneo
+  // Busca imagens populares (banco interno) — instantâneo.
+  // Limite 20: regra do user é "sempre populares; se tiver 20+ não busca internet
+  // nenhuma". Backend filtra os 20 mais usados por nome de produto.
   const buscarPopulares = async (q) => {
     if (!q.trim()) return;
     setCarregandoPopulares(true);
     try {
-      const r = await fetch(`/api/produtos/imagens-populares?q=${encodeURIComponent(q)}&limite=8`);
+      const r = await fetch(`/api/produtos/imagens-populares?q=${encodeURIComponent(q)}&limite=20`);
       const json = await r.json();
       setPopulares(json.imagens || []);
     } catch {
@@ -49,22 +51,29 @@ export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, ao
     }
   };
 
-  // Lista única combinada: populares primeiro (já ordenadas por uso desc no backend),
-  // depois imagens da internet (já ordenadas por score do domínio). Dedup por URL —
-  // se a mesma URL aparece em populares e na busca web, mostra só uma vez (a popular).
-  // Sem distinção visual: o user só vê "imagens", o sistema cuida da ordenação.
+  // Lista única combinada (max 20 cards):
+  // 1. Populares primeiro (já ordenadas por uso desc no backend)
+  // 2. Completa com imagens da internet APENAS se faltar pra chegar em 20
+  //    (se tem 20+ populares, NÃO mostra nenhuma internet)
+  // Dedup por URL — se a mesma URL aparece nos 2, conta uma vez só.
+  const MAX_TOTAL = 20;
   const listaCombinada = (() => {
     const vistas = new Set();
     const out = [];
     for (const p of populares) {
+      if (out.length >= MAX_TOTAL) break;
       if (!p.url || vistas.has(p.url)) continue;
       vistas.add(p.url);
       out.push({ url: p.url, titulo: '', isPopular: true });
     }
-    for (const w of imagens) {
-      if (!w.url || vistas.has(w.url)) continue;
-      vistas.add(w.url);
-      out.push({ url: w.url, titulo: w.titulo || '', isPopular: false });
+    const restante = MAX_TOTAL - out.length;
+    if (restante > 0) {
+      for (const w of imagens) {
+        if (out.length >= MAX_TOTAL) break;
+        if (!w.url || vistas.has(w.url)) continue;
+        vistas.add(w.url);
+        out.push({ url: w.url, titulo: w.titulo || '', isPopular: false });
+      }
     }
     return out;
   })();
