@@ -60,14 +60,17 @@ export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRem
   const [arrastandoIdx, setArrastandoIdx] = useState(null);
   const [hoverIdx, setHoverIdx] = useState(null);
 
-  // Auto-remoção de fundo após trocar imagem
+  // Auto-remoção de fundo após trocar imagem.
+  // Usa chroma key rápido (~100ms). Se fundo não é uniforme, NÃO chama IA
+  // automaticamente (congelaria UI). User pode refinar com botão "Refinar IA"
+  // depois se o resultado não ficar bom.
   const autoRemoverFundo = async (idx, novaUrl, nome) => {
-    setProcessando(prev => ({ ...prev, [idx]: { progresso: 0 } }));
+    setProcessando(prev => ({ ...prev, [idx]: { progresso: 0, label: 'Removendo fundo...' } }));
     try {
       const blob = await removerFundoDeUrl(novaUrl, {
         onProgress: (key, current, total) => {
           const progresso = total > 0 ? Math.round((current / total) * 100) : 0;
-          setProcessando(prev => ({ ...prev, [idx]: { progresso } }));
+          setProcessando(prev => ({ ...prev, [idx]: { progresso, label: 'Removendo fundo...' } }));
         },
       });
       const urlFinal = await uploadBlobProcessado(blob, `${(nome || 'produto').replace(/[^a-z0-9]/gi, '_')}_sem_fundo.png`);
@@ -75,6 +78,35 @@ export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRem
       aoMudar(idx, { ...p, imagem: urlFinal, fundoRemovido: true });
     } catch (e) {
       console.warn('Auto-remoção falhou:', e.message);
+    } finally {
+      setProcessando(prev => {
+        const copy = { ...prev };
+        delete copy[idx];
+        return copy;
+      });
+    }
+  };
+
+  // Refinamento MANUAL com IA — user clica no botão quando o recorte rápido
+  // (chroma key) não satisfaz. Força IA (pularIA: false). Demora 3-5s mas é
+  // muito mais robusto pra produtos com detalhes finos da mesma cor do fundo
+  // (ranhuras brancas em tampa, texto branco em fundo claro, etc.).
+  const refinarComIA = async (idx, urlAtual, nome) => {
+    setProcessando(prev => ({ ...prev, [idx]: { progresso: 0, label: '✨ Refinando com IA... (3-5s)' } }));
+    try {
+      const blob = await removerFundoDeUrl(urlAtual, {
+        pularIA: false, // FORÇA IA (modelo isnet_fp16)
+        onProgress: (key, current, total) => {
+          const progresso = total > 0 ? Math.round((current / total) * 100) : 0;
+          setProcessando(prev => ({ ...prev, [idx]: { progresso, label: '✨ Refinando com IA...' } }));
+        },
+      });
+      if (!blob) throw new Error('IA não retornou imagem');
+      const urlFinal = await uploadBlobProcessado(blob, `${(nome || 'produto').replace(/[^a-z0-9]/gi, '_')}_ia.png`);
+      const p = produtos[idx];
+      aoMudar(idx, { ...p, imagem: urlFinal, fundoRemovido: true });
+    } catch (e) {
+      alert('Não foi possível refinar com IA: ' + (e.message || e));
     } finally {
       setProcessando(prev => {
         const copy = { ...prev };
@@ -181,7 +213,7 @@ export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRem
                     )}
                     {proc && (
                       <div className="overlay-processando">
-                        <div>Removendo fundo...</div>
+                        <div>{proc.label || 'Removendo fundo...'}</div>
                         <div className="progresso">{proc.progresso}%</div>
                       </div>
                     )}
@@ -189,6 +221,22 @@ export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRem
                     {p.fundoRemovido && !proc && <span className="badge-sem-fundo">SEM FUNDO</span>}
                   </div>
                   <button className="link-acao" onClick={() => aoTrocarImagem(idx)}>🔍 Enviar Imagem</button>
+                  {/* Refinar com IA — só aparece se já tem imagem e não está processando.
+                      Útil quando o recorte rápido (chroma key) não satisfaz. Avisa que demora. */}
+                  {p.imagem && !proc && (
+                    <button
+                      className="link-acao"
+                      onClick={() => {
+                        if (confirm('Refinar com IA leva 3-5 segundos e a tela vai travar nesse tempo. Continuar?')) {
+                          refinarComIA(idx, p.imagem, p.nome);
+                        }
+                      }}
+                      title="Usa IA pra recortar produtos com detalhes finos que o algoritmo rápido não pega bem (ex: tampa branca em fundo amarelo)"
+                      style={{ marginTop: 4 }}
+                    >
+                      ✨ Refinar com IA
+                    </button>
+                  )}
                 </div>
 
                 <div>
