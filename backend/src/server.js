@@ -578,6 +578,69 @@ app.get('/api/produtos/buscar-imagens', async (req, res) => {
   }
 });
 
+// ATENÇÃO: rotas com path FIXO (registrar-imagem, imagens-populares, etc.)
+// DEVEM ficar ANTES de /api/produtos/:id — Express bate pela ordem e o :id
+// capturaria "imagens-populares" como ID, retornando 404. Bug histórico:
+// frontend pedia /api/produtos/imagens-populares?q=X e recebia "Produto não
+// encontrado", então a seção "MAIS USADAS" sumia mesmo com dados no banco.
+
+app.post('/api/produtos/registrar-imagem', (req, res) => {
+  try {
+    const { nome, imagemUrl, peso } = req.body || {};
+    if (!nome || !imagemUrl) {
+      return res.status(400).json({ error: 'nome e imagemUrl são obrigatórios' });
+    }
+    // Não registra placeholders nem URLs vazias
+    if (imagemUrl.includes('/api/placeholder')) {
+      return res.json({ ok: true, ignorado: 'placeholder' });
+    }
+    const pesoNum = Math.max(1, Math.min(50, parseInt(peso, 10) || 1));
+    imagensDb.registrarUso(nome, imagemUrl, pesoNum);
+    if (pesoNum >= 5) {
+      console.log(`[banco] registrado "${nome}" com peso ${pesoNum} → ${imagemUrl.slice(0, 80)}`);
+      // Peso >= 5 = ação explícita do usuário (upload/swap). Invalida cache
+      // pra próxima busca pelo termo retornar a imagem nova (via populares),
+      // não a antiga que ainda estaria cacheada.
+      cacheImagens.cacheInvalidate(nome);
+    }
+    res.json({ ok: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Lista as imagens mais usadas pra um produto (ordenadas por popularidade).
+// Query: ?q=<nome>&limite=12
+app.get('/api/produtos/imagens-populares', (req, res) => {
+  try {
+    const q = (req.query.q || '').toString().trim();
+    const limite = parseInt(req.query.limite || '12', 10);
+    if (!q) return res.json({ imagens: [] });
+    const populares = imagensDb.buscarPopulares(q, Math.min(limite, 50));
+    res.json({ imagens: populares });
+  } catch (e) {
+    res.status(500).json({ error: e.message, imagens: [] });
+  }
+});
+
+// Estatísticas do banco (debug/dashboard)
+app.get('/api/produtos/imagens-stats', (req, res) => {
+  try {
+    res.json(imagensDb.estatisticas());
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Status do Google Custom Search (quota diária)
+app.get('/api/produtos/gcse-stats', (req, res) => {
+  try {
+    res.json(statsCSE());
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.get('/api/produtos/:id', (req, res) => {
   const p = produtosDb.obter(req.params.id);
   if (!p) return res.status(404).json({ error: 'Produto não encontrado' });
@@ -680,63 +743,6 @@ app.get('/api/proxy-imagem', async (req, res) => {
 // ---------- Banco de imagens populares ----------
 // Registra que uma imagem foi usada pra um produto (incrementa contador).
 // Body: { nome, imagemUrl, peso? } — peso 1 (uso normal) ou 3 (escolha explícita)
-app.post('/api/produtos/registrar-imagem', (req, res) => {
-  try {
-    const { nome, imagemUrl, peso } = req.body || {};
-    if (!nome || !imagemUrl) {
-      return res.status(400).json({ error: 'nome e imagemUrl são obrigatórios' });
-    }
-    // Não registra placeholders nem URLs vazias
-    if (imagemUrl.includes('/api/placeholder')) {
-      return res.json({ ok: true, ignorado: 'placeholder' });
-    }
-    const pesoNum = Math.max(1, Math.min(50, parseInt(peso, 10) || 1));
-    imagensDb.registrarUso(nome, imagemUrl, pesoNum);
-    if (pesoNum >= 5) {
-      console.log(`[banco] registrado "${nome}" com peso ${pesoNum} → ${imagemUrl.slice(0, 80)}`);
-      // Peso >= 5 = ação explícita do usuário (upload/swap). Invalida cache
-      // pra próxima busca pelo termo retornar a imagem nova (via populares),
-      // não a antiga que ainda estaria cacheada.
-      cacheImagens.cacheInvalidate(nome);
-    }
-    res.json({ ok: true });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-// Lista as imagens mais usadas pra um produto (ordenadas por popularidade).
-// Query: ?q=<nome>&limite=12
-app.get('/api/produtos/imagens-populares', (req, res) => {
-  try {
-    const q = (req.query.q || '').toString().trim();
-    const limite = parseInt(req.query.limite || '12', 10);
-    if (!q) return res.json({ imagens: [] });
-    const populares = imagensDb.buscarPopulares(q, Math.min(limite, 50));
-    res.json({ imagens: populares });
-  } catch (e) {
-    res.status(500).json({ error: e.message, imagens: [] });
-  }
-});
-
-// Estatísticas do banco (debug/dashboard)
-app.get('/api/produtos/imagens-stats', (req, res) => {
-  try {
-    res.json(imagensDb.estatisticas());
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-// Status do Google Custom Search (quota diária)
-app.get('/api/produtos/gcse-stats', (req, res) => {
-  try {
-    res.json(statsCSE());
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
 // ---------- Categorias ----------
 app.get('/api/categorias', (req, res) => {
   try {

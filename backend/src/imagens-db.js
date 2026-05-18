@@ -92,9 +92,16 @@ function normalizarChave(nome) {
 // Registra que uma imagem foi usada para um determinado nome de produto.
 // Se já existir, incrementa o contador de usos. Senão, cria entrada nova.
 //
-// peso (default 1): incremento do contador de usos. Use peso > 1 quando o
-// usuário ESCOLHEU explicitamente a imagem (sinal mais forte que adicionar
-// um produto da busca automática).
+// peso (default 1): incremento do contador de usos.
+//   - peso 1: aprendizado passivo (encarte salvo)
+//   - peso 10: swap explícito (user trocou imagem)
+//   - peso 20: upload sem metadata
+//   - peso 25+: upload com metadata (sinal mais forte)
+//
+// Pesos >= 20 ATIVAM "fresh-start mode": a nova imagem garantidamente vira o TOP
+// do ranking, ignorando histórico. Sem isso, uploads novos competem contra
+// imagens com centenas de usos acumulados em sessões anteriores e nunca vencem
+// (UX confusa: "subi minha foto mas o sistema continua mostrando a velha").
 function registrarUso(nome, url, peso = 1) {
   if (!nome || !url) return;
   const chave = normalizarChave(nome);
@@ -102,12 +109,31 @@ function registrarUso(nome, url, peso = 1) {
   const db = carregar();
   if (!db[chave]) db[chave] = [];
   const agora = new Date().toISOString();
+
+  // Upload manual (peso >= 20): garante que essa URL vire TOP do ranking.
+  // Calcula o usos MÁXIMO atual entre as OUTRAS imagens e dá um boost
+  // proporcional pra essa. Preserva histórico (não zera os outros).
+  let pesoEfetivo = peso;
+  if (peso >= 20) {
+    const existente = db[chave].find(e => e.url === url);
+    const usosAtuais = existente?.usos || 0;
+    const maxOutros = db[chave]
+      .filter(e => e.url !== url)
+      .reduce((m, e) => Math.max(m, e.usos || 0), 0);
+    // Pra ficar acima do máximo dos outros: precisa de (maxOutros + 10) total.
+    // Como vamos somar pesoEfetivo nos usosAtuais, precisamos:
+    //   usosAtuais + pesoEfetivo >= maxOutros + 10
+    //   pesoEfetivo >= maxOutros + 10 - usosAtuais
+    const pesoMinimo = Math.max(peso, maxOutros + 10 - usosAtuais);
+    pesoEfetivo = pesoMinimo;
+  }
+
   const existente = db[chave].find(e => e.url === url);
   if (existente) {
-    existente.usos = (existente.usos || 0) + peso;
+    existente.usos = (existente.usos || 0) + pesoEfetivo;
     existente.ultimoUso = agora;
   } else {
-    db[chave].push({ url, usos: peso, primeiroUso: agora, ultimoUso: agora });
+    db[chave].push({ url, usos: pesoEfetivo, primeiroUso: agora, ultimoUso: agora });
   }
   // Mantém só as 20 imagens mais usadas por produto pra evitar inflar o JSON
   db[chave].sort((a, b) => (b.usos || 0) - (a.usos || 0));
