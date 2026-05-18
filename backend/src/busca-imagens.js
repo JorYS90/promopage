@@ -126,10 +126,14 @@ async function buscarBingImages(query, limite = 12) {
 }
 async function _buscarBingImagesNoCache(query, limite = 12) {
   try {
-    const url = `https://www.bing.com/images/search?q=${encodeURIComponent(query)}&form=HDRSC2&first=1&mkt=pt-BR`;
+    // adlt=strict + safesearch=strict force Bing SafeSearch máximo (filtra
+    // adulto/violência). Cookie SRCHHPGUSR adicional reforça (Bing às vezes
+    // ignora só o querystring quando vem de IP novo).
+    const url = `https://www.bing.com/images/search?q=${encodeURIComponent(query)}&form=HDRSC2&first=1&mkt=pt-BR&safesearch=strict&adlt=strict`;
     const html = await fetchText(url, {
       'Accept': 'text/html,application/xhtml+xml',
       'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.8',
+      'Cookie': 'SRCHHPGUSR=ADLT=STRICT',
     });
 
     const resultados = [];

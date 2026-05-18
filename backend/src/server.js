@@ -27,6 +27,7 @@ const { buscarBingImages, buscarGoogleImages, buscarOpenFoodFacts, buscarYandexI
 const seedProdutos = require('./seed-produtos');
 const seedImagensPopulares = require('./seed-imagens-populares');
 const cacheImagens = require('./db/cache-imagens');
+const moderacao = require('./lib/moderacao');
 
 const ROOT = path.resolve(__dirname, '..');
 const TEMPLATES_DIR = path.join(ROOT, 'templates');
@@ -306,6 +307,30 @@ app.post('/api/produtos/buscar-lote', async (req, res) => {
     let imagemEncontrada = '';
     let codigoBarras = '';
     let fonte = null;
+
+    // 0) MODERAÇÃO: bloqueia queries com termos proibidos (pornografia, drogas,
+    //    armas, etc.) — força placeholder e pula TODAS as fontes externas pra
+    //    não passar a query nem pra log do Bing.
+    const mod = moderacao.classificar(nomeDigitado);
+    if (mod.proibida) {
+      console.warn(`[moderacao] bloqueado termo "${mod.termo}" em query="${nomeDigitado}"`);
+      return {
+        linhaOriginal: linha,
+        produto: {
+          id: 'novo-' + nanoid(6),
+          nome: nomeDigitado,
+          marca: '',
+          categoria: 'Bloqueado',
+          codigoBarras: '',
+          imagem: gerarPlaceholderUrl(nomeDigitado, 'vermelho'),
+          preco: parsed.preco || '',
+          precoDe: parsed.precoDe || '',
+          unidade: parsed.unidade || '',
+          unidadeAbrev: parsed.unidadeAbrev || '',
+          fonte: 'moderacao-bloqueado',
+        },
+      };
+    }
 
     // 1) PRIORIDADE MÁXIMA: BANCO DE IMAGENS POPULARES (uso real dos usuários).
     // Quando o usuário troca a imagem, ela sobe no banco e ganha prioridade.
@@ -906,22 +931,45 @@ app.get('/api/projetos/:id', (req, res) => {
 app.post('/api/projetos', (req, res) => {
   const id = req.body.id || nanoid(10);
   const agora = new Date().toISOString();
-  // Preserva criadoEm se já existir (lê do arquivo atual quando é update),
-  // senão usa data de agora (criação nova).
+  // Preserva criadoEm + lê produtos antigos pra comparar (aprendizado passivo)
   let criadoEm = req.body.criadoEm || null;
-  if (!criadoEm) {
-    try {
-      const existente = path.join(PROJETOS_DIR, `${id}.json`);
-      if (fs.existsSync(existente)) {
-        const json = JSON.parse(fs.readFileSync(existente, 'utf8'));
-        criadoEm = json.criadoEm || json.atualizadoEm || agora;
-      } else {
-        criadoEm = agora;
-      }
-    } catch { criadoEm = agora; }
-  }
+  let produtosAntigos = [];
+  try {
+    const existente = path.join(PROJETOS_DIR, `${id}.json`);
+    if (fs.existsSync(existente)) {
+      const json = JSON.parse(fs.readFileSync(existente, 'utf8'));
+      criadoEm = criadoEm || json.criadoEm || json.atualizadoEm || agora;
+      produtosAntigos = Array.isArray(json.produtos) ? json.produtos : [];
+    } else {
+      criadoEm = criadoEm || agora;
+    }
+  } catch { criadoEm = criadoEm || agora; }
+
   const data = { ...req.body, id, criadoEm, atualizadoEm: agora };
   fs.writeFileSync(path.join(PROJETOS_DIR, `${id}.json`), JSON.stringify(data, null, 2));
+
+  // APRENDIZADO PASSIVO (peso 1): registra produtos do projeto no banco populares.
+  // Só registra NOVOS ou com imagem trocada vs versão anterior — evita inflar peso
+  // quando user salva mesmo projeto várias vezes. Sinal fraco; 5+ usos = popular.
+  try {
+    const antigoPorId = new Map(produtosAntigos.map(p => [p.id, p]));
+    const produtos = Array.isArray(data.produtos) ? data.produtos : [];
+    let registrados = 0;
+    for (const p of produtos) {
+      if (!p?.nome || !p?.imagem) continue;
+      if (p.imagem.includes('/api/placeholder')) continue;
+      const antigo = antigoPorId.get(p.id);
+      if (antigo && antigo.imagem === p.imagem) continue; // imagem inalterada — pula
+      imagensDb.registrarUso(p.nome, p.imagem, 1);
+      registrados++;
+    }
+    if (registrados > 0) {
+      console.log(`[aprendizado-passivo] projeto ${id}: ${registrados} produtos novos/alterados registrados (peso 1)`);
+    }
+  } catch (e) {
+    console.error('[aprendizado-passivo] falhou (não bloqueia save):', e.message);
+  }
+
   res.json({ id, ok: true });
 });
 
@@ -932,7 +980,11 @@ app.delete('/api/projetos/:id', (req, res) => {
 });
 
 // ---------- Upload manual ----------
-// Wrapper pra capturar erros do multer (file too large, etc) e retornar JSON
+// Wrapper pra capturar erros do multer (file too large, etc) e retornar JSON.
+// Aceita metadata opcional no body (multipart fields): nome, marca, categoria,
+// codigoBarras. Se fornecido, registra peso 25 no banco populares (acima do peso
+// 20 de "upload sem contexto") porque o user demonstrou intenção explícita
+// associando imagem a um produto específico — sinal forte de qualidade.
 app.post('/api/upload', (req, res) => {
   upload.single('imagem')(req, res, (err) => {
     if (err) {
@@ -946,8 +998,51 @@ app.post('/api/upload', (req, res) => {
       return res.status(400).json({ error: msgs[code] || `Erro upload: ${err.message}`, code });
     }
     if (!req.file) return res.status(400).json({ error: 'Nenhum arquivo enviado' });
-    console.log(`[upload] ${req.file.filename} (${(req.file.size/1024).toFixed(1)}KB) → /uploads/${req.file.filename}`);
-    res.json({ url: `/uploads/${req.file.filename}`, filename: req.file.filename });
+    const url = `/uploads/${req.file.filename}`;
+    console.log(`[upload] ${req.file.filename} (${(req.file.size/1024).toFixed(1)}KB) → ${url}`);
+
+    // Salva parâmetros do produto se fornecidos no upload — sinal forte de uso real.
+    // Frontend pode passar nome + marca + categoria + codigoBarras como campos do form.
+    const { nome, marca, categoria, codigoBarras } = req.body || {};
+    if (nome && typeof nome === 'string' && nome.trim()) {
+      // Moderação: rejeita salvar metadata se o nome do produto bate na blacklist.
+      // A imagem em si já foi salva (multer), mas NÃO é associada ao nome proibido
+      // — não entra no banco populares, não é cacheada. Cliente ainda pode usar a
+      // imagem solta (URL retornada), mas perde o aprendizado.
+      const mod = moderacao.classificar(nome.trim());
+      if (mod.proibida) {
+        console.warn(`[upload][moderacao] bloqueado metadata pra termo "${mod.termo}" — imagem salva mas não associada`);
+        return res.json({ url, filename: req.file.filename, _aviso: 'metadata bloqueada por termo proibido' });
+      }
+      try {
+        // Peso 25 = mais forte que upload genérico (20) e troca de imagem (10).
+        // Sinaliza que o user explicitamente associou ESSA imagem a ESSE produto.
+        imagensDb.registrarUso(nome.trim(), url, 25);
+        console.log(`[upload+metadata] "${nome.trim()}" → ${url} (peso 25)`);
+        // Invalida cache pra próxima busca pegar a imagem nova
+        try {
+          const cacheImagens = require('./db/cache-imagens');
+          cacheImagens.cacheInvalidate(nome.trim());
+        } catch {}
+        // Se tem marca ou código de barras, registra como produto completo
+        // no produtos-db (catálogo persistente do estabelecimento).
+        if (marca || codigoBarras) {
+          try {
+            // produtosDb.adicionar() já trata duplicate (match por codigoBarras ou
+            // nome+marca) — atualiza se existir, cria se não. Idempotente.
+            produtosDb.adicionar({
+              nome: nome.trim(),
+              marca: (marca || '').trim(),
+              categoria: (categoria || 'Geral').trim(),
+              codigoBarras: (codigoBarras || '').trim(),
+              imagem: url,
+              fonte: 'upload-user',
+            });
+          } catch (e) { console.error('[upload+metadata] produtos-db falhou:', e.message); }
+        }
+      } catch (e) { console.error('[upload+metadata] falhou:', e.message); }
+    }
+    res.json({ url, filename: req.file.filename });
   });
 });
 
