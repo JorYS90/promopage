@@ -3531,13 +3531,16 @@ button { font-family: inherit; }
   max-height: 65vh; overflow-y: auto;
   padding-right: 4px;
 }
+/* Técnica clássica do padding-top 100% pra garantir cards QUADRADOS
+   independente de browser/aspect-ratio support. A img fica position:absolute
+   ocupando toda a "caixa" forçada pelo padding. Sem isso, em alguns browsers
+   a imagem com altura intrínseca grande "explodia" o card e virava layout
+   caótico (bug reportado 2026-05-18). */
 .modal.escolher-imagem .img-card {
-  position: relative; aspect-ratio: 1/1;
-  /* min-height + flex como defesa contra browsers que não aplicam aspect-ratio
-     a grid items (raro mas acontece). Sem isso, alguns cards eram esticados
-     pela altura da imagem (carregada em ordem aleatória), virando layout caótico. */
-  min-height: 140px;
-  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* faz altura = largura SEMPRE */
+  height: 0;
   background: rgba(255,255,255,0.97);
   border: 2px solid rgba(71,85,105,0.45);
   border-radius: 10px;
@@ -3554,7 +3557,12 @@ button { font-family: inherit; }
   box-shadow: 0 0 0 3px rgba(59,130,246,0.30), 0 0 22px rgba(59,130,246,0.40);
 }
 .modal.escolher-imagem .img-card img {
-  width: 100%; height: 100%; object-fit: contain; padding: 8px;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  padding: 8px;
+  box-sizing: border-box;
 }
 .modal.escolher-imagem .img-card .fonte-badge {
   position: absolute; top: 6px; right: 6px;
