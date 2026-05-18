@@ -92,10 +92,12 @@ export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRem
   // muito mais robusto pra produtos com detalhes finos da mesma cor do fundo
   // (ranhuras brancas em tampa, texto branco em fundo claro, etc.).
   const refinarComIA = async (idx, urlAtual, nome) => {
-    setProcessando(prev => ({ ...prev, [idx]: { progresso: 0, label: '✨ Refinando com IA... (3-5s)' } }));
+    setProcessando(prev => ({ ...prev, [idx]: { progresso: 0, label: '✨ Refinando com IA... (5-15s na 1ª vez, depois +rápido)' } }));
     try {
       const blob = await removerFundoDeUrl(urlAtual, {
-        pularIA: false, // FORÇA IA (modelo isnet_fp16)
+        pularIA: false,    // FORÇA IA
+        modeloIA: 'precise', // usa isnet FULL (~160MB) em vez do fp16 — mais preciso
+                              // pra ranhuras finas, texto e bordas suaves
         onProgress: (key, current, total) => {
           const progresso = total > 0 ? Math.round((current / total) * 100) : 0;
           setProcessando(prev => ({ ...prev, [idx]: { progresso, label: '✨ Refinando com IA...' } }));

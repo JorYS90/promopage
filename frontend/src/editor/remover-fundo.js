@@ -262,15 +262,25 @@ async function removerFundoChromaKey(blob, opts = {}) {
 }
 
 // ---------- IA fallback ----------
+// Modelos disponíveis (@imgly/background-removal v1.x):
+//   - 'isnet_quint8' (~40MB)  — rápido mas com artefatos
+//   - 'isnet_fp16'   (~80MB)  — balanceado, default
+//   - 'isnet'        (~160MB) — full precision, MAIS PRECISO em detalhes finos
+//                                (ranhuras, texto, bordas suaves). Mais lento +
+//                                mais memória, mas é o que faz diferença em casos
+//                                difíceis (tipo tampa branca da Nutella).
+//
+// opts.modeloIA: 'fast' (default) usa isnet_fp16; 'precise' usa isnet full.
+// Chamadas explícitas via botão "Refinar com IA" passam modeloIA: 'precise'.
 async function removerFundoIA(blob, opts = {}) {
   const removeBackground = await carregarBibliotecaIA();
-  // Modelo isnet_fp16 = balanceado e mais conservador que 'isnet' full
-  // (não fragmenta tanto fotos com múltiplos objetos visuais)
+  const modelo = opts.modeloIA === 'precise' ? 'isnet' : 'isnet_fp16';
   const config = {
-    model: 'isnet_fp16',
+    model: modelo,
     output: { format: 'image/png', quality: 1 },
     progress: opts.onProgress,
   };
+  console.log(`[bg-removal] usando modelo IA: ${modelo}`);
   return await removeBackground(blob, config);
 }
 
