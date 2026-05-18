@@ -327,67 +327,26 @@ app.post('/api/produtos/buscar-lote', async (req, res) => {
       }
     }
 
-    // ORDEM nova: priorizar fontes ESPECÍFICAS (Open Food Facts > DuckDuckGo > Bing > Google >
-    // Wikimedia). Bing/Google scraping faz match por palavra-chave bruta — sem filtro
-    // de relevância vinha lixo (ex: "FILE PEITO" → ícone de arquivo). Agora filtra pelo
-    // título da imagem antes de validar URL.
-
-    // 3) GOOGLE CSE — qualidade Google nativa (100 queries/dia free).
-    //    Vem antes do OFF porque Google indexa MUITO mais produtos BR do que OFF.
-    if (!imagemEncontrada) {
-      try {
-        const gcse = await buscarGoogleCSE(nomeDigitado, 5);
-        if (gcse.length > 0 && gcse[0].imagem) {
-          imagemEncontrada = gcse[0].imagem;
-          fonte = 'gcse';
-        }
-      } catch (e) { /* segue */ }
-    }
-
-    // 4) Open Food Facts (produtos BR cadastrados, com código de barras)
-    if (!imagemEncontrada) {
-      try {
-        const externos = await buscarOpenFoodFacts(nomeDigitado, 5);
-        const candidato = externos.find(p => externoRelevante(nomeDigitado, p));
-        if (candidato && candidato.imagem) {
-          imagemEncontrada = candidato.imagem;
-          codigoBarras = candidato.codigoBarras || '';
-          fonte = 'openfoodfacts';
-        }
-      } catch (e) { /* segue */ }
-    }
-
-    // 3.5) Yandex (cobertura excelente de produtos BR via CDNs de supermercados)
-    if (!imagemEncontrada) {
-      try {
-        const yandex = await buscarYandexImages(nomeDigitado, 10);
-        const relevantes = yandex.filter(r => externoRelevante(nomeDigitado, r));
-        const valido = await primeiraUrlValida(relevantes, 5);
-        if (valido && valido.imagem) {
-          imagemEncontrada = valido.imagem;
-          fonte = 'yandex';
-        }
-      } catch (e) { /* segue */ }
-    }
+    // ============================================================================
+    // ORDEM RECALIBRADA em 2026-05-17 após medir 21s/produto em produção.
+    // Diagnóstico (logs VPS): das 7 fontes externas, só Bing+OFF+Wikimedia funcionam.
+    //   - Google CSE  → "permission denied" (API não habilitada no Google Cloud)
+    //   - Yandex      → retorna HTML lang="en" (bloqueio geográfico do datacenter)
+    //   - DuckDuckGo  → endpoint i.js mudou, sempre retorna 0
+    //   - Google Images → exige JS desde 2024 (scraping morreu)
+    // Nova estratégia: Bing PRIMEIRO (única consistente), depois OFF (quando tem
+    // código de barras), depois Wikimedia (genéricos de hortifruti/açougue).
+    // As funções das fontes mortas continuam exportadas no busca-imagens.js pra
+    // reativação futura, mas não são mais chamadas neste pipeline.
+    // ============================================================================
 
     // Query com contexto pra desambiguar buscas ambíguas em web search
     // (ex: "Saches Heinz" sozinho retorna paleontologia; com contexto retorna o produto)
     const queryWeb = `${nomeDigitado} produto supermercado`;
 
-    // 4) DuckDuckGo Images (sem CAPTCHA, retorna título → permite filtrar por relevância)
-    if (!imagemEncontrada) {
-      try {
-        const ddg = await buscarDuckDuckGo(queryWeb, 8);
-        const relevantes = ddg.filter(r => externoRelevante(nomeDigitado, r));
-        const valido = await primeiraUrlValida(relevantes, 5);
-        if (valido && valido.imagem) {
-          imagemEncontrada = valido.imagem;
-          fonte = 'duckduckgo';
-        }
-      } catch (e) { /* segue */ }
-    }
-
-    // 5) Bing Images (já com filtro de relevância pelo título — antes pegava 1ª URL "viva" sem checar)
+    // 3) Bing Images — única fonte de web scraping consistente em 2026.
+    //    Filtra por relevância no título antes de validar URL (sem isso vinha lixo
+    //    tipo ícone de arquivo pra "FILE PEITO").
     if (!imagemEncontrada) {
       try {
         const bing = await buscarBingImages(queryWeb, 12);
@@ -400,19 +359,21 @@ app.post('/api/produtos/buscar-lote', async (req, res) => {
       } catch (e) { /* segue */ }
     }
 
-    // 6) Google Images (sem título no scrape — só valida URL; usado como último web search)
+    // 4) Open Food Facts — produtos BR cadastrados (com código de barras).
+    //    Cobertura BR razoável pra alimentos industrializados.
     if (!imagemEncontrada) {
       try {
-        const google = await buscarGoogleImages(queryWeb, 8);
-        const valido = await primeiraUrlValida(google, 5);
-        if (valido && valido.imagem) {
-          imagemEncontrada = valido.imagem;
-          fonte = 'google';
+        const externos = await buscarOpenFoodFacts(nomeDigitado, 5);
+        const candidato = externos.find(p => externoRelevante(nomeDigitado, p));
+        if (candidato && candidato.imagem) {
+          imagemEncontrada = candidato.imagem;
+          codigoBarras = candidato.codigoBarras || '';
+          fonte = 'openfoodfacts';
         }
       } catch (e) { /* segue */ }
     }
 
-    // 7) Wikimedia Commons (genéricos: hortifruti/açougue, com tradução PT→EN)
+    // 5) Wikimedia Commons — fallback pra genéricos (hortifruti/açougue, com tradução PT→EN)
     if (!imagemEncontrada) {
       try {
         const wm = await buscarWikimedia(nomeDigitado, 3);
@@ -521,46 +482,29 @@ app.get('/api/produtos/buscar-imagens', async (req, res) => {
       queries.push(palavras[0]);
     }
 
-    // GOOGLE CUSTOM SEARCH API: roda só na query ORIGINAL (não nas variações) pra economizar
-    // a quota gratuita de 100/dia. Resultados de qualidade Google nativa.
-    const gcsePromise = buscarGoogleCSE(query, 10).catch(() => []);
-
-    // Pipeline em paralelo: pra cada query, dispara fontes scraping
+    // Pipeline em paralelo: pra cada query, dispara fontes scraping.
+    // 2026-05-17: removidos Google CSE (permission denied), Yandex (bloqueado geo)
+    // e DuckDuckGo (endpoint quebrado). Mantidos Bing (consistente), OFF e Wikimedia.
     const todasPromises = [];
     for (const q of queries) {
       todasPromises.push(
-        buscarYandexImages(q, 20).catch(() => []),
         buscarBingImages(q, 12).catch(() => []),
       );
     }
     todasPromises.push(
       buscarOpenFoodFacts(query, 8).catch(() => []),
       buscarWikimedia(query, 6).catch(() => []),
-      buscarDuckDuckGo(query, 8).catch(() => []),
     );
 
-    const [gcse, ...resultadosBrutos] = await Promise.all([gcsePromise, ...todasPromises]);
-    const yandexCount = resultadosBrutos.slice(0, queries.length * 2).filter((_, i) => i % 2 === 0).reduce((s, l) => s + l.length, 0);
-    const bingCount = resultadosBrutos.slice(0, queries.length * 2).filter((_, i) => i % 2 === 1).reduce((s, l) => s + l.length, 0);
-    const offCount = resultadosBrutos[queries.length * 2].length;
-    const wmCount = resultadosBrutos[queries.length * 2 + 1].length;
-    const ddgCount = resultadosBrutos[queries.length * 2 + 2].length;
-    console.log(`[buscar-imagens] q="${query}" (${queries.length} variações) → gcse:${gcse.length} yandex:${yandexCount} bing:${bingCount} ddg:${ddgCount} off:${offCount} wm:${wmCount}`);
+    const resultadosBrutos = await Promise.all(todasPromises);
+    const bingCount = resultadosBrutos.slice(0, queries.length).reduce((s, l) => s + l.length, 0);
+    const offCount = resultadosBrutos[queries.length].length;
+    const wmCount = resultadosBrutos[queries.length + 1].length;
+    console.log(`[buscar-imagens] q="${query}" (${queries.length} variações) → bing:${bingCount} off:${offCount} wm:${wmCount}`);
 
-    // Achata + dedup + pontua. GCSE primeiro (qualidade Google), depois resto.
+    // Achata + dedup + pontua por confiabilidade do domínio.
     const vistos = new Set();
     const todasComScore = [];
-    // GCSE recebe BÔNUS de score +5 sobre o domain score (resultados curados pelo Google)
-    for (const item of gcse) {
-      if (!item.imagem || vistos.has(item.imagem)) continue;
-      vistos.add(item.imagem);
-      todasComScore.push({
-        url: item.imagem,
-        fonte: 'gcse',
-        titulo: item.nome,
-        score: pontuarFonte(item.imagem) + 5,
-      });
-    }
     for (const lista of resultadosBrutos) {
       for (const item of lista) {
         if (!item.imagem || vistos.has(item.imagem)) continue;
@@ -1061,17 +1005,19 @@ async function popularImagensPopulares() {
         pulados++;
         continue;
       }
-      const yandex = await buscarYandexImages(item.nome, 3);
-      // Pega só URLs de fontes confiáveis (score > 0)
-      const boas = yandex.filter(r => pontuarFonte(r.imagem) > 0);
-      const escolhidas = boas.length > 0 ? boas.slice(0, 2) : yandex.slice(0, 1);
+      // Yandex retornava bons resultados de produtos BR antes, mas em 2026 o IP do
+      // datacenter HostGator é bloqueado (retorna HTML lang="en" genérico). Trocado
+      // por Bing — única fonte de scraping consistente em produção.
+      const bing = await buscarBingImages(item.nome, 3);
+      const boas = bing.filter(r => pontuarFonte(r.imagem) > 0);
+      const escolhidas = boas.length > 0 ? boas.slice(0, 2) : bing.slice(0, 1);
       for (const r of escolhidas) {
         // peso 1: BAIXÍSSIMO. Seed é só baseline pra primeiro uso. QUALQUER ação
         // do usuário (upload peso 20, swap peso 10) sobrescreve isso facilmente.
         imagensDb.registrarUso(item.nome, r.imagem, 1);
       }
       if (escolhidas.length > 0) novos++;
-      // Throttle pra não estressar Yandex
+      // Throttle pra não estressar a fonte
       await new Promise(r => setTimeout(r, 800));
     } catch (e) {
       // Falha individual não para o seed

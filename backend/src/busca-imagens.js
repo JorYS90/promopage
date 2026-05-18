@@ -7,13 +7,13 @@ const CACHE_IMG_DIR = path.join(__dirname, '..', 'uploads', 'produtos');
 
 function fetchJson(url, extraHeaders = {}) {
   return new Promise((resolve, reject) => {
-    https.get(url, {
+    const req = https.get(url, {
       headers: {
         'User-Agent': 'EncarteBuilder/1.0 (contato@encartebuilder.local)',
         'Accept': 'application/json',
         ...extraHeaders,
       },
-      timeout: 8000,
+      timeout: 4000, // reduzido de 8000 em 2026-05-17 (latência > 21s em prod)
     }, (res) => {
       let data = '';
       res.on('data', chunk => data += chunk);
@@ -24,7 +24,11 @@ function fetchJson(url, extraHeaders = {}) {
         }
         try { resolve(JSON.parse(data)); } catch (e) { reject(new Error('JSON inválido')); }
       });
-    }).on('error', reject);
+    });
+    req.on('error', reject);
+    // CRITICAL: node `timeout` option só DISPARA o event, não aborta. Sem este
+    // handler, o request fica pendurado mesmo após o timeout — daí 21s/produto.
+    req.on('timeout', () => { req.destroy(new Error('Timeout 4s')); });
   });
 }
 
@@ -37,8 +41,9 @@ function downloadImagem(url) {
 
     const fazerRequest = (urlAlvo, redirects = 0) => {
       if (redirects > 5) return reject(new Error('Muitos redirecionamentos'));
-      https.get(urlAlvo, {
-        headers: { 'User-Agent': 'Mozilla/5.0 EncarteBuilder/1.0' }
+      const req = https.get(urlAlvo, {
+        headers: { 'User-Agent': 'Mozilla/5.0 EncarteBuilder/1.0' },
+        timeout: 8000, // download de imagem pode ser maior que API call (até 1-2MB)
       }, (res) => {
         if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
           return fazerRequest(res.headers.location, redirects + 1);
@@ -50,7 +55,9 @@ function downloadImagem(url) {
         res.pipe(file);
         file.on('finish', () => { file.close(); resolve(`/uploads/produtos/${filename}`); });
         file.on('error', reject);
-      }).on('error', reject);
+      });
+      req.on('error', reject);
+      req.on('timeout', () => { req.destroy(new Error('Download timeout 8s')); });
     };
     fazerRequest(url);
   });
@@ -308,7 +315,7 @@ function fetchText(url, headers = {}, redirects = 0) {
           'Accept-Encoding': 'gzip, deflate',
           ...headers,
         },
-        timeout: 12000,
+        timeout: 5000, // reduzido de 12000 em 2026-05-17 (latência > 21s em prod)
       }, (res) => {
         // Redirect: segue Location
         if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
@@ -331,7 +338,7 @@ function fetchText(url, headers = {}, redirects = 0) {
         stream.on('error', reject);
       });
       req.on('error', reject);
-      req.on('timeout', () => { req.destroy(new Error('Timeout 12s')); });
+      req.on('timeout', () => { req.destroy(new Error('Timeout 5s')); });
     } catch (e) { reject(e); }
   });
 }
