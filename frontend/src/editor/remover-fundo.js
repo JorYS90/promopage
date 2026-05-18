@@ -82,8 +82,11 @@ async function removerFundoChromaKey(blob, opts = {}) {
   }
 
   // Tolerância conservadora — preserva mais do produto.
-  // Se fundo for MUITO uniforme (variação < 5), pode ser um pouco mais permissivo.
-  const tolBase = opts.tolerancia ?? (fundo.variacao < 5 ? 28 : 22);
+  // Reduzida em 2026-05-17 após caso Nutella: iluminação criava "ponte de cor"
+  // amarelo-pálido entre fundo e branco do produto, e o flood fill seguia.
+  // Trade-off: pode sobrar mais fundo grudado no contorno, mas preserva o produto.
+  // User pode polir com IA (botão "Tentar IA") nos casos difíceis.
+  const tolBase = opts.tolerancia ?? (fundo.variacao < 5 ? 24 : 18);
 
   // NÚCLEO PROTEGIDO: pixels com distância de cor MUITO grande do fundo são
   // garantidamente parte do produto e nunca podem virar fundo, mesmo cercados.
@@ -138,8 +141,8 @@ async function removerFundoChromaKey(blob, opts = {}) {
   // brancos sobre amarelo) que estão CERCADOS por pixels já marcados como fundo.
   // Conservador: tolerância e passes menores que antes pra não invadir o produto.
   // Pixels de NÚCLEO PROTEGIDO (mask=3) nunca são convertidos.
-  const tolExpansao = opts.tolerancia2 ?? Math.max(35, tolBase * 1.5);
-  const passesExpansao = opts.passesExpansao ?? 2;
+  const tolExpansao = opts.tolerancia2 ?? Math.max(28, tolBase * 1.3);
+  const passesExpansao = opts.passesExpansao ?? 1;
   for (let passo = 0; passo < passesExpansao; passo++) {
     let mudou = false;
     const novaMask = new Uint8Array(mask);
@@ -158,6 +161,39 @@ async function removerFundoChromaKey(blob, opts = {}) {
         // E proximidade da cor do fundo dentro da tolerância de expansão.
         if (fundoVizinhos >= 4 && ehFundo(idx, tolExpansao)) {
           novaMask[idx] = 1;
+          mudou = true;
+        }
+      }
+    }
+    mask.set(novaMask);
+    if (!mudou) break;
+  }
+
+  // HOLE-FILLING: pixels de fundo CERCADOS por produto em todos os lados são
+  // claramente artefato (ex: highlight amarelado dentro da tampa branca da
+  // Nutella que ficou parecido com fundo amarelo). Vira produto.
+  // Usa janela 3x3 (8 vizinhos incluindo diagonais) — exige 6+ vizinhos de
+  // produto pra evitar transformar bordas finas do produto em fundo.
+  const holeFillPasses = opts.holeFillPasses ?? 3;
+  for (let passo = 0; passo < holeFillPasses; passo++) {
+    let mudou = false;
+    const novaMask = new Uint8Array(mask);
+    for (let y = 1; y < H - 1; y++) {
+      for (let x = 1; x < W - 1; x++) {
+        const idx = y * W + x;
+        if (mask[idx] !== 1) continue; // só mexe em fundo
+        // Conta vizinhos de produto (mask 2 ou 3) em 8 direções
+        let prod = 0;
+        if (mask[idx - W - 1] >= 2) prod++;
+        if (mask[idx - W]     >= 2) prod++;
+        if (mask[idx - W + 1] >= 2) prod++;
+        if (mask[idx - 1]     >= 2) prod++;
+        if (mask[idx + 1]     >= 2) prod++;
+        if (mask[idx + W - 1] >= 2) prod++;
+        if (mask[idx + W]     >= 2) prod++;
+        if (mask[idx + W + 1] >= 2) prod++;
+        if (prod >= 6) {
+          novaMask[idx] = 2; // converte buraco em produto
           mudou = true;
         }
       }
