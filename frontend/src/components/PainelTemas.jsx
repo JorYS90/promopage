@@ -23,6 +23,17 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) 
     fetch('/api/templates').then(r => r.json()).then(setTemas);
   };
 
+  // "Recente" = tem flag novo:true E foi criado nos últimos 5 dias.
+  // Templates antigos sem criadoEm caem fora (não são contados como recentes),
+  // mesmo que tenham novo:true do seed inicial. Templates criados via API
+  // novos aparecem por 5 dias e depois saem do contador automaticamente.
+  const JANELA_RECENTE_MS = 5 * 24 * 60 * 60 * 1000;
+  const ehRecente = (tema) => {
+    if (!tema?.novo || !tema?.criadoEm) return false;
+    const idade = Date.now() - new Date(tema.criadoEm).getTime();
+    return idade >= 0 && idade < JANELA_RECENTE_MS;
+  };
+
   useEffect(() => {
     carregar();
   }, []);
@@ -142,7 +153,7 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) 
         onClick={() => aoEscolher(t.id)}
       >
         {t.premium && <span className="badge">PREMIUM</span>}
-        {t.novo && <span className="badge novo">NOVO</span>}
+        {ehRecente(t) && <span className="badge novo">NOVO</span>}
         {ehAdmin && (
           <div className="tema-card-acoes" onClick={e => e.stopPropagation()}>
             <button className="tc-btn tc-btn-edit" onClick={(e) => abrirEdicao(t.id, e)} title="Editar tema">✏️</button>
@@ -164,7 +175,7 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) 
 
   // === View "Novos Temas" — listagem dedicada dos temas com flag .novo ===
   if (verNovos) {
-    const novos = filtrados.filter(t => t.novo);
+    const novos = filtrados.filter(ehRecente);
     return (
       <div>
         <div className="novos-temas-header">
@@ -230,7 +241,7 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) 
         <button>BUSCAR</button>
       </div>
       <div className="painel-temas-info">
-        Lançamos <b>{temas.filter(t => t.novo).length} temas novos</b> hoje! ✨
+        Lançamos <b>{temas.filter(ehRecente).length} temas recentes</b>! ✨
       </div>
 
       {ehAdmin && (
@@ -310,7 +321,7 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) 
                     onClick={() => { aoEscolher(t.id); fecharModalCategoria(); }}
                   >
                     {t.premium && <span className="badge">PREMIUM</span>}
-                    {t.novo && <span className="badge novo">NOVO</span>}
+                    {ehRecente(t) && <span className="badge novo">NOVO</span>}
                     {ehAdmin && (
                       <div className="tema-card-acoes" onClick={e => e.stopPropagation()}>
                         <button className="tc-btn tc-btn-edit" onClick={(e) => abrirEdicao(t.id, e)} title="Editar tema">✏️</button>

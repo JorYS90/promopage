@@ -847,16 +847,28 @@ app.post('/api/templates', requireAuth, requireRole(['admin', 'super_admin']), (
   if (!slug) return res.status(400).json({ error: 'nome inválido pra gerar id' });
 
   const file = path.join(TEMPLATES_DIR, `${slug}.json`);
+  const jaExiste = fs.existsSync(file);
+  // Preserva criadoEm original se editando — só seta na criação inicial.
+  // Sem isso, cada save renovava criadoEm e templates antigos viravam "recentes"
+  // de novo (badge 'Lançamos N temas recentes' contaria errado).
+  let criadoEmExistente = null;
+  if (jaExiste) {
+    try {
+      const antigo = JSON.parse(fs.readFileSync(file, 'utf8'));
+      criadoEmExistente = antigo.criadoEm || null;
+    } catch {}
+  }
   const data = {
     nome: body.nome,
     categoria: body.categoria || 'Meus Temas',
     premium: false,
-    novo: !fs.existsSync(file),
+    novo: !jaExiste,
     capa: body.capa || null,
     rodape: body.rodape || null,
     paleta: body.paleta || {},
     fundoEncarte: body.fundoEncarte || null,  // novo: cor ou imagem tileada da área dos produtos
-    criadoEm: new Date().toISOString(),
+    criadoEm: criadoEmExistente || new Date().toISOString(),
+    atualizadoEm: new Date().toISOString(),
   };
   try {
     fs.writeFileSync(file, JSON.stringify(data, null, 2), 'utf8');
