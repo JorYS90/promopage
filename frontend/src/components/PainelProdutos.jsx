@@ -215,6 +215,7 @@ Sabão em pó OMO 1kg R$ 15,99`}</pre>
         aberto={modalImg.aberto}
         queryInicial={modalImg.query}
         aoFechar={() => setModalImg({ aberto: false, query: '', idx: -1 })}
+        fetchAuth={fetchAuth}
         aoEscolher={(novaUrl) => {
           // Atualiza a imagem do resultado escolhido
           const nomeProduto = resultados[modalImg.idx]?.produto?.nome;
