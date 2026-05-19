@@ -1704,12 +1704,16 @@ button { font-family: inherit; }
 .pd-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
 }
 .pd-campo {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  /* min-width: 0 é CRUCIAL em grid items pra evitar overflow horizontal
+     quando o conteúdo intrínseco do input (placeholder dd/mm/aaaa + ícone do
+     calendário) é maior que a coluna estreita do sidebar. */
+  min-width: 0;
 }
 .pd-campo label {
   font-size: 10.5px;
@@ -1722,15 +1726,18 @@ button { font-family: inherit; }
 .pd-campo textarea {
   width: 100%;
   box-sizing: border-box;
-  padding: 9px 12px;
+  /* padding horizontal reduzido (12→8) pra deixar mais espaço pra dd/mm/aaaa
+     + ícone do calendário em sidebar estreita. Ícone com fundo claro também. */
+  padding: 9px 8px;
   background: #ffffff;
   color: #18181b;
   border: 1px solid #e5e7eb;
   border-radius: 7px;
-  font-size: 13px;
+  font-size: 12.5px;
   font-family: inherit;
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
+  min-width: 0;  /* defensivo: garante que o input pode encolher */
 }
 .pd-campo input[type="date"]:focus,
 .pd-campo textarea:focus {
