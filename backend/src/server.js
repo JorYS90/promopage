@@ -853,25 +853,28 @@ app.post('/api/templates', requireAuth, requireRole(['admin', 'super_admin']), (
 
   const file = path.join(TEMPLATES_DIR, `${slug}.json`);
   const jaExiste = fs.existsSync(file);
-  // Preserva criadoEm original se editando — só seta na criação inicial.
-  // Sem isso, cada save renovava criadoEm e templates antigos viravam "recentes"
-  // de novo (badge 'Lançamos N temas recentes' contaria errado).
+  // Preserva criadoEm + novo do template existente. Sem isso, cada edit
+  // (re-save via interface) zerava 'novo: true' pra false e o badge "Lançamos
+  // N temas recentes" sumia logo na primeira mexida. Agora 'novo' só é
+  // false depois que sair da janela de 5 dias (frontend decide via ehRecente).
   let criadoEmExistente = null;
+  let novoExistente = null;
   if (jaExiste) {
     try {
       const antigo = JSON.parse(fs.readFileSync(file, 'utf8'));
       criadoEmExistente = antigo.criadoEm || null;
+      novoExistente = antigo.novo;
     } catch {}
   }
   const data = {
     nome: body.nome,
     categoria: body.categoria || 'Meus Temas',
     premium: false,
-    novo: !jaExiste,
+    novo: jaExiste ? !!novoExistente : true, // criação = true; edição = preserva
     capa: body.capa || null,
     rodape: body.rodape || null,
     paleta: body.paleta || {},
-    fundoEncarte: body.fundoEncarte || null,  // novo: cor ou imagem tileada da área dos produtos
+    fundoEncarte: body.fundoEncarte || null,  // cor ou imagem tileada da área dos produtos
     criadoEm: criadoEmExistente || new Date().toISOString(),
     atualizadoEm: new Date().toISOString(),
   };
