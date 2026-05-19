@@ -788,6 +788,11 @@ app.get('/api/templates', (req, res) => {
         gratis: !!json.gratis,  // tema liberado pra clientes sem conta/assinatura
         paleta: json.paleta || {},
         capa: json.capa || null,
+        // criadoEm/atualizadoEm: usado pelo frontend pra filtrar 'novos recentes'
+        // (janela de 5 dias). Estava sendo omitido aqui — bug que fazia o badge
+        // 'Lançamos N temas recentes' mostrar 0 mesmo após criar templates novos.
+        criadoEm: json.criadoEm || null,
+        atualizadoEm: json.atualizadoEm || null,
       };
     } catch (e) { return null; }
   }).filter(Boolean);
