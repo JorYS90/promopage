@@ -31,11 +31,18 @@ services:
       NODE_ENV: production
       PORT: 4010
     volumes:
-      - api_data:/app/data          # SQLite + JSONs
-      - api_uploads:/app/uploads    # imagens enviadas
-      - api_projetos:/app/projetos  # encartes salvos
-      - api_backups:/app/backups    # backups locais
+      - api_data:/app/data            # SQLite + JSONs
+      - api_uploads:/app/uploads      # imagens enviadas
+      - api_projetos:/app/projetos    # encartes salvos
+      - api_backups:/app/backups      # backups locais
       - api_logs:/app/logs
+      # Templates customizados criados via POST /api/templates ficam aqui.
+      # Sem este volume, todo `up -d --build` apagava os temas novos do usuário.
+      # IMPORTANTE: o Docker auto-popula este volume com os templates default
+      # do build APENAS na primeira criação. Edits manuais em backend/templates
+      # após volume existir NÃO são refletidos — pra atualizar manualmente
+      # precisa copiar via `docker cp` ou recriar o volume.
+      - api_templates:/app/templates
     # Health check — docker reinicia se API morrer.
     # Usa node nativo (fetch é built-in em Node 18+) em vez de wget/curl,
     # pois a imagem node:slim não vem com eles instalados.
@@ -103,4 +110,6 @@ volumes:
   api_backups:
     driver: local
   api_logs:
+    driver: local
+  api_templates:
     driver: local
