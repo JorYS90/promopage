@@ -33,7 +33,13 @@ export default function PainelProdutos({ produtosAtuais, aoAdicionar, aoAdiciona
         return;
       }
       if (!r.ok) {
-        alert('Erro ao buscar: ' + (json.error || `status ${r.status}`));
+        // 401 com user definido = token expirou OU JS cacheado sem auth.
+        // Dá mensagem actionable em vez do genérico "Não autenticado".
+        if (r.status === 401) {
+          alert('Sua sessão expirou. Faça logout, recarregue a página (Ctrl+Shift+R) e entre novamente.');
+        } else {
+          alert('Erro ao buscar: ' + (json.error || `status ${r.status}`));
+        }
         return;
       }
       setResultados(json.resultados || []);
