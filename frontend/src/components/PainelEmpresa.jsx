@@ -24,7 +24,8 @@ const CAMPOS = [
   { key: 'website',          label: 'Mostrar Website',                 placeholder: 'www.suaempresa.com.br' },
 ];
 
-const STORAGE_KEY = 'encarte-builder:empresa';
+// Chave isolada por user (2026-05-19) — cada conta tem dados próprios da empresa
+const storageKey = (userId) => `encarte-builder:empresa:${userId || 'anon'}`;
 
 const DADOS_VAZIOS = {
   // Valores
@@ -45,9 +46,9 @@ const DADOS_VAZIOS = {
   },
 };
 
-function carregar() {
+function carregar(userId) {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey(userId));
     if (!raw) return DADOS_VAZIOS;
     const obj = JSON.parse(raw);
     return { ...DADOS_VAZIOS, ...obj, mostrar: { ...DADOS_VAZIOS.mostrar, ...(obj.mostrar || {}) } };
@@ -56,24 +57,24 @@ function carregar() {
   }
 }
 
-export default function PainelEmpresa({ aoAtualizar }) {
+export default function PainelEmpresa({ aoAtualizar, userId }) {
   const [dados, setDados] = useState(DADOS_VAZIOS);
   // Quais campos estão com o input expandido pra edição (clicou no lápis)
   const [editando, setEditando] = useState({});
   // Modal de formas de pagamento aberto?
   const [modalPagamento, setModalPagamento] = useState(false);
 
-  // Carrega do localStorage no mount
+  // Carrega do localStorage no mount (e recarrega quando user muda)
   useEffect(() => {
-    const inicial = carregar();
+    const inicial = carregar(userId);
     setDados(inicial);
     aoAtualizar?.(inicial);
-  }, []);
+  }, [userId]);
 
   // Persiste e notifica o pai sempre que `dados` muda
   const salvar = (novo) => {
     setDados(novo);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(novo)); } catch {}
+    try { localStorage.setItem(storageKey(userId), JSON.stringify(novo)); } catch {}
     aoAtualizar?.(novo);
   };
 

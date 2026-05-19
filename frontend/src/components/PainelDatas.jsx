@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-const STORAGE_KEY = 'encarte-builder:datas';
+// Chave isolada por user (2026-05-19) — cada conta tem suas datas
+const storageKey = (userId) => `encarte-builder:datas:${userId || 'anon'}`;
 
 const DADOS_VAZIOS = {
   dataInicio: '',
@@ -15,9 +16,9 @@ const DADOS_VAZIOS = {
   },
 };
 
-function carregar() {
+function carregar(userId) {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey(userId));
     if (!raw) return DADOS_VAZIOS;
     const obj = JSON.parse(raw);
     return {
@@ -38,18 +39,18 @@ const TOGGLES = [
   { key: 'frasePromocional',       label: 'Mostrar Frase Promocional' },
 ];
 
-export default function PainelDatas({ aoAtualizar }) {
+export default function PainelDatas({ aoAtualizar, userId }) {
   const [dados, setDados] = useState(DADOS_VAZIOS);
 
   useEffect(() => {
-    const inicial = carregar();
+    const inicial = carregar(userId);
     setDados(inicial);
     aoAtualizar?.(inicial);
-  }, []);
+  }, [userId]);
 
   const salvar = (novo) => {
     setDados(novo);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(novo)); } catch {}
+    try { localStorage.setItem(storageKey(userId), JSON.stringify(novo)); } catch {}
     aoAtualizar?.(novo);
   };
 

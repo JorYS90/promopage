@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import ModalRecortarLogo from './ModalRecortarLogo.jsx';
 
-const STORAGE_KEY = 'encarte-builder:logo';
+// Chave de localStorage agora inclui sufixo do user (2026-05-19) pra isolar
+// preferências entre contas no mesmo browser. userId=null/anon = chave pública.
+const storageKey = (userId) => `encarte-builder:logo:${userId || 'anon'}`;
 
 const DADOS_VAZIOS = {
   url: '',                  // URL da imagem (vinda do upload)
@@ -32,9 +34,9 @@ async function uploadArquivo(file, fetchAuth) {
   return json.url;
 }
 
-function carregar() {
+function carregar(userId) {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey(userId));
     if (!raw) return DADOS_VAZIOS;
     return { ...DADOS_VAZIOS, ...JSON.parse(raw) };
   } catch {
@@ -42,7 +44,7 @@ function carregar() {
   }
 }
 
-export default function PainelLogo({ aoAtualizar, corBorda = '#ef4444', fetchAuth }) {
+export default function PainelLogo({ aoAtualizar, corBorda = '#ef4444', fetchAuth, userId }) {
   const [dados, setDados] = useState(DADOS_VAZIOS);
   const [enviando, setEnviando] = useState(false);
   const fileInputRef = useRef(null);
@@ -50,14 +52,15 @@ export default function PainelLogo({ aoAtualizar, corBorda = '#ef4444', fetchAut
   const [urlPendente, setUrlPendente] = useState('');
 
   useEffect(() => {
-    const inicial = carregar();
+    const inicial = carregar(userId);
     setDados(inicial);
     aoAtualizar?.(inicial);
-  }, []);
+    // Recarrega sempre que user muda (login/logout)
+  }, [userId]);
 
   const salvar = (novo) => {
     setDados(novo);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(novo)); } catch {}
+    try { localStorage.setItem(storageKey(userId), JSON.stringify(novo)); } catch {}
     aoAtualizar?.(novo);
   };
 

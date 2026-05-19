@@ -48,34 +48,37 @@ export default function App() {
   const [tema, setTema] = useState(null);
   const [temaId, setTemaId] = useState(null);
   const [produtos, setProdutos] = useState([]);
-  // Dados da empresa (carregados de localStorage no mount; atualizados pelo PainelEmpresa)
-  const [empresa, setEmpresa] = useState(() => {
+
+  // === Preferências do usuário em localStorage (logo, empresa, datas, fontes) ===
+  // ISOLAMENTO POR USER (2026-05-19): cada conta tem suas próprias preferências
+  // mesmo no mesmo browser. Chave de cada item é `encarte-builder:<chave>:<userId>`.
+  // - Deslogado: usa sufixo ':anon' (compartilhado entre todos os deslogados)
+  // - Logado: usa ':<id-numérico-do-user>'
+  // O useEffect abaixo recarrega tudo quando auth.user muda (login/logout).
+  // MIGRATION ONE-SHOT: na primeira leitura, se chave antiga (sem sufixo) existe
+  // e nova não, copia pra nova chave do user atual (preserva dados pré-isolamento).
+  const carregarLs = (chave, userId) => {
+    const sufixo = userId || 'anon';
     try {
-      const raw = localStorage.getItem('encarte-builder:empresa');
+      // Tenta chave nova primeiro
+      let raw = localStorage.getItem(`encarte-builder:${chave}:${sufixo}`);
+      // Migration: se nova não existe MAS antiga sim, copia uma vez
+      if (raw === null) {
+        const antiga = localStorage.getItem(`encarte-builder:${chave}`);
+        if (antiga !== null) {
+          localStorage.setItem(`encarte-builder:${chave}:${sufixo}`, antiga);
+          localStorage.removeItem(`encarte-builder:${chave}`); // limpa pra não poluir outro user
+          raw = antiga;
+        }
+      }
       return raw ? JSON.parse(raw) : null;
     } catch { return null; }
-  });
-  // Datas e regras adicionais (similar ao empresa)
-  const [datas, setDatas] = useState(() => {
-    try {
-      const raw = localStorage.getItem('encarte-builder:datas');
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
-  });
-  // Logo da empresa (URL + opções de fundo/posição/tamanho)
-  const [logo, setLogo] = useState(() => {
-    try {
-      const raw = localStorage.getItem('encarte-builder:logo');
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
-  });
-  // Fontes customizadas por target (nome / preco / frase / rodape)
-  const [fontes, setFontes] = useState(() => {
-    try {
-      const raw = localStorage.getItem('encarte-builder:fontes');
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
-  });
+  };
+  // Estado inicial: tenta 'anon' (antes do auth carregar); useEffect re-popula pro user
+  const [empresa, setEmpresa] = useState(() => carregarLs('empresa', null));
+  const [datas, setDatas] = useState(() => carregarLs('datas', null));
+  const [logo, setLogo] = useState(() => carregarLs('logo', null));
+  const [fontes, setFontes] = useState(() => carregarLs('fontes', null));
   // Trigger pra re-renderizar quando Google Fonts terminarem de carregar
   // (necessário pra medições corretas de largura no canvas)
   const [fontsLoadedTick, setFontsLoadedTick] = useState(0);
@@ -103,6 +106,17 @@ export default function App() {
       .then(d => setPlanoAtualSlug(d?.subscription?.plan_slug || null))
       .catch(() => setPlanoAtualSlug(null));
   }, [auth.user, auth.fetchAuth]);
+
+  // Quando user muda, recarrega TODAS as preferências (logo/empresa/datas/fontes)
+  // da chave do user atual. Evita user B ver dados de user A no mesmo browser.
+  useEffect(() => {
+    const uid = auth.user?.id || null;
+    setEmpresa(carregarLs('empresa', uid));
+    setDatas(carregarLs('datas', uid));
+    setLogo(carregarLs('logo', uid));
+    setFontes(carregarLs('fontes', uid));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.user]);
 
   const [modalEditar, setModalEditar] = useState(false);
   const [modalCampanhas, setModalCampanhas] = useState(false);
@@ -346,7 +360,8 @@ export default function App() {
         if (!validos) return;
         setLogo(prev => {
           const novo = { ...(prev || {}), ...delta };
-          try { localStorage.setItem('encarte-builder:logo', JSON.stringify(novo)); } catch {}
+          const sufixo = auth.user?.id || 'anon';
+          try { localStorage.setItem(`encarte-builder:logo:${sufixo}`, JSON.stringify(novo)); } catch {}
           return novo;
         });
       },
@@ -695,20 +710,21 @@ export default function App() {
           <PainelTemas temaAtivo={temaId} aoEscolher={escolherTema} user={auth.user} fetchAuth={auth.fetchAuth} />
         )}
         {aba === 'empresa' && (
-          <PainelEmpresa aoAtualizar={setEmpresa} />
+          <PainelEmpresa aoAtualizar={setEmpresa} userId={auth.user?.id || null} />
         )}
         {aba === 'datas' && (
-          <PainelDatas aoAtualizar={setDatas} />
+          <PainelDatas aoAtualizar={setDatas} userId={auth.user?.id || null} />
         )}
         {aba === 'logo' && (
           <PainelLogo
             aoAtualizar={setLogo}
             corBorda={tema?.paleta?.primaria || tema?.paleta?.tagPreco || '#ef4444'}
             fetchAuth={auth.fetchAuth}
+            userId={auth.user?.id || null}
           />
         )}
         {aba === 'fontes' && (
-          <PainelFontes aoAtualizar={setFontes} />
+          <PainelFontes aoAtualizar={setFontes} userId={auth.user?.id || null} />
         )}
         {aba === 'postar' && (
           <PainelPostar produtos={produtos} empresa={empresa} nomeProjeto={nomeProjeto} />

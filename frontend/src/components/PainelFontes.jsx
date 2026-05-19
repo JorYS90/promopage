@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FONTES, FONTE_TARGETS, carregarTodasFontes, carregarFontesGoogle } from './fontes-catalogo.js';
 
-const STORAGE_KEY = 'encarte-builder:fontes';
+// Chave isolada por user (2026-05-19) — cada conta tem suas fontes
+const storageKey = (userId) => `encarte-builder:fontes:${userId || 'anon'}`;
 
 const DADOS_VAZIOS = {
   // Cada chave = um target (nome, preco, frase, rodape) → font ID
@@ -11,9 +12,9 @@ const DADOS_VAZIOS = {
   rodape: 'Arial',
 };
 
-function carregar() {
+function carregar(userId) {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey(userId));
     if (!raw) return DADOS_VAZIOS;
     return { ...DADOS_VAZIOS, ...JSON.parse(raw) };
   } catch {
@@ -21,7 +22,7 @@ function carregar() {
   }
 }
 
-export default function PainelFontes({ aoAtualizar }) {
+export default function PainelFontes({ aoAtualizar, userId }) {
   const [dados, setDados] = useState(DADOS_VAZIOS);
   // Targets selecionados pra aplicar a próxima fonte (checkboxes)
   const [targetsSelecionados, setTargetsSelecionados] = useState(new Set());
@@ -31,16 +32,16 @@ export default function PainelFontes({ aoAtualizar }) {
   const [filtroNome, setFiltroNome] = useState('');
 
   useEffect(() => {
-    const inicial = carregar();
+    const inicial = carregar(userId);
     setDados(inicial);
     aoAtualizar?.(inicial);
     // Pré-carrega fontes do Google pra preview
     carregarTodasFontes();
-  }, []);
+  }, [userId]);
 
   const salvar = (novo) => {
     setDados(novo);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(novo)); } catch {}
+    try { localStorage.setItem(storageKey(userId), JSON.stringify(novo)); } catch {}
     aoAtualizar?.(novo);
   };
 
