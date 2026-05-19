@@ -26,7 +26,7 @@ require('./db/migration-isolamento').rodar();
 const authRoutes = require('./auth/routes');
 const usersRoutes = require('./auth/users-routes');
 const adminRoutes = require('./admin/routes');
-const { requireAuth, requireRole } = require('./auth/middleware');
+const { requireAuth, requireRole, optionalAuth } = require('./auth/middleware');
 const { buscarBingImages, buscarGoogleImages, buscarOpenFoodFacts, buscarYandexImages, buscarDuckDuckGo, buscarWikimedia, buscarGoogleCSE, statsCSE, downloadImagem, gerarPlaceholderUrl, gerarPlaceholderSVG, primeiraUrlValida, pontuarFonte } = require('./busca-imagens');
 const seedProdutos = require('./seed-produtos');
 const seedImagensPopulares = require('./seed-imagens-populares');
@@ -790,14 +790,13 @@ app.get('/api/proxy-imagem', async (req, res) => {
 // Registra que uma imagem foi usada pra um produto (incrementa contador).
 // Body: { nome, imagemUrl, peso? } — peso 1 (uso normal) ou 3 (escolha explícita)
 // ---------- Categorias ----------
-// GET é PÚBLICO porque o frontend exibe a lista de categorias (padrão + custom
-// do user logado) tanto pra deslogados quanto logados. Pra deslogado, só
-// padrão. Pra logado: padrão + suas custom. Admin vê padrão + custom de todos.
-app.get('/api/categorias', (req, res) => {
+// GET é semi-público com optionalAuth: deslogados veem só padrão; logados
+// veem padrão + suas custom; admin vê padrão + custom de todos.
+// Sem optionalAuth o req.user nunca era populado, então mesmo logado vinha
+// só padrão (bug reportado pelo user: categorias custom Pizza/Queijo/Dia
+// das Mães não apareciam no select).
+app.get('/api/categorias', optionalAuth, (req, res) => {
   try {
-    // Se autenticação foi tentada via middleware opcional, req.user existe;
-    // senão lista só padrão. Pra MVP, usamos query simples: se header tem token
-    // válido, escopo é o user; senão, escopo = -1 (id inválido → só padrão).
     let escopo = -1;
     if (req.user) escopo = escopoUserId(req);
     // Listagem com user_id=-1 retorna padrão + 0 custom (-1 nunca existe na tabela).
