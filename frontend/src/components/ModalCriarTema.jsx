@@ -3,18 +3,19 @@ import { useEffect, useState } from 'react';
 // Categorias agora vêm do backend (são gerenciáveis dinamicamente)
 const CATEGORIAS_FALLBACK = ['Meus Temas']; // usado se /api/categorias falhar
 
-// Upload helper
-async function uploadArquivo(file) {
+// Upload helper. fetchAuth opcional pra autenticar (endpoint exige auth).
+async function uploadArquivo(file, fetchAuth) {
   const fd = new FormData();
   fd.append('imagem', file);
-  const r = await fetch('/api/upload', { method: 'POST', body: fd });
+  const http = fetchAuth || ((url, opts) => fetch(url, opts));
+  const r = await http('/api/upload', { method: 'POST', body: fd });
   const json = await r.json();
   if (!json.url) throw new Error(json.error || 'falha no upload');
   return json.url;
 }
 
 // Componente reusável de zona de upload com preview
-function ZonaUpload({ titulo, subtitulo, dimensaoRecomendada, dica, valor, aoMudar, accept }) {
+function ZonaUpload({ titulo, subtitulo, dimensaoRecomendada, dica, valor, aoMudar, accept, fetchAuth }) {
   const [enviando, setEnviando] = useState(false);
   const [nomeArq, setNomeArq] = useState('');
 
@@ -23,7 +24,7 @@ function ZonaUpload({ titulo, subtitulo, dimensaoRecomendada, dica, valor, aoMud
     if (!file) return;
     setEnviando(true);
     try {
-      const url = await uploadArquivo(file);
+      const url = await uploadArquivo(file, fetchAuth);
       setNomeArq(file.name);
       aoMudar(url);
     } catch (err) {
@@ -115,9 +116,10 @@ export default function ModalCriarTema({ aoFechar, aoSalvar, temaInicial, fetchA
   // Esses dados agora vêm de outras fontes: PainelEmpresa (telefone/loja)
   // e configs do encarte. Evita duplicação de configuração.
 
-  // Carrega categorias do backend
+  // Carrega categorias do backend (GET é público; usa httpAuth pra incluir
+  // custom do user logado — sem auth, vem só as padrão).
   const carregarCategorias = () => {
-    fetch('/api/categorias')
+    httpAuth('/api/categorias')
       .then(r => r.json())
       .then(lista => {
         if (Array.isArray(lista) && lista.length > 0) {
@@ -131,12 +133,12 @@ export default function ModalCriarTema({ aoFechar, aoSalvar, temaInicial, fetchA
     carregarCategorias();
   }, []);
 
-  // Adiciona categoria inline
+  // Adiciona categoria inline (POST exige auth)
   const handleAdicionarCategoria = async () => {
     const limpo = novaCategoria.trim();
     if (!limpo) return;
     try {
-      const r = await fetch('/api/categorias', {
+      const r = await httpAuth('/api/categorias', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nome: limpo }),
@@ -154,11 +156,11 @@ export default function ModalCriarTema({ aoFechar, aoSalvar, temaInicial, fetchA
     }
   };
 
-  // Remove categoria
+  // Remove categoria (DELETE exige auth)
   const handleRemoverCategoria = async (nomeCat) => {
     if (!confirm(`Remover a categoria "${nomeCat}"?\nTemas dessa categoria não serão deletados, mas ficarão sem agrupamento.`)) return;
     try {
-      const r = await fetch(`/api/categorias/${encodeURIComponent(nomeCat)}`, { method: 'DELETE' });
+      const r = await httpAuth(`/api/categorias/${encodeURIComponent(nomeCat)}`, { method: 'DELETE' });
       if (!r.ok) throw new Error('falha');
       carregarCategorias();
       if (categoria === nomeCat) setCategoria('Meus Temas');
@@ -324,7 +326,7 @@ export default function ModalCriarTema({ aoFechar, aoSalvar, temaInicial, fetchA
           {/* Uploads da capa */}
           <div className="secao-titulo">🖼️ Imagens da Capa</div>
           <div className="grade-uploads">
-            <ZonaUpload
+            <ZonaUpload fetchAuth={fetchAuth}
               titulo="Imagem de Fundo"
               subtitulo="Preenche todo o fundo da capa"
               dimensaoRecomendada="2400 × 800 px (aspecto 3:1)"
@@ -332,7 +334,7 @@ export default function ModalCriarTema({ aoFechar, aoSalvar, temaInicial, fetchA
               valor={imagemFundo}
               aoMudar={setImagemFundo}
             />
-            <ZonaUpload
+            <ZonaUpload fetchAuth={fetchAuth}
               titulo="Imagem do Título"
               subtitulo="Logo/escrita principal sobreposta"
               dimensaoRecomendada="1500 × 500 px (PNG transparente)"
@@ -370,7 +372,7 @@ export default function ModalCriarTema({ aoFechar, aoSalvar, temaInicial, fetchA
           <div className="secao-titulo">💰 Balão de Oferta (Tag de Preço)</div>
 
           <div className="grade-uploads grade-uploads-1">
-            <ZonaUpload
+            <ZonaUpload fetchAuth={fetchAuth}
               titulo="Imagem do Balão"
               subtitulo="Forma/etiqueta onde o preço aparece"
               dimensaoRecomendada="600 × 150 px (aspecto 4:1, PNG transparente)"
@@ -479,7 +481,7 @@ export default function ModalCriarTema({ aoFechar, aoSalvar, temaInicial, fetchA
 
           {fundoEncarteTipo === 'imagem' && (
             <div className="grade-uploads grade-uploads-1" style={{ marginBottom: 14 }}>
-              <ZonaUpload
+              <ZonaUpload fetchAuth={fetchAuth}
                 titulo="Imagem do Fundo do Encarte"
                 subtitulo="Será REPETIDA (tileada) infinitamente pra preencher qualquer formato"
                 dimensaoRecomendada="400 × 400 px (textura sem bordas visíveis = tile perfeito)"

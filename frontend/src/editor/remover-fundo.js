@@ -336,10 +336,16 @@ export async function removerFundoDeUrl(url, opts = {}) {
   return removerFundo(blob, opts);
 }
 
-export async function uploadBlobProcessado(blob, nomeArquivo = 'sem-fundo.png') {
+/**
+ * Sobe o blob processado pro /api/upload. Aceita fetchAuth opcional pra
+ * autenticação (endpoint exige auth desde isolamento por user, 2026-05-19).
+ * Sem fetchAuth, falha com 401.
+ */
+export async function uploadBlobProcessado(blob, nomeArquivo = 'sem-fundo.png', fetchAuth) {
   const fd = new FormData();
   fd.append('imagem', blob, nomeArquivo);
-  const r = await fetch('/api/upload', { method: 'POST', body: fd });
+  const http = fetchAuth || ((url, opts) => fetch(url, opts));
+  const r = await http('/api/upload', { method: 'POST', body: fd });
   if (!r.ok) throw new Error('Falha no upload');
   const json = await r.json();
   return json.url;

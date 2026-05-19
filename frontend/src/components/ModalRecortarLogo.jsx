@@ -8,7 +8,7 @@ import { removerFundoDeUrl, uploadBlobProcessado } from '../editor/remover-fundo
 //   urlOriginal — URL da imagem recém-uploaded
 //   aoFechar    — fecha sem aplicar (descarta o upload)
 //   aoSalvar(novaUrl) — confirma e retorna a URL final
-export default function ModalRecortarLogo({ urlOriginal, aoFechar, aoSalvar }) {
+export default function ModalRecortarLogo({ urlOriginal, aoFechar, aoSalvar, fetchAuth }) {
   // Crop em valores 0..1 (fração da imagem)
   const [crop, setCrop] = useState({ x: 0, y: 0, w: 1, h: 1 });
   const [removerFundo, setRemoverFundo] = useState(true);
@@ -108,7 +108,7 @@ export default function ModalRecortarLogo({ urlOriginal, aoFechar, aoSalvar }) {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, cx, cy, cw, ch, 0, 0, cw, ch);
         const blobCrop = await new Promise(r => canvas.toBlob(r, 'image/png', 1));
-        urlAtual = await uploadBlobProcessado(blobCrop, 'logo-recortada.png');
+        urlAtual = await uploadBlobProcessado(blobCrop, 'logo-recortada.png', fetchAuth);
       }
 
       // 2. (opcional) Remover fundo
@@ -119,7 +119,7 @@ export default function ModalRecortarLogo({ urlOriginal, aoFechar, aoSalvar }) {
             setProgresso(`removendo fundo... ${etapa} ${Math.round((atual / total) * 100)}%`);
           },
         });
-        urlAtual = await uploadBlobProcessado(blobSemFundo, 'logo-sem-fundo.png');
+        urlAtual = await uploadBlobProcessado(blobSemFundo, 'logo-sem-fundo.png', fetchAuth);
       }
 
       aoSalvar(urlAtual);

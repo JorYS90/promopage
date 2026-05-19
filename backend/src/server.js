@@ -19,6 +19,10 @@ const categoriasDb = require('./categorias-db');
 // === SaaS: auth + multi-tenant ===
 // Inicializa banco SQLite (cria tabelas se não existir + seeds default)
 require('./db/schema');
+// Migra produtos/projetos/categorias custom dos arquivos JSON pra SQLite
+// (one-shot, idempotente). Atribui dados existentes ao user_id=1 (super_admin
+// guadagnin). Sem isso, todos os users veem tudo de todos — bug de privacidade.
+require('./db/migration-isolamento').rodar();
 const authRoutes = require('./auth/routes');
 const usersRoutes = require('./auth/users-routes');
 const adminRoutes = require('./admin/routes');
@@ -28,6 +32,7 @@ const seedProdutos = require('./seed-produtos');
 const seedImagensPopulares = require('./seed-imagens-populares');
 const cacheImagens = require('./db/cache-imagens');
 const moderacao = require('./lib/moderacao');
+const projetosDb = require('./projetos-db');
 
 const ROOT = path.resolve(__dirname, '..');
 const TEMPLATES_DIR = path.join(ROOT, 'templates');
@@ -110,14 +115,34 @@ app.use('/api', usersRoutes);  // pra /api/plans (rota pública)
 // /api/admin/* — gestão administrativa (requer role admin ou super_admin)
 app.use('/api/admin', adminRoutes);
 
+// Multer com destination dinâmico baseado no user logado.
+// Uploads vão pra /uploads/<user_id>/<file> — isolamento físico no FS.
+// Uploads legados (de antes do isolamento, 2026-05-19) ficam em /uploads/<file>
+// direto na raiz e continuam servidos pelo express.static abaixo (URLs salvas
+// no DB de produtos antigos não quebram).
 const storage = multer.diskStorage({
-  destination: UPLOADS_DIR,
+  destination: (req, file, cb) => {
+    const userId = req.user?.id;
+    if (!userId) return cb(new Error('Upload requer autenticação'));
+    const dest = path.join(UPLOADS_DIR, String(userId));
+    try { fs.mkdirSync(dest, { recursive: true }); } catch (e) { return cb(e); }
+    cb(null, dest);
+  },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname) || '.png';
     cb(null, `${Date.now()}-${nanoid(6)}${ext}`);
   },
 });
 const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
+
+// ---------- Helper: escopo do user pra leituras ----------
+// Admin e super_admin enxergam TUDO (param null pros métodos do *-db.js que
+// retornam tudo quando user_id é null). Demais users veem só os próprios dados.
+function escopoUserId(req) {
+  const role = req.user?.role_nome;
+  if (role === 'admin' || role === 'super_admin') return null;
+  return req.user?.id;
+}
 
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 
@@ -293,7 +318,10 @@ function externoRelevante(query, produto) {
 }
 
 // ---------- Busca em lote (várias linhas de uma vez, igual qrofertas) ----------
-app.post('/api/produtos/buscar-lote', async (req, res) => {
+// requireAuth: o catálogo local é por user (isolamento), então user logado é
+// obrigatório. Deslogados que tentarem chamar recebem 401 — UI já trata
+// abrindo modal de login.
+app.post('/api/produtos/buscar-lote', requireAuth, async (req, res) => {
  try {
   const linhas = (req.body.linhas || '').toString().split('\n').map(l => l.trim()).filter(Boolean);
   if (!linhas.length) return res.json({ resultados: [] });
@@ -345,7 +373,7 @@ app.post('/api/produtos/buscar-lote', async (req, res) => {
 
     // 2) Fallback: tenta cache local de produtos (com score)
     if (!imagemEncontrada) {
-      const ranked = produtosDb.buscarLocalComScore(nomeDigitado);
+      const ranked = produtosDb.buscarLocalComScore(nomeDigitado, escopoUserId(req));
       if (ranked.length > 0 && imagemRelevante(nomeDigitado, ranked[0]) && ranked[0].produto.imagem) {
         imagemEncontrada = ranked[0].produto.imagem;
         codigoBarras = ranked[0].produto.codigoBarras || '';
@@ -465,12 +493,12 @@ app.post('/api/produtos/buscar-lote', async (req, res) => {
 });
 
 // ---------- Produtos: busca com cache local + Open Food Facts ----------
-app.get('/api/produtos/buscar', async (req, res) => {
+app.get('/api/produtos/buscar', requireAuth, async (req, res) => {
   const query = (req.query.q || '').trim();
   if (!query) return res.json({ produtos: [], fonte: 'vazio' });
 
-  // 1) Busca local primeiro
-  const locais = produtosDb.buscarLocal(query);
+  // 1) Busca local primeiro (catálogo do user — admin vê de todos)
+  const locais = produtosDb.buscarLocal(query, escopoUserId(req));
   if (locais.length >= 6) {
     return res.json({ produtos: locais.slice(0, 24), fonte: 'local' });
   }
@@ -501,8 +529,9 @@ app.get('/api/produtos/buscar', async (req, res) => {
   });
 });
 
-app.get('/api/produtos', (req, res) => {
-  res.json(produtosDb.carregar().produtos);
+app.get('/api/produtos', requireAuth, (req, res) => {
+  // Cliente normal: só seus produtos. Admin/super_admin: todos (escopo null).
+  res.json(produtosDb.carregar(escopoUserId(req)).produtos);
 });
 
 // Retorna até N imagens encontradas para uma query (Bing + Google + OFF + Wikimedia).
@@ -641,13 +670,13 @@ app.get('/api/produtos/gcse-stats', (req, res) => {
   }
 });
 
-app.get('/api/produtos/:id', (req, res) => {
-  const p = produtosDb.obter(req.params.id);
+app.get('/api/produtos/:id', requireAuth, (req, res) => {
+  const p = produtosDb.obter(req.params.id, escopoUserId(req));
   if (!p) return res.status(404).json({ error: 'Produto não encontrado' });
   res.json(p);
 });
 
-app.post('/api/produtos', async (req, res) => {
+app.post('/api/produtos', requireAuth, async (req, res) => {
   const dados = { ...req.body };
   // Se a imagem é externa (URL), baixa e cacheia local
   if (dados.imagem && /^https?:\/\//.test(dados.imagem) && !dados.imagem.includes('/uploads/')) {
@@ -660,18 +689,35 @@ app.post('/api/produtos', async (req, res) => {
       // Mantém URL externa se falhar
     }
   }
-  const produto = produtosDb.adicionar(dados);
+  // Writes SEMPRE são pro user logado (mesmo admin não cria pra outro user
+  // via UI normal — pra isso seria endpoint /api/admin/* separado).
+  const produto = produtosDb.adicionar(dados, req.user.id);
   res.json(produto);
 });
 
-app.put('/api/produtos/:id', (req, res) => {
-  const atualizado = produtosDb.atualizar(req.params.id, req.body);
+app.put('/api/produtos/:id', requireAuth, (req, res) => {
+  // Edição: cliente só edita o próprio; admin pode editar de qualquer um
+  // (passa userId do dono se admin estiver editando alheio).
+  let donoId = req.user.id;
+  if (escopoUserId(req) === null) {
+    // Admin: descobre quem é o dono real do produto
+    const existente = produtosDb.obter(req.params.id, null);
+    if (existente) donoId = existente.userId;
+  }
+  const atualizado = produtosDb.atualizar(req.params.id, req.body, donoId);
   if (!atualizado) return res.status(404).json({ error: 'Não encontrado' });
   res.json(atualizado);
 });
 
-app.delete('/api/produtos/:id', (req, res) => {
-  produtosDb.remover(req.params.id);
+app.delete('/api/produtos/:id', requireAuth, (req, res) => {
+  // Mesma lógica do PUT: admin pode deletar de outros
+  let donoId = req.user.id;
+  if (escopoUserId(req) === null) {
+    const existente = produtosDb.obter(req.params.id, null);
+    if (existente) donoId = existente.userId;
+  }
+  const removeu = produtosDb.remover(req.params.id, donoId);
+  if (!removeu) return res.status(404).json({ error: 'Não encontrado' });
   res.json({ ok: true });
 });
 
@@ -744,28 +790,48 @@ app.get('/api/proxy-imagem', async (req, res) => {
 // Registra que uma imagem foi usada pra um produto (incrementa contador).
 // Body: { nome, imagemUrl, peso? } — peso 1 (uso normal) ou 3 (escolha explícita)
 // ---------- Categorias ----------
+// GET é PÚBLICO porque o frontend exibe a lista de categorias (padrão + custom
+// do user logado) tanto pra deslogados quanto logados. Pra deslogado, só
+// padrão. Pra logado: padrão + suas custom. Admin vê padrão + custom de todos.
 app.get('/api/categorias', (req, res) => {
   try {
-    res.json(categoriasDb.listar());
+    // Se autenticação foi tentada via middleware opcional, req.user existe;
+    // senão lista só padrão. Pra MVP, usamos query simples: se header tem token
+    // válido, escopo é o user; senão, escopo = -1 (id inválido → só padrão).
+    let escopo = -1;
+    if (req.user) escopo = escopoUserId(req);
+    // Listagem com user_id=-1 retorna padrão + 0 custom (-1 nunca existe na tabela).
+    res.json(categoriasDb.listar(escopo === null ? null : (escopo > 0 ? escopo : -1)));
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
 
-app.post('/api/categorias', (req, res) => {
+app.post('/api/categorias', requireAuth, (req, res) => {
   try {
     const { nome } = req.body || {};
-    const cat = categoriasDb.adicionar(nome);
+    const cat = categoriasDb.adicionar(nome, req.user.id);
     res.json(cat);
   } catch (e) {
     res.status(400).json({ error: e.message });
   }
 });
 
-app.delete('/api/categorias/:nome', (req, res) => {
+app.delete('/api/categorias/:nome', requireAuth, (req, res) => {
   try {
-    const ok = categoriasDb.remover(req.params.nome);
-    if (!ok) return res.status(404).json({ error: 'Categoria não encontrada' });
+    // Padrões nunca podem ser removidas (categorias-db retorna false).
+    // Admin pode remover custom de outros (passa userId = todos via null).
+    const userIdParaRemocao = escopoUserId(req) === null ? null : req.user.id;
+    if (userIdParaRemocao === null) {
+      // Admin: tenta deletar a categoria de QUALQUER user (não só seu)
+      const r = require('./db/schema').prepare(
+        'DELETE FROM categorias_custom WHERE lower(nome) = lower(?)'
+      ).run(req.params.nome);
+      if (r.changes === 0) return res.status(404).json({ error: 'Categoria não encontrada' });
+      return res.json({ ok: true, removidas: r.changes });
+    }
+    const ok = categoriasDb.remover(req.params.nome, req.user.id);
+    if (!ok) return res.status(404).json({ error: 'Categoria não encontrada (ou é padrão)' });
     res.json({ ok: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -923,63 +989,43 @@ function obterCapasTema() {
   return _capasTemaCache;
 }
 
-app.get('/api/projetos', (req, res) => {
-  const files = fs.readdirSync(PROJETOS_DIR).filter(f => f.endsWith('.json'));
+// Projetos agora isolados por user (SQLite + user_id FK). Migrado de
+// projetos/*.json em 2026-05-19. Admin/super_admin enxerga de todos.
+app.get('/api/projetos', requireAuth, (req, res) => {
+  const projetos = projetosDb.listar(escopoUserId(req));
   const capasTema = obterCapasTema();
-  const projetos = files.map(file => {
-    try {
-      const raw = fs.readFileSync(path.join(PROJETOS_DIR, file), 'utf8');
-      const json = JSON.parse(raw);
-      const temaInfo = json.tema ? (capasTema[json.tema] || {}) : {};
-      return {
-        id: path.basename(file, '.json'),
-        nome: json.nome || 'Sem nome',
-        tema: json.tema || null,
-        temaNome: temaInfo.nome || null,
-        capa: temaInfo.capa || null,
-        qtdProdutos: Array.isArray(json.produtos) ? json.produtos.length : 0,
-        criadoEm: json.criadoEm || json.atualizadoEm || null,
-        atualizadoEm: json.atualizadoEm || null,
-        vencidaEm: json.vencidaEm || null,
-      };
-    } catch (e) { return null; }
-  }).filter(Boolean);
-  projetos.sort((a, b) => (b.atualizadoEm || '').localeCompare(a.atualizadoEm || ''));
-  res.json(projetos);
+  // Enriquece com nome/capa do tema (sem precisar reler templates a cada call)
+  const enriched = projetos.map(p => {
+    const temaInfo = p.tema ? (capasTema[p.tema] || {}) : {};
+    return { ...p, temaNome: temaInfo.nome || null, capa: temaInfo.capa || null };
+  });
+  res.json(enriched);
 });
 
-app.get('/api/projetos/:id', (req, res) => {
-  const file = path.join(PROJETOS_DIR, `${req.params.id}.json`);
-  if (!fs.existsSync(file)) return res.status(404).json({ error: 'Projeto não encontrado' });
-  res.sendFile(file);
+app.get('/api/projetos/:id', requireAuth, (req, res) => {
+  const proj = projetosDb.obter(req.params.id, escopoUserId(req));
+  if (!proj) return res.status(404).json({ error: 'Projeto não encontrado' });
+  res.json(proj);
 });
 
-app.post('/api/projetos', (req, res) => {
-  const id = req.body.id || nanoid(10);
-  const agora = new Date().toISOString();
-  // Preserva criadoEm + lê produtos antigos pra comparar (aprendizado passivo)
-  let criadoEm = req.body.criadoEm || null;
-  let produtosAntigos = [];
-  try {
-    const existente = path.join(PROJETOS_DIR, `${id}.json`);
-    if (fs.existsSync(existente)) {
-      const json = JSON.parse(fs.readFileSync(existente, 'utf8'));
-      criadoEm = criadoEm || json.criadoEm || json.atualizadoEm || agora;
-      produtosAntigos = Array.isArray(json.produtos) ? json.produtos : [];
-    } else {
-      criadoEm = criadoEm || agora;
-    }
-  } catch { criadoEm = criadoEm || agora; }
+app.post('/api/projetos', requireAuth, (req, res) => {
+  // Determina quem é o dono: cliente normal sempre = req.user.id.
+  // Admin editando projeto alheio: descobre dono real do projeto existente.
+  let donoId = req.user.id;
+  const idAlvo = req.body.id;
+  if (idAlvo && escopoUserId(req) === null) {
+    const existente = projetosDb.obter(idAlvo, null);
+    if (existente) donoId = existente.userId;
+  }
 
-  const data = { ...req.body, id, criadoEm, atualizadoEm: agora };
-  fs.writeFileSync(path.join(PROJETOS_DIR, `${id}.json`), JSON.stringify(data, null, 2));
+  const { id, criado, projeto, produtosAntigos } = projetosDb.salvar(idAlvo, req.body, donoId);
 
   // APRENDIZADO PASSIVO (peso 1): registra produtos do projeto no banco populares.
   // Só registra NOVOS ou com imagem trocada vs versão anterior — evita inflar peso
   // quando user salva mesmo projeto várias vezes. Sinal fraco; 5+ usos = popular.
   try {
-    const antigoPorId = new Map(produtosAntigos.map(p => [p.id, p]));
-    const produtos = Array.isArray(data.produtos) ? data.produtos : [];
+    const antigoPorId = new Map((produtosAntigos || []).map(p => [p.id, p]));
+    const produtos = Array.isArray(req.body.produtos) ? req.body.produtos : [];
     let registrados = 0;
     for (const p of produtos) {
       if (!p?.nome || !p?.imagem) continue;
@@ -996,12 +1042,18 @@ app.post('/api/projetos', (req, res) => {
     console.error('[aprendizado-passivo] falhou (não bloqueia save):', e.message);
   }
 
-  res.json({ id, ok: true });
+  res.json({ id, ok: true, criado });
 });
 
-app.delete('/api/projetos/:id', (req, res) => {
-  const file = path.join(PROJETOS_DIR, `${req.params.id}.json`);
-  if (fs.existsSync(file)) fs.unlinkSync(file);
+app.delete('/api/projetos/:id', requireAuth, (req, res) => {
+  // Admin pode deletar projeto de qualquer user; descobre dono primeiro.
+  let donoId = req.user.id;
+  if (escopoUserId(req) === null) {
+    const existente = projetosDb.obter(req.params.id, null);
+    if (existente) donoId = existente.userId;
+  }
+  const removeu = projetosDb.remover(req.params.id, donoId);
+  if (!removeu) return res.status(404).json({ error: 'Projeto não encontrado' });
   res.json({ ok: true });
 });
 
@@ -1011,7 +1063,7 @@ app.delete('/api/projetos/:id', (req, res) => {
 // codigoBarras. Se fornecido, registra peso 25 no banco populares (acima do peso
 // 20 de "upload sem contexto") porque o user demonstrou intenção explícita
 // associando imagem a um produto específico — sinal forte de qualidade.
-app.post('/api/upload', (req, res) => {
+app.post('/api/upload', requireAuth, (req, res) => {
   upload.single('imagem')(req, res, (err) => {
     if (err) {
       console.error('[upload] multer:', err.code, err.message);
@@ -1024,8 +1076,10 @@ app.post('/api/upload', (req, res) => {
       return res.status(400).json({ error: msgs[code] || `Erro upload: ${err.message}`, code });
     }
     if (!req.file) return res.status(400).json({ error: 'Nenhum arquivo enviado' });
-    const url = `/uploads/${req.file.filename}`;
-    console.log(`[upload] ${req.file.filename} (${(req.file.size/1024).toFixed(1)}KB) → ${url}`);
+    // URL pública inclui a subpasta do user pra preservar isolamento físico.
+    // Static handler já serve /uploads/<user_id>/<file>.
+    const url = `/uploads/${req.user.id}/${req.file.filename}`;
+    console.log(`[upload] user=${req.user.id} ${req.file.filename} (${(req.file.size/1024).toFixed(1)}KB) → ${url}`);
 
     // Salva parâmetros do produto se fornecidos no upload — sinal forte de uso real.
     // Frontend pode passar nome + marca + categoria + codigoBarras como campos do form.

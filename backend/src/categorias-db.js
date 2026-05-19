@@ -1,11 +1,14 @@
-// Banco de categorias de temas. Permite ao admin criar/remover categorias
-// que aparecem como agrupamento nos cards de temas.
-const fs = require('fs');
-const path = require('path');
+// Categorias de temas — padrão (sistema, global, hardcoded) + customizadas (por user, SQLite).
+//
+// Migrado de categorias.json (compartilhado) em 2026-05-19.
+// Categorias `padrao: true` são as do sistema (lista hardcoded abaixo).
+// Categorias custom (criadas via API) ficam na tabela categorias_custom com
+// user_id FK — cada user vê só as próprias custom + todas as padrão.
+//
+// Admin com userId=null vê padrão + custom de todo mundo.
 
-const DB_FILE = path.join(__dirname, '..', 'data', 'categorias.json');
+const db = require('./db/schema');
 
-// Categorias padrão criadas se o arquivo não existir
 const PADRAO = [
   'Temas Grátis',
   'Datas Comemorativas',
@@ -19,54 +22,63 @@ const PADRAO = [
   'Meus Temas',
 ];
 
-function carregar() {
-  if (!fs.existsSync(DB_FILE)) {
-    const inicial = PADRAO.map(nome => ({ nome, criadoEm: new Date().toISOString(), padrao: true }));
-    salvar(inicial);
-    return inicial;
-  }
-  try {
-    return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
-  } catch (e) {
-    console.error('[categorias-db] erro lendo:', e.message);
-    return [];
-  }
+const padraoComoObj = () =>
+  PADRAO.map(nome => ({ nome, padrao: true, criadoEm: null, userId: null }));
+
+function listar(userId) {
+  const padroes = padraoComoObj();
+  const stmt = userId
+    ? db.prepare('SELECT nome, criado_em, user_id FROM categorias_custom WHERE user_id = ? ORDER BY nome')
+    : db.prepare('SELECT nome, criado_em, user_id FROM categorias_custom ORDER BY user_id, nome');
+  const customRows = userId ? stmt.all(userId) : stmt.all();
+  const customs = customRows.map(r => ({
+    nome: r.nome,
+    padrao: false,
+    criadoEm: r.criado_em,
+    userId: r.user_id,
+  }));
+  // Junta padrão + custom, deduplicando por nome (caso-insensitivo).
+  // Se user criou custom com mesmo nome que padrão, padrão ganha.
+  const vistas = new Set(padroes.map(c => c.nome.toLowerCase()));
+  const filtradas = customs.filter(c => !vistas.has(c.nome.toLowerCase()));
+  return [...padroes, ...filtradas];
 }
 
-function salvar(lista) {
-  try {
-    fs.mkdirSync(path.dirname(DB_FILE), { recursive: true });
-    fs.writeFileSync(DB_FILE, JSON.stringify(lista, null, 2), 'utf8');
-  } catch (e) {
-    console.error('[categorias-db] erro gravando:', e.message);
-  }
-}
-
-function listar() {
-  return carregar();
-}
-
-function adicionar(nome) {
+function adicionar(nome, userId) {
+  if (!userId) throw new Error('userId obrigatório pra adicionar categoria custom');
   const limpo = (nome || '').toString().trim();
   if (!limpo) throw new Error('Nome da categoria é obrigatório');
   if (limpo.length > 60) throw new Error('Nome muito longo (máx 60 caracteres)');
-  const lista = carregar();
-  // Caso-insensitivo: evita "Bebidas" e "bebidas" como duplicatas
-  const ja = lista.find(c => c.nome.toLowerCase() === limpo.toLowerCase());
-  if (ja) return ja;
-  const nova = { nome: limpo, criadoEm: new Date().toISOString(), padrao: false };
-  lista.push(nova);
-  salvar(lista);
-  return nova;
+
+  // Se já é padrão (caso-insensitivo), retorna a padrão sem criar custom duplicada.
+  const ehPadrao = PADRAO.some(p => p.toLowerCase() === limpo.toLowerCase());
+  if (ehPadrao) {
+    return { nome: PADRAO.find(p => p.toLowerCase() === limpo.toLowerCase()), padrao: true };
+  }
+
+  // Insere se não existir (UNIQUE constraint user_id+nome trata duplicata).
+  try {
+    db.prepare(`
+      INSERT INTO categorias_custom (user_id, nome, criado_em)
+      VALUES (?, ?, ?)
+    `).run(userId, limpo, new Date().toISOString());
+  } catch (e) {
+    // Provável conflito UNIQUE — user já tem essa categoria
+    if (!/UNIQUE/i.test(e.message)) throw e;
+  }
+  return { nome: limpo, padrao: false, userId };
 }
 
-function remover(nome) {
-  const lista = carregar();
-  const idx = lista.findIndex(c => c.nome.toLowerCase() === (nome || '').toLowerCase());
-  if (idx < 0) return false;
-  lista.splice(idx, 1);
-  salvar(lista);
-  return true;
+function remover(nome, userId) {
+  if (!userId) throw new Error('userId obrigatório pra remover categoria custom');
+  // Padrão não pode ser removida (são do sistema)
+  if (PADRAO.some(p => p.toLowerCase() === (nome || '').toLowerCase())) {
+    return false;
+  }
+  const r = db.prepare(`
+    DELETE FROM categorias_custom WHERE user_id = ? AND lower(nome) = lower(?)
+  `).run(userId, nome || '');
+  return r.changes > 0;
 }
 
 module.exports = { listar, adicionar, remover };

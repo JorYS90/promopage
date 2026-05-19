@@ -15,17 +15,21 @@ export default function ModalMinhasCampanhas({
   aoFechar,
   aoCarregarProjeto,
   aoCriarNovo,
+  fetchAuth,  // injetado pelo App.jsx — usado em todos os fetches (endpoint exige auth)
 }) {
   const [projetos, setProjetos] = useState([]);
   const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState('');
   const [filtro, setFiltro] = useState('');
+  // fetchAuth opcional pra compat; sem ele, fetch normal vai dar 401
+  const httpAuth = fetchAuth || ((url, opts) => fetch(url, opts));
 
   const carregar = async () => {
     setCarregando(true);
     setErro('');
     try {
-      const r = await fetch('/api/projetos');
+      const r = await httpAuth('/api/projetos');
+      if (r.status === 401) { setErro('Faça login pra ver suas campanhas.'); setProjetos([]); return; }
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const lista = await r.json();
       setProjetos(Array.isArray(lista) ? lista : []);
@@ -43,7 +47,7 @@ export default function ModalMinhasCampanhas({
 
   const abrirProjeto = async (id) => {
     try {
-      const r = await fetch(`/api/projetos/${id}`);
+      const r = await httpAuth(`/api/projetos/${id}`);
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const projeto = await r.json();
       aoCarregarProjeto(projeto);
@@ -57,7 +61,7 @@ export default function ModalMinhasCampanhas({
     evt?.stopPropagation();
     if (!confirm(`Excluir a campanha "${nome}"? Essa ação não pode ser desfeita.`)) return;
     try {
-      const r = await fetch(`/api/projetos/${id}`, { method: 'DELETE' });
+      const r = await httpAuth(`/api/projetos/${id}`, { method: 'DELETE' });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       carregar();
     } catch (e) {
@@ -68,7 +72,7 @@ export default function ModalMinhasCampanhas({
   const duplicar = async (id, evt) => {
     evt?.stopPropagation();
     try {
-      const rGet = await fetch(`/api/projetos/${id}`);
+      const rGet = await httpAuth(`/api/projetos/${id}`);
       if (!rGet.ok) throw new Error(`HTTP ${rGet.status}`);
       const projeto = await rGet.json();
       const copia = {
@@ -77,7 +81,7 @@ export default function ModalMinhasCampanhas({
         criadoEm: undefined,
         nome: (projeto.nome || 'Encarte') + ' (cópia)',
       };
-      const rPost = await fetch('/api/projetos', {
+      const rPost = await httpAuth('/api/projetos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(copia),

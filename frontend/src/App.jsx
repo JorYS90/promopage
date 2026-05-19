@@ -116,16 +116,18 @@ export default function App() {
   // Carrega contagem de campanhas pra mostrar no badge da Topbar
   useEffect(() => {
     const carregarQtd = async () => {
+      // /api/projetos agora requer auth — pula se user não logado
+      if (!auth.user) { setQtdCampanhas(0); return; }
       try {
-        const r = await fetch('/api/projetos');
+        const r = await auth.fetchAuth('/api/projetos');
         if (!r.ok) return;
         const lista = await r.json();
         setQtdCampanhas(Array.isArray(lista) ? lista.length : 0);
       } catch {}
     };
     carregarQtd();
-    // Recarrega quando o modal de campanhas fechar (pode ter excluído/duplicado)
-  }, [modalCampanhas]);
+    // Recarrega quando user muda (login/logout) ou modal de campanhas fechar
+  }, [modalCampanhas, auth.user, auth.fetchAuth]);
 
   // Carrega um projeto salvo no app — substitui todos os states relevantes
   const carregarProjeto = (projeto) => {
@@ -511,7 +513,7 @@ export default function App() {
         ));
         return;
       }
-      const novaUrl = await uploadBlobProcessado(blob, `${(produto.nome || 'produto').replace(/[^a-z0-9]/gi, '_')}_sem_fundo.png`);
+      const novaUrl = await uploadBlobProcessado(blob, `${(produto.nome || 'produto').replace(/[^a-z0-9]/gi, '_')}_sem_fundo.png`, auth.fetchAuth);
       if (!novaUrl) throw new Error('upload retornou vazio');
       // Atualiza o produto na lista por ID (defensivo: só atualiza se ainda existe)
       setProdutos(prev => prev.map(p =>
@@ -612,9 +614,10 @@ export default function App() {
     input.onchange = async () => {
       const file = input.files?.[0];
       if (!file) return;
+      if (!auth.user) { alert('Faça login pra subir imagens.'); return; }
       const fd = new FormData();
       fd.append('imagem', file);
-      const r = await fetch('/api/upload', { method: 'POST', body: fd });
+      const r = await auth.fetchAuth('/api/upload', { method: 'POST', body: fd });
       const json = await r.json();
       editarProduto(idx, { ...produtos[idx], imagem: json.url });
     };
@@ -623,6 +626,7 @@ export default function App() {
 
   // ---------- Salvar / Exportar ----------
   const salvar = async () => {
+    if (!auth.user) { alert('Faça login pra salvar seus projetos.'); return; }
     const payload = {
       id: projetoId,
       nome: nomeProjeto,
@@ -632,7 +636,7 @@ export default function App() {
       observacoes,
       categoria,
     };
-    const r = await fetch('/api/projetos', {
+    const r = await auth.fetchAuth('/api/projetos', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -683,6 +687,8 @@ export default function App() {
             aoAdicionar={adicionarProduto}
             aoAdicionarTudo={adicionarTudo}
             aoEditar={(idx) => setModalEditar({ aberto: true, foco: idx })}
+            user={auth.user}
+            fetchAuth={auth.fetchAuth}
           />
         )}
         {aba === 'temas' && (
@@ -698,6 +704,7 @@ export default function App() {
           <PainelLogo
             aoAtualizar={setLogo}
             corBorda={tema?.paleta?.primaria || tema?.paleta?.tagPreco || '#ef4444'}
+            fetchAuth={auth.fetchAuth}
           />
         )}
         {aba === 'fontes' && (
@@ -714,6 +721,7 @@ export default function App() {
             setObservacoes={setObservacoes}
             categoria={categoria}
             setCategoria={setCategoria}
+            fetchAuth={auth.fetchAuth}
           />
         )}
       </div>
@@ -843,6 +851,7 @@ export default function App() {
           aoRemoverTodos={removerTodos}
           aoTrocarImagem={trocarImagem}
           aoReordenar={reordenarProduto}
+          fetchAuth={auth.fetchAuth}
         />
       )}
 
@@ -851,6 +860,7 @@ export default function App() {
         aoFechar={() => setModalCampanhas(false)}
         aoCarregarProjeto={carregarProjeto}
         aoCriarNovo={criarNovo}
+        fetchAuth={auth.fetchAuth}
       />
 
       <ModalAuth

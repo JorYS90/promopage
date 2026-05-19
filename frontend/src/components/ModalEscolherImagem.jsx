@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, aoEscolher }) {
+export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, aoEscolher, fetchAuth }) {
   const [query, setQuery] = useState(queryInicial || '');
   const [imagens, setImagens] = useState([]);
   const [populares, setPopulares] = useState([]);
@@ -9,6 +9,8 @@ export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, ao
   const [selecionada, setSelecionada] = useState(null); // índice na lista combinada
   const [enviandoUpload, setEnviandoUpload] = useState(false);
   const inputFileRef = useRef(null);
+  // /api/upload exige auth; outros endpoints daqui (populares/buscar-imagens) são públicos.
+  const httpAuth = fetchAuth || ((url, opts) => fetch(url, opts));
 
   useEffect(() => {
     if (aberto && queryInicial) {
@@ -108,7 +110,7 @@ export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, ao
     try {
       const fd = new FormData();
       fd.append('imagem', file);
-      const r = await fetch('/api/upload', { method: 'POST', body: fd });
+      const r = await httpAuth('/api/upload', { method: 'POST', body: fd });
       if (!r.ok) {
         // Tenta ler corpo da resposta pra mostrar erro REAL do backend
         let detalhe = '';

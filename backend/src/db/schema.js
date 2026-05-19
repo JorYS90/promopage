@@ -184,6 +184,62 @@ db.exec(`
     expira_em TEXT NOT NULL                -- ISO date — após isso é considerado miss
   );
   CREATE INDEX IF NOT EXISTS idx_cache_busca_expira ON cache_busca_imagens(expira_em);
+
+  -- ============================================================================
+  -- ISOLAMENTO POR USUÁRIO (introduzido 2026-05-19)
+  -- ============================================================================
+  -- Até então produtos/projetos/categorias eram arquivos JSON COMPARTILHADOS
+  -- entre todos os users (bug de privacidade: Bruno via dados do jaopaulinho).
+  -- Migrado pra SQLite com user_id FK + ON DELETE CASCADE (deletar user limpa
+  -- catálogo dele). Admin/super_admin enxerga tudo via filtro do endpoint.
+
+  -- Produtos cadastrados (catálogo pessoal do lojista)
+  CREATE TABLE IF NOT EXISTS produtos (
+    id TEXT PRIMARY KEY,                -- nanoid(10), gerado no app
+    user_id INTEGER NOT NULL,
+    nome TEXT NOT NULL,
+    marca TEXT NOT NULL DEFAULT '',
+    categoria TEXT NOT NULL DEFAULT 'Geral',
+    codigo_barras TEXT NOT NULL DEFAULT '',
+    imagem TEXT NOT NULL DEFAULT '',
+    preco TEXT NOT NULL DEFAULT '',
+    preco_de TEXT NOT NULL DEFAULT '',
+    fonte TEXT NOT NULL DEFAULT 'manual',
+    criado_em TEXT NOT NULL,
+    atualizado_em TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+  );
+  CREATE INDEX IF NOT EXISTS idx_produtos_user ON produtos(user_id);
+  CREATE INDEX IF NOT EXISTS idx_produtos_codbarras ON produtos(user_id, codigo_barras)
+    WHERE codigo_barras != '';
+
+  -- Projetos / encartes salvos
+  CREATE TABLE IF NOT EXISTS projetos (
+    id TEXT PRIMARY KEY,                -- nanoid(10), preservado do nome do JSON antigo
+    user_id INTEGER NOT NULL,
+    nome TEXT NOT NULL DEFAULT '',
+    categoria TEXT NOT NULL DEFAULT '',
+    observacoes TEXT NOT NULL DEFAULT '',
+    tema TEXT,                          -- id do template usado
+    configs TEXT NOT NULL DEFAULT '{}', -- JSON serializado (settings do canvas)
+    produtos TEXT NOT NULL DEFAULT '[]',-- JSON serializado (lista de produtos)
+    criado_em TEXT NOT NULL,
+    atualizado_em TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+  );
+  CREATE INDEX IF NOT EXISTS idx_projetos_user ON projetos(user_id);
+  CREATE INDEX IF NOT EXISTS idx_projetos_user_atualizado ON projetos(user_id, atualizado_em);
+
+  -- Categorias customizadas por usuário (além das padrão do app)
+  CREATE TABLE IF NOT EXISTS categorias_custom (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    nome TEXT NOT NULL,
+    criado_em TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(user_id, nome)               -- mesmo user não cria 2 categorias iguais
+  );
+  CREATE INDEX IF NOT EXISTS idx_categorias_custom_user ON categorias_custom(user_id);
 `);
 
 // === Migração idempotente: adiciona colunas novas em tabelas existentes ===

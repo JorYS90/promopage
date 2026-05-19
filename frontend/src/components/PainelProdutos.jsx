@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import ModalEscolherImagem from './ModalEscolherImagem.jsx';
 
-export default function PainelProdutos({ produtosAtuais, aoAdicionar, aoAdicionarTudo, aoEditar }) {
+export default function PainelProdutos({ produtosAtuais, aoAdicionar, aoAdicionarTudo, aoEditar, fetchAuth, user }) {
   const [modalImg, setModalImg] = useState({ aberto: false, query: '', idx: -1 });
   const [tab, setTab] = useState('pesquisar');
   const [linhas, setLinhas] = useState('');
   const [resultados, setResultados] = useState([]);
   const [carregando, setCarregando] = useState(false);
+  // fetchAuth opcional pra compat — sem ele, cai pra fetch normal (deslogado vai dar 401)
+  const httpAuth = fetchAuth || ((url, opts) => fetch(url, opts));
 
   const buscar = async () => {
     if (!linhas.trim()) return;
+    if (!user) { alert('Faça login pra pesquisar e adicionar produtos.'); return; }
     setCarregando(true);
     try {
-      const r = await fetch('/api/produtos/buscar-lote', {
+      const r = await httpAuth('/api/produtos/buscar-lote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ linhas }),

@@ -21,10 +21,12 @@ const FUNDOS = [
   { id: 'transparente',   label: 'Sem Fundo',            bg: 'transparent', shape: 'none'   },
 ];
 
-async function uploadArquivo(file) {
+async function uploadArquivo(file, fetchAuth) {
   const fd = new FormData();
   fd.append('imagem', file);
-  const r = await fetch('/api/upload', { method: 'POST', body: fd });
+  // /api/upload exige auth desde isolamento por user (2026-05-19)
+  const http = fetchAuth || ((url, opts) => fetch(url, opts));
+  const r = await http('/api/upload', { method: 'POST', body: fd });
   const json = await r.json();
   if (!json.url) throw new Error(json.error || 'falha no upload');
   return json.url;
@@ -40,7 +42,7 @@ function carregar() {
   }
 }
 
-export default function PainelLogo({ aoAtualizar, corBorda = '#ef4444' }) {
+export default function PainelLogo({ aoAtualizar, corBorda = '#ef4444', fetchAuth }) {
   const [dados, setDados] = useState(DADOS_VAZIOS);
   const [enviando, setEnviando] = useState(false);
   const fileInputRef = useRef(null);
@@ -68,7 +70,7 @@ export default function PainelLogo({ aoAtualizar, corBorda = '#ef4444' }) {
     if (!file) return;
     setEnviando(true);
     try {
-      const url = await uploadArquivo(file);
+      const url = await uploadArquivo(file, fetchAuth);
       // Não salva direto: abre o modal de recorte/remoção de fundo
       setUrlPendente(url);
     } catch (err) {
@@ -203,6 +205,7 @@ export default function PainelLogo({ aoAtualizar, corBorda = '#ef4444' }) {
           urlOriginal={urlPendente}
           aoFechar={() => setUrlPendente('')}
           aoSalvar={(novaUrl) => salvar({ ...dados, url: novaUrl })}
+          fetchAuth={fetchAuth}
         />
       )}
     </div>

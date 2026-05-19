@@ -54,7 +54,7 @@ const UNIDADES = [
   { nome: 'Jarda',      abrev: 'yd' },
 ];
 
-export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRemover, aoRemoverTodos, aoTrocarImagem, aoReordenar }) {
+export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRemover, aoRemoverTodos, aoTrocarImagem, aoReordenar, fetchAuth }) {
   const [processando, setProcessando] = useState({});  // { idx: { progresso } }
   const [modalImg, setModalImg] = useState({ aberto: false, idx: -1, query: '' });
   const [arrastandoIdx, setArrastandoIdx] = useState(null);
@@ -73,7 +73,7 @@ export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRem
           setProcessando(prev => ({ ...prev, [idx]: { progresso, label: 'Removendo fundo...' } }));
         },
       });
-      const urlFinal = await uploadBlobProcessado(blob, `${(nome || 'produto').replace(/[^a-z0-9]/gi, '_')}_sem_fundo.png`);
+      const urlFinal = await uploadBlobProcessado(blob, `${(nome || 'produto').replace(/[^a-z0-9]/gi, '_')}_sem_fundo.png`, fetchAuth);
       const p = produtos[idx];
       aoMudar(idx, { ...p, imagem: urlFinal, fundoRemovido: true });
     } catch (e) {
@@ -104,7 +104,7 @@ export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRem
         },
       });
       if (!blob) throw new Error('IA não retornou imagem');
-      const urlFinal = await uploadBlobProcessado(blob, `${(nome || 'produto').replace(/[^a-z0-9]/gi, '_')}_ia.png`);
+      const urlFinal = await uploadBlobProcessado(blob, `${(nome || 'produto').replace(/[^a-z0-9]/gi, '_')}_ia.png`, fetchAuth);
       const p = produtos[idx];
       aoMudar(idx, { ...p, imagem: urlFinal, fundoRemovido: true });
     } catch (e) {
@@ -331,6 +331,7 @@ export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRem
         queryInicial={modalImg.query}
         aoFechar={() => setModalImg({ aberto: false, idx: -1, query: '' })}
         aoEscolher={aoEscolherImagem}
+        fetchAuth={fetchAuth}
       />
     </>
   );

@@ -11,12 +11,14 @@ export default function PainelEncarte({
   setObservacoes,
   categoria = '',
   setCategoria,
+  fetchAuth,  // opcional — sem ele, lista só categorias padrão (público)
 }) {
-  // Categorias disponíveis (vêm do backend — gerenciadas em "Temas")
+  // Categorias disponíveis (vêm do backend — padrão do sistema + custom do user logado)
   const [categorias, setCategorias] = useState([]);
+  const httpAuth = fetchAuth || ((url, opts) => fetch(url, opts));
 
   useEffect(() => {
-    fetch('/api/categorias')
+    httpAuth('/api/categorias')
       .then(r => r.ok ? r.json() : [])
       .then(lista => {
         // Backend retorna objetos {nome, criadoEm, padrao} — normaliza pra string
