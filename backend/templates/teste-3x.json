@@ -2,6 +2,7 @@
   "nome": "Ofertas Relâmpago",
   "categoria": "Temas Grátis",
   "premium": false,
+  "gratis": true,
   "novo": false,
   "capa": {
     "tipo": "imagens",
