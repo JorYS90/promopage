@@ -5812,6 +5812,14 @@ export async function renderizarEncarte(canvas, { tema, produtos, configs, empre
       return false;
     })();
 
+    // "*Imagens Meramente Ilustrativas": vem LIGADO por padrão em TODO encarte.
+    // O toggle (imagensIlustrativas) é a fonte da verdade — antes ele não
+    // controlava nada (o texto dependia do tema ter rodape.textoDireito). Agora:
+    //   ON (default, inclusive quando datas/toggle nem existe) → mostra o aviso
+    //   OFF (usuário desativou manualmente) → esconde, mesmo se o tema trouxer
+    const mostrarIlustrativas = datas?.mostrar?.imagensIlustrativas !== false;
+    const textoIlustrativas = mostrarIlustrativas ? '*Imagens Meramente Ilustrativas' : '';
+
     let alturaRodape = 0;
     try {
       let rodapeAjustado = null;
@@ -5824,11 +5832,22 @@ export async function renderizarEncarte(canvas, { tema, produtos, configs, empre
             altura: 13,
             textoEsquerdo: '',     // esconde "Feito com promopage.com"
             faixaSuperior: null,   // remove faixa amarela superior
+            textoDireito: textoIlustrativas,
           };
         } else {
           // Reduzido 50% (era max(50, 6%) → max(25, 3%))
-          rodapeAjustado = { ...tema.rodape, altura: Math.max(25, H * 0.03) };
+          rodapeAjustado = { ...tema.rodape, altura: Math.max(25, H * 0.03), textoDireito: textoIlustrativas };
         }
+      } else if (mostrarIlustrativas) {
+        // Tema sem rodapé próprio: cria um rodapé mínimo só pra garantir que o
+        // aviso apareça (regra: default em todo encarte).
+        const corRodape = tema?.paleta?.primaria || tema?.paleta?.tagPreco || '#ef4444';
+        rodapeAjustado = {
+          altura: temEmpresaVisivel ? 13 : Math.max(25, H * 0.03),
+          fundo: corRodape,
+          textoEsquerdo: '',
+          textoDireito: textoIlustrativas,
+        };
       }
       alturaRodape = renderizarRodape(canvas, rodapeAjustado, W, H);
     } catch (e) { console.warn('[render] rodapé falhou:', e?.message); }
