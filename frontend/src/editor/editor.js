@@ -1255,8 +1255,14 @@ function formatarDataBR(iso) {
 }
 
 function renderizarFaixaEmpresa(canvas, empresa, larguraCanvas, alturaCanvas, alturaRodape, paleta, datas) {
-  if (!empresa || !empresa.mostrar) return 0;
-  const m = empresa.mostrar;
+  // empresa pode estar vazia: as regras de Datas (datas / frase promocional /
+  // advertência de medicamento) são INDEPENDENTES dos dados de empresa e
+  // precisam renderizar mesmo quando o painel Empresa não foi preenchido.
+  // Por isso NÃO retornamos cedo aqui — `m` vira {} (nenhum item de empresa) e
+  // o early-return real, mais abaixo, considera também temFaixaDatas /
+  // temAdvMed / temFrasePromocional. Todos os acessos a empresa.X estão
+  // protegidos por `m.X && empresa.X` (curto-circuito), então m={} é seguro.
+  const m = (empresa && empresa.mostrar) || {};
   // Tipos de ícone: 'whatsapp' (verde), 'telefone' (preto), 'localizacao', etc.
   // Cada item: { tipo, texto, legenda? } — legenda aparece em fonte menor acima do texto.
   const mostrarLegendas = !!m.legendaTelefones;
