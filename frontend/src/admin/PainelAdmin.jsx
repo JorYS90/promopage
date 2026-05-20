@@ -279,9 +279,13 @@ function AbaUsers({ fetchAuth, adminUser }) {
                 <td>#{u.id}</td>
                 <td>
                   <div><b>{u.nome}</b></div>
-                  {u.empresa && <small>{u.empresa}</small>}
+                  {u.empresa && <small style={{ display: 'block' }}>{u.empresa}</small>}
+                  {u.documento && <small style={{ display: 'block', color: '#64748b' }}>📄 {u.documento}</small>}
                 </td>
-                <td>{u.email}</td>
+                <td>
+                  <div>{u.email}</div>
+                  {u.telefone && <small style={{ display: 'block', color: '#64748b' }}>📞 {u.telefone}</small>}
+                </td>
                 <td><span className={`adm-role adm-role-${u.role_nome}`}>{u.role_nome}</span></td>
                 <td>{u.plan_slug ? <code>{u.plan_slug}</code> : <small>—</small>}</td>
                 <td>
@@ -359,8 +363,28 @@ function ModalUserDetalhe({ id, fetchAuth, aoFechar, aoRecarregar }) {
         <button className="btn-fechar-x" onClick={aoFechar} aria-label="Fechar">✕</button>
         <h2 style={{ marginTop: 0 }}>{dados.user.nome}</h2>
         <p style={{ color: '#6b7280', marginTop: -8 }}>
-          {dados.user.email} · #{dados.user.id} · {dados.user.role_nome}
+          #{dados.user.id} · {dados.user.role_nome}
         </p>
+
+        <h3 style={{ marginTop: 16 }}>Dados cadastrais</h3>
+        <div style={{
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gap: 10, margin: '8px 0 8px', padding: 14,
+          background: '#f8fafc', border: '1px solid #e5e7eb', borderRadius: 10,
+        }}>
+          {[
+            ['Email', dados.user.email],
+            ['Telefone', dados.user.telefone],
+            ['CPF / CNPJ', dados.user.documento],
+            ['Empresa', dados.user.empresa],
+            ['Cadastro', formatarData(dados.user.criado_em)],
+          ].map(([label, val]) => (
+            <div key={label}>
+              <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: 0.5, color: '#94a3b8', fontWeight: 700 }}>{label}</div>
+              <div style={{ fontSize: 14, color: '#0f172a', fontWeight: 600, wordBreak: 'break-word' }}>{val || '—'}</div>
+            </div>
+          ))}
+        </div>
 
         <h3 style={{ marginTop: 24 }}>Forçar mudança de plano</h3>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
