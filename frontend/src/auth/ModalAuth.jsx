@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
+import {
+  mascararTelefone, mascararDocumento,
+  validarTelefone, validarDocumento,
+} from './documento.js';
 
 // Modal de autenticação. 3 modos alternáveis via tab interno:
 //   - login: email + senha
-//   - signup: nome + email + senha + empresa + telefone
+//   - signup: nome + email + senha + empresa + telefone + CPF/CNPJ (obrigatórios)
 //   - forgot: email (envia token de reset)
 //   - reset: token + nova senha (após receber email)
 
@@ -49,13 +53,15 @@ export default function ModalAuth({
     setErro(''); setCarregando(true);
     try {
       if (form.senha.length < 8) throw new Error('Senha precisa ter pelo menos 8 caracteres');
+      if (!validarTelefone(form.telefone)) throw new Error('Informe um telefone válido com DDD, ex: (11) 99999-9999');
+      if (!validarDocumento(form.documento)) throw new Error('Informe um CPF (11 dígitos) ou CNPJ (14 dígitos) válido');
       await signup({
         email: form.email.trim(),
         senha: form.senha,
         nome: form.nome.trim(),
         empresa: form.empresa.trim() || null,
-        telefone: form.telefone.trim() || null,
-        documento: form.documento.trim() || null,
+        telefone: form.telefone.trim(),
+        documento: form.documento.trim(),
       });
       aoFechar();
     } catch (err) {
@@ -181,17 +187,17 @@ export default function ModalAuth({
                   placeholder="Nome do mercado" maxLength={120} />
               </label>
               <label>
-                <span>Telefone</span>
-                <input type="tel"
-                  value={form.telefone} onChange={e => atualizar('telefone', e.target.value)}
-                  placeholder="(11) 99999-9999" maxLength={30} />
+                <span>Telefone *</span>
+                <input type="tel" required inputMode="numeric"
+                  value={form.telefone} onChange={e => atualizar('telefone', mascararTelefone(e.target.value))}
+                  placeholder="(11) 99999-9999" maxLength={16} />
               </label>
             </div>
             <label>
-              <span>CPF / CNPJ <small>(opcional, p/ NF)</small></span>
-              <input type="text"
-                value={form.documento} onChange={e => atualizar('documento', e.target.value)}
-                placeholder="000.000.000-00" maxLength={20} />
+              <span>CPF / CNPJ *</span>
+              <input type="text" required inputMode="numeric"
+                value={form.documento} onChange={e => atualizar('documento', mascararDocumento(e.target.value))}
+                placeholder="000.000.000-00" maxLength={18} />
             </label>
             <button type="submit" className="ma-btn-primary" disabled={carregando}>
               {carregando ? 'Criando...' : 'Criar conta grátis'}

@@ -16,17 +16,24 @@ const { z } = require('zod');
 const service = require('./service');
 const { requireAuth } = require('./middleware');
 const { enviarReset } = require('../lib/email');
+const { validarTelefone, validarDocumento } = require('../lib/documento');
 
 const router = Router();
 
 // Validators Zod (input strict)
+// telefone e documento (CPF/CNPJ) são OBRIGATÓRIOS e validados de verdade
+// (dígito verificador), não só presença. empresa segue opcional.
 const signupSchema = z.object({
   email: z.string().email('Email inválido'),
   senha: z.string().min(8, 'Mínimo 8 caracteres'),
   nome: z.string().min(2, 'Nome muito curto').max(120),
   empresa: z.string().max(120).optional().nullable(),
-  telefone: z.string().max(30).optional().nullable(),
-  documento: z.string().max(20).optional().nullable(),
+  telefone: z.string({ required_error: 'Telefone obrigatório' })
+    .max(30)
+    .refine(validarTelefone, 'Telefone inválido — informe DDD + número'),
+  documento: z.string({ required_error: 'CPF/CNPJ obrigatório' })
+    .max(20)
+    .refine(validarDocumento, 'CPF ou CNPJ inválido'),
 });
 
 const loginSchema = z.object({
