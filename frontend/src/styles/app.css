@@ -508,6 +508,11 @@ button { font-family: inherit; }
   position: relative;
   transition: opacity 0.2s ease, padding 0.26s cubic-bezier(0.4, 0, 0.2, 1);
 }
+/* Botão "✕ Fechar" do sheet — escondido no desktop (usa-se o ‹/› lateral).
+   Só aparece no mobile (regra na media query ≤1024px). */
+.sheet-fechar-mobile {
+  display: none;
+}
 /* Faixa neon azul na borda esquerda da sidebar-panel */
 .sidebar-panel::before {
   content: '';
@@ -6534,7 +6539,34 @@ button { font-family: inherit; }
     box-shadow: 0 -8px 28px rgba(0,0,0,0.5);
     transform: translateY(0);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    padding-top: 26px;       /* espaço pra "alça" decorativa */
+    padding-top: 46px;       /* espaço pra alça + botão fechar */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;  /* scroll suave em iOS */
+    overscroll-behavior: contain;       /* scroll do sheet não vaza pro fundo */
+  }
+  /* Botão de fechar o sheet (mobile) — fixo no topo do sheet, sempre visível
+     mesmo rolando o conteúdo (position: sticky). Resolve o caso do user ficar
+     "preso" com o sheet cobrindo os botões de download do canvas. */
+  .sheet-fechar-mobile {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    z-index: 2;
+    background: rgba(239,68,68,0.15);
+    color: #fca5a5;
+    border: 1px solid rgba(239,68,68,0.4);
+    border-radius: 16px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .sheet-fechar-mobile:hover {
+    background: rgba(239,68,68,0.25);
+    color: #fecaca;
   }
   /* Alça (handle) decorativa no topo do bottom sheet — indica que sobe/desce */
   .sidebar-panel::after {

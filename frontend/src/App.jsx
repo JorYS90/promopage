@@ -735,6 +735,16 @@ export default function App() {
       </button>
 
       <div className="sidebar-panel">
+        {/* Botão de fechar o painel — visível só no mobile (bottom sheet).
+            No desktop usa-se o ‹/› lateral. Fica fixo no topo do sheet. */}
+        <button
+          className="sheet-fechar-mobile"
+          onClick={() => setPainelAberto(false)}
+          aria-label="Fechar painel"
+          title="Fechar"
+        >
+          ✕ Fechar
+        </button>
         {aba === 'produtos' && (
           <PainelProdutos
             produtosAtuais={produtos}
