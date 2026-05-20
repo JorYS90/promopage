@@ -59,6 +59,10 @@ export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRem
   const [modalImg, setModalImg] = useState({ aberto: false, idx: -1, query: '' });
   const [arrastandoIdx, setArrastandoIdx] = useState(null);
   const [hoverIdx, setHoverIdx] = useState(null);
+  // Só permite arrastar quando o usuário pega pelo "handle" (ícone ⠿). Sem isso,
+  // qualquer clique na linha iniciava drag e reordenava sem querer (bug reportado).
+  // dragArmadoIdx = índice da linha cujo handle foi pressionado.
+  const [dragArmadoIdx, setDragArmadoIdx] = useState(null);
 
   // Auto-remoção de fundo após trocar imagem.
   // Usa chroma key rápido (~100ms). Se fundo não é uniforme, NÃO chama IA
@@ -169,8 +173,10 @@ export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRem
               <div
                 key={p.id || idx}
                 className={`editar-row ${sendoArrastado ? 'arrastando' : ''} ${ehAlvoHover ? 'drop-alvo' : ''}`}
-                draggable={true}
+                draggable={dragArmadoIdx === idx}
                 onDragStart={(e) => {
+                  // Segurança extra: só inicia se foi armado pelo handle
+                  if (dragArmadoIdx !== idx) { e.preventDefault(); return; }
                   setArrastandoIdx(idx);
                   e.dataTransfer.effectAllowed = 'move';
                   e.dataTransfer.setData('text/plain', String(idx));
@@ -196,12 +202,29 @@ export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRem
                   }
                   setArrastandoIdx(null);
                   setHoverIdx(null);
+                  setDragArmadoIdx(null);
                 }}
                 onDragEnd={() => {
                   setArrastandoIdx(null);
                   setHoverIdx(null);
+                  setDragArmadoIdx(null);
                 }}
               >
+                {/* Handle de arraste: ÚNICO ponto que inicia o reordenamento.
+                    Pressionar aqui "arma" o drag da linha; o resto da linha não
+                    arrasta (evita reordenar sem querer ao editar campos). */}
+                <button
+                  type="button"
+                  className="editar-drag-handle"
+                  aria-label="Arrastar pra reordenar"
+                  title="Arraste pra reordenar"
+                  onMouseDown={() => setDragArmadoIdx(idx)}
+                  onTouchStart={() => setDragArmadoIdx(idx)}
+                  onMouseUp={() => setDragArmadoIdx(null)}
+                  onClick={(e) => e.preventDefault()}
+                >
+                  ⠿
+                </button>
                 <div className="col-img">
                   <div className="img-wrapper-grande" onClick={() => setModalImg({ aberto: true, idx, query: p.nome })}>
                     {p.imagem ? (
@@ -310,7 +333,15 @@ export default function ModalEditarProdutos({ produtos, aoFechar, aoMudar, aoRem
                 </div>
 
                 <div className="editar-acoes">
-                  <button className="btn-arraste">↕ ARRASTE</button>
+                  <button
+                    type="button"
+                    className="btn-arraste"
+                    title="Segure e arraste pra reordenar"
+                    onMouseDown={() => setDragArmadoIdx(idx)}
+                    onTouchStart={() => setDragArmadoIdx(idx)}
+                    onMouseUp={() => setDragArmadoIdx(null)}
+                    onClick={(e) => e.preventDefault()}
+                  >↕ ARRASTE</button>
                   <button className="btn-ver" onClick={aoFechar} title="Fechar e voltar para o encarte">👁 VER</button>
                   <button className="btn-remover" onClick={() => aoRemover(idx)}>🗑 Remover</button>
                 </div>

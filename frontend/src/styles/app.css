@@ -3335,6 +3335,30 @@ button { font-family: inherit; }
   border-color: #93c5fd;
   box-shadow: 0 4px 16px rgba(59,130,246,0.08);
 }
+/* Handle de arraste — único ponto que inicia o reordenamento. Fica no canto
+   superior esquerdo da linha. touch-action:none impede o scroll da página
+   quando o usuário começa a arrastar pelo handle no touch. */
+.editar-drag-handle {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 3;
+  background: rgba(148,163,184,0.12);
+  border: none;
+  border-radius: 6px;
+  color: #94a3b8;
+  font-size: 16px;
+  letter-spacing: -1px;
+  line-height: 1.3;
+  padding: 2px 9px;
+  cursor: grab;
+  touch-action: none;
+}
+.editar-drag-handle:active {
+  cursor: grabbing;
+  background: rgba(59,130,246,0.2);
+  color: #2563eb;
+}
 .editar-row .col-img { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .editar-row .col-img .img-wrapper-grande {
   position: relative; width: 140px; height: 140px;
@@ -6681,10 +6705,42 @@ button { font-family: inherit; }
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
   }
-  /* Linha de produto no Editar Produtos: permite quebrar (foto + campos) em
-     vez de forçar tudo numa linha horizontal que estouraria em 375px. */
+  /* Linha de produto no Editar Produtos: empilha tudo numa coluna só. A grade
+     desktop (200px 1fr 320px 110px ≈ 846px) estourava em 375px. Aqui vira
+     1 coluna; padding-top abre espaço pro handle ⠿ que fica absoluto no topo. */
   .editar-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding-top: 40px;
+  }
+  /* Foto centralizada no topo do card */
+  .editar-row .col-img {
+    align-items: center;
+  }
+  /* Campos ocupam a largura toda; label menor pra sobrar espaço pro input */
+  .editar-row .editar-campo {
+    grid-template-columns: 96px 1fr;
+    gap: 6px;
+  }
+  .editar-row .editar-campo input,
+  .editar-row .editar-campo select {
+    width: 100%;
+    min-width: 0;
+  }
+  /* Botões de ação em linha, divididos igualmente, em vez de empilhados */
+  .editar-row .editar-acoes {
+    flex-direction: row;
     flex-wrap: wrap;
+  }
+  .editar-row .editar-acoes button {
+    flex: 1 1 0;
+    min-width: 96px;
+  }
+  /* O badge "Soltar aqui" do drag fica no canto pra não cobrir os campos */
+  .editar-row.drop-alvo::before {
+    right: 12px;
+    top: 16px;
+    transform: none;
   }
 
   /* Minhas Campanhas: header empilha (título em cima, ações embaixo). Senão
