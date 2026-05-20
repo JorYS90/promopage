@@ -13,6 +13,52 @@ button { font-family: inherit; }
   grid-template-rows: 56px auto 1fr;
   height: 100vh;
   overflow: hidden;
+  /* Anima a largura do painel ao recolher/expandir (Chrome 107+/Edge/Safari 16+) */
+  transition: grid-template-columns 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* Painel de conteúdo recolhido — col do meio vira 0 e o canvas ganha o espaço */
+.app.painel-fechado {
+  grid-template-columns: 56px 0px 1fr;
+}
+.app.painel-fechado .sidebar-panel {
+  opacity: 0;
+  padding-left: 0;
+  padding-right: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Botão flutuante de recolher/expandir painel */
+.toggle-painel {
+  position: fixed;
+  top: 50%;
+  /* 56 (barra de ícones) + 320 (painel) = 376px, encostado na borda do painel */
+  left: 376px;
+  transform: translateY(-50%);
+  z-index: 16;
+  width: 22px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  color: #93c5fd;
+  border: 1px solid rgba(59,130,246,0.35);
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+  transition: left 0.26s cubic-bezier(0.4, 0, 0.2, 1), background 0.15s, color 0.15s;
+}
+.toggle-painel:hover {
+  background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+  color: #dbeafe;
+}
+/* Quando recolhido, encosta na barra de ícones (56px) */
+.app.painel-fechado .toggle-painel {
+  left: 56px;
 }
 
 /* ---------- Topbar — DARK PREMIUM com neon azul ---------- */
@@ -460,6 +506,7 @@ button { font-family: inherit; }
   padding: 20px 16px;
   color: #e2e8f0;
   position: relative;
+  transition: opacity 0.2s ease, padding 0.26s cubic-bezier(0.4, 0, 0.2, 1);
 }
 /* Faixa neon azul na borda esquerda da sidebar-panel */
 .sidebar-panel::before {
@@ -6400,3 +6447,230 @@ button { font-family: inherit; }
 .mc-btn-abrir:hover,
 .mc-btn-duplicar:hover,
 .mc-btn-excluir:hover { filter: brightness(0.95); }
+
+/* ============================================================================
+   RESPONSIVO — Telas estreitas (tablet/mobile <= 1024px)
+   ============================================================================
+   IMPORTANTE: este bloco fica no FINAL do arquivo de propósito. CSS cascade:
+   regras com mesma especificidade — a que vem por último vence. Como as regras
+   base de .sidebar-icons/.sidebar-panel estão acima, a media query PRECISA
+   vir depois delas pra sobrescrever em telas pequenas. (Bug 2026-05-20: estava
+   no topo e era anulada pelas regras base.)
+
+   Breakpoint 1024px (decisão 2026-05-20): cobre celulares + tablets retrato
+   (768px) + iPad paisagem (1024px). Laptops/desktop (>1024px) mantêm lateral.
+
+   BOTTOM NAVIGATION: a barra de ícones sai da lateral esquerda e vira uma
+   barra horizontal fixa na parte de baixo (padrão de apps mobile). */
+@media (max-width: 1024px) {
+  /* minmax(0, 1fr) — CRUCIAL: '1fr' puro = minmax(auto, 1fr), e o mínimo
+     'auto' é o min-content. O canvas Fabric.js tem largura intrínseca grande
+     (~842px), então com '1fr' a coluna NÃO encolhe e estoura o viewport
+     (topbar/configbar/canvas ficavam com 842px num celular de 375px).
+     minmax(0, 1fr) deixa a coluna encolher; o canvas ganha scroll interno. */
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .app.painel-fechado {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Barra de ícones → bottom nav horizontal */
+  .sidebar-icons {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    top: auto;
+    width: 100%;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;  /* distribui os 8 igualmente */
+    padding: 4px 4px;
+    padding-bottom: max(4px, env(safe-area-inset-bottom));
+    gap: 0;
+    border-right: none;
+    border-top: 1px solid rgba(59,130,246,0.25);
+    overflow: hidden;          /* todos cabem — sem scroll */
+    z-index: 25;
+    height: calc(58px + env(safe-area-inset-bottom));
+  }
+  /* Neon na borda de cima em vez da direita */
+  .sidebar-icons::after {
+    top: 0; right: auto; left: 0;
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59,130,246,0.5), transparent);
+  }
+  /* Cada botão: flex:1 distribui os 8 igualmente na largura disponível.
+     min-width:0 + width:auto resetam o width:100% do CSS base do desktop
+     (senão cada botão pegava ~363px e gerava scroll horizontal gigante). */
+  .sidebar-icons button {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    font-size: 8px;
+    padding: 4px 1px;
+    gap: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sidebar-icons button .icon {
+    font-size: 17px;
+  }
+
+  /* Painel de conteúdo = BOTTOM SHEET no mobile: sobe de baixo (acima da
+     bottom nav) em vez de deslizar da lateral. Acompanha a barra de baixo. */
+  .sidebar-panel {
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 60px;            /* logo acima da bottom nav */
+    width: 100%;
+    max-height: 68vh;        /* não cobre tudo — deixa ver o canvas em cima */
+    height: auto;
+    border-radius: 18px 18px 0 0;   /* cantos arredondados no topo (estilo sheet) */
+    z-index: 14;
+    box-shadow: 0 -8px 28px rgba(0,0,0,0.5);
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding-top: 26px;       /* espaço pra "alça" decorativa */
+  }
+  /* Alça (handle) decorativa no topo do bottom sheet — indica que sobe/desce */
+  .sidebar-panel::after {
+    content: '';
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(148,163,184,0.5);
+  }
+  /* Fechado: desce e some abaixo da tela */
+  .app.painel-fechado .sidebar-panel {
+    transform: translateY(calc(100% + 60px));
+  }
+  /* No bottom sheet o botão lateral ‹/› não faz sentido. Esconde — o user
+     abre tocando num ícone da barra e fecha tocando no mesmo ícone (toggle
+     via mudarAba). */
+  .toggle-painel {
+    display: none;
+  }
+
+  /* config-bar e canvas ocupam a coluna única; canvas com espaço pra bottom nav */
+  .config-bar {
+    grid-column: 1;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  /* Campos da config-bar: cada um ocupa linha cheia. min-width:0 + select
+     com max-width:100% impede que opções longas (ex: "5 Produtos - 4 produtos
+     + 1 destaque Esquerdo") forcem o select a 443px e estourem a tela. */
+  .config-bar .field {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  /* Texto (3º) e Zoom (4º) são compactos — ficam lado a lado pra economizar
+     altura (senão a config-bar come muito espaço do canvas no mobile). */
+  .config-bar .field:nth-child(3),
+  .config-bar .field:nth-child(4) {
+    flex: 1 1 calc(50% - 4px);
+  }
+  .config-bar .field select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .canvas-area {
+    grid-column: 1;
+    padding-bottom: 72px;   /* não fica escondido atrás da bottom nav */
+  }
+
+  /* (toggle-painel já escondido acima — no mobile o painel é bottom sheet,
+     aberto/fechado tocando nos ícones da barra) */
+
+  /* ---------- Topbar mobile ----------
+     Não cabe logo + 3 botões de menu + auth em 375px. Estratégia:
+     - Reduz padding/gaps
+     - Esconde "Recursos e Planos" e "Central de Atendimento" (navegação
+       secundária; ficam acessíveis no desktop). Mantém "Minhas Campanhas"
+       que é o acesso mais usado.
+     - Auth (Entrar/Cadastrar) compacto. */
+  .topbar {
+    padding: 0 8px;
+    gap: 6px;
+  }
+  .topbar-menu {
+    gap: 4px;
+    min-width: 0;
+    flex-shrink: 0;
+  }
+  /* Esconde 2º e 3º botões (Recursos e Planos / Central de Atendimento) */
+  .topbar-menu .topbar-neon-btn:nth-child(2),
+  .topbar-menu .topbar-neon-btn:nth-child(3) {
+    display: none;
+  }
+  .topbar-neon-btn {
+    padding: 7px 9px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  /* "Minhas Campanhas" (1º botão) vira ícone 📋 no mobile (texto não cabe).
+     Esconde o texto via font-size:0 e mostra ícone com ::before. O badge
+     de contagem continua visível. */
+  .topbar-menu .topbar-neon-btn:first-child > span:first-child {
+    font-size: 0;
+  }
+  .topbar-menu .topbar-neon-btn:first-child > span:first-child::before {
+    content: '📋';
+    font-size: 17px;
+  }
+  /* Logo um pouco menor */
+  .logo-promopage-img {
+    transform: scale(0.85);
+  }
+
+  /* ---------- Modais no mobile ----------
+     Reduz padding (32px de cada lado deixava pouco espaço útil) e diminui a
+     grade de imagens de 4 → 3 colunas pra cada thumbnail ficar maior. */
+  .modal-overlay {
+    padding: 10px;
+  }
+  .modal {
+    padding: 16px;
+    max-height: 94vh;
+  }
+  .modal.escolher-imagem {
+    padding: 16px;
+  }
+  .modal.escolher-imagem .grid-imagens {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  /* Linha de produto no Editar Produtos: permite quebrar (foto + campos) em
+     vez de forçar tudo numa linha horizontal que estouraria em 375px. */
+  .editar-row {
+    flex-wrap: wrap;
+  }
+
+  /* Minhas Campanhas: header empilha (título em cima, ações embaixo). Senão
+     o botão "CRIAR NOVA CAMPANHA" + links estouravam a direita (422px). */
+  .mc2-header {
+    flex-direction: column;
+    gap: 14px;
+  }
+  .mc2-header-acoes {
+    align-items: stretch;
+    width: 100%;
+  }
+  .mc2-btn-criar {
+    justify-content: center;
+  }
+  .mc2-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+}

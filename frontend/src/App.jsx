@@ -121,6 +121,34 @@ export default function App() {
   const [modalEditar, setModalEditar] = useState(false);
   const [modalCampanhas, setModalCampanhas] = useState(false);
   const [qtdCampanhas, setQtdCampanhas] = useState(0);
+  // Painel de conteúdo (Temas/Produtos/etc.) aberto ou recolhido. Recolher dá
+  // mais espaço pro canvas. Persiste a escolha em localStorage (por dispositivo).
+  const [painelAberto, setPainelAberto] = useState(() => {
+    try {
+      const v = localStorage.getItem('encarte-builder:painelAberto');
+      // Default: aberto no desktop, fechado em telas estreitas (<900px)
+      if (v === null) return window.innerWidth >= 900;
+      return v === 'true';
+    } catch { return true; }
+  });
+  const togglePainel = () => setPainelAberto(v => {
+    const novo = !v;
+    try { localStorage.setItem('encarte-builder:painelAberto', String(novo)); } catch {}
+    return novo;
+  });
+  // Clicar num ícone da barra: muda a aba E abre o painel (bottom sheet no
+  // mobile, lateral no desktop). Se clicar no ícone da aba já ativa com o
+  // painel aberto, fecha (toggle). Comportamento natural de bottom sheet.
+  const mudarAba = (id) => {
+    if (id === aba && painelAberto) {
+      setPainelAberto(false);
+      try { localStorage.setItem('encarte-builder:painelAberto', 'false'); } catch {}
+    } else {
+      setAba(id);
+      setPainelAberto(true);
+      try { localStorage.setItem('encarte-builder:painelAberto', 'true'); } catch {}
+    }
+  };
   const [nomeProjeto, setNomeProjeto] = useState('Encarte sem nome');
   const [projetoId, setProjetoId] = useState(null);
   // Metadados extras do encarte (aba "Encarte"): observações e categoria
@@ -679,7 +707,7 @@ export default function App() {
   };
 
   return (
-    <div className="app">
+    <div className={`app ${painelAberto ? '' : 'painel-fechado'}`}>
       <Topbar
         aoAbrirCampanhas={() => setModalCampanhas(true)}
         qtdCampanhas={qtdCampanhas}
@@ -693,7 +721,18 @@ export default function App() {
         aoAbrirPreviewLayouts={() => setModalPreviewLayouts(true)}
         aoVoltarHome={voltarHome}
       />
-      <SidebarIcons ativa={aba} aoMudar={setAba} />
+      <SidebarIcons ativa={aba} aoMudar={mudarAba} />
+
+      {/* Botão de recolher/expandir o painel de conteúdo. Fica na divisa entre
+          o painel e o canvas; quando recolhido, encosta na barra de ícones. */}
+      <button
+        className="toggle-painel"
+        onClick={togglePainel}
+        title={painelAberto ? 'Recolher painel (mais espaço pro encarte)' : 'Expandir painel'}
+        aria-label={painelAberto ? 'Recolher painel' : 'Expandir painel'}
+      >
+        {painelAberto ? '‹' : '›'}
+      </button>
 
       <div className="sidebar-panel">
         {aba === 'produtos' && (
