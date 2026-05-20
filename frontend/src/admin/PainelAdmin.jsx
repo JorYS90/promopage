@@ -151,6 +151,7 @@ function AbaUsers({ fetchAuth, adminUser }) {
   const [filtroAtivo, setFiltroAtivo] = useState('');
   const [filtroRole, setFiltroRole] = useState('');
   const [userDetalhe, setUserDetalhe] = useState(null);
+  const [planos, setPlanos] = useState([]);
 
   const carregar = async () => {
     setCarregando(true);
@@ -166,6 +167,47 @@ function AbaUsers({ fetchAuth, adminUser }) {
   };
 
   useEffect(() => { carregar(); }, []);
+  // Carrega planos uma vez pra detectar o plano "premium" na promoção rápida.
+  useEffect(() => {
+    fetchAuth('/api/admin/plans').then(r => r.json()).then(d => setPlanos(d.plans || [])).catch(() => {});
+  }, [fetchAuth]);
+
+  // Detecta o plano premium: prioriza slug/nome contendo "premium"; se não
+  // achar, cai pro plano pago mais caro (maior preço mensal > 0).
+  const planoPremium = (() => {
+    const porNome = planos.find(p => /premium/i.test(p.slug || '') || /premium/i.test(p.nome || ''));
+    if (porNome) return porNome;
+    const pagos = planos.filter(p => (p.preco_mensal_centavos || 0) > 0);
+    if (!pagos.length) return null;
+    return pagos.reduce((a, b) => (b.preco_mensal_centavos > a.preco_mensal_centavos ? b : a));
+  })();
+
+  // Promoção rápida a premium: 1 clique, valida dias (cortesia padrão 365),
+  // cancela assinatura ativa anterior e cria a premium (via change-plan).
+  const promoverPremium = async (u) => {
+    if (!planoPremium) {
+      alert('Nenhum plano premium encontrado. Use 👁 → "Forçar mudança de plano".');
+      return;
+    }
+    const diasStr = prompt(
+      `Promover "${u.nome}" para ${planoPremium.nome} (premium).\n\nValidade em dias (cortesia):`,
+      '365'
+    );
+    if (diasStr === null) return;
+    const dias = Math.max(1, parseInt(diasStr) || 365);
+    const ciclo = dias >= 360 ? 'anual' : 'mensal';
+    const r = await fetchAuth(`/api/admin/users/${u.id}/change-plan`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan_id: planoPremium.id, diasValidade: dias, status: 'ativo', ciclo }),
+    });
+    if (r.ok) {
+      alert(`✅ ${u.nome} agora é ${planoPremium.nome} por ${dias} dias.`);
+      carregar();
+    } else {
+      alert('Erro: ' + ((await r.json()).error || 'falha ao promover'));
+    }
+  };
 
   const suspender = async (id, nome) => {
     const motivo = prompt(`Motivo da suspensão de "${nome}"?`, 'Pagamento atrasado');
@@ -252,6 +294,11 @@ function AbaUsers({ fetchAuth, adminUser }) {
                 <td><small>{formatarSomenteData(u.criado_em)}</small></td>
                 <td className="adm-acoes">
                   <button onClick={() => setUserDetalhe(u.id)} title="Ver detalhes">👁</button>
+                  <button
+                    onClick={() => promoverPremium(u)}
+                    title={planoPremium ? `Promover a ${planoPremium.nome}` : 'Promover a Premium'}
+                    disabled={!planoPremium || (planoPremium && u.plan_slug === planoPremium.slug)}
+                  >⭐</button>
                   {u.ativo ? (
                     <button onClick={() => suspender(u.id, u.nome)} title="Suspender" disabled={u.id === adminUser?.id}>🚫</button>
                   ) : (
