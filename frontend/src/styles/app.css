@@ -770,10 +770,12 @@ button { font-family: inherit; }
 .sidebar-panel .pe-dica b { color: #fcd34d; }
 
 /* === Painel Postar === */
-.sidebar-panel .pp-titulo { color: #f1f5f9; text-shadow: 0 0 12px rgba(59,130,246,0.25); }
-.sidebar-panel .pp-intro { color: #94a3b8; }
-.sidebar-panel .pp-link { color: #60a5fa; }
-.sidebar-panel .pp-secao-titulo { color: #94a3b8; }
+/* O painel Postar tem fundo BRANCO próprio (.painel-postar), então o texto
+   precisa ser ESCURO. O título é um <h3>, e a regra genérica
+   `.sidebar-panel h3 { color:#cbd5e1 }` (clara) ganhava por especificidade e
+   deixava o título invisível no branco. Forçamos escuro aqui. intro/secao já
+   pegam as cores base escuras (não são h2/h3). */
+.sidebar-panel .pp-titulo { color: #111827; }
 /* O bloco principal do Postar já é escuro (#1f2937), mas vamos harmonizar */
 .sidebar-panel .pp-bloco {
   background: linear-gradient(180deg, #0f1a30 0%, #0b1426 100%);
