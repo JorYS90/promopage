@@ -37,10 +37,14 @@ async function criarPreferencia({ titulo, valorCentavos, payerEmail, externalRef
     }],
     external_reference: externalReference,
     back_urls: backUrls,
-    auto_return: 'approved',
     notification_url: notificationUrl,
     statement_descriptor: 'PROMOPAGE',
   };
+  // auto_return (volta automática pro site após aprovar) exige back_url HTTPS.
+  // Em localhost (http) o MP rejeita — então só ativa quando for https (prod).
+  if (backUrls?.success && backUrls.success.startsWith('https://')) {
+    body.auto_return = 'approved';
+  }
   if (payerEmail) body.payer = { email: payerEmail };
   const result = await pref.create({ body });
   return {
