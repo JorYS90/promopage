@@ -5794,6 +5794,31 @@ button { font-family: inherit; }
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
 }
+/* Textarea no formulário (solicitar tema) — mesmo visual dos inputs */
+.ma-form textarea {
+  padding: 11px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  background: #fff;
+  color: #1f2937;
+  resize: vertical;
+  min-height: 84px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.ma-form textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+}
+/* Modal Solicitar Tema */
+.modal-solicitar-tema { max-width: 520px; width: 95vw; }
+.st-sub { font-size: 13px; color: #6b7280; margin: 0 0 4px; }
+.st-sucesso { text-align: center; padding: 12px 8px 8px; }
+.st-sucesso-icon { font-size: 44px; margin-bottom: 8px; }
+.st-sucesso h2 { margin: 0 0 8px; font-size: 20px; color: #0a1428; }
+.st-sucesso p { font-size: 14px; color: #4b5563; line-height: 1.5; margin: 0 0 20px; }
 .ma-row {
   display: grid;
   grid-template-columns: 1fr 1fr;

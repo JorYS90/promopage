@@ -60,4 +60,34 @@ async function enviarReset({ to, token, link }) {
   });
 }
 
-module.exports = { enviarEmail, enviarReset };
+// Email pro ADMIN quando um usuário solicita um tema novo via formulário.
+async function enviarSolicitacaoTema({ to, solicitante, email, tipoTema, segmento, descricao }) {
+  const linha = (label, val) => val
+    ? `<tr><td style="padding:6px 12px 6px 0;color:#6b7280;font-size:13px;vertical-align:top;white-space:nowrap">${escapeHtml(label)}</td>
+         <td style="padding:6px 0;color:#0a1428;font-size:14px;font-weight:600">${escapeHtml(val)}</td></tr>`
+    : '';
+  const html = `<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"></head>
+<body style="font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f4f6fa;margin:0;padding:24px">
+  <table role="presentation" style="max-width:560px;margin:0 auto;background:#fff;border-radius:12px;padding:32px;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+    <tr><td>
+      <h1 style="font-size:20px;margin:0 0 8px;color:#0a1428">🎨 Nova solicitação de tema</h1>
+      <p style="font-size:14px;color:#666;margin:0 0 20px">Um usuário pediu um tema novo no PromoPage.</p>
+      <table role="presentation" style="width:100%;border-collapse:collapse">
+        ${linha('Tema desejado', tipoTema)}
+        ${linha('Segmento', segmento)}
+        ${linha('Detalhes', descricao)}
+        ${linha('Solicitante', solicitante)}
+        ${linha('E-mail', email)}
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+  return enviarEmail({
+    to,
+    subject: `🎨 Solicitação de tema: ${tipoTema || 'sem título'}`,
+    html,
+  });
+}
+
+module.exports = { enviarEmail, enviarReset, enviarSolicitacaoTema, escapeHtml };

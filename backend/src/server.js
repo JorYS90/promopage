@@ -32,6 +32,11 @@ const seedProdutos = require('./seed-produtos');
 const seedImagensPopulares = require('./seed-imagens-populares');
 const cacheImagens = require('./db/cache-imagens');
 const moderacao = require('./lib/moderacao');
+const { enviarSolicitacaoTema } = require('./lib/email');
+
+// E-mail do ADMIN que recebe as solicitações de tema. Configurável via env
+// (ADMIN_EMAIL). Placeholder por enquanto — trocar quando o cliente definir.
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@promopage.com.br';
 const projetosDb = require('./projetos-db');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -851,6 +856,40 @@ app.delete('/api/categorias/:nome', requireAuth, (req, res) => {
     }
     const ok = categoriasDb.remover(req.params.nome, req.user.id);
     if (!ok) return res.status(404).json({ error: 'Categoria não encontrada (ou é padrão)' });
+    res.json({ ok: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ---------- Solicitação de tema ----------
+// Formulário público (optionalAuth): usuário pede um tema novo e o ADMIN recebe
+// por e-mail. Em dev (sem RESEND_API_KEY) o email só é logado no console.
+app.post('/api/solicitacoes-tema', optionalAuth, async (req, res) => {
+  try {
+    const b = req.body || {};
+    const tipoTema = (b.tipoTema || '').toString().trim().slice(0, 200);
+    const segmento = (b.segmento || '').toString().trim().slice(0, 120);
+    const descricao = (b.descricao || '').toString().trim().slice(0, 2000);
+    // Solicitante: vem do user logado; senão usa o que ele digitou no form.
+    const email = (req.user?.email || b.email || '').toString().trim().slice(0, 160);
+    const solicitante = (req.user?.nome || b.nome || '').toString().trim().slice(0, 160);
+
+    if (!tipoTema) return res.status(400).json({ error: 'Descreva o tema que você quer.' });
+    if (!email) return res.status(400).json({ error: 'Informe um e-mail pra contato.' });
+
+    // Moderação leve: bloqueia pedidos com termos proibidos.
+    if (moderacao.queryProibida(`${tipoTema} ${segmento} ${descricao}`)) {
+      return res.status(400).json({ error: 'Solicitação contém termos não permitidos.' });
+    }
+
+    console.log(`[solicitacao-tema] de ${email} (${solicitante || 'sem nome'}): "${tipoTema}" | seg=${segmento}`);
+    try {
+      await enviarSolicitacaoTema({ to: ADMIN_EMAIL, solicitante, email, tipoTema, segmento, descricao });
+    } catch (err) {
+      console.error('[solicitacao-tema] falha ao enviar email:', err.message);
+      // Não falha pro usuário — o pedido foi logado server-side de qualquer forma.
+    }
     res.json({ ok: true });
   } catch (e) {
     res.status(500).json({ error: e.message });

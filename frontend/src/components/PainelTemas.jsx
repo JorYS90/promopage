@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ModalCriarTema from './ModalCriarTema.jsx';
 import ModalMeusInteresses from '../auth/ModalMeusInteresses.jsx';
+import ModalSolicitarTema from './ModalSolicitarTema.jsx';
 
 export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) {
   // Só admin/super_admin podem criar/editar/excluir temas — temas são globais
@@ -12,6 +13,8 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) 
   const [verNovos, setVerNovos] = useState(false);
   // Modal "Meus Interesses"
   const [interessesAberto, setInteressesAberto] = useState(false);
+  // Modal "Solicitar tema" (formulário que envia e-mail pro admin)
+  const [solicitarAberto, setSolicitarAberto] = useState(false);
   const [temas, setTemas] = useState([]);
   const [busca, setBusca] = useState('');
   const [criarAberto, setCriarAberto] = useState(false);
@@ -221,7 +224,12 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) 
     <div>
       <h2>
         Temas
-        <span className="tema-link-secundario" style={{float:'right'}}>Solicitações</span>
+        <span
+          className="tema-link-secundario"
+          style={{float:'right'}}
+          onClick={() => setSolicitarAberto(true)}
+          title="Pedir um tema novo — envia direto pra nossa equipe"
+        >Solicitações</span>
         <span
           className="tema-link-secundario"
           style={{float:'right',marginRight:12}}
@@ -361,6 +369,13 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) 
       <ModalMeusInteresses
         aberto={interessesAberto}
         aoFechar={() => setInteressesAberto(false)}
+        fetchAuth={fetchAuth}
+      />
+
+      <ModalSolicitarTema
+        aberto={solicitarAberto}
+        aoFechar={() => setSolicitarAberto(false)}
+        user={user}
         fetchAuth={fetchAuth}
       />
     </div>
