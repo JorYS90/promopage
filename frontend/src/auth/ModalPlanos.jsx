@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
+import LogoPromoPage from '../components/LogoPromoPage.jsx';
+import RodapeSite from '../components/RodapeSite.jsx';
 
-// Modal público "Recursos e Planos" — vitrine de planos pra qualquer visitante.
-// Funciona logado ou deslogado:
+// Página pública "Recursos e Planos" — vitrine de planos pra qualquer visitante.
+// Renderiza em tela cheia (não é mais um modal centralizado) e tem o rodapé
+// institucional do site no final. Funciona logado ou deslogado:
 //   - Deslogado: botão "Cadastre-se e Assine" (abre modal de signup)
 //   - Logado: badge "SEU PLANO" no plano atual; botão "Assinar" nos outros
 //   - Logado com plano: botão "Trocar plano" (Fase 2 com Stripe)
@@ -60,10 +63,15 @@ export default function ModalPlanos({
   if (!aberto) return null;
 
   return (
-    <div className="modal-overlay" onClick={aoFechar}>
-      <div className="modal modal-planos" onClick={e => e.stopPropagation()}>
-        <button className="btn-fechar-x" onClick={aoFechar} aria-label="Fechar">✕</button>
+    <div className="mp-pagina">
+      {/* Barra de topo da página: voltar pro editor + logo */}
+      <div className="mp-pagina-topo">
+        <button className="mp-voltar" onClick={aoFechar}>← Voltar</button>
+        <LogoPromoPage size={34} aoClick={aoFechar} />
+        <span className="mp-topo-spacer" aria-hidden="true" />
+      </div>
 
+      <div className="mp-pagina-conteudo">
         {/* HEADER */}
         <div className="mp-header">
           <h2 className="mp-titulo">
@@ -194,6 +202,9 @@ export default function ModalPlanos({
           </p>
         </div>
       </div>
+
+      {/* Rodapé institucional do site (estilo landing) */}
+      <RodapeSite />
     </div>
   );
 }

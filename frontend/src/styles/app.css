@@ -5027,6 +5027,96 @@ button { font-family: inherit; }
 .mp-disclaimer b { color: #111827; }
 .mp-disclaimer small { color: #9ca3af; }
 
+/* ===== Página Recursos e Planos (tela cheia, com rodapé do site) ===== */
+.mp-pagina {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: #f9fafb;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.mp-pagina-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.mp-voltar {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.mp-voltar:hover { background: #e5e7eb; border-color: #d1d5db; }
+.mp-topo-spacer { width: 70px; }
+.mp-pagina-conteudo {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 32px 24px 40px;
+}
+
+/* ===== Rodapé institucional do site ===== */
+.rodape-site {
+  background: #1a1a1a;
+  color: #cbd5e1;
+  padding: 44px 20px 30px;
+  text-align: center;
+}
+.rs-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px 30px;
+  margin-bottom: 20px;
+}
+.rs-links a {
+  color: #e2e8f0;
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: color .15s;
+}
+.rs-links a:hover { color: #fff; text-decoration: underline; }
+.rs-links svg { flex-shrink: 0; }
+.rs-legal {
+  font-size: 13px;
+  color: #94a3b8;
+  margin: 4px 0;
+  line-height: 1.6;
+}
+.rs-copy {
+  font-size: 12px;
+  color: #64748b;
+  margin: 16px 0 14px;
+  font-weight: 600;
+}
+.rs-logo {
+  display: flex;
+  justify-content: center;
+  margin-top: 6px;
+  opacity: 0.92;
+}
+@media (max-width: 600px) {
+  .rs-links { gap: 12px 18px; }
+  .rs-links a { font-size: 13px; }
+  .mp-pagina-conteudo { padding: 24px 14px 32px; }
+}
+
 /* ============ Modal Conta Usuário (Perfil / Assinatura / Pagamentos) ============ */
 .modal-conta {
   max-width: 920px;
