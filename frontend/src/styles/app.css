@@ -5111,6 +5111,25 @@ button { font-family: inherit; }
   margin-top: 6px;
   opacity: 0.92;
 }
+.rs-quem-somos {
+  max-width: 760px;
+  margin: 0 auto 26px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.rs-quem-somos h3 {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+.rs-quem-somos p {
+  color: #cbd5e1;
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0 0 10px;
+  text-align: left;
+}
 @media (max-width: 600px) {
   .rs-links { gap: 12px 18px; }
   .rs-links a { font-size: 13px; }

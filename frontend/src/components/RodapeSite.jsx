@@ -1,23 +1,26 @@
 import LogoPromoPage from './LogoPromoPage.jsx';
 
 // Rodapé institucional do site (estilo landing page) — usado na página de
-// Recursos e Planos. Centraliza redes sociais, links legais e dados da empresa.
-//
-// ⚠️ PREENCHER COM OS DADOS REAIS DO PROMOPAGE. Os valores abaixo são
-// placeholders — troque CNPJ, telefone, endereço e links das redes sociais
-// pelos dados oficiais. Tudo num só objeto pra facilitar a edição.
+// Recursos e Planos. Renderiza só os itens que estiverem PREENCHIDOS:
+// deixe '' (string vazia) pra desativar uma rede social, link legal ou telefone.
 const INFO = {
-  instagram: 'https://instagram.com/promopage',
-  facebook: 'https://facebook.com/promopage',
-  whatsapp: 'https://wa.me/5500000000000',
-  termosUrl: '#',
-  privacidadeUrl: '#',
-  anuncieUrl: '#',
-  cnpj: '00.000.000/0001-00',
-  telefone: '+55 (00) 0000-0000',
-  endereco: 'Rua Exemplo, 000 - Bairro, Cidade - UF, CEP 00000-000',
+  // Redes sociais e links legais — vazios = desativados (não aparecem)
+  instagram: '',
+  facebook: '',
+  whatsapp: '',
+  termosUrl: '',
+  privacidadeUrl: '',
+  anuncieUrl: '',
+  // Dados da empresa
+  cnpj: '59.885.670/0001-85',
+  telefone: '',  // desativado por enquanto
+  endereco: 'Rua Amália Tonon Minatti, 78 — Cafezal, Londrina - PR, CEP 86.045-210',
   anoInicio: 2026,
 };
+
+// Texto "Quem somos nós" — será enviado pelo cliente. Enquanto vazio, a seção
+// não aparece. Aceita várias linhas (separadas por \n viram parágrafos).
+const QUEM_SOMOS = '';
 
 const IconeInstagram = () => (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -42,18 +45,46 @@ export default function RodapeSite() {
   const anos = INFO.anoInicio && INFO.anoInicio < anoAtual
     ? `${INFO.anoInicio} - ${anoAtual}`
     : `${anoAtual}`;
+
+  const quemSomos = QUEM_SOMOS.trim();
+  const links = [
+    INFO.instagram && { href: INFO.instagram, externo: true, icone: <IconeInstagram />, label: 'Siga no Instagram' },
+    INFO.facebook && { href: INFO.facebook, externo: true, icone: <IconeFacebook />, label: 'Siga no Facebook' },
+    INFO.whatsapp && { href: INFO.whatsapp, externo: true, icone: <IconeWhatsapp />, label: 'Chame no Whatsapp' },
+    INFO.termosUrl && { href: INFO.termosUrl, label: 'Termos de Uso' },
+    INFO.privacidadeUrl && { href: INFO.privacidadeUrl, label: 'Política de Privacidade' },
+    INFO.anuncieUrl && { href: INFO.anuncieUrl, label: 'Quer Anunciar?' },
+  ].filter(Boolean);
+
   return (
     <footer className="rodape-site">
-      <div className="rs-links">
-        <a href={INFO.instagram} target="_blank" rel="noopener noreferrer"><IconeInstagram /> Siga no Instagram</a>
-        <a href={INFO.facebook} target="_blank" rel="noopener noreferrer"><IconeFacebook /> Siga no Facebook</a>
-        <a href={INFO.whatsapp} target="_blank" rel="noopener noreferrer"><IconeWhatsapp /> Chame no Whatsapp</a>
-        <a href={INFO.termosUrl}>Termos de Uso</a>
-        <a href={INFO.privacidadeUrl}>Política de Privacidade</a>
-        <a href={INFO.anuncieUrl}>Quer Anunciar?</a>
+      {quemSomos && (
+        <div className="rs-quem-somos">
+          <h3>Quem somos nós</h3>
+          {quemSomos.split('\n').filter(p => p.trim()).map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
+        </div>
+      )}
+
+      {links.length > 0 && (
+        <div className="rs-links">
+          {links.map((l, i) => (
+            <a
+              key={i}
+              href={l.href}
+              {...(l.externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            >
+              {l.icone}{l.icone ? ' ' : ''}{l.label}
+            </a>
+          ))}
+        </div>
+      )}
+
+      <div className="rs-legal">
+        CNPJ: {INFO.cnpj}{INFO.telefone ? ` | Telefone: ${INFO.telefone}` : ''}
       </div>
-      <div className="rs-legal">CNPJ: {INFO.cnpj} | Telefone: {INFO.telefone}</div>
-      <div className="rs-legal">Endereço: {INFO.endereco}</div>
+      {INFO.endereco && <div className="rs-legal">Endereço: {INFO.endereco}</div>}
       <div className="rs-copy">© Todos os Direitos Reservados {anos}</div>
       <div className="rs-logo"><LogoPromoPage size={36} /></div>
     </footer>
