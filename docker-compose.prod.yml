@@ -1,0 +1,32 @@
+# Override de PRODUÇÃO com HTTPS (Caddy como container) — na RAIZ do repo
+# pra permitir comando SEM barras (limitação de teclado em console mobile).
+#
+# Uso (a partir da raiz do repo, na VPS):
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+# Ao usar -f explícito, o Compose NÃO carrega o docker-compose.override.yml
+# automático (que prende o web na porta 80). Assim o `web` volta pra 8080 e o
+# Caddy assume 80/443 sem conflito — sem precisar apagar o override nem sudo.
+#
+# O Caddy emite o certificado Let's Encrypt sozinho (porta 80 precisa estar
+# acessível, já está). Cert persiste no volume caddy_data entre restarts.
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: promopage-caddy
+    restart: unless-stopped
+    depends_on:
+      - web
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile.docker:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
