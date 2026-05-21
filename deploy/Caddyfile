@@ -1,0 +1,17 @@
+# Caddyfile de PRODUÇÃO (Caddy do sistema na VPS).
+# Copiar pra /etc/caddy/Caddyfile e rodar: systemctl restart caddy
+#
+# Caddy escuta 80/443, emite certificado Let's Encrypt automático e faz
+# reverse_proxy pro container `web` (que está em localhost:8080).
+#
+# auto_https disable_redirects: NÃO força redirect HTTP->HTTPS. Assim o HTTP
+# continua servindo o site mesmo se a porta 443 estiver bloqueada no firewall
+# (segurança: não derruba o acesso atual). Depois de confirmar que o HTTPS
+# funciona, dá pra remover essa linha pra ativar o redirect.
+{
+	auto_https disable_redirects
+}
+
+promopage.com.br, www.promopage.com.br {
+	reverse_proxy localhost:8080
+}
