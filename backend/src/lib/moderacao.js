@@ -89,4 +89,67 @@ function classificar(query) {
   return { proibida: false };
 }
 
-module.exports = { queryProibida, classificar, normalizar };
+// ===================================================================
+// FILTRAGEM DE RESULTADOS (defense-in-depth)
+// Mesmo com SafeSearch nas fontes (Bing/Google/etc.), conteúdo adulto às vezes
+// vaza. Aqui filtramos os RESULTADOS (URL + título) por domínios adultos
+// conhecidos e termos explícitos, ANTES de devolver ao usuário.
+// ===================================================================
+
+// Domínios de conteúdo adulto — match por substring no hostname.
+const DOMINIOS_ADULTOS = [
+  'pornhub', 'xvideos', 'xnxx', 'redtube', 'youporn', 'xhamster', 'spankbang',
+  'onlyfans', 'fansly', 'rule34', 'nhentai', 'e-hentai', 'ehentai', 'hanime',
+  'erome', 'motherless', 'porntrex', 'eporner', 'tnaflix', 'beeg', 'tube8',
+  'youjizz', 'fapello', 'brazzers', 'bangbros', 'naughtyamerica', 'realitykings',
+  'chaturbate', 'stripchat', 'livejasmin', 'camsoda', 'myfreecams', 'bongacams',
+  'manyvids', 'clips4sale', 'adultempire', 'redgifs', 'imagefap', 'pornpics',
+  'sexvid', 'txxx', 'hclips', 'upornia', 'gotporn', 'drtuber', 'nuvid',
+  'porn300', 'javhd', 'javbus', 'javlibrary', 'cumlouder', 'gelbooru',
+  'danbooru', 'sankakucomplex', 'hentai-foundry', 'thumbzilla',
+  'porn', 'xxx', 'hentai', 'sexo', 'erotik', 'escort',
+];
+
+// Termos explícitos pra checar (palavra inteira) no caminho da URL e no título.
+// Whole-word só (evita falso positivo: "sexta-feira", "essex" etc.).
+const TERMOS_IMAGEM_PROIBIDOS = [
+  'porn', 'porno', 'xxx', 'sex', 'sexo', 'sexy', 'nude', 'nudes', 'nua', 'nuas',
+  'naked', 'nsfw', 'erotic', 'erotica', 'erotico', 'erotica', 'hentai', 'bdsm',
+  'bondage', 'fetish', 'milf', 'anal', 'blowjob', 'creampie', 'cumshot',
+  'pussy', 'dick', 'cock', 'boobs', 'tits', 'titties', 'nipple', 'gangbang',
+  'deepthroat', 'hardcore', 'camgirl', 'escort', 'upskirt', 'voyeur', 'boquete',
+];
+
+/**
+ * true se a URL (domínio/caminho) ou o título indicam conteúdo adulto.
+ */
+function imagemProibida(url, titulo = '') {
+  if (!url) return true;  // sem URL = descarta
+  let u = String(url).toLowerCase();
+  try { u = decodeURIComponent(u); } catch { /* mantém */ }
+
+  // 1) Domínio adulto conhecido
+  let host = u;
+  try { host = new URL(String(url)).hostname.toLowerCase(); } catch { /* usa string toda */ }
+  for (const d of DOMINIOS_ADULTOS) {
+    if (host.includes(d)) return true;
+  }
+
+  // 2) Termos explícitos (palavra inteira) no caminho da URL ou no título
+  const alvo = normalizar(`${u} ${titulo}`);
+  const tokens = new Set(alvo.split(' '));
+  for (const t of TERMOS_IMAGEM_PROIBIDOS) {
+    if (tokens.has(t)) return true;
+  }
+  return false;
+}
+
+/**
+ * Filtra uma lista de resultados {imagem, nome}, removendo conteúdo adulto.
+ */
+function filtrarImagensSeguras(lista) {
+  if (!Array.isArray(lista)) return [];
+  return lista.filter(r => r && r.imagem && !imagemProibida(r.imagem, r.nome || r.titulo || ''));
+}
+
+module.exports = { queryProibida, classificar, normalizar, imagemProibida, filtrarImagensSeguras };

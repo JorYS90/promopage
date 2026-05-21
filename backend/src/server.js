@@ -365,7 +365,7 @@ app.post('/api/produtos/buscar-lote', requireAuth, async (req, res) => {
     // Resolve o problema de "estou trocando a imagem toda vez por uma mais bonita".
     try {
       const popular = imagensDb.imagemMaisPopular(nomeDigitado);
-      if (popular && popular.url) {
+      if (popular && popular.url && !moderacao.imagemProibida(popular.url, nomeDigitado)) {
         imagemEncontrada = popular.url;
         fonte = 'populares';
       }
@@ -542,6 +542,14 @@ app.get('/api/produtos/buscar-imagens', async (req, res) => {
     const limite = parseInt(req.query.limite) || 20;
     if (!query) return res.json({ imagens: [] });
 
+    // MODERAÇÃO: bloqueia queries explícitas (pornografia/drogas/etc.) antes de
+    // chamar QUALQUER fonte externa. Esse endpoint (grid de troca de imagem) não
+    // tinha essa checagem — era a porta de entrada de conteúdo adulto.
+    if (moderacao.queryProibida(query)) {
+      console.warn(`[buscar-imagens][moderacao] query bloqueada: "${query}"`);
+      return res.json({ imagens: [], total: 0, bloqueado: true });
+    }
+
     // ESTRATÉGIA: múltiplas queries + ranqueamento por qualidade do domínio.
     //
     // 1) Query original "Ancho Maturatta"
@@ -586,6 +594,9 @@ app.get('/api/produtos/buscar-imagens', async (req, res) => {
     for (const lista of resultadosBrutos) {
       for (const item of lista) {
         if (!item.imagem || vistos.has(item.imagem)) continue;
+        // Rede de segurança final: descarta qualquer resultado adulto que tenha
+        // escapado dos filtros das fontes (domínio/termo explícito).
+        if (moderacao.imagemProibida(item.imagem, item.nome)) continue;
         vistos.add(item.imagem);
         todasComScore.push({
           url: item.imagem,
@@ -623,6 +634,11 @@ app.post('/api/produtos/registrar-imagem', (req, res) => {
     if (imagemUrl.includes('/api/placeholder')) {
       return res.json({ ok: true, ignorado: 'placeholder' });
     }
+    // Não registra conteúdo adulto no banco compartilhado (nem por URL nem por nome)
+    if (moderacao.imagemProibida(imagemUrl, nome) || moderacao.queryProibida(nome)) {
+      console.warn(`[banco][moderacao] registro recusado (adulto): "${nome}"`);
+      return res.json({ ok: true, ignorado: 'moderacao' });
+    }
     const pesoNum = Math.max(1, Math.min(50, parseInt(peso, 10) || 1));
     imagensDb.registrarUso(nome, imagemUrl, pesoNum);
     if (pesoNum >= 5) {
@@ -645,7 +661,11 @@ app.get('/api/produtos/imagens-populares', (req, res) => {
     const q = (req.query.q || '').toString().trim();
     const limite = parseInt(req.query.limite || '12', 10);
     if (!q) return res.json({ imagens: [] });
-    const populares = imagensDb.buscarPopulares(q, Math.min(limite, 50));
+    if (moderacao.queryProibida(q)) return res.json({ imagens: [], bloqueado: true });
+    // Banco de populares é COMPARTILHADO entre usuários — filtra qualquer imagem
+    // adulta que tenha sido registrada antes do filtro existir.
+    const populares = imagensDb.buscarPopulares(q, Math.min(limite, 50))
+      .filter(p => !moderacao.imagemProibida(p.url || p.imagem || '', p.nome || q));
     res.json({ imagens: populares });
   } catch (e) {
     res.status(500).json({ error: e.message, imagens: [] });

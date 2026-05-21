@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const { nanoid } = require('nanoid');
+const { filtrarImagensSeguras } = require('./lib/moderacao');
 
 const CACHE_IMG_DIR = path.join(__dirname, '..', 'uploads', 'produtos');
 
@@ -77,7 +78,7 @@ async function buscarOpenFoodFacts(query, limite = 12) {
   try {
     const json = await fetchJson(url);
     if (!json.products) return [];
-    return json.products
+    return filtrarImagensSeguras(json.products
       .filter(p => p.image_front_url || p.image_url)
       .map(p => ({
         nome: p.product_name_pt || p.product_name || 'Sem nome',
@@ -86,7 +87,7 @@ async function buscarOpenFoodFacts(query, limite = 12) {
         codigoBarras: p.code || '',
         imagem: p.image_front_url || p.image_url,
         fonte: 'openfoodfacts',
-      }));
+      })));
   } catch (e) {
     // OFF/Cloudflare frequentemente retorna 503/HTML. Não loga toda vez pra não floodar.
     // Se quiser ver, descomenta a linha abaixo.
@@ -179,7 +180,7 @@ async function _buscarBingImagesNoCache(query, limite = 12) {
       console.warn(`[bing] 0 resultados pra "${query}" (HTML ${html.length} chars). Possível mudança de layout.`);
     }
 
-    return resultados.slice(0, limite);
+    return filtrarImagensSeguras(resultados.slice(0, limite));
   } catch (e) {
     console.error('Erro Bing:', e.message);
     return [];
@@ -192,7 +193,7 @@ async function _buscarBingImagesNoCache(query, limite = 12) {
 // (mais consistente que gbv=1 antigo, que está sendo removido).
 async function buscarGoogleImages(query, limite = 12) {
   try {
-    const url = `https://www.google.com/search?q=${encodeURIComponent(query)}&udm=2&hl=pt-BR&gl=br&safe=off`;
+    const url = `https://www.google.com/search?q=${encodeURIComponent(query)}&udm=2&hl=pt-BR&gl=br&safe=active`;
     const html = await fetchText(url, {
       'Accept': 'text/html,application/xhtml+xml',
       'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.8',
@@ -253,7 +254,7 @@ async function buscarGoogleImages(query, limite = 12) {
 
     // Google bloqueia scraping desde 2024 (exige JS). Não loga toda vez — apenas
     // se passar a funcionar de novo.
-    return resultados.slice(0, limite);
+    return filtrarImagensSeguras(resultados.slice(0, limite));
   } catch (e) {
     return [];
   }
@@ -414,7 +415,7 @@ async function buscarGoogleCSE(query, limite = 10) {
       return [];
     }
 
-    const resultados = json.items.map(item => ({
+    const resultados = filtrarImagensSeguras(json.items.map(item => ({
       nome: item.title || query,
       marca: '',
       categoria: 'Geral',
@@ -422,7 +423,7 @@ async function buscarGoogleCSE(query, limite = 10) {
       imagem: item.link,
       thumb: item.image?.thumbnailLink || null,
       fonte: 'gcse',
-    }));
+    })));
     console.log(`[gcse] q="${query}" → ${resultados.length} resultados (quota: ${quota.usados}/${CSE_QUOTA_DIARIA})`);
     cacheBuscaSet(cacheKey, resultados);
     return resultados;
@@ -530,9 +531,13 @@ async function buscarYandexImages(query, limite = 20) {
 }
 async function _buscarYandexImagesNoCache(query, limite = 20) {
   try {
-    const url = `https://yandex.com/images/search?text=${encodeURIComponent(query)}`;
+    // family=yes + cookie yp/sp = SafeSearch família (Yandex não tem SafeSearch
+    // tão forte quanto Bing; o filtro de resultados (filtrarImagensSeguras) é a
+    // defesa principal). Yandex é fonte de risco — sempre filtrar o retorno.
+    const url = `https://yandex.com/images/search?text=${encodeURIComponent(query)}&family=yes`;
     const html = await fetchText(url, {
       'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.8',
+      'Cookie': 'yp=1900000000.sp.family%3A2',
     });
 
     const resultados = [];
@@ -568,7 +573,7 @@ async function _buscarYandexImagesNoCache(query, limite = 20) {
       console.warn(`[yandex] 0 resultados pra "${query}" (HTML ${html.length} chars). Início HTML: ${html.slice(0, 120).replace(/\s+/g, ' ')}`);
     }
 
-    return resultados.slice(0, limite);
+    return filtrarImagensSeguras(resultados.slice(0, limite));
   } catch (e) {
     console.error('Erro Yandex:', e?.message || String(e) || 'erro vazio', e?.code || '');
     return [];
@@ -595,7 +600,7 @@ async function buscarDuckDuckGo(query, limite = 5) {
     try { parsed = JSON.parse(json); } catch (e) { return []; }
     if (!parsed.results) return [];
 
-    return parsed.results.slice(0, limite).map(r => ({
+    return filtrarImagensSeguras(parsed.results.slice(0, limite).map(r => ({
       nome: r.title || query,
       marca: r.source || '',
       categoria: 'Geral',
@@ -603,7 +608,7 @@ async function buscarDuckDuckGo(query, limite = 5) {
       imagem: r.image,
       thumb: r.thumbnail,
       fonte: 'duckduckgo',
-    }));
+    })));
   } catch (e) {
     console.error('Erro DuckDuckGo:', e.message);
     return [];
@@ -669,7 +674,7 @@ async function _buscarWikimediaRaw(query, limite) {
     const detalhes = await fetchJson(detalhesUrl);
     const paginas = detalhes.query?.pages || {};
 
-    return Object.values(paginas)
+    return filtrarImagensSeguras(Object.values(paginas)
       .map(p => {
         const info = p.imageinfo?.[0];
         if (!info) return null;
@@ -682,7 +687,7 @@ async function _buscarWikimediaRaw(query, limite) {
           fonte: 'wikimedia',
         };
       })
-      .filter(Boolean);
+      .filter(Boolean));
   } catch (e) {
     console.error('Erro Wikimedia:', e.message);
     return [];
