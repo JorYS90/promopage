@@ -2353,6 +2353,13 @@ button { font-family: inherit; }
 .select-com-acoes select {
   flex: 1;
 }
+/* As opções do dropdown herdavam texto branco (tema escuro) e ficavam brancas
+   no fundo branco da lista aberta. Força texto escuro em fundo branco — a lista
+   aberta fica legível, e o select fechado mantém seu visual normal. */
+.select-com-acoes select option {
+  color: #1f2937;
+  background: #ffffff;
+}
 .btn-mini-del {
   background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5;
   border-radius: 4px; cursor: pointer;
