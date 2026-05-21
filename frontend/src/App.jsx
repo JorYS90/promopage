@@ -1005,6 +1005,23 @@ export default function App() {
             alert('Não foi possível iniciar o pagamento: ' + (e.message || e));
           }
         }}
+        aoTestarPagamento={async () => {
+          // Admin-only: pagamento REAL de R$1 pra validar o fluxo (reembolsar depois).
+          try {
+            const r = await auth.fetchAuth('/api/pagamentos/checkout', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ slug: 'basico', ciclo: 'mensal', valorTesteCentavos: 100 }),
+            });
+            const d = await r.json().catch(() => ({}));
+            if (!r.ok) throw new Error(d.error || 'Falha ao iniciar o teste');
+            const url = d.init_point || d.sandbox_init_point;
+            if (!url) throw new Error('Checkout indisponível');
+            window.location.href = url;
+          } catch (e) {
+            alert('Não foi possível iniciar o teste: ' + (e.message || e));
+          }
+        }}
       />
 
       <PainelAdmin

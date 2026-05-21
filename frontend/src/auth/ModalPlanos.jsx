@@ -31,8 +31,10 @@ export default function ModalPlanos({
   aberto, aoFechar,
   user, planoAtualSlug,
   aoAssinarSemConta,   // chamado quando deslogado clica em "assinar"
-  aoTrocarPlano,       // chamado quando logado clica em assinar (Fase 2)
+  aoTrocarPlano,       // chamado quando logado clica em assinar (Checkout MP)
+  aoTestarPagamento,   // admin-only: dispara um checkout de R$1 (teste real)
 }) {
+  const ehAdmin = user?.role_nome === 'admin' || user?.role_nome === 'super_admin';
   const [planos, setPlanos] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [ciclo, setCiclo] = useState('mensal');  // 'mensal' ou 'anual'
@@ -200,6 +202,16 @@ export default function ModalPlanos({
             <br />
             <small>Suporte via WhatsApp · Notas fiscais emitidas automaticamente · Sem fidelidade</small>
           </p>
+          {ehAdmin && aoTestarPagamento && (
+            <button
+              type="button"
+              onClick={() => aoTestarPagamento()}
+              style={{ marginTop: 14, padding: '8px 16px', fontSize: 12, fontWeight: 700, color: '#92400e', background: '#fef3c7', border: '1px solid #fcd34d', borderRadius: 8, cursor: 'pointer' }}
+              title="Só admin: faz um pagamento REAL de R$1 pra validar o fluxo (depois reembolse no MP)"
+            >
+              🧪 Testar pagamento real (R$ 1,00) — admin
+            </button>
+          )}
         </div>
       </div>
 

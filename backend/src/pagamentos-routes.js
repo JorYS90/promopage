@@ -51,19 +51,32 @@ router.post('/checkout', requireAuth, async (req, res) => {
       return res.status(400).json({ error: 'Plano sem preço definido' });
     }
 
+    // Valor de TESTE (somente admin/super_admin): permite validar um pagamento
+    // real com valor mínimo (R$1 a R$10) sem criar plano público. Usuários
+    // normais SEMPRE pagam o preço do plano.
+    let valorCobranca = valorCentavos;
+    let ehTeste = false;
+    const ehAdmin = req.user.role_nome === 'admin' || req.user.role_nome === 'super_admin';
+    if (ehAdmin && req.body?.valorTesteCentavos != null) {
+      const vt = parseInt(req.body.valorTesteCentavos, 10);
+      if (Number.isFinite(vt) && vt >= 100 && vt <= 1000) { valorCobranca = vt; ehTeste = true; }
+    }
+
     // Registra pagamento PENDENTE (vincula o resto via external_reference)
     const pag = db.prepare(`
       INSERT INTO payments (user_id, valor_centavos, moeda, metodo, status, gateway, metadata, criado_em)
       VALUES (?, ?, 'BRL', 'mercado_pago', 'pendente', 'mercado_pago', ?, ?)
-    `).run(req.user.id, valorCentavos, JSON.stringify({ plan_id: plan.id, ciclo }), agora());
+    `).run(req.user.id, valorCobranca, JSON.stringify({ plan_id: plan.id, ciclo, teste: ehTeste }), agora());
     const payRow = pag.lastInsertRowid;
 
     // external_reference: u<userId>:p<planId>:<ciclo>:pay<paymentRowId>
     const externalReference = `u${req.user.id}:p${plan.id}:${ciclo}:pay${payRow}`;
 
     const pref = await mp.criarPreferencia({
-      titulo: `PromoPage ${plan.nome} — ${ciclo === 'anual' ? 'Anual' : 'Mensal'}`,
-      valorCentavos,
+      titulo: ehTeste
+        ? `PromoPage — Teste de pagamento (${plan.nome})`
+        : `PromoPage ${plan.nome} — ${ciclo === 'anual' ? 'Anual' : 'Mensal'}`,
+      valorCentavos: valorCobranca,
       payerEmail: req.user.email,
       externalReference,
       backUrls: {
