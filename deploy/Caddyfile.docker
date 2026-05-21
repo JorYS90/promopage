@@ -1,0 +1,15 @@
+# Caddyfile pro Caddy rodando como CONTAINER Docker (não o do sistema).
+# Montado em /etc/caddy/Caddyfile dentro do container pelo deploy/docker-compose.prod.yml.
+#
+# Caddy (container) escuta 80/443, emite cert Let's Encrypt e faz reverse_proxy
+# pro container `web` pela rede interna do Docker (web:80).
+#
+# auto_https disable_redirects: HTTP segue servindo o site mesmo se a 443
+# estiver bloqueada no firewall (não derruba o acesso atual).
+{
+	auto_https disable_redirects
+}
+
+promopage.com.br, www.promopage.com.br {
+	reverse_proxy web:80
+}
