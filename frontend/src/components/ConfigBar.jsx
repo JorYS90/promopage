@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { LAYOUTS_NOMEADOS } from '../editor/auto-layout.js';
 
 // Valores discretos pra os botões − e + do controle de zoom (estilo Figma/Photoshop).
@@ -6,6 +7,18 @@ const ZOOM_STEPS = ['0.25', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1', '1.25
 
 export default function ConfigBar({ configs, aoMudar }) {
   const set = (k, v) => aoMudar({ ...configs, [k]: v });
+
+  // No mobile (≤1024px) a barra pode ser recolhida pra dar mais espaço ao canvas.
+  // No desktop o toggle fica escondido (CSS) e os campos aparecem sempre.
+  // Começa recolhida no mobile; lembra a preferência via localStorage.
+  const [aberto, setAberto] = useState(() => {
+    try { return localStorage.getItem('encarte-builder:configbar-aberto') === '1'; } catch { return false; }
+  });
+  const toggleBarra = () => setAberto(a => {
+    const nv = !a;
+    try { localStorage.setItem('encarte-builder:configbar-aberto', nv ? '1' : '0'); } catch {}
+    return nv;
+  });
 
   // Helper pra clicar nos botões − e + de zoom
   const zoomLabel = (val) => val === 'auto' ? 'Auto' : `${Math.round(parseFloat(val) * 100)}%`;
@@ -31,7 +44,19 @@ export default function ConfigBar({ configs, aoMudar }) {
   const listas = layoutsDisponiveis.filter(l => l.tipo === 'lista');
 
   return (
-    <div className="config-bar">
+    <div className={`config-bar ${aberto ? 'aberto' : 'fechado'}`}>
+      {/* Toggle: aparece só no mobile (CSS). Recolhe/expande os campos. */}
+      <button
+        type="button"
+        className="config-bar-toggle"
+        onClick={toggleBarra}
+        aria-expanded={aberto}
+      >
+        <span className="cbt-label">⚙ Modelo, grade, texto e zoom</span>
+        <span className="cbt-chevron" aria-hidden="true">{aberto ? '▲' : '▼'}</span>
+      </button>
+
+      <div className="config-bar-campos">
       <div className="field">
         <label>Modelo:</label>
         <select value={configs.modelo} onChange={e => set('modelo', e.target.value)}>
@@ -111,6 +136,7 @@ export default function ConfigBar({ configs, aoMudar }) {
             aria-label="Aumentar zoom"
           >+</button>
         </div>
+      </div>
       </div>
     </div>
   );
