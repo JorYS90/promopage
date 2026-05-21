@@ -212,6 +212,25 @@ export default function App() {
     setModalAdmin(false);
   };
 
+  // Retorno do checkout do Mercado Pago (?pagamento=sucesso|pendente|falha).
+  // O webhook ativa a assinatura de forma assíncrona; aqui só damos o feedback.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const pg = params.get('pagamento');
+    if (!pg) return;
+    if (pg === 'sucesso') {
+      alert('✅ Pagamento recebido! Sua assinatura será ativada em instantes (assim que o Mercado Pago confirmar). Pode atualizar a página em alguns segundos.');
+    } else if (pg === 'pendente') {
+      alert('⏳ Pagamento pendente. Se você pagou via PIX/boleto, a confirmação pode levar alguns minutos/dias. Sua assinatura é ativada automaticamente quando o pagamento for aprovado.');
+    } else if (pg === 'falha') {
+      alert('❌ O pagamento não foi concluído. Você pode tentar de novo em Recursos e Planos.');
+    }
+    // Limpa o parâmetro da URL pra não repetir o alerta em refresh
+    params.delete('pagamento');
+    const novaUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+    window.history.replaceState({}, '', novaUrl);
+  }, []);
+
   // Página atual da paginação (0-indexed)
   const [paginaAtual, setPaginaAtual] = useState(0);
 
@@ -969,9 +988,22 @@ export default function App() {
           setModalPlanos(false);
           setModalAuth({ aberto: true, modo: 'signup' });
         }}
-        aoTrocarPlano={(slug, ciclo) => {
-          // Logado: Fase 2 vai redirecionar pra Stripe Checkout
-          alert(`Você clicou no plano "${slug}" (${ciclo}).\n\nIntegração Stripe vem na Fase 2 — em breve!`);
+        aoTrocarPlano={async (slug, ciclo) => {
+          // Logado: cria a preferência no Mercado Pago e redireciona pro checkout.
+          try {
+            const r = await auth.fetchAuth('/api/pagamentos/checkout', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ slug, ciclo }),
+            });
+            const d = await r.json().catch(() => ({}));
+            if (!r.ok) throw new Error(d.error || 'Falha ao iniciar o pagamento');
+            const url = d.init_point || d.sandbox_init_point;
+            if (!url) throw new Error('Checkout indisponível no momento');
+            window.location.href = url; // vai pro checkout do Mercado Pago
+          } catch (e) {
+            alert('Não foi possível iniciar o pagamento: ' + (e.message || e));
+          }
         }}
       />
 
