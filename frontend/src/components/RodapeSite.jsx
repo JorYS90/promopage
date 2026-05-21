@@ -18,9 +18,11 @@ const INFO = {
   anoInicio: 2026,
 };
 
-// Texto "Quem somos nós" — será enviado pelo cliente. Enquanto vazio, a seção
-// não aparece. Aceita várias linhas (separadas por \n viram parágrafos).
-const QUEM_SOMOS = '';
+// Texto "Quem somos nós". Cada linha vira um parágrafo (split por \n).
+const QUEM_SOMOS = `A Promopage nasceu para transformar a forma como o comércio divulga suas ofertas. Sabemos que criar encartes profissionais muitas vezes exige tempo, investimento alto com agências e um processo cansativo de edição e atualização. Por isso, desenvolvemos uma plataforma tecnológica, moderna e intuitiva, capaz de facilitar o marketing de qualquer empresa.
+Nossa missão é permitir que qualquer negócio crie encartes de alto nível com praticidade, rapidez e qualidade profissional. Com a Promopage, empresas de todos os segmentos conseguem produzir materiais visualmente impactantes através de criação automática de encartes, edição fácil, templates prontos e exportação para impressão.
+Acreditamos que toda empresa merece divulgar seus produtos de forma profissional, com identidade visual forte e comunicação que realmente chama atenção. Mais do que criar artes, queremos ajudar comerciantes a economizar tempo, fortalecer sua marca e vender mais.
+A Promopage foi criada para simplificar processos, padronizar campanhas e levar tecnologia ao dia a dia do comércio, tornando o design profissional acessível para todos.`;
 
 const IconeInstagram = () => (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
