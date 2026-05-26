@@ -2665,7 +2665,9 @@ function renderizarBoxHorizontal(canvas, box, produto, idx, paleta, tamanhoTexto
   // Renderiza linhas centralizadas
   const lineGapH = 0.10;
   const totalLinhasH = nomeLinhas.length;
-  const yInicialNomeH = box.y + padding;  // colado no topo (antes 15% da área) → mais espaço pra foto
+  // nomeOffsetTop: empurra o nome pra baixo (fração da nomeAreaH). 0=colado no topo (default).
+  const _nomeOffsetTopH = (box.nomeOffsetTop || 0) * nomeAreaH;
+  const yInicialNomeH = box.y + padding + _nomeOffsetTopH;  // 0=colado no topo → mais espaço pra foto
   nomeLinhas.forEach((linha, i) => {
     let largLinha = 0;
     try {
@@ -3007,7 +3009,10 @@ function renderizarBoxHorizontalTopo(canvas, box, produto, idx, paleta, tamanhoT
   // nomeOffsetTop em horizontal-topo: 0=padrão (centralizado em nomeAreaH),
   // positivo=desloca pra baixo, negativo=pra cima. Fração da nomeAreaH.
   const _nomeOffsetTopHT = (box.nomeOffsetTop || 0) * nomeAreaH;
-  const yInicialHT = box.y + (nomeAreaH - alturaBlocoHT) / 2 + _nomeOffsetTopHT;
+  // Clamp: nunca acima do topo do card (offset negativo grande não joga o nome
+  // pra cima da capa/borda). No máximo "colado" no topo, com 4px de respiro.
+  const _yPropostoHT = box.y + (nomeAreaH - alturaBlocoHT) / 2 + _nomeOffsetTopHT;
+  const yInicialHT = Math.max(box.y + 4, _yPropostoHT);
   nomeLinhasHT.forEach((linha, i) => {
     let largLinha = 0;
     try {
@@ -3957,9 +3962,12 @@ function renderizarBoxCardBanner(canvas, box, produto, idx, paleta, tamanhoTexto
         if (escala > maxEscalaW) escala = maxEscalaW;
         img.scale(escala);
         const w = visualW * escala, h = visualH * escala;
+        // fotoPosY: 0=topo da área, 0.5=centro (default), 1=embaixo. Permite
+        // ajustar o "centro" visual da foto por box/modelo via grade.
+        const _fotoPosYCB = (box.fotoPosY == null) ? 0.5 : box.fotoPosY;
         img.set({
           left: box.x + (box.w - w) / 2,
-          top: fotoAreaY + (fotoAreaH - h) / 2,
+          top: fotoAreaY + (fotoAreaH - h) * _fotoPosYCB,
           selectable: false,
         });
         img.set('boxIdx', idx);
@@ -5180,7 +5188,10 @@ function renderizarBoxProduto(canvas, box, produto, idx, paleta, tamanhoTexto, a
   const _padInfPR = temObs ? 0 : padding;
 
   const tagX = box.x + (box.w - tagW) / 2;
-  const tagY = box.y + box.h - tagAltura - _padInfPR - obsAltura;
+  // balaoOffsetY: fração da altura do card pra SUBIR o balão (positivo = sobe).
+  // Default 0 = balão colado na base (comportamento original de todos os layouts).
+  const _balaoOffsetYPR = (box.balaoOffsetY || 0) * box.h;
+  const tagY = box.y + box.h - tagAltura - _padInfPR - obsAltura - _balaoOffsetYPR;
   const centroX = box.x + box.w / 2;
 
   // 4) FOTO — centralizada VERTICALMENTE no espaço entre nome e tag
