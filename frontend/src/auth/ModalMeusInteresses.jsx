@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import LogoPromoPage from '../components/LogoPromoPage.jsx';
+import { SEGMENTOS } from './segmentos.js';
 
 // Modal "Meus Interesses" — usuário marca os segmentos da empresa dele.
 // Os interesses são usados pra:
@@ -10,62 +11,6 @@ import LogoPromoPage from '../components/LogoPromoPage.jsx';
 // Pode ser aberto de 2 lugares:
 //   - Link "Meus Interesses" no header de Temas (usuário logado)
 //   - Step opcional pós-cadastro (incentiva o usuário a marcar antes de usar)
-
-// Lista de segmentos disponíveis (mesma do mercado SaaS de encartes)
-const SEGMENTOS = [
-  { id: 'todos',            nome: 'Todos os segmentos',        especial: true },
-  { id: 'eventos',          nome: 'Eventos Regionais' },
-  { id: 'supermercado',     nome: 'Supermercado' },
-  { id: 'acougue',          nome: 'Açougue' },
-  { id: 'hortifruti',       nome: 'Hortifrúti' },
-  { id: 'farmacia',         nome: 'Farmácia' },
-  { id: 'construcao',       nome: 'Material para Construção' },
-  { id: 'bebidas',          nome: 'Distribuidora de Bebidas' },
-  { id: 'autopecas',        nome: 'Autopeças' },
-  { id: 'fastfood',         nome: 'Fast Food' },
-  { id: 'academia',         nome: 'Academia' },
-  { id: 'barbearia',        nome: 'Barbearia' },
-  { id: 'escola',           nome: 'Escola' },
-  { id: 'imobiliaria',      nome: 'Imobiliária' },
-  { id: 'livraria',         nome: 'Livraria' },
-  { id: 'sorvetes',         nome: 'Sorvetes' },
-  { id: 'cosmeticos',       nome: 'Cosméticos' },
-  { id: 'cimed',            nome: 'CIMED' },
-  { id: 'esportivos',       nome: 'Artigos Esportivos' },
-  { id: 'concessionaria-carros', nome: 'Concessionaria de Carros' },
-  { id: 'concessionaria-motos',  nome: 'Concessionaria de Motos' },
-  { id: 'baterias',         nome: 'Baterias Elétricas' },
-  { id: 'moveis',           nome: 'Móveis e Eletro' },
-  { id: 'motopecas',        nome: 'Moto Peças' },
-  { id: 'bebes',            nome: 'Bebês' },
-  { id: 'pisos',            nome: 'Pisos e Revestimentos' },
-  { id: 'tintas',           nome: 'Tintas e Ferramentas' },
-  { id: 'ferragens',        nome: 'Ferragens' },
-  { id: 'tubos',            nome: 'Tubos e Conexões' },
-  { id: 'maquinas',         nome: 'Maquinas e Ferramentas' },
-  { id: 'calcados',         nome: 'Calçados' },
-  { id: 'roupas',           nome: 'Roupas e Acessórios' },
-  { id: 'oticas',           nome: 'Óticas' },
-  { id: 'informatica',      nome: 'Informática' },
-  { id: 'vinhos',           nome: 'Vinhos' },
-  { id: 'comida-japonesa',  nome: 'Comida Japonesa' },
-  { id: 'restaurante',      nome: 'Restaurante' },
-  { id: 'hamburgueria',     nome: 'Hamburgueria' },
-  { id: 'salgadaria',       nome: 'Salgadaria' },
-  { id: 'agua-gas',         nome: 'Água e Gás' },
-  { id: 'brinquedos',       nome: 'Brinquedos' },
-  { id: 'floricultura',     nome: 'Floricultura e Jardim' },
-  { id: 'frios',            nome: 'Frios e Laticínios' },
-  { id: 'padaria',          nome: 'Padaria' },
-  { id: 'papelaria',        nome: 'Papelaria' },
-  { id: 'naturais',         nome: 'Produtos Naturais' },
-  { id: 'piscina',          nome: 'Produtos para Piscina' },
-  { id: 'agropecuaria',     nome: 'Agropecuária' },
-  { id: 'petshop',          nome: 'Pet Shop' },
-  { id: 'utilidades',       nome: 'Utilidades Domésticas' },
-  { id: 'suplementos',      nome: 'Suplementos Alimentares' },
-  { id: 'eletricos',        nome: 'Materiais Elétricos' },
-];
 
 export default function ModalMeusInteresses({
   aberto,
@@ -114,6 +59,9 @@ export default function ModalMeusInteresses({
 
   const salvar = async () => {
     if (!fetchAuth) return;
+    // Obrigatório no cadastro: mínimo 3 segmentos ('todos' é meta-seletor, não conta).
+    const qtdReais = Array.from(selecionados).filter(id => id !== 'todos').length;
+    if (modoSignup && qtdReais < 3) return;
     setSalvando(true);
     try {
       const lista = Array.from(selecionados);
@@ -130,11 +78,6 @@ export default function ModalMeusInteresses({
     } finally {
       setSalvando(false);
     }
-  };
-
-  const pular = () => {
-    aoSalvar?.([]);
-    aoFechar();
   };
 
   if (!aberto) return null;
@@ -204,17 +147,18 @@ export default function ModalMeusInteresses({
         <div className="mi-footer">
           <div className="mi-contador">
             <b>{qtdSelecionados}</b> segmento{qtdSelecionados !== 1 ? 's' : ''} selecionado{qtdSelecionados !== 1 ? 's' : ''}
+            {modoSignup && qtdSelecionados < 3 && (
+              <span style={{ color: '#dc2626', fontWeight: 600, marginLeft: 6 }}>
+                · selecione pelo menos 3 pra continuar
+              </span>
+            )}
           </div>
           <div className="mi-acoes">
-            {modoSignup && (
-              <button className="mi-btn-pular" onClick={pular} disabled={salvando}>
-                Pular por enquanto
-              </button>
-            )}
+            {/* No cadastro (modoSignup) é OBRIGATÓRIO escolher 3+ — sem botão "Pular". */}
             <button
               className="mi-btn-salvar"
               onClick={salvar}
-              disabled={salvando || carregando}
+              disabled={salvando || carregando || (modoSignup && qtdSelecionados < 3)}
             >
               {salvando ? 'Salvando...' : (
                 <>

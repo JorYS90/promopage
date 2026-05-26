@@ -1920,9 +1920,11 @@ function renderizarRodape(canvas, rodape, larguraCanvas, alturaCanvas, modelo = 
   // Modo slim: quando altura < 35, escala fontes pra caber sem cortar
   const ehSlim = altura < 35;
   const fontSizeEsq = ehSlim ? Math.max(10, altura * 0.55) : 14;
-  // Pedido do cliente: "*Imagens Meramente Ilustrativas" (textoDireito) maior só no STORIES
-  // (aumentos sucessivos: +20%, +30%, +30% ≈ 2.03) — estava pequeno/ilegível no canvas alto do stories.
-  const multDir = modelo === 'STORIES' ? 2.03 : 1.0;
+  // Pedido do cliente: "*Imagens Meramente Ilustrativas" (textoDireito) maior em formatos
+  // de canvas alto onde 12px fica ilegível: STORIES ≈ 2.03 ; REELS_INSTAGRAM +60% (1.60).
+  const multDir = modelo === 'STORIES' ? 2.03
+    : modelo === 'REELS_INSTAGRAM' ? 1.60
+    : 1.0;
   const fontSizeDir = (ehSlim ? Math.max(9,  altura * 0.50) : 12) * multDir;
 
   if (rodape.faixaSuperior) {
@@ -3984,7 +3986,10 @@ function renderizarBoxCardBanner(canvas, box, produto, idx, paleta, tamanhoTexto
         let escala = escalaContain * 0.87 * (box.multFoto || 1.0);  // 0.95 → 0.87 (-8%)
         // SAFETY: multFoto > 1.0 + foto horizontal larga = transbordamento lateral
         // (foto sai do card). Cap escala pra foto SEMPRE caber na largura.
-        const maxEscalaW = (fotoAreaW * 0.98) / visualW;
+        // fotoCapW (por box) sobe o teto: default 0.98; ex. 1.08 deixa a foto encher
+        // a largura do card (resolve "foto não cresce" quando multFoto satura no cap).
+        const _capWFator = (box.fotoCapW != null) ? box.fotoCapW : 0.98;
+        const maxEscalaW = (fotoAreaW * _capWFator) / visualW;
         if (escala > maxEscalaW) escala = maxEscalaW;
         img.scale(escala);
         const w = visualW * escala, h = visualH * escala;
@@ -4017,7 +4022,10 @@ function renderizarBoxCardBanner(canvas, box, produto, idx, paleta, tamanhoTexto
   // Faixa cola na borda inferior — quando há obs, balão fica imediatamente acima.
   const _obsCB = calcularObsFaixa(produto, bH * 0.55);
   const _padInfCB = _obsCB.temObs ? 0 : padding;
-  const bY = box.y + box.h - _padInfCB - bH - _obsCB.obsAltura;
+  // balaoOffsetY: fração da altura do card pra SUBIR o balão (positivo = sobe). Default 0.
+  // Move a pílula inteira (sombra, fundo, balão custom e preço, que usam bY como base).
+  const _balaoOffsetYCB = (box.balaoOffsetY || 0) * box.h;
+  const bY = box.y + box.h - _padInfCB - bH - _obsCB.obsAltura - _balaoOffsetYCB;
 
   // Sombra + pílula DEFAULT (sempre desenha como fallback). Se balão custom carregar,
   // sombra e pílula são escondidos.
@@ -4087,6 +4095,18 @@ function renderizarBoxCardBanner(canvas, box, produto, idx, paleta, tamanhoTexto
   const ctxFonte = canvas.contextContainer || canvas.lowerCanvasEl?.getContext('2d');
   const ajusteFonte = ajustarPrecoParaTag(bW, bH, produto.preco, produto.unidadeAbrev, configs, ctxFonte);
   let fonteValor = (ajusteFonte?.fonteValor || bH * 0.62) * (box.multValor || 1.0);
+  // Valor CONSISTENTE (opt-in via box.valorConsistente): usa a fonte que cabe o preço MAIS
+  // "exigente" entre os irmãos (configs._precosValores) no balão DESTE box — assim os
+  // destaques mostram o preço no MESMO tamanho (não varia por unidade/dígitos).
+  if (box.valorConsistente && Array.isArray(configs._precosValores) && configs._precosValores.length > 1) {
+    let _menorFV = fonteValor;
+    for (const _pr of configs._precosValores) {
+      const _aj = ajustarPrecoParaTag(bW, bH, _pr?.preco, _pr?.unidadeAbrev, configs, ctxFonte);
+      const _f = (_aj?.fonteValor || bH * 0.62) * (box.multValor || 1.0);
+      if (_f < _menorFV) _menorFV = _f;
+    }
+    fonteValor = _menorFV;
+  }
   const fonteRS = fonteValor * 0.55;
   const fonteUnid = fonteValor * 0.32;
   const valorTexto = produto.preco || '0,00';
@@ -4686,6 +4706,43 @@ function renderizarCardFotoTopo(canvas, box, produto, idx, paleta, tamanhoTexto,
       ctxMed.restore();
     } catch {}
   }
+  // Nome CONSISTENTE (opt-in via box.nomeConsistente): padroniza o tamanho do nome em TODOS
+  // os produtos — usa a fonte que cabe o nome MAIS LONGO entre os irmãos (configs._nomesProdutos).
+  // Sem isso, nomes curtos ficam grandes e longos pequenos ("discrepante por falta de letras").
+  if (box.nomeConsistente && Array.isArray(configs._nomesProdutos) && configs._nomesProdutos.length > 1) {
+    const _ctxN = canvas.contextContainer || canvas.lowerCanvasEl?.getContext('2d');
+    if (_ctxN) {
+      try {
+        _ctxN.save();
+        let _menorFonte = Infinity;
+        for (const _nm of configs._nomesProdutos) {
+          const _t = (_nm || 'PRODUTO').toUpperCase();
+          const _pal = _t.split(/\s+/).filter(Boolean);
+          let _f = bottomH * 0.50 * fatorTextoSize;
+          _ctxN.font = `900 ${_f}px ${fonteFamilia}`;
+          let _lns = [_t];
+          let _lg = _ctxN.measureText(_t).width;
+          if (_lg > maxLargNomeEff && _pal.length >= 2) {
+            let _mS = 1, _mD = Infinity;
+            for (let i = 1; i < _pal.length; i++) {
+              const _dl = Math.abs(_ctxN.measureText(_pal.slice(0, i).join(' ')).width - _ctxN.measureText(_pal.slice(i).join(' ')).width);
+              if (_dl < _mD) { _mD = _dl; _mS = i; }
+            }
+            _lns = [_pal.slice(0, _mS).join(' '), _pal.slice(_mS).join(' ')];
+            _lg = Math.max(..._lns.map(l => _ctxN.measureText(l).width));
+          }
+          while (_lg > maxLargNomeEff && _f > 10) {
+            _f *= 0.92;
+            _ctxN.font = `900 ${_f}px ${fonteFamilia}`;
+            _lg = Math.max(..._lns.map(l => _ctxN.measureText(l).width));
+          }
+          if (_f < _menorFonte) _menorFonte = _f;
+        }
+        _ctxN.restore();
+        if (_menorFonte !== Infinity) fonteSizeNome = _menorFonte;
+      } catch {}
+    }
+  }
   fonteSizeNome *= _multNomeCF;
   const lineGap = 0.10;
   const alturaBloco = fonteSizeNome * nomeLinhas.length + fonteSizeNome * lineGap * (nomeLinhas.length - 1);
@@ -5111,6 +5168,18 @@ function renderizarBoxProduto(canvas, box, produto, idx, paleta, tamanhoTexto, a
     );
     fonteValor = fonteCabeSemMult * _multValorPR;
   }
+  // Valor CONSISTENTE (opt-in via box.valorConsistente): usa a fonte que cabe o preço
+  // MAIS LARGO entre todos os irmãos (configs._precosValores) e aplica igual em todos —
+  // assim todos os balões mostram o valor no MESMO tamanho (não cresce pros preços curtos).
+  if (box.valorConsistente && Array.isArray(configs._precosValores) && configs._precosValores.length > 1) {
+    const _baseSemMult = ts.preco * escalaCard * multFormato * (ehDestaque ? 2.28 : 1.56);
+    let _menorFV = Infinity;
+    for (const _pr of configs._precosValores) {
+      const _f = capFonteValorOverflow(_baseSemMult, _capWidth, 0.10, _pr?.preco, _pr?.unidadeAbrev, configs, _ctxFV);
+      if (_f < _menorFV) _menorFV = _f;
+    }
+    if (_menorFV !== Infinity) fonteValor = _menorFV * _multValorPR;
+  }
   const fonteRS    = fonteValor * 0.55;  // R$ proporcional ao valor
   const valorTexto = produto.preco || '0,00';
 
@@ -5168,7 +5237,14 @@ function renderizarBoxProduto(canvas, box, produto, idx, paleta, tamanhoTexto, a
   const tagWMax = (box.w - padding * 2) * 0.95;
 
   let tagW, tagAltura;
-  if (balaoUrl_pre) {
+  if (box.balaoFixo) {
+    // Pílula FIXA tem PRIORIDADE (mesmo com balão custom do tema): largura uniforme em
+    // todas as pílulas. Antes o balaoUrl_pre vinha primeiro e o balaoFixo era IGNORADO
+    // quando o tema tinha paleta.balaoOferta, deixando as larguras diferentes conforme
+    // o texto/unidade do preço. O balão custom (se houver) é desenhado dentro dessa largura.
+    tagAltura = tagAlturaMin;
+    tagW = (box.w - padding * 2) * 0.85 * multBalao;
+  } else if (balaoUrl_pre) {
     // Modo balão: tag respeita aspecto do balão. Começa pela altura mínima.
     tagAltura = tagAlturaMin;
     tagW = tagAltura * balaoAspect;
@@ -5196,11 +5272,6 @@ function renderizarBoxProduto(canvas, box, produto, idx, paleta, tamanhoTexto, a
       tagW = Math.min(tagWScaled, tagWLimite);
       tagAltura = tagW / balaoAspect;
     }
-  } else if (box.balaoFixo) {
-    // Modo pílula FIXA: largura independe do texto (todas as pílulas no mesmo
-    // layout ficam idênticas). Texto já foi capado pra caber em _capWidth.
-    tagAltura = tagAlturaMin;
-    tagW = (box.w - padding * 2) * 0.85 * multBalao;
   } else {
     // Modo pílula: largura baseada em texto, altura fixa
     tagAltura = tagAlturaMin;
@@ -5959,7 +6030,9 @@ export async function renderizarEncarte(canvas, { tema, produtos, configs, empre
         configs.modelo,
       );
       // Header da tabela (só pra layouts tipo 'lista')
-      let configsLista = configs;
+      // _precosValores: lista de preços de todos os produtos — usado pra "valor consistente"
+      // (box.valorConsistente) deixar o tamanho do preço igual em todos os cards.
+      let configsLista = { ...configs, _precosValores: produtosValidos.map(p => ({ preco: p?.preco, unidadeAbrev: p?.unidadeAbrev })), _nomesProdutos: produtosValidos.map(p => p?.nome) };
       if (tipo === 'lista') {
         try {
           renderizarTabelaHeader(canvas, areaX, areaY, areaW, TABELA_HEADER_H, paleta);

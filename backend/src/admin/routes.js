@@ -390,4 +390,31 @@ router.get('/plans', (req, res) => {
   });
 });
 
+// === GET /api/admin/interesses-stats ===
+// Agrega os interesses (segmentos) marcados por TODOS os usuários e retorna o
+// ranking (mais marcados primeiro) + quantos marcaram / não marcaram nenhum.
+router.get('/interesses-stats', (req, res) => {
+  const rows = db.prepare('SELECT interesses FROM users').all();
+  const counts = {};
+  let comInteresse = 0;
+  for (const row of rows) {
+    let lista = tryParse(row.interesses, []);
+    if (!Array.isArray(lista)) lista = [];
+    // 'todos' é um meta-seletor (marca tudo na UI); não conta como segmento real.
+    lista = lista.filter(id => id && id !== 'todos');
+    if (lista.length > 0) comInteresse++;
+    for (const id of lista) counts[id] = (counts[id] || 0) + 1;
+  }
+  const total = rows.length;
+  const ranking = Object.entries(counts)
+    .map(([id, count]) => ({ id, count }))
+    .sort((a, b) => b.count - a.count);
+  res.json({
+    ranking,
+    totalUsuarios: total,
+    usuariosComInteresse: comInteresse,
+    usuariosSemInteresse: total - comInteresse,
+  });
+});
+
 module.exports = router;

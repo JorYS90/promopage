@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { SEGMENTOS } from '../auth/segmentos.js';
 
-// Painel administrativo. Modal grande com 5 abas:
+// Painel administrativo. Modal grande com 6 abas:
 //   - Dashboard: stats gerais (users, MRR, inadimplentes, top planos)
 //   - Usuários: tabela paginada com busca, suspensão, change plan
 //   - Assinaturas: lista filtrável por status
@@ -50,6 +51,9 @@ export default function PainelAdmin({ aberto, aoFechar, fetchAuth, user }) {
           <button className={`adm-nav ${aba === 'logs' ? 'ativa' : ''}`} onClick={() => setAba('logs')}>
             📜 Audit Logs
           </button>
+          <button className={`adm-nav ${aba === 'interesses' ? 'ativa' : ''}`} onClick={() => setAba('interesses')}>
+            🎯 Interesses
+          </button>
         </div>
 
         <div className="adm-content">
@@ -58,6 +62,7 @@ export default function PainelAdmin({ aberto, aoFechar, fetchAuth, user }) {
           {aba === 'subs' && <AbaSubscriptions fetchAuth={fetchAuth} />}
           {aba === 'payments' && <AbaPayments fetchAuth={fetchAuth} />}
           {aba === 'logs' && <AbaLogs fetchAuth={fetchAuth} />}
+          {aba === 'interesses' && <AbaInteresses fetchAuth={fetchAuth} />}
         </div>
       </div>
     </div>
@@ -598,6 +603,86 @@ function AbaLogs({ fetchAuth }) {
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+// ===================================================================
+// === ABA: INTERESSES ===
+// ===================================================================
+// Ranking agregado dos segmentos que os usuários marcaram como interesse.
+function AbaInteresses({ fetchAuth }) {
+  const [dados, setDados] = useState(null);
+  const [carregando, setCarregando] = useState(true);
+
+  useEffect(() => {
+    fetchAuth('/api/admin/interesses-stats')
+      .then(r => r.json())
+      .then(setDados)
+      .finally(() => setCarregando(false));
+  }, [fetchAuth]);
+
+  if (carregando) return <div className="adm-loading">Carregando interesses...</div>;
+  if (!dados) return <div className="adm-loading">Erro ao carregar</div>;
+
+  const nomePorId = Object.fromEntries(SEGMENTOS.map(s => [s.id, s.nome]));
+  const maxCount = dados.ranking[0]?.count || 1;
+  const totalU = dados.totalUsuarios || 0;
+
+  return (
+    <div>
+      <h2 className="adm-titulo">🎯 Interesses dos usuários</h2>
+      <p className="adm-resumo">
+        Segmentos que os clientes marcaram em "Meus Interesses" — quanto mais marcado, maior a demanda.
+      </p>
+
+      <div className="adm-cards-stats">
+        <div className="adm-stat-card">
+          <div className="adm-stat-icon">👥</div>
+          <div className="adm-stat-num">{dados.totalUsuarios}</div>
+          <div className="adm-stat-label">Usuários totais</div>
+        </div>
+        <div className="adm-stat-card destaque">
+          <div className="adm-stat-icon">🎯</div>
+          <div className="adm-stat-num">{dados.usuariosComInteresse}</div>
+          <div className="adm-stat-label">Marcaram interesses</div>
+        </div>
+        <div className="adm-stat-card alerta">
+          <div className="adm-stat-icon">∅</div>
+          <div className="adm-stat-num">{dados.usuariosSemInteresse}</div>
+          <div className="adm-stat-label">Sem nenhum interesse</div>
+        </div>
+      </div>
+
+      <h3 className="adm-subtitulo">Ranking de segmentos mais marcados</h3>
+      {dados.ranking.length === 0 ? (
+        <div className="adm-vazio" style={{ padding: 24 }}>Nenhum usuário marcou interesses ainda.</div>
+      ) : (
+        <table className="adm-tabela adm-tabela-compacta">
+          <thead>
+            <tr><th>#</th><th>Segmento</th><th>Usuários</th><th>% dos usuários</th><th style={{ width: '38%' }}>Popularidade</th></tr>
+          </thead>
+          <tbody>
+            {dados.ranking.map((r, i) => {
+              const pct = totalU > 0 ? Math.round((r.count / totalU) * 100) : 0;
+              const barW = Math.round((r.count / maxCount) * 100);
+              return (
+                <tr key={r.id}>
+                  <td>{i + 1}º</td>
+                  <td><b>{nomePorId[r.id] || r.id}</b></td>
+                  <td>{r.count}</td>
+                  <td>{pct}%</td>
+                  <td>
+                    <div style={{ background: '#eef2f7', borderRadius: 6, height: 14, overflow: 'hidden', minWidth: 60 }}>
+                      <div style={{ width: barW + '%', height: '100%', background: 'linear-gradient(90deg,#2563eb,#3b82f6)', borderRadius: 6 }} />
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

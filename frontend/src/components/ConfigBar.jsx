@@ -39,9 +39,14 @@ export default function ConfigBar({ configs, aoMudar }) {
     if (l.excluirFormatos && l.excluirFormatos.includes(configs.modelo)) return false;
     return true;
   });
-  // Separa em "Grades" (grids) e "Listas" (tabelas)
-  const grades = layoutsDisponiveis.filter(l => l.tipo !== 'lista');
-  const listas = layoutsDisponiveis.filter(l => l.tipo === 'lista');
+  // Separa em "Grades" (grids) e "Listas" (tabelas) e ORDENA por quantidade de produtos
+  // (sort estável → grades com a mesma quantidade mantêm a ordem do array).
+  const grades = layoutsDisponiveis
+    .filter(l => l.tipo !== 'lista')
+    .sort((a, b) => (a.quantidade || 0) - (b.quantidade || 0));
+  const listas = layoutsDisponiveis
+    .filter(l => l.tipo === 'lista')
+    .sort((a, b) => (a.quantidade || 0) - (b.quantidade || 0));
 
   return (
     <div className={`config-bar ${aberto ? 'aberto' : 'fechado'}`}>
