@@ -80,6 +80,7 @@ export const LAYOUTS_NOMEADOS = [
     multFoto: 1.10,
     multNome: 1.15,
     multBalao: 1.20,
+    nomeOffsetTop: 0.12,  // Pedido do cliente (STORIES): nome dos produtos um pouco mais baixo
   },
   { id: 'g_3x1',  nome: '3 Produtos - 3x1', quantidade: 3,
     excluirFormatos: ['STORIES'],  // STORIES usa g_1x3 (1×3 empilhado)
@@ -110,7 +111,7 @@ export const LAYOUTS_NOMEADOS = [
         // STORIES: usa renderer padrão (nome topo + foto centro + balão pílula embaixo,
         // estilo qrofertas que casa melhor com cards verticais altos do stories)
         perModelo: {
-          STORIES: { layoutTipo: null, multBalao: 0.89, multValor: 1.0, multNome: 3.25, multFoto: 0.86 },
+          STORIES: { layoutTipo: null, multBalao: 0.89, multValor: 1.0, multNome: 3.25, multFoto: 0.86, nomeOffsetTop: 0.10 },
           REELS_INSTAGRAM: { multFoto: 1.79, multNome: 0.70, multBalao: 0.89, multValor: 1.0, balaoFixo: true, balaoAlignX: 1 },
           ENCARTE_GRANDE: { multFoto: 1.59, fotoOffsetX: 0.20 },
           // Pedido do cliente: nome um pouco mais pra cima só no FACEBOOK_QUADRADO
@@ -120,7 +121,7 @@ export const LAYOUTS_NOMEADOS = [
       { col: 1, row: 0, colSpan: 1, rowSpan: 1, layoutTipo: 'horizontal-topo',
         multBalao: 1.30, multValor: 0.94, multNome: 0.72, multFoto: 1.38,
         perModelo: {
-          STORIES: { layoutTipo: null, multBalao: 0.89, multValor: 1.0, multNome: 3.25, multFoto: 0.86 },
+          STORIES: { layoutTipo: null, multBalao: 0.89, multValor: 1.0, multNome: 3.25, multFoto: 0.86, nomeOffsetTop: 0.10 },
           REELS_INSTAGRAM: { multFoto: 1.79, multNome: 0.70, multBalao: 0.89, multValor: 1.0, balaoFixo: true, balaoAlignX: 1 },
           ENCARTE_GRANDE: { multFoto: 1.59, fotoOffsetX: 0.20 },
           // Pedido do cliente: nome um pouco mais pra cima só no FACEBOOK_QUADRADO
@@ -130,7 +131,7 @@ export const LAYOUTS_NOMEADOS = [
       { col: 0, row: 1, colSpan: 1, rowSpan: 1, layoutTipo: 'horizontal-topo',
         multBalao: 1.30, multValor: 0.94, multNome: 0.72, multFoto: 1.38,
         perModelo: {
-          STORIES: { layoutTipo: null, multBalao: 0.89, multValor: 1.0, multNome: 3.25, multFoto: 0.86 },
+          STORIES: { layoutTipo: null, multBalao: 0.89, multValor: 1.0, multNome: 3.25, multFoto: 0.86, nomeOffsetTop: 0.10 },
           REELS_INSTAGRAM: { multFoto: 1.79, multNome: 0.70, multBalao: 0.89, multValor: 1.0, balaoFixo: true, balaoAlignX: 1 },
           ENCARTE_GRANDE: { multFoto: 1.59, fotoOffsetX: 0.20 },
           // Pedido do cliente: nome um pouco mais pra cima só no FACEBOOK_QUADRADO
@@ -140,7 +141,7 @@ export const LAYOUTS_NOMEADOS = [
       { col: 1, row: 1, colSpan: 1, rowSpan: 1, layoutTipo: 'horizontal-topo',
         multBalao: 1.30, multValor: 0.94, multNome: 0.72, multFoto: 1.38,
         perModelo: {
-          STORIES: { layoutTipo: null, multBalao: 0.89, multValor: 1.0, multNome: 3.25, multFoto: 0.86 },
+          STORIES: { layoutTipo: null, multBalao: 0.89, multValor: 1.0, multNome: 3.25, multFoto: 0.86, nomeOffsetTop: 0.10 },
           REELS_INSTAGRAM: { multFoto: 1.79, multNome: 0.70, multBalao: 0.89, multValor: 1.0, balaoFixo: true, balaoAlignX: 1 },
           ENCARTE_GRANDE: { multFoto: 1.59, fotoOffsetX: 0.20 },
           // Pedido do cliente: nome um pouco mais pra cima só no FACEBOOK_QUADRADO
@@ -181,18 +182,19 @@ export const LAYOUTS_NOMEADOS = [
     cols: 80, rows: 2, boxes: [
       // Destaque à esquerda: colSpan 28 = 35% (cumulativo -30% vs g_5_dest_esq 50%)
       // foto +10%, nome deslocado pra baixo pra preencher melhor
+      // Pedido do cliente (STORIES): nome do destaque +60% e depois +40% (≈ 0.87)
       { col: 0, row: 0, colSpan: 28, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
-        multNome: 0.39, multValor: 1.0, multBalao: 1.15, multFoto: 1.21, nomeOffsetTop: 0.30 },
+        multNome: 0.87, multValor: 1.0, multBalao: 1.15, multFoto: 1.21, nomeOffsetTop: 0.30 },
       // 4 produtos pequenos à direita: colSpan 26 cada (32.5% cada), 2 cols × 2 rows
-      // foto +5%, nome deslocado pra baixo
+      // Pedido do cliente (STORIES): nome dos 4 produtos um pouco mais alto (0.30 → 0.20)
       { col: 28, row: 0, colSpan: 26, rowSpan: 1, layoutTipo: 'card-banner',
-        multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.30 },
+        multNome: 0.57, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.12 },
       { col: 54, row: 0, colSpan: 26, rowSpan: 1, layoutTipo: 'card-banner',
-        multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.30 },
+        multNome: 0.57, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.12 },
       { col: 28, row: 1, colSpan: 26, rowSpan: 1, layoutTipo: 'card-banner',
-        multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.30 },
+        multNome: 0.57, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.12 },
       { col: 54, row: 1, colSpan: 26, rowSpan: 1, layoutTipo: 'card-banner',
-        multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.30 },
+        multNome: 0.57, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.12 },
     ]},
   // Variante ENCARTE_GRANDE: destaque com 42.5% de largura (15% menor que 50% original).
   { id: 'g_5_dest_esq_encarte', nome: '5 Produtos - 4 produtos + 1 destaque Esquerdo', quantidade: 5,
@@ -259,16 +261,17 @@ export const LAYOUTS_NOMEADOS = [
     cols: 80, rows: 2, boxes: [
       // 4 produtos pequenos à esquerda
       { col: 0, row: 0, colSpan: 26, rowSpan: 1, layoutTipo: 'card-banner',
-        multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.30 },
+        multNome: 0.57, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.12 },
       { col: 26, row: 0, colSpan: 26, rowSpan: 1, layoutTipo: 'card-banner',
-        multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.30 },
+        multNome: 0.57, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.12 },
       { col: 0, row: 1, colSpan: 26, rowSpan: 1, layoutTipo: 'card-banner',
-        multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.30 },
+        multNome: 0.57, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.12 },
       { col: 26, row: 1, colSpan: 26, rowSpan: 1, layoutTipo: 'card-banner',
-        multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.30 },
+        multNome: 0.57, multValor: 1.0, multBalao: 1.45, multFoto: 1.11, nomeOffsetTop: 0.12 },
       // Destaque à DIREITA: colSpan 28 = 35%
+      // Pedido do cliente (STORIES): mesmos ajustes do espelho esquerdo — nome do destaque ≈ +124% (0.39 → 0.87)
       { col: 52, row: 0, colSpan: 28, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
-        multNome: 0.39, multValor: 1.0, multBalao: 1.15, multFoto: 1.21, nomeOffsetTop: 0.30 },
+        multNome: 0.87, multValor: 1.0, multBalao: 1.15, multFoto: 1.21, nomeOffsetTop: 0.30 },
     ]},
   // Variante ENCARTE_GRANDE espelho de g_5_dest_esq_encarte (destaque à direita 42.5%)
   { id: 'g_5_dest_dir_encarte', nome: '5 Produtos - 4 produtos + 1 destaque Direito', quantidade: 5,
@@ -537,8 +540,10 @@ export const LAYOUTS_NOMEADOS = [
     perModelo: {
       STORIES: {
         multNome: 3.05,        // 2.77 + 10%
-        fotoPosY: 0.50,        // foto centralizada (era 0.25 default = topo)
+        multFoto: 0.97,        // Pedido do cliente: foto +5% e +5% (0.88 → 0.97) — ainda < 1.0, não estoura o card
+        fotoPosY: 0.60,        // Pedido do cliente: foto um pouco mais pra baixo (centraliza melhor no card)
         nomeOffsetTop: 0.40,   // subiu de 0.60 → 0.40 (nome mais pra cima)
+        balaoOffsetY: 0.05,    // Pedido do cliente: balão de preço mais alto
       },
       REELS_INSTAGRAM: {
         multNome: 2.00,        // 1.54 + 30%
@@ -888,7 +893,7 @@ export const LAYOUTS_NOMEADOS = [
       { col: 0, row: 0, colSpan: 4, rowSpan: 4, destaque: true, layoutTipo: 'horizontal-topo',
         multNome: 0.42, multValor: 0.90, multBalao: 0.94, multFoto: 1.63,
         perModelo: {
-          STORIES: { layoutTipo: 'card-banner', multNome: 0.60, multValor: 1.05, multBalao: 1.40, multFoto: 1.40 },
+          STORIES: { layoutTipo: 'card-banner', multNome: 0.66, multValor: 1.05, multBalao: 1.40, multFoto: 1.40 },
           REELS_INSTAGRAM: { multFoto: 1.79, fotoOffsetX: 0.25 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque +15% (0.94 × 1.15 ≈ 1.08)
           FACEBOOK_QUADRADO: { multBalao: 1.08 },
@@ -896,7 +901,7 @@ export const LAYOUTS_NOMEADOS = [
       { col: 4, row: 0, colSpan: 4, rowSpan: 4, destaque: true, layoutTipo: 'horizontal-topo',
         multNome: 0.42, multValor: 0.90, multBalao: 0.94, multFoto: 1.63,
         perModelo: {
-          STORIES: { layoutTipo: 'card-banner', multNome: 0.60, multValor: 1.05, multBalao: 1.40, multFoto: 1.40 },
+          STORIES: { layoutTipo: 'card-banner', multNome: 0.66, multValor: 1.05, multBalao: 1.40, multFoto: 1.40 },
           REELS_INSTAGRAM: { multFoto: 1.79, fotoOffsetX: 0.25 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque +15% (0.94 × 1.15 ≈ 1.08)
           FACEBOOK_QUADRADO: { multBalao: 1.08 },
@@ -904,7 +909,7 @@ export const LAYOUTS_NOMEADOS = [
       { col: 8, row: 0, colSpan: 4, rowSpan: 4, destaque: true, layoutTipo: 'horizontal-topo',
         multNome: 0.42, multValor: 0.90, multBalao: 0.94, multFoto: 1.63,
         perModelo: {
-          STORIES: { layoutTipo: 'card-banner', multNome: 0.60, multValor: 1.05, multBalao: 1.40, multFoto: 1.40 },
+          STORIES: { layoutTipo: 'card-banner', multNome: 0.66, multValor: 1.05, multBalao: 1.40, multFoto: 1.40 },
           REELS_INSTAGRAM: { multFoto: 1.79, fotoOffsetX: 0.25 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque +15% (0.94 × 1.15 ≈ 1.08)
           FACEBOOK_QUADRADO: { multBalao: 1.08 },
@@ -913,49 +918,49 @@ export const LAYOUTS_NOMEADOS = [
       // proporcionalmente mais prominente que o destaque, batendo com o print qrofertas.
       { col: 0, row: 4, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
-        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.85, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
+        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
           FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
       { col: 3, row: 4, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
-        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.85, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
+        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
           FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
       { col: 6, row: 4, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
-        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.85, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
+        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
           FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
       { col: 9, row: 4, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
-        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.85, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
+        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
           FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
       { col: 0, row: 7, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
-        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.85, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
+        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
           FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
       { col: 3, row: 7, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
-        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.85, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
+        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
           FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
       { col: 6, row: 7, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
-        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.85, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
+        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
           FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
       { col: 9, row: 7, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
-        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.85, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
+        perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
           FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
@@ -1077,37 +1082,37 @@ export const LAYOUTS_NOMEADOS = [
         multBalao: 1.69, multValor: 1.0, multNome: 0.85, multFoto: 1.10 },
       // Grid 4x4 abaixo (16 produtos) — card-banner (nome topo + foto + balão bottom)
       { col: 0, row: 1, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 1, row: 1, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 2, row: 1, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 3, row: 1, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 0, row: 2, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 1, row: 2, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 2, row: 2, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 3, row: 2, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 0, row: 3, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 1, row: 3, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 2, row: 3, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 3, row: 3, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 0, row: 4, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 1, row: 4, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 2, row: 4, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
       { col: 3, row: 4, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
-        multBalao: 1.35, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
+        multBalao: 1.54, multValor: 1.0, multNome: 0.80, multFoto: 1.42 },
     ]},
 
   // === 12 PRODUTOS ===

@@ -1913,14 +1913,17 @@ function renderizarFaixaEmpresa(canvas, empresa, larguraCanvas, alturaCanvas, al
   return alturaTotal;
 }
 
-function renderizarRodape(canvas, rodape, larguraCanvas, alturaCanvas) {
+function renderizarRodape(canvas, rodape, larguraCanvas, alturaCanvas, modelo = null) {
   if (!rodape) return 0;
   const altura = rodape.altura || 80;
   const top = alturaCanvas - altura;
   // Modo slim: quando altura < 35, escala fontes pra caber sem cortar
   const ehSlim = altura < 35;
   const fontSizeEsq = ehSlim ? Math.max(10, altura * 0.55) : 14;
-  const fontSizeDir = ehSlim ? Math.max(9,  altura * 0.50) : 12;
+  // Pedido do cliente: "*Imagens Meramente Ilustrativas" (textoDireito) maior só no STORIES
+  // (aumentos sucessivos: +20%, +30%, +30% ≈ 2.03) — estava pequeno/ilegível no canvas alto do stories.
+  const multDir = modelo === 'STORIES' ? 2.03 : 1.0;
+  const fontSizeDir = (ehSlim ? Math.max(9,  altura * 0.50) : 12) * multDir;
 
   if (rodape.faixaSuperior) {
     canvas.add(new fabric.Rect({
@@ -2100,7 +2103,10 @@ function renderizarLinhaLista(canvas, box, produto, idx, paleta, tamanhoTexto, a
   canvas.add(nome);
 
   // === PREÇO (direita): R$ pequeno + valor grande + centavos médio ===
-  let fonteValor = box.h * 0.80 * (box.multValor || 1.0);
+  // Pedido do cliente: valores no STORIES ajustados (0.80 → 0.68 → 0.74) — menor que o
+  // original mas legível também nas tabelas com muitas linhas (ex: 20 produtos).
+  const _fatorValorLista = configs?.modelo === 'STORIES' ? 0.74 : 0.80;
+  let fonteValor = box.h * _fatorValorLista * (box.multValor || 1.0);
   fonteValor = capFonteValorOverflow(
     fonteValor,
     box.w * 0.42,  // ~42% da row pra preço (resto é nome)
@@ -2116,9 +2122,12 @@ function renderizarLinhaLista(canvas, box, produto, idx, paleta, tamanhoTexto, a
   const temCentavos = centavosNum !== undefined;
   const centavosTexto = temCentavos ? ',' + centavosNum : '';
   const fonteCentavos = configs.precoCentavosMesmoTamanho ? fonteValor : fonteValor * 0.65;
+  // Unidade (KG/UN/etc) — faltava na tabela; renderiza pequena tipo expoente após o preço.
+  const unidAbrev = (produto.unidadeAbrev || '').toUpperCase();
+  const fonteUnid = fonteValor * 0.42;
 
   // Mede larguras — usa fonteAtual (mesma fonte do render dessa função)
-  let larguraRs = 0, larguraReais = 0, larguraCentavos = 0;
+  let larguraRs = 0, larguraReais = 0, larguraCentavos = 0, larguraUnid = 0;
   try {
     const ctx = canvas.contextContainer || canvas.lowerCanvasEl?.getContext('2d');
     if (ctx) {
@@ -2131,12 +2140,17 @@ function renderizarLinhaLista(canvas, box, produto, idx, paleta, tamanhoTexto, a
         ctx.font = `${FONTE_PRECO_WEIGHT} ${fonteCentavos}px ${fonteAtual(canvas, 'preco', FONTE_PRECO_BASE)}`;
         larguraCentavos = ctx.measureText(centavosTexto).width;
       }
+      if (unidAbrev) {
+        ctx.font = `${FONTE_PRECO_WEIGHT} ${fonteUnid}px ${fonteAtual(canvas, 'preco', FONTE_PRECO_BASE)}`;
+        larguraUnid = ctx.measureText(unidAbrev).width;
+      }
       ctx.restore();
     }
   } catch {}
 
   const espacoRsValor = fonteValor * 0.10;
-  const larguraTotal = larguraRs + espacoRsValor + larguraReais + larguraCentavos;
+  const espacoValorUnid = unidAbrev ? fonteValor * 0.08 : 0;
+  const larguraTotal = larguraRs + espacoRsValor + larguraReais + larguraCentavos + espacoValorUnid + larguraUnid;
   // Posição: alinhado à direita
   const startX = box.x + box.w - padding - larguraTotal;
   const corPreco = corNome;  // mesma cor do nome (preto)
@@ -2167,6 +2181,18 @@ function renderizarLinhaLista(canvas, box, produto, idx, paleta, tamanhoTexto, a
       left: startX + larguraRs + espacoRsValor + larguraReais,
       top: configs.precoCentavosMesmoTamanho ? centroY - fonteValor * 0.55 : centroY - fonteValor * 0.30,
       fontSize: fonteCentavos,
+      fontFamily: fonteAtual(canvas, 'preco', FONTE_PRECO_BASE),
+      fontWeight: FONTE_PRECO_WEIGHT,
+      fill: corPreco,
+      selectable: false, evented: false,
+    }));
+  }
+  // UNIDADE (KG/UN/etc) — expoente pequeno após o preço (alinhado no topo do número)
+  if (unidAbrev) {
+    canvas.add(new fabric.Text(unidAbrev, {
+      left: startX + larguraRs + espacoRsValor + larguraReais + larguraCentavos + espacoValorUnid,
+      top: centroY - fonteValor * 0.50,
+      fontSize: fonteUnid,
       fontFamily: fonteAtual(canvas, 'preco', FONTE_PRECO_BASE),
       fontWeight: FONTE_PRECO_WEIGHT,
       fill: corPreco,
@@ -4339,7 +4365,9 @@ function renderizarBoxCardBannerH(canvas, box, produto, idx, paleta, tamanhoText
   const lineGap = 0.10;
   const totalLinhasN = nomeLinhas.length;
   const alturaBlocoN = fonteSizeNome * totalLinhasN + fonteSizeNome * lineGap * (totalLinhasN - 1);
-  const yInicialN = rightAreaY;  // colado no topo (antes centralizado) → mais espaço pra foto
+  // nomeOffsetTop: empurra o nome pra baixo (fração da nomeAreaH). 0=colado no topo (default).
+  const _nomeOffsetTopBH = (box.nomeOffsetTop || 0) * nomeAreaH;
+  const yInicialN = rightAreaY + _nomeOffsetTopBH;  // 0=colado no topo → mais espaço pra foto
   nomeLinhas.forEach((linha, i) => {
     let largLinha = 0;
     try {
@@ -5860,7 +5888,7 @@ export async function renderizarEncarte(canvas, { tema, produtos, configs, empre
           textoDireito: textoIlustrativas,
         };
       }
-      alturaRodape = renderizarRodape(canvas, rodapeAjustado, W, H);
+      alturaRodape = renderizarRodape(canvas, rodapeAjustado, W, H, configs?.modelo);
     } catch (e) { console.warn('[render] rodapé falhou:', e?.message); }
 
     // Faixa empresa (telefone, whatsapp, etc) acima do rodapé.
