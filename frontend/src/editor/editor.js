@@ -5879,8 +5879,11 @@ export async function renderizarEncarte(canvas, { tema, produtos, configs, empre
     let alturaCapa = 0;
     if (configs.gerarCapa !== false && tema?.capa) {
       try {
-        // 30% da altura do canvas (com mín/máx razoáveis)
-        const alturaCapaProporcional = Math.max(180, Math.min(H * 0.30, 500));
+        // 30% da altura do canvas (com mín/máx razoáveis).
+        // FB quadrado: capa mais alta (40% ≈ proporção de banner ~2.5:1) — a imagem
+        // PREENCHE a capa (cover, sem distorcer e sem vão) e corta bem menos.
+        const fatorCapa = configs.modelo === 'FACEBOOK_QUADRADO' ? 0.40 : 0.30;
+        const alturaCapaProporcional = Math.max(180, Math.min(H * fatorCapa, 520));
         const capaAjustada = { ...tema.capa, altura: alturaCapaProporcional };
         alturaCapa = renderizarCapa(canvas, capaAjustada, W);
       } catch (e) { console.warn('[render] capa falhou:', e?.message); }
