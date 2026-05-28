@@ -1921,9 +1921,11 @@ function renderizarRodape(canvas, rodape, larguraCanvas, alturaCanvas, modelo = 
   const ehSlim = altura < 35;
   const fontSizeEsq = ehSlim ? Math.max(10, altura * 0.55) : 14;
   // Pedido do cliente: "*Imagens Meramente Ilustrativas" (textoDireito) maior em formatos
-  // de canvas alto onde 12px fica ilegível: STORIES ≈ 2.03 ; REELS_INSTAGRAM +60% (1.60).
+  // de canvas alto onde 12px fica ilegível: STORIES ≈ 2.03 ; REELS_INSTAGRAM +60% (1.60) ;
+  // ENCARTE_GRANDE +80% (1.80).
   const multDir = modelo === 'STORIES' ? 2.03
     : modelo === 'REELS_INSTAGRAM' ? 1.60
+    : modelo === 'ENCARTE_GRANDE' ? 1.80
     : 1.0;
   const fontSizeDir = (ehSlim ? Math.max(9,  altura * 0.50) : 12) * multDir;
 
@@ -1941,9 +1943,16 @@ function renderizarRodape(canvas, rodape, larguraCanvas, alturaCanvas, modelo = 
     selectable: false, evented: false,
   }));
 
+  // IA de contraste: detecta luminância do fundo do rodapé e escolhe automaticamente
+  // entre texto claro (branco) ou escuro (cinza-quase-preto) pra garantir legibilidade
+  // em QUALQUER cor de tema. Substitui o branco fixo, que ficava invisível em rodapés
+  // amarelos/claros (#fde047 do tema "Ouro & Real", por ex).
+  const corRodape = rodape.fundo || '#ef0000';
+  const corTextoRodape = corContrastanteParaTexto(corRodape, '#ffffff', '#1f2937');
+
   if (rodape.textoEsquerdo) {
     const tE = new fabric.Text(rodape.textoEsquerdo, {
-      left: 20, fontSize: fontSizeEsq, fontWeight: 'bold', fill: '#ffffff',
+      left: 20, fontSize: fontSizeEsq, fontWeight: 'bold', fill: corTextoRodape,
       selectable: false, evented: false,
     });
     tE.set('top', top + (altura - tE.height) / 2);
@@ -1951,7 +1960,7 @@ function renderizarRodape(canvas, rodape, larguraCanvas, alturaCanvas, modelo = 
   }
   if (rodape.textoDireito) {
     const t = new fabric.Text(rodape.textoDireito, {
-      fontSize: fontSizeDir, fill: '#ffffff', fontStyle: 'italic',
+      fontSize: fontSizeDir, fill: corTextoRodape, fontStyle: 'italic',
       selectable: false, evented: false,
     });
     t.set('left', larguraCanvas - t.width - 20);
@@ -3076,10 +3085,16 @@ function renderizarBoxHorizontalTopo(canvas, box, produto, idx, paleta, tamanhoT
 
         let visualW = img.width, visualH = img.height;
         try {
-          let bbox = CACHE_BBOX_BALAO.get(produto.imagem);
+          // smartFoto: usa detector que ENTENDE o conteúdo real do produto
+          // (ignora tanto transparente quanto fundo branco/cinza uniforme) — chave
+          // pra normalizar tamanhos quando PNGs têm paddings diferentes.
+          const cacheKey = box.smartFoto ? `${produto.imagem}:conteudoReal` : produto.imagem;
+          let bbox = CACHE_BBOX_BALAO.get(cacheKey);
           if (bbox === undefined) {
-            bbox = detectarBboxNaoTransparente(img, 15);
-            CACHE_BBOX_BALAO.set(produto.imagem, bbox);
+            bbox = box.smartFoto
+              ? detectarBboxConteudoReal(img)
+              : detectarBboxNaoTransparente(img, 15);
+            CACHE_BBOX_BALAO.set(cacheKey, bbox);
           }
           if (bbox) {
             img.set({ cropX: bbox.x, cropY: bbox.y, width: bbox.w, height: bbox.h });
@@ -3094,7 +3109,21 @@ function renderizarBoxHorizontalTopo(canvas, box, produto, idx, paleta, tamanhoT
         const mf = box.multFoto || 1.0;
         const fotoAreaW = photoAreaW;
         const fotoAreaH = bottomH;  // bottomH inteiro — costuma ter folga vertical
-        let escala = Math.min(fotoAreaW / visualW, fotoAreaH / visualH) * mf;
+        const escalaContain = Math.min(fotoAreaW / visualW, fotoAreaH / visualH);
+        // smartFoto: aplica boost adaptativo pra normalizar tamanho VISUAL — fotos
+        // com aspect-ratio diferente (boards horizontais vs latas verticais) saem
+        // com peso semelhante no card. Sem smartFoto, mantém contain puro.
+        let smartBoost = 1.0;
+        if (box.smartFoto) {
+          const areaImg = (visualW * escalaContain) * (visualH * escalaContain);
+          const areaTarget = fotoAreaW * fotoAreaH;
+          const fillRatio = areaImg / Math.max(1, areaTarget);
+          const FILL_IDEAL = 0.88;
+          if (fillRatio < FILL_IDEAL) {
+            smartBoost = Math.min(Math.sqrt(FILL_IDEAL / fillRatio), 1.35);
+          }
+        }
+        let escala = escalaContain * mf * smartBoost;
         // CAP DE SEGURANÇA: a foto nunca pode ser maior que o card inteiro
         const escalaMaxCard = Math.min(
           (box.w - padding * 2) / visualW,
@@ -5879,11 +5908,28 @@ export async function renderizarEncarte(canvas, { tema, produtos, configs, empre
     let alturaCapa = 0;
     if (configs.gerarCapa !== false && tema?.capa) {
       try {
-        // 30% da altura do canvas (com mín/máx razoáveis).
-        // FB quadrado: capa mais alta (40% ≈ proporção de banner ~2.5:1) — a imagem
-        // PREENCHE a capa (cover, sem distorcer e sem vão) e corta bem menos.
-        const fatorCapa = configs.modelo === 'FACEBOOK_QUADRADO' ? 0.40 : 0.30;
-        const alturaCapaProporcional = Math.max(180, Math.min(H * fatorCapa, 520));
+        // Altura da capa proporcional ao canvas, ajustada por modelo pra dar
+        // melhor presença visual à imagem de fundo do tema (modo cover — sem
+        // distorcer, sem vão, corta o mínimo possível).
+        //   - FB quadrado:    40% (banner ~2.5:1)
+        //   - A4 paisagem:    38% (banner mais alto, encarte impresso pede destaque)
+        //   - Stories/Reels:  28% (verticais — capa não pode comer muito espaço)
+        //   - Outros:         30%
+        const FATOR_CAPA_POR_MODELO = {
+          FACEBOOK_QUADRADO: 0.40,
+          A4_PAISAGEM:       0.38,
+          CARTAZ_HORIZONTAL: 0.38,  // mesmas dims do A4 paisagem
+          A4_RETRATO:        0.26,  // vertical (alto) — 26% já é bem mais que 30% horizontal
+          CARTAZ_VERTICAL:   0.26,  // mesmas dims do A4 retrato
+          TV_HORIZONTAL:     0.48,  // 16:9 (1920x1080) — TV tem muito espaço vertical, capa pode ser bem alta
+          TV_VERTICAL:       0.24,  // 9:16 (1080x1920) vertical alto
+          STORIES:           0.28,
+          REELS_INSTAGRAM:   0.28,
+        };
+        const fatorCapa = FATOR_CAPA_POR_MODELO[configs.modelo] ?? 0.30;
+        // Cap máx subido pra 640 — permite que TV horizontal (1080*0.48=518) e
+        // formatos verticais (1920*0.28=538) usem o valor cheio sem clamp.
+        const alturaCapaProporcional = Math.max(180, Math.min(H * fatorCapa, 640));
         const capaAjustada = { ...tema.capa, altura: alturaCapaProporcional };
         alturaCapa = renderizarCapa(canvas, capaAjustada, W);
       } catch (e) { console.warn('[render] capa falhou:', e?.message); }

@@ -411,21 +411,21 @@ export const LAYOUTS_NOMEADOS = [
       // 3 destaques no topo: destaque EXPLÍCITO (fundo vermelho)
       { col: 0, row: 0, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.36, multValor: 1.0, multBalao: 1.49, multFoto: 1.18,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 0.64, nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (espelho de g_7_4_prod_3_dest_baixo)
           FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
           // Pedido do cliente (REELS): nome do destaque +35% (0.36 × 1.35 ≈ 0.49)
           REELS_INSTAGRAM: { multNome: 0.59 } } },
       { col: 4, row: 0, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.36, multValor: 1.0, multBalao: 1.49, multFoto: 1.18,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 0.64, nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (espelho de g_7_4_prod_3_dest_baixo)
           FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
           // Pedido do cliente (REELS): nome do destaque +35% (0.36 × 1.35 ≈ 0.49)
           REELS_INSTAGRAM: { multNome: 0.59 } } },
       { col: 8, row: 0, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.36, multValor: 1.0, multBalao: 1.49, multFoto: 1.18,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 0.64, nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (espelho de g_7_4_prod_3_dest_baixo)
           FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
           // Pedido do cliente (REELS): nome do destaque +35% (0.36 × 1.35 ≈ 0.49)
@@ -487,21 +487,21 @@ export const LAYOUTS_NOMEADOS = [
       // 3 destaques embaixo: destaque EXPLÍCITO (fundo vermelho)
       { col: 0, row: 2, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.44, multValor: 1.0, multBalao: 1.49, multFoto: 1.18,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 0.64, nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (chamar mais atenção)
           FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
           // Pedido do cliente (REELS): nome do destaque +35% (espelho de g_7_3_dest_topo, multNome 0.49)
           REELS_INSTAGRAM: { multNome: 0.59 } } },
       { col: 4, row: 2, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.44, multValor: 1.0, multBalao: 1.49, multFoto: 1.18,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 0.64, nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (chamar mais atenção)
           FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
           // Pedido do cliente (REELS): nome do destaque +35% (espelho de g_7_3_dest_topo, multNome 0.49)
           REELS_INSTAGRAM: { multNome: 0.59 } } },
       { col: 8, row: 2, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.44, multValor: 1.0, multBalao: 1.49, multFoto: 1.18,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 0.64, nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (chamar mais atenção)
           FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
           // Pedido do cliente (REELS): nome do destaque +35% (espelho de g_7_3_dest_topo, multNome 0.49)
@@ -516,27 +516,27 @@ export const LAYOUTS_NOMEADOS = [
       { col: 0, row: 0, colSpan: 2, rowSpan: 3, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.86, multValor: 1.10,
         // Pedido do cliente (REELS): foto do destaque +12% + nome mais baixo + balão subido
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 1.21, nomeOffsetTop: 0.20 },
           REELS_INSTAGRAM: { multFoto: 1.12, nomeOffsetTop: 0.15, balaoOffsetY: 0.03 } } },
       // 6 produtos pequenos: destaque: false EXPLÍCITO (fundo amarelo normal)
       { col: 2, row: 0, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 } } },
+        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 } } },
       { col: 4, row: 0, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 } } },
+        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 } } },
       { col: 2, row: 1, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 } } },
+        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 } } },
       { col: 4, row: 1, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 } } },
+        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 } } },
       { col: 2, row: 2, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 } } },
+        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 } } },
       { col: 4, row: 2, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 } } },
+        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 } } },
     ]},
   // 7 produtos (STORIES): estilo qrofertas — 1 destaque grande no topo (foto esquerda +
   // nome+balão amarelo grande à direita) + 6 produtos card-banner abaixo em grid 3×2.
@@ -583,9 +583,11 @@ export const LAYOUTS_NOMEADOS = [
         fotoPosY: 0.50,        // foto centralizada (era 0.25 default = topo)
       },
       ENCARTE_GRANDE: {
-        multNome: 1.77,        // 1.54 + 15%
+        multNome: 2.02,        // 1.77 + 14% (pedido cliente)
+        multFoto: 0.97,        // 0.88 + 10% (pedido cliente)
         nomeOffsetTop: 0.20,
         fotoPosY: 0.50,        // foto centralizada
+        balaoOffsetY: 0.03,    // balão um pouco mais alto (pedido cliente)
       },
     },
   },
@@ -622,31 +624,31 @@ export const LAYOUTS_NOMEADOS = [
         perModelo: {
           // Pedido do cliente (REELS): balão dos 5 produtos um pouco mais alto (balaoOffsetY)
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
-          ENCARTE_GRANDE: { multNome: 1.81, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
       { col: 3,  row: 2, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           // Pedido do cliente (REELS): balão dos 5 produtos um pouco mais alto (balaoOffsetY)
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
-          ENCARTE_GRANDE: { multNome: 1.81, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
       { col: 6,  row: 2, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           // Pedido do cliente (REELS): balão dos 5 produtos um pouco mais alto (balaoOffsetY)
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
-          ENCARTE_GRANDE: { multNome: 1.81, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
       { col: 9,  row: 2, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           // Pedido do cliente (REELS): balão dos 5 produtos um pouco mais alto (balaoOffsetY)
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
-          ENCARTE_GRANDE: { multNome: 1.81, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
       { col: 12, row: 2, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           // Pedido do cliente (REELS): balão dos 5 produtos um pouco mais alto (balaoOffsetY)
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
-          ENCARTE_GRANDE: { multNome: 1.81, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
     ]},
   { id: 'g_8_5_prod_3_dest_baixo', nome: '8 Produtos - 5 produtos e 3 destaques em baixo', quantidade: 8,
@@ -656,7 +658,7 @@ export const LAYOUTS_NOMEADOS = [
       { col: 0,  row: 0, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
-          ENCARTE_GRANDE: { multNome: 1.81, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): foto dos 5 produtos mais baixa, perto do balão
           // + nome levemente abaixado pra descolar do topo do card
           FACEBOOK_QUADRADO: { fotoPosY: 0.85, nomeOffsetTop: 0.06 },
@@ -664,7 +666,7 @@ export const LAYOUTS_NOMEADOS = [
       { col: 3,  row: 0, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
-          ENCARTE_GRANDE: { multNome: 1.81, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): foto dos 5 produtos mais baixa, perto do balão
           // + nome levemente abaixado pra descolar do topo do card
           FACEBOOK_QUADRADO: { fotoPosY: 0.85, nomeOffsetTop: 0.06 },
@@ -672,7 +674,7 @@ export const LAYOUTS_NOMEADOS = [
       { col: 6,  row: 0, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
-          ENCARTE_GRANDE: { multNome: 1.81, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): foto dos 5 produtos mais baixa, perto do balão
           // + nome levemente abaixado pra descolar do topo do card
           FACEBOOK_QUADRADO: { fotoPosY: 0.85, nomeOffsetTop: 0.06 },
@@ -680,7 +682,7 @@ export const LAYOUTS_NOMEADOS = [
       { col: 9,  row: 0, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
-          ENCARTE_GRANDE: { multNome: 1.81, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): foto dos 5 produtos mais baixa, perto do balão
           // + nome levemente abaixado pra descolar do topo do card
           FACEBOOK_QUADRADO: { fotoPosY: 0.85, nomeOffsetTop: 0.06 },
@@ -688,7 +690,7 @@ export const LAYOUTS_NOMEADOS = [
       { col: 12, row: 0, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
-          ENCARTE_GRANDE: { multNome: 1.81, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): foto dos 5 produtos mais baixa, perto do balão
           // + nome levemente abaixado pra descolar do topo do card
           FACEBOOK_QUADRADO: { fotoPosY: 0.85, nomeOffsetTop: 0.06 },
@@ -763,104 +765,18 @@ export const LAYOUTS_NOMEADOS = [
         multBalao: 1.15,
         nomeOffsetTop: -0.18,
       },
+      // Pedido do cliente (ENCARTE_GRANDE): balões e fotos uniformes — antes variavam
+      // de tamanho conforme o preço/imagem. balaoFixo normaliza pílulas, smartFoto
+      // detecta o conteúdo real da PNG (ignorando padding/sombras) pra todas darem o
+      // mesmo "peso visual".
+      ENCARTE_GRANDE: {
+        balaoFixo: true,
+        smartFoto: true,
+        multBalao: 1.27,       // 0.98 + 30% (pedido cliente)
+        nomeOffsetTop: -0.15,
+      },
     },
   },
-
-  // === 10 PRODUTOS ===
-  { id: 'g_10_1_dest_lat', nome: '10 Produtos - 1 destaque lateral + 9 produtos', quantidade: 10,
-    excluirFormatos: ['STORIES'],
-    // Cols 8 (era 5): destaque cai de 40% pra 25%. 9 produtos ocupam 75% em 3x3.
-    // Layouts MANTIDOS no default (renderização original) — só ajustamos largura+mults.
-    cols: 8, rows: 3, boxes: [
-      // Destaque lateral 25% × full height: destaque EXPLÍCITO (fundo vermelho)
-      { col: 0, row: 0, colSpan: 2, rowSpan: 3, destaque: true,
-        multBalao: 0.95, multValor: 0.60, multNome: 1.12, multFoto: 1.15, fotoPosY: 0.65,
-        perModelo: {
-          // Pedido do cliente (REELS): nome +20% (1.55→1.86) + foto +8% (1.15→1.24) + balão subido
-          REELS_INSTAGRAM: { multBalao: 1.09, multValor: 0.95, multNome: 1.86, multFoto: 1.24, nomeOffsetTop: 0.25, balaoOffsetY: 0.03 },
-          ENCARTE_GRANDE: { multBalao: 1.40, multValor: 0.90, multNome: 1.34, nomeOffsetTop: 0.20 },
-          // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo +
-          // balão subido um pouco (balaoOffsetY) + balão +18% (1.14 × 1.18 ≈ 1.35) +
-          // preço maior pra preencher o balão (multValor 0.60 → 0.95)
-          FACEBOOK_QUADRADO: { multBalao: 1.35, multValor: 0.95, nomeOffsetTop: 0.12, balaoOffsetY: 0.04 },
-        } },
-      // 9 produtos pequenos (3x3 em 75% da largura): foto −14%, balão +15%
-      // destaque: false EXPLÍCITO — auto-detect marcaria como destaque (colSpan>1)
-      // e o renderer aplicaria estilo destaque (pílula amarela com texto preto).
-      // Esses 9 são cards NORMAIS (pílula vermelha + texto branco).
-      { col: 2, row: 0, colSpan: 2, rowSpan: 1, destaque: false,
-        multFoto: 0.75, multValor: 0.66, multBalao: 0.80, multNome: 1.68, smartFoto: true, balaoFixo: true, fotoPosY: 0.55,
-        perModelo: {
-          REELS_INSTAGRAM: { multBalao: 1.00, multNome: 1.93, nomeOffsetTop: 0.25, valorConsistente: true },
-          ENCARTE_GRANDE: { multBalao: 1.04, multNome: 1.85, nomeOffsetTop: 0.20 },
-          // Pedido do cliente: balão +18% só no FACEBOOK_QUADRADO desta grade (0.80 × 1.18)
-          FACEBOOK_QUADRADO: { multBalao: 0.944 },
-        } },
-      { col: 4, row: 0, colSpan: 2, rowSpan: 1, destaque: false,
-        multFoto: 0.75, multValor: 0.66, multBalao: 0.80, multNome: 1.68, smartFoto: true, balaoFixo: true, fotoPosY: 0.55,
-        perModelo: {
-          REELS_INSTAGRAM: { multBalao: 1.00, multNome: 1.93, nomeOffsetTop: 0.25, valorConsistente: true },
-          ENCARTE_GRANDE: { multBalao: 1.04, multNome: 1.85, nomeOffsetTop: 0.20 },
-          // Pedido do cliente: balão +18% só no FACEBOOK_QUADRADO desta grade (0.80 × 1.18)
-          FACEBOOK_QUADRADO: { multBalao: 0.944 },
-        } },
-      { col: 6, row: 0, colSpan: 2, rowSpan: 1, destaque: false,
-        multFoto: 0.75, multValor: 0.66, multBalao: 0.80, multNome: 1.68, smartFoto: true, balaoFixo: true, fotoPosY: 0.55,
-        perModelo: {
-          REELS_INSTAGRAM: { multBalao: 1.00, multNome: 1.93, nomeOffsetTop: 0.25, valorConsistente: true },
-          ENCARTE_GRANDE: { multBalao: 1.04, multNome: 1.85, nomeOffsetTop: 0.20 },
-          // Pedido do cliente: balão +18% só no FACEBOOK_QUADRADO desta grade (0.80 × 1.18)
-          FACEBOOK_QUADRADO: { multBalao: 0.944 },
-        } },
-      { col: 2, row: 1, colSpan: 2, rowSpan: 1, destaque: false,
-        multFoto: 0.75, multValor: 0.66, multBalao: 0.80, multNome: 1.68, smartFoto: true, balaoFixo: true, fotoPosY: 0.55,
-        perModelo: {
-          REELS_INSTAGRAM: { multBalao: 1.00, multNome: 1.93, nomeOffsetTop: 0.25, valorConsistente: true },
-          ENCARTE_GRANDE: { multBalao: 1.04, multNome: 1.85, nomeOffsetTop: 0.20 },
-          // Pedido do cliente: balão +18% só no FACEBOOK_QUADRADO desta grade (0.80 × 1.18)
-          FACEBOOK_QUADRADO: { multBalao: 0.944 },
-        } },
-      { col: 4, row: 1, colSpan: 2, rowSpan: 1, destaque: false,
-        multFoto: 0.75, multValor: 0.66, multBalao: 0.80, multNome: 1.68, smartFoto: true, balaoFixo: true, fotoPosY: 0.55,
-        perModelo: {
-          REELS_INSTAGRAM: { multBalao: 1.00, multNome: 1.93, nomeOffsetTop: 0.25, valorConsistente: true },
-          ENCARTE_GRANDE: { multBalao: 1.04, multNome: 1.85, nomeOffsetTop: 0.20 },
-          // Pedido do cliente: balão +18% só no FACEBOOK_QUADRADO desta grade (0.80 × 1.18)
-          FACEBOOK_QUADRADO: { multBalao: 0.944 },
-        } },
-      { col: 6, row: 1, colSpan: 2, rowSpan: 1, destaque: false,
-        multFoto: 0.75, multValor: 0.66, multBalao: 0.80, multNome: 1.68, smartFoto: true, balaoFixo: true, fotoPosY: 0.55,
-        perModelo: {
-          REELS_INSTAGRAM: { multBalao: 1.00, multNome: 1.93, nomeOffsetTop: 0.25, valorConsistente: true },
-          ENCARTE_GRANDE: { multBalao: 1.04, multNome: 1.85, nomeOffsetTop: 0.20 },
-          // Pedido do cliente: balão +18% só no FACEBOOK_QUADRADO desta grade (0.80 × 1.18)
-          FACEBOOK_QUADRADO: { multBalao: 0.944 },
-        } },
-      { col: 2, row: 2, colSpan: 2, rowSpan: 1, destaque: false,
-        multFoto: 0.75, multValor: 0.66, multBalao: 0.80, multNome: 1.68, smartFoto: true, balaoFixo: true, fotoPosY: 0.55,
-        perModelo: {
-          REELS_INSTAGRAM: { multBalao: 1.00, multNome: 1.93, nomeOffsetTop: 0.25, valorConsistente: true },
-          ENCARTE_GRANDE: { multBalao: 1.04, multNome: 1.85, nomeOffsetTop: 0.20 },
-          // Pedido do cliente: balão +18% só no FACEBOOK_QUADRADO desta grade (0.80 × 1.18)
-          FACEBOOK_QUADRADO: { multBalao: 0.944 },
-        } },
-      { col: 4, row: 2, colSpan: 2, rowSpan: 1, destaque: false,
-        multFoto: 0.75, multValor: 0.66, multBalao: 0.80, multNome: 1.68, smartFoto: true, balaoFixo: true, fotoPosY: 0.55,
-        perModelo: {
-          REELS_INSTAGRAM: { multBalao: 1.00, multNome: 1.93, nomeOffsetTop: 0.25, valorConsistente: true },
-          ENCARTE_GRANDE: { multBalao: 1.04, multNome: 1.85, nomeOffsetTop: 0.20 },
-          // Pedido do cliente: balão +18% só no FACEBOOK_QUADRADO desta grade (0.80 × 1.18)
-          FACEBOOK_QUADRADO: { multBalao: 0.944 },
-        } },
-      { col: 6, row: 2, colSpan: 2, rowSpan: 1, destaque: false,
-        multFoto: 0.75, multValor: 0.66, multBalao: 0.80, multNome: 1.68, smartFoto: true, balaoFixo: true, fotoPosY: 0.55,
-        perModelo: {
-          REELS_INSTAGRAM: { multBalao: 1.00, multNome: 1.93, nomeOffsetTop: 0.25, valorConsistente: true },
-          ENCARTE_GRANDE: { multBalao: 1.04, multNome: 1.85, nomeOffsetTop: 0.20 },
-          // Pedido do cliente: balão +18% só no FACEBOOK_QUADRADO desta grade (0.80 × 1.18)
-          FACEBOOK_QUADRADO: { multBalao: 0.944 },
-        } },
-    ]},
 
   // === 11 PRODUTOS ===
   { id: 'g_11_dest_central', nome: '11 Produtos - destaque central + 2 largos topo/baixo + 8 pequenos', quantidade: 11,
@@ -904,30 +820,30 @@ export const LAYOUTS_NOMEADOS = [
     cols: 3, rows: 4, boxes: [
       // Row 0: 3 pequenos topo
       { col: 0, row: 0, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'card-foto-topo',
-        multNome: 0.70, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
+        multNome: 1.06, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
       { col: 1, row: 0, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'card-foto-topo',
-        multNome: 0.70, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
+        multNome: 1.06, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
       { col: 2, row: 0, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'card-foto-topo',
-        multNome: 0.70, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
+        multNome: 1.06, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
       // Row 1: pequeno esq, DESTAQUE central (rowSpan 2), pequeno dir
       { col: 0, row: 1, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'card-foto-topo',
-        multNome: 0.70, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
+        multNome: 1.06, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
       { col: 1, row: 1, colSpan: 1, rowSpan: 2, destaque: true, layoutTipo: 'card-banner',
         multNome: 0.61, multValor: 1.0, multBalao: 1.20, multFoto: 1.15, nomeOffsetTop: 0.20 },
       { col: 2, row: 1, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'card-foto-topo',
-        multNome: 0.70, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
+        multNome: 1.06, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
       // Row 2: pequeno esq, [destaque continua], pequeno dir
       { col: 0, row: 2, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'card-foto-topo',
-        multNome: 0.70, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
+        multNome: 1.06, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
       { col: 2, row: 2, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'card-foto-topo',
-        multNome: 0.70, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
+        multNome: 1.06, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
       // Row 3: 3 pequenos baixo
       { col: 0, row: 3, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'card-foto-topo',
-        multNome: 0.70, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
+        multNome: 1.06, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
       { col: 1, row: 3, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'card-foto-topo',
-        multNome: 0.70, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
+        multNome: 1.06, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
       { col: 2, row: 3, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'card-foto-topo',
-        multNome: 0.70, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
+        multNome: 1.06, multValor: 0.85, multBalao: 1.30, multFoto: 1.15, balaoFixo: true, nomeAlignX: 0.5 },
     ]},
   { id: 'g_11_3_dest_topo', nome: '11 Produtos - 3 destaques topo + 8 produtos', quantidade: 11,
     excluirFormatos: ['ENCARTE_GRANDE'],
@@ -1073,16 +989,16 @@ export const LAYOUTS_NOMEADOS = [
     cols: 12, rows: 4, boxes: [
       // Row 0: 3 destaques (4 cols cada = 33% largura) — fundo vermelho
       { col: 0, row: 0, colSpan: 4, rowSpan: 1, destaque: true,
-        multNome: 1.45, multValor: 1.10, multBalao: 0.60, multFoto: 1.10, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+        multNome: 1.67, multValor: 1.10, multBalao: 0.60, multFoto: 1.10, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
       { col: 4, row: 0, colSpan: 4, rowSpan: 1, destaque: true,
-        multNome: 1.45, multValor: 1.10, multBalao: 0.60, multFoto: 1.10, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+        multNome: 1.67, multValor: 1.10, multBalao: 0.60, multFoto: 1.10, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
       { col: 8, row: 0, colSpan: 4, rowSpan: 1, destaque: true,
-        multNome: 1.45, multValor: 1.10, multBalao: 0.60, multFoto: 1.10, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+        multNome: 1.67, multValor: 1.10, multBalao: 0.60, multFoto: 1.10, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
       // Rows 1-3: 12 produtos pequenos (3 cols cada = 25% largura, 4 por linha)
       ...Array.from({ length: 12 }, (_, i) => ({
         col: (i % 4) * 3, row: 1 + Math.floor(i / 4), colSpan: 3, rowSpan: 1,
         layoutTipo: 'card-foto-topo', destaque: false,
-        multNome: 0.75, multValor: 0.90, multBalao: 1.08, multFoto: 1.10, balaoFixo: true, nomeAlignX: 0.5,
+        multNome: 0.90, multValor: 0.90, multBalao: 1.24, multFoto: 1.10, balaoFixo: true, nomeAlignX: 0.5,
       })),
     ]},
 
@@ -1092,7 +1008,7 @@ export const LAYOUTS_NOMEADOS = [
     cols: 4, rows: 4, boxes: Array.from({ length: 16 }, (_, i) => ({
       col: i % 4, row: Math.floor(i / 4), colSpan: 1, rowSpan: 1,
       layoutTipo: 'card-foto-topo', destaque: false,
-      multNome: 0.90, multValor: 0.90, multBalao: 1.08, multFoto: 1.10, balaoFixo: true, nomeAlignX: 0.5,
+      multNome: 0.90, multValor: 0.90, multBalao: 1.24, multFoto: 1.10, balaoFixo: true, nomeAlignX: 0.5,
     })) },
 
   // === 16 PRODUTOS === (4x4 simétrico, estilo qrofertas — todos com foto esq + balão dir)
@@ -1182,60 +1098,60 @@ export const LAYOUTS_NOMEADOS = [
     cols: 4, rows: 4, boxes: [
       // 4 destaques 1x2 (verticais): destaque EXPLÍCITO (fundo vermelho)
       { col: 0, row: 0, colSpan: 1, rowSpan: 2, destaque: true,
-        perModelo: { ENCARTE_GRANDE: { multNome: 1.30, multFoto: 1.18, nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 1.50, multFoto: 1.27, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + fonte +8%
           FACEBOOK_QUADRADO: { multNome: 1.08, nomeOffsetTop: 0.10 },
           // Pedido do cliente (REELS): nome +10% + foto +18% + balão subido
           REELS_INSTAGRAM: { multNome: 1.10, multFoto: 1.24, nomeOffsetTop: 0.12, balaoOffsetY: 0.03 } } },
       { col: 1, row: 0, colSpan: 1, rowSpan: 2, destaque: true,
-        perModelo: { ENCARTE_GRANDE: { multNome: 1.30, multFoto: 1.18, nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 1.50, multFoto: 1.27, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + fonte +8%
           FACEBOOK_QUADRADO: { multNome: 1.08, nomeOffsetTop: 0.10 },
           // Pedido do cliente (REELS): nome +10% + foto +18% + balão subido
           REELS_INSTAGRAM: { multNome: 1.10, multFoto: 1.24, nomeOffsetTop: 0.12, balaoOffsetY: 0.03 } } },
       { col: 2, row: 0, colSpan: 1, rowSpan: 2, destaque: true,
-        perModelo: { ENCARTE_GRANDE: { multNome: 1.30, multFoto: 1.18, nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 1.50, multFoto: 1.27, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + fonte +8%
           FACEBOOK_QUADRADO: { multNome: 1.08, nomeOffsetTop: 0.10 },
           // Pedido do cliente (REELS): nome +10% + foto +18% + balão subido
           REELS_INSTAGRAM: { multNome: 1.10, multFoto: 1.24, nomeOffsetTop: 0.12, balaoOffsetY: 0.03 } } },
       { col: 3, row: 0, colSpan: 1, rowSpan: 2, destaque: true,
-        perModelo: { ENCARTE_GRANDE: { multNome: 1.30, multFoto: 1.18, nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 1.50, multFoto: 1.27, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + fonte +8%
           FACEBOOK_QUADRADO: { multNome: 1.08, nomeOffsetTop: 0.10 },
           // Pedido do cliente (REELS): nome +10% + foto +18% + balão subido
           REELS_INSTAGRAM: { multNome: 1.10, multFoto: 1.24, nomeOffsetTop: 0.12, balaoOffsetY: 0.03 } } },
       // 8 produtos pequenos: nome +50%, balão -40%, foto menor
       { col: 0, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.77, multValor: 0.75, multFoto: 1.13, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.96, multBalao: 0.94, multNome: 1.98, nomeOffsetTop: 0.10, fotoPosY: 0.55 },
           // Pedido do cliente (REELS): nome dos 8 produtos +20% (1.50 → 1.80)
           REELS_INSTAGRAM: { multNome: 1.80 } } },
       { col: 1, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.77, multValor: 0.75, multFoto: 1.13, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.96, multBalao: 0.94, multNome: 1.98, nomeOffsetTop: 0.10, fotoPosY: 0.55 },
           // Pedido do cliente (REELS): nome dos 8 produtos +20% (1.50 → 1.80)
           REELS_INSTAGRAM: { multNome: 1.80 } } },
       { col: 2, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.77, multValor: 0.75, multFoto: 1.13, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.96, multBalao: 0.94, multNome: 1.98, nomeOffsetTop: 0.10, fotoPosY: 0.55 },
           // Pedido do cliente (REELS): nome dos 8 produtos +20% (1.50 → 1.80)
           REELS_INSTAGRAM: { multNome: 1.80 } } },
       { col: 3, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.77, multValor: 0.75, multFoto: 1.13, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.96, multBalao: 0.94, multNome: 1.98, nomeOffsetTop: 0.10, fotoPosY: 0.55 },
           // Pedido do cliente (REELS): nome dos 8 produtos +20% (1.50 → 1.80)
           REELS_INSTAGRAM: { multNome: 1.80 } } },
       { col: 0, row: 3, colSpan: 1, rowSpan: 1, multBalao: 0.77, multValor: 0.75, multFoto: 1.13, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.96, multBalao: 0.94, multNome: 1.98, nomeOffsetTop: 0.10, fotoPosY: 0.55 },
           // Pedido do cliente (REELS): nome dos 8 produtos +20% (1.50 → 1.80)
           REELS_INSTAGRAM: { multNome: 1.80 } } },
       { col: 1, row: 3, colSpan: 1, rowSpan: 1, multBalao: 0.77, multValor: 0.75, multFoto: 1.13, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.96, multBalao: 0.94, multNome: 1.98, nomeOffsetTop: 0.10, fotoPosY: 0.55 },
           // Pedido do cliente (REELS): nome dos 8 produtos +20% (1.50 → 1.80)
           REELS_INSTAGRAM: { multNome: 1.80 } } },
       { col: 2, row: 3, colSpan: 1, rowSpan: 1, multBalao: 0.77, multValor: 0.75, multFoto: 1.13, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.96, multBalao: 0.94, multNome: 1.98, nomeOffsetTop: 0.10, fotoPosY: 0.55 },
           // Pedido do cliente (REELS): nome dos 8 produtos +20% (1.50 → 1.80)
           REELS_INSTAGRAM: { multNome: 1.80 } } },
       { col: 3, row: 3, colSpan: 1, rowSpan: 1, multBalao: 0.77, multValor: 0.75, multFoto: 1.13, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.96, multBalao: 0.94, multNome: 1.98, nomeOffsetTop: 0.10, fotoPosY: 0.55 },
           // Pedido do cliente (REELS): nome dos 8 produtos +20% (1.50 → 1.80)
           REELS_INSTAGRAM: { multNome: 1.80 } } },
     ]},
@@ -1247,8 +1163,8 @@ export const LAYOUTS_NOMEADOS = [
     perModelo: {
       ENCARTE_GRANDE: {
         multNome: 1.98,    // 1.58 + 25%
-        multBalao: 0.90,   // 0.78 + 15%
-        fotoPosY: 0.45,    // foto um pouco mais pra baixo
+        multBalao: 1.04,   // 0.90 + 15% (pedido cliente)
+        fotoPosY: 0.58,    // foto mais pra baixo, longe do nome (pedido cliente)
       },
       // Pedido do cliente (REELS): nome +8% (1.58 → 1.71) + foto mais baixa perto do balão
       // (fotoPosY 0.58) + balão +15% (0.78 → 0.90)
@@ -1264,47 +1180,47 @@ export const LAYOUTS_NOMEADOS = [
     cols: 4, rows: 4, boxes: [
       // 8 produtos pequenos topo: balão -20%, nome +50%
       { col: 0, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.68, multNome: 1.88,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 1.02, multNome: 2.07, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
       { col: 1, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.68, multNome: 1.88,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 1.02, multNome: 2.07, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
       { col: 2, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.68, multNome: 1.88,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 1.02, multNome: 2.07, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
       { col: 3, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.68, multNome: 1.88,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 1.02, multNome: 2.07, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
       { col: 0, row: 1, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.68, multNome: 1.88,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 1.02, multNome: 2.07, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
       { col: 1, row: 1, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.68, multNome: 1.88,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 1.02, multNome: 2.07, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
       { col: 2, row: 1, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.68, multNome: 1.88,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 1.02, multNome: 2.07, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
       { col: 3, row: 1, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.68, multNome: 1.88,
-        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 0.85, multNome: 1.80, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
+        perModelo: { ENCARTE_GRANDE: { multFoto: 0.87, multBalao: 1.02, multNome: 2.07, nomeOffsetTop: 0.10, fotoPosY: 0.45 } } },
       // 4 destaques verticais (1x2): destaque EXPLÍCITO (fundo vermelho)
       { col: 0, row: 2, colSpan: 1, rowSpan: 2, destaque: true, multBalao: 0.74, multValor: 0.75, multNome: 1.01,
         perModelo: {
           REELS_INSTAGRAM: { multBalao: 0.89, nomeOffsetTop: 0.25, multNome: 1.16 },
-          ENCARTE_GRANDE: { multNome: 1.30, multFoto: 1.18, multBalao: 0.95, fotoPosY: 0.65, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.30, multFoto: 1.18, multBalao: 1.12, fotoPosY: 0.65, nomeOffsetTop: 0.10 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + balão +18% (0.74 × 1.18 ≈ 0.87)
           FACEBOOK_QUADRADO: { multBalao: 0.87, nomeOffsetTop: 0.10 },
         } },
       { col: 1, row: 2, colSpan: 1, rowSpan: 2, destaque: true, multBalao: 0.74, multValor: 0.75, multNome: 1.01,
         perModelo: {
           REELS_INSTAGRAM: { multBalao: 0.89, nomeOffsetTop: 0.25, multNome: 1.16 },
-          ENCARTE_GRANDE: { multNome: 1.30, multFoto: 1.18, multBalao: 0.95, fotoPosY: 0.65, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.30, multFoto: 1.18, multBalao: 1.12, fotoPosY: 0.65, nomeOffsetTop: 0.10 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + balão +18% (0.74 × 1.18 ≈ 0.87)
           FACEBOOK_QUADRADO: { multBalao: 0.87, nomeOffsetTop: 0.10 },
         } },
       { col: 2, row: 2, colSpan: 1, rowSpan: 2, destaque: true, multBalao: 0.74, multValor: 0.75, multNome: 1.01,
         perModelo: {
           REELS_INSTAGRAM: { multBalao: 0.89, nomeOffsetTop: 0.25, multNome: 1.16 },
-          ENCARTE_GRANDE: { multNome: 1.30, multFoto: 1.18, multBalao: 0.95, fotoPosY: 0.65, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.30, multFoto: 1.18, multBalao: 1.12, fotoPosY: 0.65, nomeOffsetTop: 0.10 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + balão +18% (0.74 × 1.18 ≈ 0.87)
           FACEBOOK_QUADRADO: { multBalao: 0.87, nomeOffsetTop: 0.10 },
         } },
       { col: 3, row: 2, colSpan: 1, rowSpan: 2, destaque: true, multBalao: 0.74, multValor: 0.75, multNome: 1.01,
         perModelo: {
           REELS_INSTAGRAM: { multBalao: 0.89, nomeOffsetTop: 0.25, multNome: 1.16 },
-          ENCARTE_GRANDE: { multNome: 1.30, multFoto: 1.18, multBalao: 0.95, fotoPosY: 0.65, nomeOffsetTop: 0.20 },
+          ENCARTE_GRANDE: { multNome: 1.30, multFoto: 1.18, multBalao: 1.12, fotoPosY: 0.65, nomeOffsetTop: 0.10 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + balão +18% (0.74 × 1.18 ≈ 0.87)
           FACEBOOK_QUADRADO: { multBalao: 0.87, nomeOffsetTop: 0.10 },
         } },
@@ -1377,39 +1293,39 @@ export const LAYOUTS_NOMEADOS = [
     cols: 5, rows: 3, boxes: [
       // Linha 0: 5 produtos pequenos no topo — foto -12%, nome +50%
       { col: 0, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 1, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 2, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 3, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 4, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       // Linhas 1-2: 4 produtos esquerda + destaque vertical central + 4 produtos direita
       { col: 0, row: 1, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 1, row: 1, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       // destaque central (1 col × 2 rows): nome +15%, foto +10%
       { col: 2, row: 1, colSpan: 1, rowSpan: 2, destaque: true,
         multBalao: 1.26, multValor: 1.30, multNome: 0.86, multFoto: 1.29,
         // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo (0.12) + nome +15%
         // (0.86 × 1.15 ≈ 0.99) + balão subido um pouco (balaoOffsetY). Vale pras 2 grades espelho.
-        perModelo: { ENCARTE_GRANDE: { multNome: 2.10, nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 2.10, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           FACEBOOK_QUADRADO: { nomeOffsetTop: 0.12, multNome: 0.99, balaoOffsetY: 0.03 } } },
       { col: 3, row: 1, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 4, row: 1, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 0, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 1, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 3, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 4, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
     ]},
   { id: 'g_14_dest_cima_centro', nome: '14 Produtos - 13 produtos e 1 destaque central cima', quantidade: 14,
     excluirFormatos: ['STORIES', 'REELS_INSTAGRAM'],
@@ -1420,39 +1336,39 @@ export const LAYOUTS_NOMEADOS = [
     cols: 5, rows: 3, boxes: [
       // Linhas 0-1: 4 produtos esquerda + destaque vertical central + 4 produtos direita
       { col: 0, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 1, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       // destaque central (1 col × 2 rows) no topo
       { col: 2, row: 0, colSpan: 1, rowSpan: 2, destaque: true,
         multBalao: 1.26, multValor: 1.30, multNome: 0.86, multFoto: 1.29,
         // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo (0.12) + nome +15%
         // (0.86 × 1.15 ≈ 0.99) + balão subido um pouco (balaoOffsetY). Vale pras 2 grades espelho.
-        perModelo: { ENCARTE_GRANDE: { multNome: 2.10, nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 2.10, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           FACEBOOK_QUADRADO: { nomeOffsetTop: 0.12, multNome: 0.99, balaoOffsetY: 0.03 } } },
       { col: 3, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 4, row: 0, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 0, row: 1, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 1, row: 1, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 3, row: 1, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 4, row: 1, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       // Linha 2: 5 produtos pequenos na base
       { col: 0, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 1, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 2, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 3, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
       { col: 4, row: 2, colSpan: 1, rowSpan: 1, multBalao: 0.78, multValor: 0.72, multFoto: 0.88, multNome: 1.50,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.20 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.98, multNome: 2.25, fotoPosY: 0.50, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 }, FACEBOOK_QUADRADO: { fotoPosY: 0.45, multBalao: 0.87 } } },
     ]},
 
   // === 18 PRODUTOS ===
@@ -1463,49 +1379,49 @@ export const LAYOUTS_NOMEADOS = [
     cols: 28, rows: 4, boxes: [
       // Row 0: 7 produtos pequenos
       { col: 0,  row: 0, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 4,  row: 0, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 8,  row: 0, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 12, row: 0, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 16, row: 0, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 20, row: 0, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 24, row: 0, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       // Row 1: mais 7 produtos pequenos
       { col: 0,  row: 1, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 4,  row: 1, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 8,  row: 1, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 12, row: 1, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 16, row: 1, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 20, row: 1, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 24, row: 1, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       // Rows 2-3: 4 destaques GRANDES
       { col: 0,  row: 2, colSpan: 7, rowSpan: 2, destaque: true,
-        perModelo: { ENCARTE_GRANDE: { multNome: 1.15, multFoto: 1.10, nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 1.15, multFoto: 1.10, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + foto +15%
           FACEBOOK_QUADRADO: { multFoto: 1.15, nomeOffsetTop: 0.12 } } },
       { col: 7,  row: 2, colSpan: 7, rowSpan: 2, destaque: true,
-        perModelo: { ENCARTE_GRANDE: { multNome: 1.15, multFoto: 1.10, nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 1.15, multFoto: 1.10, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + foto +15%
           FACEBOOK_QUADRADO: { multFoto: 1.15, nomeOffsetTop: 0.12 } } },
       { col: 14, row: 2, colSpan: 7, rowSpan: 2, destaque: true,
-        perModelo: { ENCARTE_GRANDE: { multNome: 1.15, multFoto: 1.10, nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 1.15, multFoto: 1.10, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + foto +15%
           FACEBOOK_QUADRADO: { multFoto: 1.15, nomeOffsetTop: 0.12 } } },
       { col: 21, row: 2, colSpan: 7, rowSpan: 2, destaque: true,
-        perModelo: { ENCARTE_GRANDE: { multNome: 1.15, multFoto: 1.10, nomeOffsetTop: 0.20 },
+        perModelo: { ENCARTE_GRANDE: { multNome: 1.15, multFoto: 1.10, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + foto +15%
           FACEBOOK_QUADRADO: { multFoto: 1.15, nomeOffsetTop: 0.12 } } },
     ]},
@@ -1514,47 +1430,51 @@ export const LAYOUTS_NOMEADOS = [
     cols: 28, rows: 4, boxes: [
       // Rows 0-1: 4 destaques GRANDES no topo
       { col: 0,  row: 0, colSpan: 7, rowSpan: 2, destaque: true,
-        // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + foto +15%
-        perModelo: { FACEBOOK_QUADRADO: { multFoto: 1.15, nomeOffsetTop: 0.12 } } },
+        perModelo: { ENCARTE_GRANDE: { multNome: 1.15, multFoto: 1.10, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + foto +15%
+          FACEBOOK_QUADRADO: { multFoto: 1.15, nomeOffsetTop: 0.12 } } },
       { col: 7,  row: 0, colSpan: 7, rowSpan: 2, destaque: true,
-        // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + foto +15%
-        perModelo: { FACEBOOK_QUADRADO: { multFoto: 1.15, nomeOffsetTop: 0.12 } } },
+        perModelo: { ENCARTE_GRANDE: { multNome: 1.15, multFoto: 1.10, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + foto +15%
+          FACEBOOK_QUADRADO: { multFoto: 1.15, nomeOffsetTop: 0.12 } } },
       { col: 14, row: 0, colSpan: 7, rowSpan: 2, destaque: true,
-        // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + foto +15%
-        perModelo: { FACEBOOK_QUADRADO: { multFoto: 1.15, nomeOffsetTop: 0.12 } } },
+        perModelo: { ENCARTE_GRANDE: { multNome: 1.15, multFoto: 1.10, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + foto +15%
+          FACEBOOK_QUADRADO: { multFoto: 1.15, nomeOffsetTop: 0.12 } } },
       { col: 21, row: 0, colSpan: 7, rowSpan: 2, destaque: true,
-        // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + foto +15%
-        perModelo: { FACEBOOK_QUADRADO: { multFoto: 1.15, nomeOffsetTop: 0.12 } } },
+        perModelo: { ENCARTE_GRANDE: { multNome: 1.15, multFoto: 1.10, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          // Pedido do cliente (FACEBOOK_QUADRADO): nome do destaque mais baixo + foto +15%
+          FACEBOOK_QUADRADO: { multFoto: 1.15, nomeOffsetTop: 0.12 } } },
       // Row 2: 7 produtos pequenos
       { col: 0,  row: 2, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 4,  row: 2, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 8,  row: 2, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 12, row: 2, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 16, row: 2, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 20, row: 2, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 24, row: 2, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       // Row 3: mais 7 produtos pequenos
       { col: 0,  row: 3, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 4,  row: 3, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 8,  row: 3, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 12, row: 3, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 16, row: 3, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 20, row: 3, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
       { col: 24, row: 3, colSpan: 4, rowSpan: 1, destaque: false, multBalao: 0.65, multNome: 2.10,
-        perModelo: { ENCARTE_GRANDE: { multBalao: 0.75, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
+        perModelo: { ENCARTE_GRANDE: { multBalao: 0.83, multNome: 2.52, multFoto: 0.94, fotoPosY: 0.50 } } },
     ]},
 
   // === 18 PRODUTOS (REELS) === 2 destaques topo + 16 produtos 4x4
@@ -1627,7 +1547,6 @@ export const AUTO_LAYOUT_POR_QUANTIDADE = {
   7:  'g_7_1_dest_lat',            // 7: 1 destaque lateral + 6 grid
   8:  'g_4x2',                     // 8: 4×2 simétrico
   9:  'g_3x3',                     // 9: 3×3 simétrico
-  10: 'g_10_1_dest_lat',           // 10: 1 destaque lateral + 9 grid
   11: 'g_11_3_dest_topo',          // 11: 3 destaques topo + 8 grid
   12: 'g_4x3',                     // 12: 4×3 simétrico
   13: 'g_13_1_dest_4x3',           // 13: 1 destaque + 4×3
