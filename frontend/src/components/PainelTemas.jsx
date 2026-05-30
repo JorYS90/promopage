@@ -141,14 +141,14 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) 
     return `linear-gradient(135deg, ${fundo} 0%, ${fundo2} 100%)`;
   };
 
-  // Componente reutilizável de card individual
+  // Componente reutilizável de card individual.
+  // Imagens carregam com loading="lazy" — só busca quando entra na viewport (antes
+  // todas as previews carregavam de uma vez como background-image, lento em listas grandes).
   const renderCard = (t) => {
     const imgFundo = t.capa?.imagemFundo;
     const imgTitulo = t.capa?.imagemTitulo;
     const usaImagem = !!imgFundo;
-    const styleThumb = usaImagem
-      ? { backgroundImage: `url(${imgFundo})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-      : { background: corThumb(t) };
+    const styleThumb = usaImagem ? {} : { background: corThumb(t) };
     return (
       <div
         key={t.id}
@@ -165,8 +165,11 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) 
           </div>
         )}
         <div className={`thumb ${usaImagem ? 'com-imagem' : ''}`} style={styleThumb}>
+          {usaImagem && (
+            <img className="thumb-fundo" src={imgFundo} alt="" loading="lazy" decoding="async" />
+          )}
           {imgTitulo
-            ? <img className="thumb-titulo" src={imgTitulo} alt={t.nome} />
+            ? <img className="thumb-titulo" src={imgTitulo} alt={t.nome} loading="lazy" decoding="async" />
             : <span className="thumb-nome">{t.nome.toUpperCase()}</span>
           }
         </div>
@@ -315,13 +318,11 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) 
             </div>
             <div className="mvt-grid">
               {(porCategoria[categoriaModal] || []).map(t => {
-                // Versão maior do card pro modal
+                // Versão maior do card pro modal — mesma estratégia lazy do renderCard
                 const imgFundo = t.capa?.imagemFundo;
                 const imgTitulo = t.capa?.imagemTitulo;
                 const usaImagem = !!imgFundo;
-                const styleThumb = usaImagem
-                  ? { backgroundImage: `url(${imgFundo})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-                  : { background: corThumb(t) };
+                const styleThumb = usaImagem ? {} : { background: corThumb(t) };
                 return (
                   <div
                     key={t.id}
@@ -338,8 +339,11 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth }) 
                       </div>
                     )}
                     <div className={`thumb ${usaImagem ? 'com-imagem' : ''}`} style={styleThumb}>
+                      {usaImagem && (
+                        <img className="thumb-fundo" src={imgFundo} alt="" loading="lazy" decoding="async" />
+                      )}
                       {imgTitulo
-                        ? <img className="thumb-titulo" src={imgTitulo} alt={t.nome} />
+                        ? <img className="thumb-titulo" src={imgTitulo} alt={t.nome} loading="lazy" decoding="async" />
                         : <span className="thumb-nome">{t.nome.toUpperCase()}</span>
                       }
                     </div>

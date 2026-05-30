@@ -2708,6 +2708,66 @@ function renderizarBoxHorizontal(canvas, box, produto, idx, paleta, tamanhoTexto
     } catch {}
   }
 
+  // Nome CONSISTENTE (opt-in via box.nomeConsistente): padroniza o tamanho do nome
+  // em TODOS os irmãos — replica a lógica de shrink/wrap pra cada nome de configs._nomesProdutos
+  // e usa o MENOR. Sem isso, nomes curtos (PIZZA, BACON) ficam grandes e longos
+  // (BISTEQUINHA SADIA, SACHE HEINZ) pequenos — fonts discrepantes por falta de letras.
+  if (box.nomeConsistente && Array.isArray(configs._nomesProdutos) && configs._nomesProdutos.length > 1) {
+    const _ctxNC = canvas.contextContainer || canvas.lowerCanvasEl?.getContext('2d');
+    if (_ctxNC) {
+      try {
+        _ctxNC.save();
+        let _menorFonte = Infinity;
+        for (const _nm of configs._nomesProdutos) {
+          const _t = (_nm || 'PRODUTO').toUpperCase();
+          const _pal = _t.split(/\s+/).filter(Boolean);
+          let _f = fonteNatural1L;
+          _ctxNC.font = `900 ${_f}px ${fonteFamiliaNome}`;
+          const _largNat = _ctxNC.measureText(_t).width;
+          let _coube1L = false;
+          if (_largNat <= maxLargNome) {
+            _coube1L = true;
+          } else if (_pal.length >= 2) {
+            let _f1L = _f, _piso = _f * 0.65, _lg = _largNat;
+            while (_lg > maxLargNome && _f1L > _piso) {
+              _f1L *= 0.96;
+              _ctxNC.font = `900 ${_f1L}px ${fonteFamiliaNome}`;
+              _lg = _ctxNC.measureText(_t).width;
+            }
+            if (_lg <= maxLargNome) { _f = _f1L; _coube1L = true; }
+          }
+          if (!_coube1L && _pal.length >= 2) {
+            // 2 linhas balanceadas — encolhe até caber
+            let _mS = 1, _mD = Infinity;
+            for (let i = 1; i < _pal.length; i++) {
+              const _dl = Math.abs(_ctxNC.measureText(_pal.slice(0, i).join(' ')).width - _ctxNC.measureText(_pal.slice(i).join(' ')).width);
+              if (_dl < _mD) { _mD = _dl; _mS = i; }
+            }
+            const _lns = [_pal.slice(0, _mS).join(' '), _pal.slice(_mS).join(' ')];
+            _f = nomeAreaH * 0.37 * fatorTextoSizeH * boostDestaqueH;
+            const _medMax = () => {
+              _ctxNC.font = `900 ${_f}px ${fonteFamiliaNome}`;
+              return Math.max(..._lns.map(l => _ctxNC.measureText(l).width));
+            };
+            let _lg2 = _medMax();
+            while (_lg2 > maxLargNome && _f > 10) { _f *= 0.95; _lg2 = _medMax(); }
+          } else if (!_coube1L) {
+            // 1 palavra só — shrink até caber
+            let _lg = _largNat;
+            while (_lg > maxLargNome && _f > 10) {
+              _f *= 0.92;
+              _ctxNC.font = `900 ${_f}px ${fonteFamiliaNome}`;
+              _lg = _ctxNC.measureText(_t).width;
+            }
+          }
+          if (_f < _menorFonte) _menorFonte = _f;
+        }
+        _ctxNC.restore();
+        if (_menorFonte !== Infinity) fonteSizeNome = _menorFonte;
+      } catch {}
+    }
+  }
+
   // multNome aplicado como escala FINAL — garante que reduzir multNome SEMPRE
   // reduz o nome, mesmo quando o shrink acima o encolheu por largura.
   fonteSizeNome *= (box.multNome || 1.0);
@@ -2964,9 +3024,13 @@ function renderizarBoxHorizontalTopo(canvas, box, produto, idx, paleta, tamanhoT
   const bottomY = box.y + nomeAreaH + padding;
   const bottomH = box.h - nomeAreaH - padding * 2;
 
-  // Layout: foto à ESQUERDA (45%) + balão à DIREITA (55%) — balão dominante.
-  const photoAreaW = (box.w - padding * 3) * 0.45;
-  const balaoAreaW = (box.w - padding * 3) * 0.55;
+  // Layout: foto à ESQUERDA + balão à DIREITA. Default 45/55. Override per-box
+  // via box.balaoAreaFrac (fração da largura útil pro balão, 0–1). Útil pra
+  // grades que precisam de balão GRANDE — aumentar fração libera o cap horizontal
+  // (capFonteValorOverflow) e font cresce de verdade.
+  const _balaoFrac = box.balaoAreaFrac ?? 0.55;
+  const photoAreaW = (box.w - padding * 3) * (1 - _balaoFrac);
+  const balaoAreaW = (box.w - padding * 3) * _balaoFrac;
   const halfW = balaoAreaW;  // legacy alias usado em capFonteValorOverflow
   const photoX = box.x + padding;
   const balaoX = box.x + padding + photoAreaW + padding;
@@ -3046,6 +3110,64 @@ function renderizarBoxHorizontalTopo(canvas, box, produto, idx, paleta, tamanhoT
       }
       ctxMedHT.restore();
     } catch {}
+  }
+
+  // Nome CONSISTENTE (opt-in via box.nomeConsistente): padroniza o tamanho do nome
+  // em TODOS os irmãos — replica o shrink/wrap pra cada nome de configs._nomesProdutos
+  // e usa o MENOR. Resolve fonts discrepantes (PIZZA grande, BISTEQUINHA SADIA pequeno).
+  if (box.nomeConsistente && Array.isArray(configs._nomesProdutos) && configs._nomesProdutos.length > 1) {
+    const _ctxNC = canvas.contextContainer || canvas.lowerCanvasEl?.getContext('2d');
+    if (_ctxNC) {
+      try {
+        _ctxNC.save();
+        let _menorFonte = Infinity;
+        for (const _nm of configs._nomesProdutos) {
+          const _t = (_nm || 'PRODUTO').toUpperCase();
+          const _pal = _t.split(/\s+/).filter(Boolean);
+          let _f = fonteNatural1LHT;
+          _ctxNC.font = `900 ${_f}px ${fonteFamiliaHT}`;
+          const _largNat = _ctxNC.measureText(_t).width;
+          let _coube1L = false;
+          if (_largNat <= maxLargNomeHT) {
+            _coube1L = true;
+          } else if (_pal.length >= 2) {
+            let _f1L = _f, _piso = _f * 0.70, _lg = _largNat;
+            while (_lg > maxLargNomeHT && _f1L > _piso) {
+              _f1L *= 0.96;
+              _ctxNC.font = `900 ${_f1L}px ${fonteFamiliaHT}`;
+              _lg = _ctxNC.measureText(_t).width;
+            }
+            if (_lg <= maxLargNomeHT) { _f = _f1L; _coube1L = true; }
+          }
+          if (!_coube1L && _pal.length >= 2) {
+            // 2 linhas balanceadas — encolhe até caber
+            let _mS = 1, _mD = Infinity;
+            for (let i = 1; i < _pal.length; i++) {
+              const _dl = Math.abs(_ctxNC.measureText(_pal.slice(0, i).join(' ')).width - _ctxNC.measureText(_pal.slice(i).join(' ')).width);
+              if (_dl < _mD) { _mD = _dl; _mS = i; }
+            }
+            const _lns = [_pal.slice(0, _mS).join(' '), _pal.slice(_mS).join(' ')];
+            _f = nomeAreaH * 0.41 * fatorTextoSizeHT * boostDestaqueHT;
+            const _medMax = () => {
+              _ctxNC.font = `900 ${_f}px ${fonteFamiliaHT}`;
+              return Math.max(..._lns.map(l => _ctxNC.measureText(l).width));
+            };
+            let _lg2 = _medMax();
+            while (_lg2 > maxLargNomeHT && _f > 10) { _f *= 0.95; _lg2 = _medMax(); }
+          } else if (!_coube1L) {
+            let _lg = _largNat;
+            while (_lg > maxLargNomeHT && _f > 10) {
+              _f *= 0.95;
+              _ctxNC.font = `900 ${_f}px ${fonteFamiliaHT}`;
+              _lg = _ctxNC.measureText(_t).width;
+            }
+          }
+          if (_f < _menorFonte) _menorFonte = _f;
+        }
+        _ctxNC.restore();
+        if (_menorFonte !== Infinity) fonteSizeNome = _menorFonte;
+      } catch {}
+    }
   }
 
   // multNome aplicado como escala FINAL — garante que reduzir multNome SEMPRE
@@ -3250,6 +3372,32 @@ function renderizarBoxHorizontalTopo(canvas, box, produto, idx, paleta, tamanhoT
     tagH *= scale;
     larguraTextoTotal *= scale;
     tagW = halfW * 0.98;
+  }
+
+  // balaoBoost (opt-in, default 1.0): escala TUDO do balão (fonte, padding, largura,
+  // altura) APÓS o cap. Permite balão crescer pra dentro da área da foto (mas ainda
+  // limitado à largura do card). Útil quando o cap natural fica pequeno demais.
+  // Hard cap: balão nunca passa de (box.w - padding*2) pra não estourar a borda.
+  const balaoBoost = box.balaoBoost ?? 1.0;
+  if (balaoBoost !== 1.0) {
+    const maxBoostW = (box.w - padding * 2) / tagW;
+    const boostReal = Math.min(balaoBoost, maxBoostW);
+    if (boostReal > 1.0) {
+      fonteValor *= boostReal;
+      fonteRS *= boostReal;
+      fonteUnid *= boostReal;
+      fonteCentavos *= boostReal;
+      larguraRs *= boostReal;
+      larguraReais *= boostReal;
+      larguraCentavos *= boostReal;
+      larguraUnid *= boostReal;
+      espacoRsValor *= boostReal;
+      espacoValorUnid *= boostReal;
+      tagPaddingH *= boostReal;
+      tagH *= boostReal;
+      larguraTextoTotal *= boostReal;
+      tagW *= boostReal;
+    }
   }
 
   // Balão alinhado horizontalmente na sua área (40% à direita). Default 0.5 (centro).
