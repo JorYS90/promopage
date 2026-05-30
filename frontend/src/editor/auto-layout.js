@@ -55,6 +55,13 @@ export const LAYOUTS_NOMEADOS = [
         multFoto: 1.09,        // Pedido do cliente: foto +8% (1.01 × 1.08)
         balaoOffsetY: 0.03,    // Pedido do cliente: balão subido um pouco
       },
+      // Pedido do cliente (A4_RETRATO): foto +20% (0.88 → 1.06), nome mais pra
+      // baixo (nomeOffsetTop 0.20), balão subido um pouco (balaoOffsetY 0.03).
+      A4_RETRATO: {
+        multFoto: 1.22,        // 1.06 × 1.15 (pedido cliente +15%)
+        nomeOffsetTop: 0.20,
+        balaoOffsetY: 0.03,
+      },
     },
   },
   // 2 produtos empilhados verticalmente (ideal pra stories/portrait)
@@ -105,6 +112,15 @@ export const LAYOUTS_NOMEADOS = [
         multFoto: 1.22,        // Pedido do cliente: foto +5% (1.16 × 1.05)
         multNome: 0.83,        // Pedido do cliente: nome +15% e +10% (0.65 → 0.83)
       },
+      // Pedido do cliente (A4_RETRATO): nome um pouco mais pra baixo, foto +10%
+      // (1.05 × 1.10 = 1.16), foto centralizada no card (fotoPosY 0.50), nome +15%
+      // (0.65 × 1.15 = 0.75).
+      A4_RETRATO: {
+        nomeOffsetTop: 0.20,
+        multFoto: 1.16,
+        fotoPosY: 0.50,
+        multNome: 0.75,
+      },
     },
   },
   { id: 'g_2x2',  nome: '4 Produtos - 2x2', quantidade: 4,
@@ -120,6 +136,10 @@ export const LAYOUTS_NOMEADOS = [
           ENCARTE_GRANDE: { multFoto: 1.59, fotoOffsetX: 0.20 },
           // Pedido do cliente: nome um pouco mais pra cima só no FACEBOOK_QUADRADO
           FACEBOOK_QUADRADO: { nomeOffsetTop: -0.5 },
+          // Pedido do cliente (A4_RETRATO): smartFoto pra normalizar peso visual
+          // das fotos (sem isso, PIZZA quadrada fica enorme e COXINHA horizontal
+          // pequena — diferenças de aspect ratio).
+          A4_RETRATO: { smartFoto: true },
         },
       },
       { col: 1, row: 0, colSpan: 1, rowSpan: 1, layoutTipo: 'horizontal-topo',
@@ -130,6 +150,10 @@ export const LAYOUTS_NOMEADOS = [
           ENCARTE_GRANDE: { multFoto: 1.59, fotoOffsetX: 0.20 },
           // Pedido do cliente: nome um pouco mais pra cima só no FACEBOOK_QUADRADO
           FACEBOOK_QUADRADO: { nomeOffsetTop: -0.5 },
+          // Pedido do cliente (A4_RETRATO): smartFoto pra normalizar peso visual
+          // das fotos (sem isso, PIZZA quadrada fica enorme e COXINHA horizontal
+          // pequena — diferenças de aspect ratio).
+          A4_RETRATO: { smartFoto: true },
         },
       },
       { col: 0, row: 1, colSpan: 1, rowSpan: 1, layoutTipo: 'horizontal-topo',
@@ -140,6 +164,10 @@ export const LAYOUTS_NOMEADOS = [
           ENCARTE_GRANDE: { multFoto: 1.59, fotoOffsetX: 0.20 },
           // Pedido do cliente: nome um pouco mais pra cima só no FACEBOOK_QUADRADO
           FACEBOOK_QUADRADO: { nomeOffsetTop: -0.5 },
+          // Pedido do cliente (A4_RETRATO): smartFoto pra normalizar peso visual
+          // das fotos (sem isso, PIZZA quadrada fica enorme e COXINHA horizontal
+          // pequena — diferenças de aspect ratio).
+          A4_RETRATO: { smartFoto: true },
         },
       },
       { col: 1, row: 1, colSpan: 1, rowSpan: 1, layoutTipo: 'horizontal-topo',
@@ -150,6 +178,10 @@ export const LAYOUTS_NOMEADOS = [
           ENCARTE_GRANDE: { multFoto: 1.59, fotoOffsetX: 0.20 },
           // Pedido do cliente: nome um pouco mais pra cima só no FACEBOOK_QUADRADO
           FACEBOOK_QUADRADO: { nomeOffsetTop: -0.5 },
+          // Pedido do cliente (A4_RETRATO): smartFoto pra normalizar peso visual
+          // das fotos (sem isso, PIZZA quadrada fica enorme e COXINHA horizontal
+          // pequena — diferenças de aspect ratio).
+          A4_RETRATO: { smartFoto: true },
         },
       },
     ]},
@@ -164,20 +196,35 @@ export const LAYOUTS_NOMEADOS = [
       // Destaque grande à ESQUERDA (45%): nome reduzido, balão +15%
       { col: 0, row: 0, colSpan: 18, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.39, multValor: 1.0, multBalao: 1.15,
-        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 } } },
+        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 },
+          // Pedido cliente (A4_RETRATO): nome +35% (0.39 → 0.53), foto +15% (1.0 → 1.15),
+          // foto centralizada, nome abaixado, balão subido um pouco.
+          A4_RETRATO: { multNome: 0.66, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 } } },
       // 4 produtos pequenos à direita (2 colunas de 27.5%)
       { col: 18, row: 0, colSpan: 11, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.06,
-        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 } } },
+        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
+          // COXINHA horizontal + nome um pouco mais pra baixo.
+          A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 } } },
       { col: 29, row: 0, colSpan: 11, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.06,
-        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 } } },
+        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
+          // COXINHA horizontal + nome um pouco mais pra baixo.
+          A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 } } },
       { col: 18, row: 1, colSpan: 11, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.06,
-        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 } } },
+        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
+          // COXINHA horizontal + nome um pouco mais pra baixo.
+          A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 } } },
       { col: 29, row: 1, colSpan: 11, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.06,
-        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 } } },
+        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
+          // COXINHA horizontal + nome um pouco mais pra baixo.
+          A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 } } },
     ]},
   // Variante STORIES do g_5_dest_esq: destaque com 42.5% de largura (15% menor que
   // os 50% do original). Grid em cols=80 pra granularidade fina sem afetar layout.
@@ -245,20 +292,35 @@ export const LAYOUTS_NOMEADOS = [
       // 4 produtos pequenos à ESQUERDA (2 colunas de 27.5%)
       { col: 0, row: 0, colSpan: 11, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.06,
-        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 } } },
+        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
+          // COXINHA horizontal + nome um pouco mais pra baixo.
+          A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 } } },
       { col: 11, row: 0, colSpan: 11, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.06,
-        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 } } },
+        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
+          // COXINHA horizontal + nome um pouco mais pra baixo.
+          A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 } } },
       { col: 0, row: 1, colSpan: 11, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.06,
-        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 } } },
+        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
+          // COXINHA horizontal + nome um pouco mais pra baixo.
+          A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 } } },
       { col: 11, row: 1, colSpan: 11, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.65, multValor: 1.0, multBalao: 1.45, multFoto: 1.06,
-        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 } } },
+        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
+          // COXINHA horizontal + nome um pouco mais pra baixo.
+          A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 } } },
       // Destaque grande à DIREITA (45%): nome -20%
       { col: 22, row: 0, colSpan: 18, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.39, multValor: 1.0, multBalao: 1.15,
-        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 } } },
+        perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 },
+          // Pedido cliente (A4_RETRATO): espelho de g_5_dest_esq — nome 0.66 (+25% sobre 0.53),
+          // foto 1.15, centralizada, nome abaixado, balão subido.
+          A4_RETRATO: { multNome: 0.66, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 } } },
     ]},
   // Variante STORIES do g_5_dest_dir: espelho do g_5_dest_esq_stories
   // (destaque colSpan 28 = 35%, foto +21%, nome deslocado pra baixo; 4 produtos colSpan 26 com foto +5%)
@@ -412,6 +474,8 @@ export const LAYOUTS_NOMEADOS = [
       { col: 0, row: 0, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.36, multValor: 1.0, multBalao: 1.49, multFoto: 1.18,
         perModelo: { ENCARTE_GRANDE: { multNome: 0.64, nomeOffsetTop: 0.20 },
+          // Pedido cliente (A4_RETRATO): destaque nome +80% (0.36 × 1.80 = 0.65) + foto +5% (1.18 × 1.05 = 1.24)
+          A4_RETRATO: { multNome: 0.65, multFoto: 1.24 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (espelho de g_7_4_prod_3_dest_baixo)
           FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
           // Pedido do cliente (REELS): nome do destaque +35% (0.36 × 1.35 ≈ 0.49)
@@ -419,6 +483,8 @@ export const LAYOUTS_NOMEADOS = [
       { col: 4, row: 0, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.36, multValor: 1.0, multBalao: 1.49, multFoto: 1.18,
         perModelo: { ENCARTE_GRANDE: { multNome: 0.64, nomeOffsetTop: 0.20 },
+          // Pedido cliente (A4_RETRATO): destaque nome +80% (0.36 × 1.80 = 0.65) + foto +5% (1.18 × 1.05 = 1.24)
+          A4_RETRATO: { multNome: 0.65, multFoto: 1.24 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (espelho de g_7_4_prod_3_dest_baixo)
           FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
           // Pedido do cliente (REELS): nome do destaque +35% (0.36 × 1.35 ≈ 0.49)
@@ -426,6 +492,8 @@ export const LAYOUTS_NOMEADOS = [
       { col: 8, row: 0, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.36, multValor: 1.0, multBalao: 1.49, multFoto: 1.18,
         perModelo: { ENCARTE_GRANDE: { multNome: 0.64, nomeOffsetTop: 0.20 },
+          // Pedido cliente (A4_RETRATO): destaque nome +80% (0.36 × 1.80 = 0.65) + foto +5% (1.18 × 1.05 = 1.24)
+          A4_RETRATO: { multNome: 0.65, multFoto: 1.24 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (espelho de g_7_4_prod_3_dest_baixo)
           FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
           // Pedido do cliente (REELS): nome do destaque +35% (0.36 × 1.35 ≈ 0.49)
@@ -435,22 +503,30 @@ export const LAYOUTS_NOMEADOS = [
         multNome: 0.65, multValor: 1.0, multBalao: 1.38, multFoto: 1.09,
         perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome dos 4 produtos menor (espelho de g_7_4_prod_3_dest_baixo)
-          FACEBOOK_QUADRADO: { multNome: 0.72 } } },
+          FACEBOOK_QUADRADO: { multNome: 0.72 },
+          // Pedido cliente (A4_RETRATO): nome dos 4 produtos um pouco mais pra baixo
+          A4_RETRATO: { nomeOffsetTop: 0.15 } } },
       { col: 3, row: 2, colSpan: 3, rowSpan: 2, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.65, multValor: 1.0, multBalao: 1.38, multFoto: 1.09,
         perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome dos 4 produtos menor (espelho de g_7_4_prod_3_dest_baixo)
-          FACEBOOK_QUADRADO: { multNome: 0.72 } } },
+          FACEBOOK_QUADRADO: { multNome: 0.72 },
+          // Pedido cliente (A4_RETRATO): nome dos 4 produtos um pouco mais pra baixo
+          A4_RETRATO: { nomeOffsetTop: 0.15 } } },
       { col: 6, row: 2, colSpan: 3, rowSpan: 2, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.65, multValor: 1.0, multBalao: 1.38, multFoto: 1.09,
         perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome dos 4 produtos menor (espelho de g_7_4_prod_3_dest_baixo)
-          FACEBOOK_QUADRADO: { multNome: 0.72 } } },
+          FACEBOOK_QUADRADO: { multNome: 0.72 },
+          // Pedido cliente (A4_RETRATO): nome dos 4 produtos um pouco mais pra baixo
+          A4_RETRATO: { nomeOffsetTop: 0.15 } } },
       { col: 9, row: 2, colSpan: 3, rowSpan: 2, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.65, multValor: 1.0, multBalao: 1.38, multFoto: 1.09,
         perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome dos 4 produtos menor (espelho de g_7_4_prod_3_dest_baixo)
-          FACEBOOK_QUADRADO: { multNome: 0.72 } } },
+          FACEBOOK_QUADRADO: { multNome: 0.72 },
+          // Pedido cliente (A4_RETRATO): nome dos 4 produtos um pouco mais pra baixo
+          A4_RETRATO: { nomeOffsetTop: 0.15 } } },
     ]},
   { id: 'g_7_4_prod_3_dest_baixo', nome: '7 Produtos - 4 produtos e 3 destaques em baixo', quantidade: 7,
     excluirFormatos: ['STORIES'],
@@ -462,32 +538,42 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido do cliente (FACEBOOK_QUADRADO): nome dos 4 produtos menor (destaque chama mais atenção)
           FACEBOOK_QUADRADO: { multNome: 0.72 },
           // Pedido do cliente (REELS): nome dos 4 produtos igual ao espelho g_7_3 (0.65) — destaque domina
-          REELS_INSTAGRAM: { multNome: 0.65 } } },
+          REELS_INSTAGRAM: { multNome: 0.65 },
+          // Pedido cliente (A4_RETRATO): nome REDUZIDO pra 0.65 igual espelho g_7_3 (base 0.95 → 0.65) — destaque domina
+          A4_RETRATO: { multNome: 0.65, nomeOffsetTop: 0.15 } } },
       { col: 3, row: 0, colSpan: 3, rowSpan: 2, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.95, multValor: 1.0, multBalao: 1.38, multFoto: 1.09,
         perModelo: { ENCARTE_GRANDE: { multNome: 0.69, nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome dos 4 produtos menor (destaque chama mais atenção)
           FACEBOOK_QUADRADO: { multNome: 0.72 },
           // Pedido do cliente (REELS): nome dos 4 produtos igual ao espelho g_7_3 (0.65) — destaque domina
-          REELS_INSTAGRAM: { multNome: 0.65 } } },
+          REELS_INSTAGRAM: { multNome: 0.65 },
+          // Pedido cliente (A4_RETRATO): nome REDUZIDO pra 0.65 igual espelho g_7_3 (base 0.95 → 0.65) — destaque domina
+          A4_RETRATO: { multNome: 0.65, nomeOffsetTop: 0.15 } } },
       { col: 6, row: 0, colSpan: 3, rowSpan: 2, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.95, multValor: 1.0, multBalao: 1.38, multFoto: 1.09,
         perModelo: { ENCARTE_GRANDE: { multNome: 0.69, nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome dos 4 produtos menor (destaque chama mais atenção)
           FACEBOOK_QUADRADO: { multNome: 0.72 },
           // Pedido do cliente (REELS): nome dos 4 produtos igual ao espelho g_7_3 (0.65) — destaque domina
-          REELS_INSTAGRAM: { multNome: 0.65 } } },
+          REELS_INSTAGRAM: { multNome: 0.65 },
+          // Pedido cliente (A4_RETRATO): nome REDUZIDO pra 0.65 igual espelho g_7_3 (base 0.95 → 0.65) — destaque domina
+          A4_RETRATO: { multNome: 0.65, nomeOffsetTop: 0.15 } } },
       { col: 9, row: 0, colSpan: 3, rowSpan: 2, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.95, multValor: 1.0, multBalao: 1.38, multFoto: 1.09,
         perModelo: { ENCARTE_GRANDE: { multNome: 0.69, nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome dos 4 produtos menor (destaque chama mais atenção)
           FACEBOOK_QUADRADO: { multNome: 0.72 },
           // Pedido do cliente (REELS): nome dos 4 produtos igual ao espelho g_7_3 (0.65) — destaque domina
-          REELS_INSTAGRAM: { multNome: 0.65 } } },
+          REELS_INSTAGRAM: { multNome: 0.65 },
+          // Pedido cliente (A4_RETRATO): nome REDUZIDO pra 0.65 igual espelho g_7_3 (base 0.95 → 0.65) — destaque domina
+          A4_RETRATO: { multNome: 0.65, nomeOffsetTop: 0.15 } } },
       // 3 destaques embaixo: destaque EXPLÍCITO (fundo vermelho)
       { col: 0, row: 2, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.44, multValor: 1.0, multBalao: 1.49, multFoto: 1.18,
         perModelo: { ENCARTE_GRANDE: { multNome: 0.64, nomeOffsetTop: 0.20 },
+          // Pedido cliente (A4_RETRATO): destaque nome +80% (0.36 × 1.80 = 0.65) + foto +5% (1.18 × 1.05 = 1.24)
+          A4_RETRATO: { multNome: 0.65, multFoto: 1.24 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (chamar mais atenção)
           FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
           // Pedido do cliente (REELS): nome do destaque +35% (espelho de g_7_3_dest_topo, multNome 0.49)
@@ -495,6 +581,8 @@ export const LAYOUTS_NOMEADOS = [
       { col: 4, row: 2, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.44, multValor: 1.0, multBalao: 1.49, multFoto: 1.18,
         perModelo: { ENCARTE_GRANDE: { multNome: 0.64, nomeOffsetTop: 0.20 },
+          // Pedido cliente (A4_RETRATO): destaque nome +80% (0.36 × 1.80 = 0.65) + foto +5% (1.18 × 1.05 = 1.24)
+          A4_RETRATO: { multNome: 0.65, multFoto: 1.24 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (chamar mais atenção)
           FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
           // Pedido do cliente (REELS): nome do destaque +35% (espelho de g_7_3_dest_topo, multNome 0.49)
@@ -502,6 +590,8 @@ export const LAYOUTS_NOMEADOS = [
       { col: 8, row: 2, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
         multNome: 0.44, multValor: 1.0, multBalao: 1.49, multFoto: 1.18,
         perModelo: { ENCARTE_GRANDE: { multNome: 0.64, nomeOffsetTop: 0.20 },
+          // Pedido cliente (A4_RETRATO): destaque nome +80% (0.36 × 1.80 = 0.65) + foto +5% (1.18 × 1.05 = 1.24)
+          A4_RETRATO: { multNome: 0.65, multFoto: 1.24 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (chamar mais atenção)
           FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
           // Pedido do cliente (REELS): nome do destaque +35% (espelho de g_7_3_dest_topo, multNome 0.49)
@@ -517,7 +607,9 @@ export const LAYOUTS_NOMEADOS = [
         multNome: 0.86, multValor: 1.10,
         // Pedido do cliente (REELS): foto do destaque +12% + nome mais baixo + balão subido
         perModelo: { ENCARTE_GRANDE: { multFoto: 1.21, nomeOffsetTop: 0.20 },
-          REELS_INSTAGRAM: { multFoto: 1.12, nomeOffsetTop: 0.15, balaoOffsetY: 0.03 } } },
+          REELS_INSTAGRAM: { multFoto: 1.12, nomeOffsetTop: 0.15, balaoOffsetY: 0.03 },
+          // Pedido cliente (A4_RETRATO): nome abaixado + foto +32% (1.20 × 1.10 = 1.32)
+          A4_RETRATO: { multFoto: 1.32, nomeOffsetTop: 0.20 } } },
       // 6 produtos pequenos: destaque: false EXPLÍCITO (fundo amarelo normal)
       { col: 2, row: 0, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
@@ -589,6 +681,16 @@ export const LAYOUTS_NOMEADOS = [
         fotoPosY: 0.50,        // foto centralizada
         balaoOffsetY: 0.03,    // balão um pouco mais alto (pedido cliente)
       },
+      // Pedido cliente (A4_RETRATO): nome +15% (1.54 → 1.77), foto +30%
+      // (0.80 × 1.30 = 1.04), centralizada, nome abaixado, balão subido.
+      // (smartFoto removido — boost 1.35× estourava cards pequenos.)
+      A4_RETRATO: {
+        multNome: 1.77,
+        multFoto: 1.04,
+        nomeOffsetTop: 0.15,
+        fotoPosY: 0.50,
+        balaoOffsetY: 0.03,
+      },
     },
   },
   { id: 'g_8_3_dest_topo_5', nome: '8 Produtos - 3 destaques no topo e 5 produtos', quantidade: 8,
@@ -600,6 +702,7 @@ export const LAYOUTS_NOMEADOS = [
         perModelo: {
           REELS_INSTAGRAM: { multBalao: 0.98, multNome: 1.31, nomeOffsetTop: 0.20, balaoFixo: true },
           ENCARTE_GRANDE: { multBalao: 0.88, multNome: 1.39, multFoto: 1.20, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          A4_RETRATO: { multBalao: 0.85, multNome: 1.39, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque maior que o dos 5 produtos
           FACEBOOK_QUADRADO: { multBalao: 0.75, multValor: 1.0 },
         } },
@@ -608,6 +711,7 @@ export const LAYOUTS_NOMEADOS = [
         perModelo: {
           REELS_INSTAGRAM: { multBalao: 0.98, multNome: 1.31, nomeOffsetTop: 0.20, balaoFixo: true },
           ENCARTE_GRANDE: { multBalao: 0.88, multNome: 1.39, multFoto: 1.20, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          A4_RETRATO: { multBalao: 0.85, multNome: 1.39, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque maior que o dos 5 produtos
           FACEBOOK_QUADRADO: { multBalao: 0.75, multValor: 1.0 },
         } },
@@ -616,6 +720,7 @@ export const LAYOUTS_NOMEADOS = [
         perModelo: {
           REELS_INSTAGRAM: { multBalao: 0.98, multNome: 1.31, nomeOffsetTop: 0.20, balaoFixo: true },
           ENCARTE_GRANDE: { multBalao: 0.88, multNome: 1.39, multFoto: 1.20, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          A4_RETRATO: { multBalao: 0.85, multNome: 1.39, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque maior que o dos 5 produtos
           FACEBOOK_QUADRADO: { multBalao: 0.75, multValor: 1.0 },
         } },
@@ -625,30 +730,35 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido do cliente (REELS): balão dos 5 produtos um pouco mais alto (balaoOffsetY)
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          A4_RETRATO: { multNome: 1.85, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
       { col: 3,  row: 2, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           // Pedido do cliente (REELS): balão dos 5 produtos um pouco mais alto (balaoOffsetY)
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          A4_RETRATO: { multNome: 1.85, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
       { col: 6,  row: 2, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           // Pedido do cliente (REELS): balão dos 5 produtos um pouco mais alto (balaoOffsetY)
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          A4_RETRATO: { multNome: 1.85, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
       { col: 9,  row: 2, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           // Pedido do cliente (REELS): balão dos 5 produtos um pouco mais alto (balaoOffsetY)
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          A4_RETRATO: { multNome: 1.85, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
       { col: 12, row: 2, colSpan: 3, rowSpan: 2, destaque: false, multNome: 1.57,
         perModelo: {
           // Pedido do cliente (REELS): balão dos 5 produtos um pouco mais alto (balaoOffsetY)
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          A4_RETRATO: { multNome: 1.85, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
     ]},
   { id: 'g_8_5_prod_3_dest_baixo', nome: '8 Produtos - 5 produtos e 3 destaques em baixo', quantidade: 8,
@@ -659,6 +769,7 @@ export const LAYOUTS_NOMEADOS = [
         perModelo: {
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          A4_RETRATO: { multNome: 1.85, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): foto dos 5 produtos mais baixa, perto do balão
           // + nome levemente abaixado pra descolar do topo do card
           FACEBOOK_QUADRADO: { fotoPosY: 0.85, nomeOffsetTop: 0.06 },
@@ -667,6 +778,7 @@ export const LAYOUTS_NOMEADOS = [
         perModelo: {
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          A4_RETRATO: { multNome: 1.85, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): foto dos 5 produtos mais baixa, perto do balão
           // + nome levemente abaixado pra descolar do topo do card
           FACEBOOK_QUADRADO: { fotoPosY: 0.85, nomeOffsetTop: 0.06 },
@@ -675,6 +787,7 @@ export const LAYOUTS_NOMEADOS = [
         perModelo: {
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          A4_RETRATO: { multNome: 1.85, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): foto dos 5 produtos mais baixa, perto do balão
           // + nome levemente abaixado pra descolar do topo do card
           FACEBOOK_QUADRADO: { fotoPosY: 0.85, nomeOffsetTop: 0.06 },
@@ -683,6 +796,7 @@ export const LAYOUTS_NOMEADOS = [
         perModelo: {
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          A4_RETRATO: { multNome: 1.85, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): foto dos 5 produtos mais baixa, perto do balão
           // + nome levemente abaixado pra descolar do topo do card
           FACEBOOK_QUADRADO: { fotoPosY: 0.85, nomeOffsetTop: 0.06 },
@@ -691,6 +805,7 @@ export const LAYOUTS_NOMEADOS = [
         perModelo: {
           REELS_INSTAGRAM: { multNome: 1.96, multFoto: 0.95, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           ENCARTE_GRANDE: { multNome: 1.99, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
+          A4_RETRATO: { multNome: 1.85, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): foto dos 5 produtos mais baixa, perto do balão
           // + nome levemente abaixado pra descolar do topo do card
           FACEBOOK_QUADRADO: { fotoPosY: 0.85, nomeOffsetTop: 0.06 },
@@ -701,6 +816,7 @@ export const LAYOUTS_NOMEADOS = [
         perModelo: {
           REELS_INSTAGRAM: { multBalao: 0.98, multNome: 1.31, nomeOffsetTop: 0.20, balaoFixo: true },
           ENCARTE_GRANDE: { multBalao: 0.88, multNome: 1.39, multFoto: 1.20, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          A4_RETRATO: { multBalao: 0.85, multNome: 1.39, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque maior (espelho de g_8_3_dest_topo_5)
           FACEBOOK_QUADRADO: { multBalao: 0.75, multValor: 1.0 },
         } },
@@ -709,6 +825,7 @@ export const LAYOUTS_NOMEADOS = [
         perModelo: {
           REELS_INSTAGRAM: { multBalao: 0.98, multNome: 1.31, nomeOffsetTop: 0.20, balaoFixo: true },
           ENCARTE_GRANDE: { multBalao: 0.88, multNome: 1.39, multFoto: 1.20, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          A4_RETRATO: { multBalao: 0.85, multNome: 1.39, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque maior (espelho de g_8_3_dest_topo_5)
           FACEBOOK_QUADRADO: { multBalao: 0.75, multValor: 1.0 },
         } },
@@ -717,6 +834,7 @@ export const LAYOUTS_NOMEADOS = [
         perModelo: {
           REELS_INSTAGRAM: { multBalao: 0.98, multNome: 1.31, nomeOffsetTop: 0.20, balaoFixo: true },
           ENCARTE_GRANDE: { multBalao: 0.88, multNome: 1.39, multFoto: 1.20, fotoPosY: 0.50, nomeOffsetTop: 0.20 },
+          A4_RETRATO: { multBalao: 0.85, multNome: 1.39, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque maior (espelho de g_8_3_dest_topo_5)
           FACEBOOK_QUADRADO: { multBalao: 0.75, multValor: 1.0 },
         } },
@@ -775,6 +893,15 @@ export const LAYOUTS_NOMEADOS = [
         multBalao: 1.27,       // 0.98 + 30% (pedido cliente)
         nomeOffsetTop: -0.15,
       },
+      // Pedido cliente (A4_RETRATO): mesma lógica do ENCARTE — balaoFixo + smartFoto
+      // pra normalizar peso visual entre fotos de aspect-ratios diferentes (PIZZA
+      // quadrada vs COXINHA horizontal). multBalao moderado pra balões legíveis.
+      A4_RETRATO: {
+        balaoFixo: true,
+        smartFoto: true,
+        multBalao: 1.18,
+        nomeOffsetTop: -0.15,
+      },
     },
   },
 
@@ -786,33 +913,40 @@ export const LAYOUTS_NOMEADOS = [
     cols: 4, rows: 4, boxes: [
       // === LINHA 0 ===
       // Pequeno top-esquerdo
-      { col: 0, row: 0, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72 },
+      { col: 0, row: 0, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72, perModelo: { A4_RETRATO: { multValor: 1.0, multFoto: 1.40, multBalao: 1.25 } } },
       // LARGO horizontal topo-centro (LINGUIÇA SEARA): destaque: false explícito (auto-detect marcaria)
       { col: 1, row: 0, colSpan: 2, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multNome: 0.85, multValor: 0.61 },  // balão -15%
       // Pequeno top-direito
-      { col: 3, row: 0, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72 },
+      { col: 3, row: 0, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72, perModelo: { A4_RETRATO: { multValor: 1.0, multFoto: 1.40, multBalao: 1.25 } } },
       // === LINHAS 1-2: DESTAQUE CENTRAL 2x2 ===
-      { col: 0, row: 1, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72 },
+      { col: 0, row: 1, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72, perModelo: { A4_RETRATO: { multValor: 1.0, multFoto: 1.40, multBalao: 1.25 } } },
       // DESTAQUE central (2x2): balão -20% (via multValor), nome +15%
       { col: 1, row: 1, colSpan: 2, rowSpan: 2, destaque: true,
         multBalao: 0.65, multValor: 0.48, multNome: 0.83, multFoto: 1.15,
         // Pedido do cliente (FACEBOOK_QUADRADO): balão +18% (0.77) + foto +14% (1.15×1.14≈1.31) +
         // foto mais baixa (fotoPosY 0.62) + nome mantido no topo (nomeOffsetTop 0 ignora o offset do layout)
-        perModelo: { FACEBOOK_QUADRADO: { multBalao: 0.77, multFoto: 1.31, fotoPosY: 0.62, nomeOffsetTop: 0 } } },
-      { col: 3, row: 1, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72 },
-      { col: 0, row: 2, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72 },
-      { col: 3, row: 2, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72 },
+        perModelo: { FACEBOOK_QUADRADO: { multBalao: 0.77, multFoto: 1.31, fotoPosY: 0.62, nomeOffsetTop: 0 },
+          // Pedido cliente (A4_RETRATO): destaque com nome +30% (0.83→1.08), balão +35% (0.65→0.88),
+          // valor maior (0.48→0.85) pra preencher o balão, foto +5% (1.15→1.20), nome abaixado, balão subido.
+          A4_RETRATO: { multNome: 1.08, multBalao: 0.70, multValor: 0.85, multFoto: 1.20, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 } } },
+      { col: 3, row: 1, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72, perModelo: { A4_RETRATO: { multValor: 1.0, multFoto: 1.40, multBalao: 1.25 } } },
+      { col: 0, row: 2, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72, perModelo: { A4_RETRATO: { multValor: 1.0, multFoto: 1.40, multBalao: 1.25 } } },
+      { col: 3, row: 2, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72, perModelo: { A4_RETRATO: { multValor: 1.0, multFoto: 1.40, multBalao: 1.25 } } },
       // === LINHA 3 ===
       // Pequeno bottom-esquerdo
-      { col: 0, row: 3, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72 },
+      { col: 0, row: 3, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72, perModelo: { A4_RETRATO: { multValor: 1.0, multFoto: 1.40, multBalao: 1.25 } } },
       // LARGO horizontal bottom-centro (BISTEQUINHA SADIA)
       { col: 1, row: 3, colSpan: 2, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multNome: 0.85, multValor: 0.61 },  // balão -15%
       // Pequeno bottom-direito
-      { col: 3, row: 3, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72 },
+      { col: 3, row: 3, colSpan: 1, rowSpan: 1, destaque: false, layoutTipo: 'horizontal', multValor: 0.72, perModelo: { A4_RETRATO: { multValor: 1.0, multFoto: 1.40, multBalao: 1.25 } } },
     ],
     // Pedido do cliente (FACEBOOK_QUADRADO): nome dos produtos (não-destaque) levemente abaixado.
     // Vale pra todos os boxes 'horizontal'; o destaque neutraliza com nomeOffsetTop:0 no seu perModelo.
-    perModelo: { FACEBOOK_QUADRADO: { nomeOffsetTop: 0.10 } },
+    perModelo: { FACEBOOK_QUADRADO: { nomeOffsetTop: 0.10 },
+      // Pedido cliente (A4_RETRATO): bump nome dos 6 pequenos laterais (que herdavam
+      // multNome 1.0 do default e ficavam minúsculos) + balão sobe um pouco. Os 2 largos
+      // e o destaque mantêm seus multNome próprios (precedência box > grade).
+      A4_RETRATO: { multNome: 1.40, nomeOffsetTop: 0.10, balaoOffsetY: 0.03 } },
   },
   // Variante ENCARTE_GRANDE estilo qrofertas: 3 topo + 1 destaque central (col 1) com 2x2 pequenos lateral + 3 baixo
   { id: 'g_11_dest_central_encarte', nome: '11 Produtos - destaque central + 2 largos topo/baixo + 8 pequenos', quantidade: 11,
@@ -858,6 +992,9 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multFoto: 1.79, fotoOffsetX: 0.25, multBalao: 1.36 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque +15% (0.94 × 1.15 ≈ 1.08)
           FACEBOOK_QUADRADO: { multBalao: 1.08 },
+          // Pedido cliente (A4_RETRATO): destaque nome +30% (0.42→0.55), balão +28% (0.94→1.20),
+          // smartFoto pra normalizar, nome abaixado, balão subido.
+          A4_RETRATO: { multNome: 0.55, multBalao: 1.20, smartFoto: true, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
       { col: 4, row: 0, colSpan: 4, rowSpan: 4, destaque: true, layoutTipo: 'horizontal-topo',
         multNome: 0.42, multValor: 0.90, multBalao: 0.94, multFoto: 1.63,
@@ -866,6 +1003,9 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multFoto: 1.79, fotoOffsetX: 0.25, multBalao: 1.36 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque +15% (0.94 × 1.15 ≈ 1.08)
           FACEBOOK_QUADRADO: { multBalao: 1.08 },
+          // Pedido cliente (A4_RETRATO): destaque nome +30% (0.42→0.55), balão +28% (0.94→1.20),
+          // smartFoto pra normalizar, nome abaixado, balão subido.
+          A4_RETRATO: { multNome: 0.55, multBalao: 1.20, smartFoto: true, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
       { col: 8, row: 0, colSpan: 4, rowSpan: 4, destaque: true, layoutTipo: 'horizontal-topo',
         multNome: 0.42, multValor: 0.90, multBalao: 0.94, multFoto: 1.63,
@@ -874,6 +1014,9 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multFoto: 1.79, fotoOffsetX: 0.25, multBalao: 1.36 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque +15% (0.94 × 1.15 ≈ 1.08)
           FACEBOOK_QUADRADO: { multBalao: 1.08 },
+          // Pedido cliente (A4_RETRATO): destaque nome +30% (0.42→0.55), balão +28% (0.94→1.20),
+          // smartFoto pra normalizar, nome abaixado, balão subido.
+          A4_RETRATO: { multNome: 0.55, multBalao: 1.20, smartFoto: true, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
         } },
       // 8 produtos: 2 linhas × 4 cards, rowSpan=3 cada. Balão +9% (1.10→1.20) — fica
       // proporcionalmente mais prominente que o destaque, batendo com o print qrofertas.
@@ -884,7 +1027,10 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multBalao: 1.20, nomeOffsetTop: -0.18, balaoFixo: true },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
-          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
+          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar peso visual + balaoFixo
+          // (uniformizar pílulas) + balão +15% (0.95→1.10) + nome subido (-0.10).
+          A4_RETRATO: { smartFoto: true, balaoFixo: true, multBalao: 1.10, nomeOffsetTop: -0.10 } } },
       { col: 3, row: 4, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
         perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
@@ -892,7 +1038,10 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multBalao: 1.20, nomeOffsetTop: -0.18, balaoFixo: true },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
-          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
+          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar peso visual + balaoFixo
+          // (uniformizar pílulas) + balão +15% (0.95→1.10) + nome subido (-0.10).
+          A4_RETRATO: { smartFoto: true, balaoFixo: true, multBalao: 1.10, nomeOffsetTop: -0.10 } } },
       { col: 6, row: 4, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
         perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
@@ -900,7 +1049,10 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multBalao: 1.20, nomeOffsetTop: -0.18, balaoFixo: true },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
-          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
+          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar peso visual + balaoFixo
+          // (uniformizar pílulas) + balão +15% (0.95→1.10) + nome subido (-0.10).
+          A4_RETRATO: { smartFoto: true, balaoFixo: true, multBalao: 1.10, nomeOffsetTop: -0.10 } } },
       { col: 9, row: 4, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
         perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
@@ -908,7 +1060,10 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multBalao: 1.20, nomeOffsetTop: -0.18, balaoFixo: true },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
-          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
+          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar peso visual + balaoFixo
+          // (uniformizar pílulas) + balão +15% (0.95→1.10) + nome subido (-0.10).
+          A4_RETRATO: { smartFoto: true, balaoFixo: true, multBalao: 1.10, nomeOffsetTop: -0.10 } } },
       { col: 0, row: 7, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
         perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
@@ -916,7 +1071,10 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multBalao: 1.20, nomeOffsetTop: -0.18, balaoFixo: true },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
-          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
+          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar peso visual + balaoFixo
+          // (uniformizar pílulas) + balão +15% (0.95→1.10) + nome subido (-0.10).
+          A4_RETRATO: { smartFoto: true, balaoFixo: true, multBalao: 1.10, nomeOffsetTop: -0.10 } } },
       { col: 3, row: 7, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
         perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
@@ -924,7 +1082,10 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multBalao: 1.20, nomeOffsetTop: -0.18, balaoFixo: true },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
-          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
+          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar peso visual + balaoFixo
+          // (uniformizar pílulas) + balão +15% (0.95→1.10) + nome subido (-0.10).
+          A4_RETRATO: { smartFoto: true, balaoFixo: true, multBalao: 1.10, nomeOffsetTop: -0.10 } } },
       { col: 6, row: 7, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
         perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
@@ -932,7 +1093,10 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multBalao: 1.20, nomeOffsetTop: -0.18, balaoFixo: true },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
-          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
+          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar peso visual + balaoFixo
+          // (uniformizar pílulas) + balão +15% (0.95→1.10) + nome subido (-0.10).
+          A4_RETRATO: { smartFoto: true, balaoFixo: true, multBalao: 1.10, nomeOffsetTop: -0.10 } } },
       { col: 9, row: 7, colSpan: 3, rowSpan: 3, destaque: false, layoutTipo: 'horizontal-topo',
         multNome: 0.81, multValor: 0.95, multBalao: 0.95, multFoto: 1.32,
         perModelo: { STORIES: { layoutTipo: 'card-banner', multNome: 0.78, multValor: 1.0, multBalao: 1.30, multFoto: 1.25 },
@@ -940,7 +1104,10 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multBalao: 1.20, nomeOffsetTop: -0.18, balaoFixo: true },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome subido (-0.15) + balão +10% (1.05) +
           // balões uniformes (balaoFixo) — antes variavam de largura conforme o preço.
-          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true } } },
+          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.15, multBalao: 1.05, balaoFixo: true },
+          // Pedido cliente (A4_RETRATO): smartFoto pra normalizar peso visual + balaoFixo
+          // (uniformizar pílulas) + balão +15% (0.95→1.10) + nome subido (-0.10).
+          A4_RETRATO: { smartFoto: true, balaoFixo: true, multBalao: 1.10, nomeOffsetTop: -0.10 } } },
     ]},
 
   // === 15 PRODUTOS === (3 destaques topo + 12 produtos 4×3, estilo qrofertas)

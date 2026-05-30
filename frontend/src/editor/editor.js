@@ -2598,12 +2598,25 @@ function renderizarBoxHorizontal(canvas, box, produto, idx, paleta, tamanhoTexto
           }
         } catch {}
 
-        const escala = Math.min(photoAreaW / visualW, photoAreaH / visualH) * (box.multFoto || 1.0);
+        let escala = Math.min(photoAreaW / visualW, photoAreaH / visualH) * (box.multFoto || 1.0);
+        // CAP DE SEGURANÇA: a foto NUNCA pode ser maior que o card inteiro — sem isso,
+        // multFoto > 1.0 + foto vertical (garrafa, lata alta) estourava pra fora do card,
+        // invadindo o card vizinho. (Bug observado em g_11_dest_central com SACHE HEINZ.)
+        const escalaMaxCard = Math.min(
+          (box.w - padding * 2) / visualW,
+          (box.h - padding * 2) / visualH,
+        );
+        if (escala > escalaMaxCard) escala = escalaMaxCard;
         img.scale(escala);
         const w = visualW * escala, h = visualH * escala;
+        // Posição clampada — nunca passa das bordas internas do card
+        let imgLeft = box.x + padding + (photoAreaW - w) / 2;
+        let imgTop = photoAreaY + (photoAreaH - h) / 2;
+        imgLeft = Math.max(box.x + padding, Math.min(imgLeft, box.x + box.w - padding - w));
+        imgTop = Math.max(box.y + padding, Math.min(imgTop, box.y + box.h - padding - h));
         img.set({
-          left: box.x + padding + (photoAreaW - w) / 2,
-          top: photoAreaY + (photoAreaH - h) / 2,
+          left: imgLeft,
+          top: imgTop,
           selectable: false,
         });
         img.set('boxIdx', idx);

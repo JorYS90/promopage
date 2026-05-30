@@ -417,7 +417,13 @@ export default function App() {
         const idxGlobal = paginaAtual * produtosPorPagina + idx;
         setModalEditar({ aberto: true, foco: idxGlobal });
       },
-      aoClicarPlaceholder: () => setAba('produtos'),
+      aoClicarPlaceholder: () => {
+        // Abre o painel + foca na aba Produtos. Antes só trocava a aba — se o
+        // painel estivesse fechado, o clique não abria nada visualmente.
+        setAba('produtos');
+        setPainelAberto(true);
+        try { localStorage.setItem('encarte-builder:painelAberto', 'true'); } catch {}
+      },
       // Watermark de bloqueio:
       // - Tema gratis (Ofertão do Dia) → sempre sem watermark
       // - Cliente com assinatura ATIVA OU admin/super_admin → sem watermark
