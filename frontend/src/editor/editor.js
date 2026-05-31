@@ -3541,17 +3541,23 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
   const corNomeBase = paleta.textoNome || '#1f2937';
   // destaque-maximo é sempre destaque — usa a cor de valor de destaque do tema
   const corTextoTag = paleta.textoPrecoDestaque || paleta.textoPreco || '#ffffff';
+  // Quando box.destaque, usa fundo vermelho (igual card-banner com destaque).
+  // Sem isso, ao switchar pra destaque-maximo via perModelo, destaque perdia o
+  // fundo vermelho característico (ficava igual aos não-destaque).
+  const ehDestaqueDM = box.destaque === true;
+  const corFundoDestaqueDM = corPrimaria;
+  const corNomeDestaqueDM = '#ffffff';
 
   // Cor de fundo (com suporte a custom + transparência)
   let fundoBox;
   if (produto.corFundoTipo === 'sem-fundo') {
     fundoBox = 'transparent';
   } else {
-    const corBase = produto.corFundoCustom || corFundoBase;
+    const corBase = produto.corFundoCustom || (ehDestaqueDM ? corFundoDestaqueDM : corFundoBase);
     const transp = produto.corFundoTransparencia ?? 100;
     fundoBox = transp < 100 ? aplicarAlpha(corBase, transp / 100) : corBase;
   }
-  const corNome = produto.corTextoCustom || corNomeBase;
+  const corNome = produto.corTextoCustom || (ehDestaqueDM ? corNomeDestaqueDM : corNomeBase);
 
   // ===== Fundo do card =====
   const fundo = new fabric.Rect({
@@ -3566,18 +3572,31 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
   canvas.add(fundo);
 
   // ===== Layout das regiões (estilo qrofertas: nome topo, foto centro, balão fundo direita) =====
+  // box.semFoto (opt-in): pula a foto e expande nome+balão pra preencher o card.
+  // - VERTICAL (h>w): nome topo + balão bottom (stacked)
+  // - HORIZONTAL (w>h*1.3): nome ESQUERDA + balão DIREITA (side-by-side)
+  // box.fotoEsquerda (opt-in): foto na metade ESQUERDA (full height) + nome topo
+  // + balão bottom na metade DIREITA. Usado em TV_HORIZONTAL pra card de 1 produto.
   const padding = 12;
-  const topStripH = box.h * 0.16;     // 16% topo: nome full-width
-  const balaoStripH = box.h * 0.25;   // 25% fundo: balão grande à direita
-  const balaoY = box.y + box.h - balaoStripH;
+  const cartazHoriz = box.semFoto && box.w > box.h * 1.3;
+  const fotoEsq = box.fotoEsquerda && !box.semFoto;
+  // Destaque em destaque-maximo (sem fotoEsq/semFoto): dá mais espaço pro nome
+  // pra não encostar na foto (topStripH 22% em vez de 16%).
+  const destaqueStacked = box.destaque && !box.semFoto && !fotoEsq;
+  const topStripH = cartazHoriz ? (box.h - padding * 2)
+    : box.semFoto ? box.h * 0.45
+    : destaqueStacked ? box.h * 0.22
+    : box.h * 0.16;
+  const balaoStripH = cartazHoriz ? (box.h - padding * 2) : (box.semFoto ? box.h * 0.50 : (fotoEsq ? box.h * 0.45 : box.h * 0.25));
+  const balaoY = cartazHoriz ? (box.y + padding) : (box.y + box.h - balaoStripH);
 
-  // Photo region: meio (entre nome topo e balão fundo)
-  const photoAreaY = box.y + padding + topStripH;
-  const photoAreaH = balaoY - photoAreaY - padding;
-  const photoAreaW = box.w - padding * 2;
+  // Photo region: meio (entre nome topo e balão fundo) OU left half se fotoEsq
+  const photoAreaY = fotoEsq ? (box.y + padding) : (box.y + padding + topStripH);
+  const photoAreaH = fotoEsq ? (box.h - padding * 2) : (balaoY - photoAreaY - padding);
+  const photoAreaW = fotoEsq ? ((box.w / 2) - padding * 2) : (box.w - padding * 2);
 
-  // ===== FOTO (top, grande) =====
-  if (produto.imagem) {
+  // ===== FOTO (top, grande) — pula se box.semFoto =====
+  if (!box.semFoto && produto.imagem) {
     fabric.Image.fromURL(produto.imagem, (img) => {
       try {
         if (!img || !img.width) return;
@@ -3598,11 +3617,19 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
           }
         } catch {}
 
-        const escala = Math.min(photoAreaW / visualW, photoAreaH / visualH) * 0.87 * (box.multFoto || 1.0);  // 0.95 → 0.87 (-8%)
+        let escala = Math.min(photoAreaW / visualW, photoAreaH / visualH) * 0.87 * (box.multFoto || 1.0);  // 0.95 → 0.87 (-8%)
+        // Safety clamp: foto nunca pode passar do photoArea (multFoto alto + foto pequena
+        // estourava pra fora do card no modo fotoEsq).
+        const escalaMaxArea = Math.min(photoAreaW / visualW, photoAreaH / visualH);
+        if (escala > escalaMaxArea) escala = escalaMaxArea;
         img.scale(escala);
         const w = visualW * escala, h = visualH * escala;
+        // fotoEsq: foto centralizada na metade ESQUERDA. Default: centralizada no card todo.
+        const fotoLeftPos = fotoEsq
+          ? box.x + padding + (photoAreaW - w) / 2
+          : box.x + (box.w - w) / 2;
         img.set({
-          left: box.x + (box.w - w) / 2,
+          left: fotoLeftPos,
           top: photoAreaY + (photoAreaH - h) / 2,
           selectable: false,
         });
@@ -3624,7 +3651,11 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
   const palavras = textoNome.split(/\s+/).filter(Boolean);
   const fonteFamilia = fonteAtual(canvas, 'nome', FONTE_PRODUTO_BASE);
   // orçamento efetivo: render final é (fonte * multNome) → largura / multNome.
-  const maxLarguraNome = ((box.w - padding * 2) * 0.95) / (box.multNome || 1.0);
+  // cartazHoriz: nome ocupa só a metade ESQUERDA do card (balão fica na direita).
+  // fotoEsq: nome ocupa só a metade DIREITA (foto à esquerda).
+  const maxLarguraNome = (cartazHoriz || fotoEsq)
+    ? ((box.w / 2 - padding * 2) * 0.95) / (box.multNome || 1.0)
+    : ((box.w - padding * 2) * 0.95) / (box.multNome || 1.0);
   // multNome aplicado como escala FINAL (pós-shrink) — ver nota em renderizarBoxCardBanner.
   const fonteNatural1L = topStripH * 0.78;
   let nomeLinhas = [textoNome];
@@ -3701,7 +3732,15 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
   const lineGap = 0.10;
   const totalLinhas = nomeLinhas.length;
   const alturaBlocoNome = fonteSizeNome * totalLinhas + fonteSizeNome * lineGap * (totalLinhas - 1);
-  const yInicialNome = box.y + padding;  // colado no topo (antes centralizado) → mais espaço pra foto
+  // cartazHoriz: nome centralizado VERTICALMENTE na metade esquerda do card.
+  // fotoEsq: nome centralizado VERTICALMENTE na metade SUPERIOR direita (entre topo
+  // e meio do card) — pra não ficar colado no topo e nem encostar no balão embaixo.
+  // Default: colado no topo.
+  const yInicialNome = cartazHoriz
+    ? box.y + (box.h - alturaBlocoNome) / 2
+    : fotoEsq
+      ? box.y + (box.h / 2 - alturaBlocoNome) / 2 + box.h * 0.05
+      : box.y + padding;
   nomeLinhas.forEach((linha, i) => {
     // Mede largura desta linha pra centralizar
     let largLinha = 0;
@@ -3715,8 +3754,15 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
       }
     } catch {}
     const yLinha = yInicialNome + i * fonteSizeNome * (1 + lineGap);
+    // cartazHoriz: nome centralizado na metade ESQUERDA do card.
+    // fotoEsq: nome centralizado na metade DIREITA.
+    const leftPos = cartazHoriz
+      ? box.x + (box.w / 2 - largLinha) / 2
+      : fotoEsq
+        ? box.x + box.w / 2 + (box.w / 2 - largLinha) / 2
+        : box.x + (box.w - largLinha) / 2;
     const txt = new fabric.Text(linha, {
-      left: box.x + (box.w - largLinha) / 2,
+      left: leftPos,
       top: yLinha,
       fontSize: fonteSizeNome,
       fontFamily: fonteFamilia,
@@ -3730,10 +3776,25 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
   });
 
   // ===== BALÃO (bottom-right, GIGANTE — estilo qrofertas) =====
-  const tagW = box.w * 0.55;
-  const tagH = balaoStripH * 0.92;
-  const tagX = box.x + box.w - tagW - padding;
-  const tagY = balaoY + (balaoStripH - tagH) / 2;
+  // - cartazHoriz: balão na METADE DIREITA do card, BEM grande (centralizado vertical)
+  // - semFoto vertical: balão CENTRALIZADO bottom, ~85% largura
+  // - fotoEsq: balão na metade DIREITA bottom (nome topo direito + balão bottom direito)
+  // - Default: bottom-right 55% (qrofertas style)
+  const tagW = cartazHoriz ? (box.w / 2 - padding * 2) * 0.95
+    : fotoEsq ? (box.w / 2 - padding * 2) * 0.95
+    : box.semFoto ? box.w * 0.85
+    : destaqueStacked ? box.w * 0.75   // destaque stacked: balão maior + centralizado
+    : box.w * 0.55;
+  const tagH = cartazHoriz ? box.h * 0.50 : balaoStripH * 0.92;
+  const tagX = cartazHoriz
+    ? box.x + box.w / 2 + (box.w / 2 - tagW) / 2
+    : fotoEsq
+      ? box.x + box.w / 2 + (box.w / 2 - tagW) / 2
+      : (box.semFoto || destaqueStacked || box.balaoCentralizado) ? box.x + (box.w - tagW) / 2
+      : box.x + box.w - tagW - padding;
+  const tagY = cartazHoriz
+    ? box.y + (box.h - tagH) / 2
+    : balaoY + (balaoStripH - tagH) / 2;
 
   // SEMPRE desenha pílula default (sombra + retângulo) como FALLBACK.
   // Se houver balão custom, ele é carregado async e SUBSTITUI sombra+pílula.
@@ -5570,6 +5631,15 @@ function renderizarBoxProduto(canvas, box, produto, idx, paleta, tamanhoTexto, a
             smartBoost = Math.min(smartBoost, 1.40);
           }
           let escala = escalaContain * fatorDestaque * multFoto * smartBoost;
+          // SAFETY CAP: foto NUNCA pode passar das bordas do card. Antes, smartBoost
+          // (até +40%) × multFoto alto fazia foto estourar pra cards vizinhos
+          // (visível em g_4x3 TV_VERTICAL: PIZZA invadia BACON, COXA invadia BISTEQUINHA).
+          // Cap usa (box.w/h - 4) pra deixar 2px de margem da borda do card.
+          const escalaMaxCardSafe = Math.min(
+            (box.w - 4) / visualW,
+            (box.h - 4) / visualH,
+          );
+          if (escala > escalaMaxCardSafe) escala = escalaMaxCardSafe;
           img.scale(escala);
           const w = visualW * escala;
           const h = visualH * escala;

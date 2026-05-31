@@ -247,8 +247,13 @@ export default function App() {
   //   ficam minúsculos por causa de excesso de produtos numa página só)
   const LIMITE_AUTOMATICO = 20;
   const layoutAtual = LAYOUTS_NOMEADOS.find(l => l.id === configs.grade);
+  // CARTAZ_*: pôster de produto único — força 1 produto por página independente da
+  // quantidade total. Pra 20 produtos vira 20 páginas de cartaz, igual o concorrente.
+  const isCartaz = configs.modelo === 'CARTAZ_HORIZONTAL' || configs.modelo === 'CARTAZ_VERTICAL';
   let produtosPorPagina;
-  if (layoutAtual && layoutAtual.quantidade) {
+  if (isCartaz) {
+    produtosPorPagina = 1;
+  } else if (layoutAtual && layoutAtual.quantidade) {
     produtosPorPagina = layoutAtual.quantidade;
   } else if (configs.grade === 'automatico' && produtos.length > LIMITE_AUTOMATICO) {
     produtosPorPagina = LIMITE_AUTOMATICO;

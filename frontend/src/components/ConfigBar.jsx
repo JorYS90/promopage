@@ -34,9 +34,38 @@ export default function ConfigBar({ configs, aoMudar }) {
   // - `apenasFormatos: [...]` → grade só aparece nesses modelos (whitelist)
   // - `excluirFormatos: [...]` → grade NÃO aparece nesses modelos (blacklist)
   // - sem nenhuma das duas → aparece em todos os modelos
+  // CARTAZ_*: pôster de produto único — só mostra grades de 1 produto (pedido cliente).
+  const isCartaz = configs.modelo === 'CARTAZ_HORIZONTAL' || configs.modelo === 'CARTAZ_VERTICAL';
+  // TV_*: whitelist por modelo (pedido cliente). Pra TV, o whitelist BYPASSA o
+  // apenasFormatos/excluirFormatos — assim grades originalmente STORIES (g_1x2,
+  // g_1x3, g_7_1_dest_topo) podem aparecer em TV_VERTICAL também.
+  const TV_HORIZONTAL_WHITELIST = new Set([
+    'g_1x1', 'g_2x1', 'g_3x1', 'g_2x2',
+    'g_5_dest_esq', 'g_5_dest_dir',
+    'g_3x2', 'g_6_2_dest_lat',
+    'g_4x2',
+    'lista_10', 'lista_20',
+  ]);
+  const TV_VERTICAL_WHITELIST = new Set([
+    'g_1x1', 'g_2x1', 'g_1x2', 'g_3x1', 'g_1x3', 'g_2x2',
+    'g_5_dest_esq', 'g_5_dest_dir',
+    'g_3x2', 'g_6_2_dest_lat',
+    'g_7_1_dest_topo',
+    'g_4x2', 'g_3x3',
+    'g_11_3_dest_topo',
+    'g_4x3',
+    'g_17_1_dest_4x4',
+    'lista_10', 'lista_20',
+  ]);
+  const tvWhitelist = configs.modelo === 'TV_HORIZONTAL' ? TV_HORIZONTAL_WHITELIST
+    : configs.modelo === 'TV_VERTICAL' ? TV_VERTICAL_WHITELIST
+    : null;
   const layoutsDisponiveis = LAYOUTS_NOMEADOS.filter(l => {
+    // TV: whitelist puro (bypassa apenasFormatos pra permitir STORIES-specific em TV_VERTICAL)
+    if (tvWhitelist) return tvWhitelist.has(l.id);
     if (l.apenasFormatos && !l.apenasFormatos.includes(configs.modelo)) return false;
     if (l.excluirFormatos && l.excluirFormatos.includes(configs.modelo)) return false;
+    if (isCartaz && l.quantidade !== 1) return false;
     return true;
   });
   // Separa em "Grades" (grids) e "Listas" (tabelas) e ORDENA por quantidade de produtos
