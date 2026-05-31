@@ -6370,5 +6370,16 @@ export async function renderizarEncarte(canvas, { tema, produtos, configs, empre
 }
 
 export function exportarPNG(canvas) {
-  return canvas.toDataURL({ format: 'png', quality: 1, multiplier: 2 });
+  // BUG-FIX (mobile baixa qualidade): App.jsx aplica zoom de preview via setWidth/
+  // setHeight, que REDUZ a dimensão interna do canvas pra caber na tela. No mobile
+  // (tela ~412px), zoom fica ~0.38 e o canvas STORIES vira 412×734 pixels (em vez
+  // de 1080×1920). Sem compensação, multiplier 2 dava só 824×1468 no PDF.
+  //
+  // multiplier = 2 / zoom mantém o export SEMPRE em 2x da resolução NATIVA do
+  // modelo (ex: STORIES → 2160×3840), independente do zoom de preview atual.
+  // No desktop com zoom 1.0, multiplier = 2 (sem mudança). No mobile com zoom 0.38,
+  // multiplier = 5.26 → recupera a alta resolução.
+  const zoom = canvas.getZoom() || 1;
+  const multiplier = 2 / zoom;
+  return canvas.toDataURL({ format: 'png', quality: 1, multiplier });
 }
