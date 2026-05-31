@@ -74,6 +74,44 @@ services:
       # Em dev local, acesse http://localhost:8080
       - "8080:80"
 
+  # ===== PROMOVIDEO (sister-app, sub-domínio videos.promopage.com.br) =====
+  # Estes 2 serviços assumem que o repo do PromoVideo está clonado em
+  #   /home/promopage/promopage-videos
+  # (mesmo nível do diretório atual = ../promopage-videos no contexto Docker).
+  #
+  # Caddy: bloco videos.promopage.com.br → reverse_proxy videos-web:80
+  # Cookie de auth: setado em .promopage.com.br no backend principal (api),
+  # automaticamente válido aqui via cross-subdomain.
+  videos-web:
+    build:
+      context: ../promopage-videos/frontend
+      dockerfile: Dockerfile
+    container_name: promovideo-web
+    restart: unless-stopped
+    depends_on:
+      videos-api:
+        condition: service_started
+    ports:
+      # 8081 do HOST → 80 do container. Caddy aponta pra essa porta.
+      - "8081:80"
+
+  videos-api:
+    build:
+      context: ../promopage-videos
+      dockerfile: Dockerfile.api
+    container_name: promovideo-api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 4020
+    volumes:
+      - videos_uploads:/app/backend/uploads
+      - videos_out:/app/backend/out             # vídeos MP4 renderizados
+      - videos_data:/app/backend/data           # JSON dos temas/jobs
+    # Sem expose externo — só acessível via videos-web (nginx faz proxy interno)
+    expose:
+      - "4020"
+
   # Job de BACKUP diário — roda às 3h da manhã via cron interno
   # Sem isso, você precisa configurar cron NO HOST. Esse container faz tudo dentro.
   backup:
@@ -112,4 +150,11 @@ volumes:
   api_logs:
     driver: local
   api_templates:
+    driver: local
+  # PromoVideo (sister-app)
+  videos_uploads:
+    driver: local
+  videos_out:
+    driver: local
+  videos_data:
     driver: local
