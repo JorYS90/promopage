@@ -5031,6 +5031,327 @@ button { font-family: inherit; }
   flex-shrink: 0;
 }
 
+/* ===== Seção "Recursos Premium" — abaixo dos planos =====
+   PREMIUM v2: seletores qualificados com .mp-pagina + !important pra escapar
+   de qualquer reset/base global. Cards com gradient sutil + sombras em camadas
+   pra dar peso visual. Ícones em chip arredondado com cor única por card. */
+.mp-pagina .mp-recursos-premium {
+  margin: 56px auto 40px !important;
+  padding: 44px 36px !important;
+  background: linear-gradient(180deg, #ffffff 0%, #fafbff 100%) !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 24px !important;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 8px 32px rgba(15, 23, 42, 0.04) !important;
+  max-width: 1100px !important;
+}
+.mp-pagina .mp-rp-header {
+  text-align: center !important;
+  margin-bottom: 36px !important;
+}
+.mp-pagina .mp-rp-titulo {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 0 0 14px !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.2 !important;
+}
+.mp-pagina .mp-rp-titulo-pre {
+  display: inline-block !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #7c3aed !important;
+  background: linear-gradient(90deg, rgba(124, 58, 237, 0.10), rgba(220, 38, 38, 0.10)) !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(124, 58, 237, 0.18) !important;
+}
+.mp-pagina .mp-rp-subtitulo {
+  margin: 0 auto !important;
+  max-width: 640px !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  color: #64748b !important;
+}
+.mp-pagina .mp-rp-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 16px !important;
+  margin-bottom: 40px !important;
+}
+@media (max-width: 900px) {
+  .mp-pagina .mp-rp-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 580px) {
+  .mp-pagina .mp-rp-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .mp-pagina .mp-recursos-premium { padding: 28px 16px !important; }
+  .mp-pagina .mp-rp-titulo { font-size: 24px !important; }
+}
+.mp-pagina .mp-rp-card {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+  padding: 18px !important;
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 16px !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+.mp-pagina .mp-rp-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow:
+    0 12px 28px rgba(15, 23, 42, 0.08),
+    0 4px 8px rgba(15, 23, 42, 0.04) !important;
+  border-color: #cbd5e1 !important;
+}
+.mp-pagina .mp-rp-icone {
+  flex-shrink: 0 !important;
+  width: 48px !important;
+  height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 14px !important;
+  /* background e color setadas inline pelo JSX (cor única por card) */
+}
+.mp-pagina .mp-rp-icone svg {
+  width: 24px !important;
+  height: 24px !important;
+}
+.mp-pagina .mp-rp-conteudo { flex: 1 !important; min-width: 0 !important; }
+.mp-pagina .mp-rp-card-titulo {
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin-bottom: 5px !important;
+  line-height: 1.3 !important;
+}
+.mp-pagina .mp-rp-card-desc {
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  color: #64748b !important;
+}
+
+/* Selos de prova social — gradient grande nos números */
+.mp-pagina .mp-rp-selos {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 20px !important;
+  padding-top: 32px !important;
+  border-top: 1px dashed #e2e8f0 !important;
+}
+@media (max-width: 720px) {
+  .mp-pagina .mp-rp-selos { grid-template-columns: repeat(2, 1fr) !important; gap: 24px !important; }
+}
+.mp-pagina .mp-rp-selo { text-align: center !important; }
+.mp-pagina .mp-rp-selo-num {
+  font-size: 32px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  letter-spacing: -0.025em !important;
+  margin-bottom: 6px !important;
+  background: linear-gradient(135deg, #7c3aed, #dc2626) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  line-height: 1.1 !important;
+}
+.mp-pagina .mp-rp-selo-label {
+  font-size: 12.5px !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+}
+
+/* ===== FAQ — Perguntas Frequentes (accordion PREMIUM) =====
+   Seletores qualificados com .mp-pagina pra ESCAPAR de qualquer reset/base
+   global (incluindo button defaults do user-agent). Visual: card com sombra
+   em múltiplas camadas, accordion com chevron animado, fade-in suave, hover
+   com lift sutil. Gradients no chip e nos números pra dar peso premium. */
+.mp-pagina .mp-faq {
+  margin: 48px auto 40px !important;
+  padding: 44px 36px !important;
+  background: linear-gradient(180deg, #ffffff 0%, #fafbff 100%) !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 24px !important;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 8px 32px rgba(15, 23, 42, 0.04) !important;
+  max-width: 1100px !important;
+}
+.mp-pagina .mp-faq-header {
+  text-align: center !important;
+  margin-bottom: 32px !important;
+}
+/* TÍTULO: força flex-column pra chip ficar EM CIMA do título (sem isso renderiza
+   inline e fica "Tira-dúvidasPerguntas frequentes" colado). */
+.mp-pagina .mp-faq-titulo {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 0 0 14px !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.2 !important;
+}
+.mp-pagina .mp-faq-titulo-pre {
+  display: inline-block !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #0891b2 !important;
+  background: linear-gradient(90deg, rgba(8, 145, 178, 0.10), rgba(124, 58, 237, 0.10)) !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(8, 145, 178, 0.18) !important;
+}
+.mp-pagina .mp-faq-subtitulo {
+  margin: 0 auto !important;
+  max-width: 600px !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  color: #64748b !important;
+}
+
+.mp-pagina .mp-faq-lista {
+  max-width: 820px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+/* CARD do item: gradient bg quando fechado, branco puro com glow quando aberto */
+.mp-pagina .mp-faq-item {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+}
+.mp-pagina .mp-faq-item:hover {
+  border-color: #cbd5e1 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important;
+}
+.mp-pagina .mp-faq-item.aberta {
+  background: #ffffff !important;
+  border-color: rgba(124, 58, 237, 0.30) !important;
+  box-shadow:
+    0 0 0 4px rgba(124, 58, 237, 0.06),
+    0 8px 24px rgba(124, 58, 237, 0.10) !important;
+  transform: translateY(0) !important;
+}
+/* Barra lateral colorida quando aberto (acento premium) */
+.mp-pagina .mp-faq-item.aberta::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 4px !important;
+  background: linear-gradient(180deg, #7c3aed, #dc2626) !important;
+}
+
+/* BOTÃO da pergunta — força reset de defaults do browser */
+.mp-pagina .mp-faq-pergunta {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  padding: 20px 24px !important;
+  background: none !important;
+  border: none !important;
+  outline: none !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  font-family: inherit !important;
+  font-size: 15.5px !important;
+  font-weight: 600 !important;
+  color: #0f172a !important;
+  transition: color 0.2s ease !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+.mp-pagina .mp-faq-pergunta:hover { color: #7c3aed !important; }
+.mp-pagina .mp-faq-item.aberta .mp-faq-pergunta { color: #7c3aed !important; }
+
+.mp-pagina .mp-faq-pergunta-texto {
+  flex: 1 !important;
+  line-height: 1.4 !important;
+}
+
+/* CHEVRON — circle bg, rotaciona 180° quando aberta */
+.mp-pagina .mp-faq-chevron {
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  background: rgba(100, 116, 139, 0.08) !important;
+  color: #64748b !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease, background 0.2s ease !important;
+}
+.mp-pagina .mp-faq-item:hover .mp-faq-chevron {
+  background: rgba(124, 58, 237, 0.10) !important;
+  color: #7c3aed !important;
+}
+.mp-pagina .mp-faq-item.aberta .mp-faq-chevron {
+  transform: rotate(180deg) !important;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(220, 38, 38, 0.15)) !important;
+  color: #7c3aed !important;
+}
+.mp-pagina .mp-faq-chevron svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* RESPOSTA — fade-in com leve slide, padding alinhado com pergunta */
+.mp-pagina .mp-faq-resposta {
+  padding: 4px 24px 22px 24px !important;
+  font-size: 14.5px !important;
+  line-height: 1.7 !important;
+  color: #475569 !important;
+  animation: mpFaqFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border-top: 1px dashed #e2e8f0 !important;
+  margin-top: -2px !important;
+  padding-top: 16px !important;
+}
+.mp-pagina .mp-faq-resposta b {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+@keyframes mpFaqFadeIn {
+  from { opacity: 0; transform: translateY(-6px); max-height: 0; }
+  to   { opacity: 1; transform: translateY(0); max-height: 500px; }
+}
+
+@media (max-width: 580px) {
+  .mp-pagina .mp-faq { padding: 28px 18px !important; }
+  .mp-pagina .mp-faq-titulo { font-size: 24px !important; }
+  .mp-pagina .mp-faq-pergunta { padding: 16px 16px !important; font-size: 14px !important; }
+  .mp-pagina .mp-faq-resposta { padding: 14px 16px 18px 16px !important; font-size: 13.5px !important; }
+  .mp-pagina .mp-faq-chevron { width: 28px !important; height: 28px !important; }
+}
+
 /* Footer */
 .mp-footer {
   border-top: 1px solid #e5e7eb;
