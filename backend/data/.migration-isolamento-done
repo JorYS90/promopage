@@ -1,0 +1,16 @@
+{
+  "concluidaEm": "2026-05-20T12:57:49.834Z",
+  "produtos": {
+    "total": 17,
+    "migrados": 17
+  },
+  "projetos": {
+    "total": 1,
+    "migrados": 1
+  },
+  "categorias": {
+    "total": 7,
+    "migrados": 7,
+    "ignoradas_padrao": 10
+  }
+}
