@@ -240,6 +240,19 @@ db.exec(`
     UNIQUE(user_id, nome)               -- mesmo user não cria 2 categorias iguais
   );
   CREATE INDEX IF NOT EXISTS idx_categorias_custom_user ON categorias_custom(user_id);
+
+  -- Temas favoritados pelo usuário. tema_id é o slug do template (filesystem-based,
+  -- ex: "ofertas-relampago"). Sem FK pra templates porque eles vivem no disco, não
+  -- no DB. UNIQUE evita o mesmo user favoritar duas vezes o mesmo tema.
+  CREATE TABLE IF NOT EXISTS temas_favoritos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    tema_id TEXT NOT NULL,
+    criado_em TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(user_id, tema_id)
+  );
+  CREATE INDEX IF NOT EXISTS idx_temas_favoritos_user ON temas_favoritos(user_id);
 `);
 
 // === Migração idempotente: adiciona colunas novas em tabelas existentes ===

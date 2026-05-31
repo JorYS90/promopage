@@ -9,9 +9,17 @@
 const { Router } = require('express');
 const { z } = require('zod');
 const bcrypt = require('bcryptjs');
+const fs = require('fs');
+const path = require('path');
 const db = require('../db/schema');
 const service = require('./service');
 const { requireAuth } = require('./middleware');
+
+// Diretório raiz de uploads (mesma constante usada em server.js).
+// Cada user tem subpasta /uploads/<user_id>/ — removida no DELETE /me.
+const UPLOADS_DIR = path.join(__dirname, '..', '..', 'uploads');
+// Diretório de projetos salvos por user (caso exista — alguns deployments têm).
+const PROJETOS_DIR = path.join(__dirname, '..', '..', 'projetos');
 
 const router = Router();
 
@@ -107,6 +115,85 @@ router.put('/me/password', requireAuth, async (req, res) => {
     ip: req.ip, user_agent: req.headers['user-agent'],
   });
   res.json({ ok: true, message: 'Senha alterada. Outras sessões foram desconectadas.' });
+});
+
+// === DELETE /api/users/me — exclusão definitiva da conta (LGPD Art. 18 VI) ===
+// Validação dupla pra evitar exclusão acidental:
+//   1. Senha atual (mesma proteção do troca-senha)
+//   2. String literal "EXCLUIR" digitada manualmente
+//
+// Limpeza:
+//   - Tabelas com FK CASCADE: subscriptions, payments, sessions, password_resets,
+//     email_verifications, produtos, projetos, categorias_custom, temas_favoritos
+//     (10 tabelas limpas automaticamente pelo DELETE da row em `users`).
+//   - Audit logs: SET NULL (não apaga, anonimiza — necessário pra forense/compliance).
+//   - Disk: remove /uploads/<user_id>/ (imagens enviadas) e /projetos/<user_id>/.
+//
+// Após sucesso, o frontend é responsável por descartar o token JWT do localStorage.
+const excluirContaSchema = z.object({
+  senha: z.string().min(1, 'Senha obrigatória'),
+  confirmacao: z.literal('EXCLUIR', { errorMap: () => ({ message: 'Digite "EXCLUIR" pra confirmar' }) }),
+});
+router.delete('/me', requireAuth, async (req, res) => {
+  const parse = excluirContaSchema.safeParse(req.body);
+  if (!parse.success) {
+    return res.status(400).json({ error: 'Dados inválidos', detalhes: parse.error.errors });
+  }
+
+  // Proteção: super_admin não pode auto-excluir (evita ficar sem nenhum admin)
+  if (req.user.role_nome === 'super_admin') {
+    return res.status(403).json({
+      error: 'Conta de super admin não pode ser auto-excluída. Peça pra outro super admin.',
+    });
+  }
+
+  // Valida senha atual
+  const user = db.prepare('SELECT id, senha_hash, email FROM users WHERE id = ?').get(req.user.id);
+  if (!user) return res.status(404).json({ error: 'Usuário não encontrado' });
+  const ok = await bcrypt.compare(parse.data.senha, user.senha_hash);
+  if (!ok) return res.status(400).json({ error: 'Senha incorreta' });
+
+  // Audita ANTES de deletar (depois o user_id seria null no audit_logs)
+  service.auditar({
+    user_id: req.user.id, actor_id: req.user.id, acao: 'user.account_deleted',
+    recurso: `user:${req.user.id}`,
+    dados: { email: user.email },
+    ip: req.ip, user_agent: req.headers['user-agent'],
+  });
+
+  // Cleanup do disco — tolerante a falhas (não bloqueia a exclusão se arquivo
+  // não existir ou não puder ser removido por permissão). Logs servem pra
+  // debug posterior se o cleanup falhar.
+  try {
+    const uploadsDoUser = path.join(UPLOADS_DIR, String(req.user.id));
+    if (fs.existsSync(uploadsDoUser)) {
+      fs.rmSync(uploadsDoUser, { recursive: true, force: true });
+      console.log(`[user.delete] uploads removidos: ${uploadsDoUser}`);
+    }
+  } catch (e) {
+    console.warn(`[user.delete] falha ao remover uploads do user ${req.user.id}: ${e.message}`);
+  }
+  try {
+    const projetosDoUser = path.join(PROJETOS_DIR, String(req.user.id));
+    if (fs.existsSync(projetosDoUser)) {
+      fs.rmSync(projetosDoUser, { recursive: true, force: true });
+      console.log(`[user.delete] projetos removidos: ${projetosDoUser}`);
+    }
+  } catch (e) {
+    console.warn(`[user.delete] falha ao remover projetos do user ${req.user.id}: ${e.message}`);
+  }
+
+  // DELETE da row em users — CASCADE limpa 10 tabelas relacionadas.
+  // Em uma transação só, pra atomicidade.
+  const result = db.prepare('DELETE FROM users WHERE id = ?').run(req.user.id);
+  if (result.changes === 0) {
+    return res.status(500).json({ error: 'Falha ao excluir conta' });
+  }
+
+  res.json({
+    ok: true,
+    message: 'Conta excluída. Todos os seus dados foram removidos da plataforma.',
+  });
 });
 
 // === GET /api/users/me/subscription ===

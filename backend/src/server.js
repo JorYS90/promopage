@@ -15,6 +15,7 @@ const { nanoid } = require('nanoid');
 const produtosDb = require('./produtos-db');
 const imagensDb = require('./imagens-db');
 const categoriasDb = require('./categorias-db');
+const temasFavoritosDb = require('./temas-favoritos-db');
 
 // === SaaS: auth + multi-tenant ===
 // Inicializa banco SQLite (cria tabelas se não existir + seeds default)
@@ -859,6 +860,42 @@ app.delete('/api/categorias/:nome', requireAuth, (req, res) => {
     const ok = categoriasDb.remover(req.params.nome, req.user.id);
     if (!ok) return res.status(404).json({ error: 'Categoria não encontrada (ou é padrão)' });
     res.json({ ok: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ---------- Temas favoritos (heart icon nos cards de tema) ----------
+// 3 endpoints requireAuth (favoritos são sempre per-user):
+//   GET    /api/temas-favoritos       — lista IDs dos temas favoritados
+//   POST   /api/temas-favoritos       — body { temaId } adiciona aos favoritos
+//   DELETE /api/temas-favoritos/:id   — remove dos favoritos
+app.get('/api/temas-favoritos', requireAuth, (req, res) => {
+  try {
+    const ids = temasFavoritosDb.listar(req.user.id);
+    res.json({ favoritos: ids });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post('/api/temas-favoritos', requireAuth, (req, res) => {
+  try {
+    const { temaId } = req.body || {};
+    const result = temasFavoritosDb.adicionar(temaId, req.user.id);
+    res.json(result);
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+app.delete('/api/temas-favoritos/:id', requireAuth, (req, res) => {
+  try {
+    const result = temasFavoritosDb.remover(req.params.id, req.user.id);
+    if (!result.removido) {
+      return res.status(404).json({ error: 'Tema não estava nos favoritos' });
+    }
+    res.json(result);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

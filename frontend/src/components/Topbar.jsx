@@ -4,6 +4,7 @@ import LogoPromoPage from './LogoPromoPage.jsx';
 export default function Topbar({
   aoAbrirCampanhas, qtdCampanhas = 0,
   user, aoLogin, aoSignup, aoLogout, aoAbrirConta, aoAbrirPlanos, aoAbrirAdmin,
+  aoAbrirFavoritos,
   aoAbrirPreviewLayouts,
   aoVoltarHome,
 }) {
@@ -44,6 +45,7 @@ export default function Topbar({
         aoLogout={aoLogout}
         aoAbrirConta={aoAbrirConta}
         aoAbrirAdmin={aoAbrirAdmin}
+        aoAbrirFavoritos={aoAbrirFavoritos}
       />
     </div>
   );

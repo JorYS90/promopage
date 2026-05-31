@@ -307,6 +307,8 @@ export default function ModalPlanos({
   aoAssinarSemConta,   // chamado quando deslogado clica em "assinar"
   aoTrocarPlano,       // chamado quando logado clica em assinar (Checkout MP)
   aoTestarPagamento,   // admin-only: dispara um checkout de R$1 (teste real)
+  aoAbrirPrivacidade,  // opcional: abre modal de Política de Privacidade no rodapé
+  aoAbrirTermos,       // opcional: idem pra Termos de Uso
 }) {
   const ehAdmin = user?.role_nome === 'admin' || user?.role_nome === 'super_admin';
   const [planos, setPlanos] = useState([]);
@@ -588,7 +590,7 @@ export default function ModalPlanos({
       </div>
 
       {/* Rodapé institucional do site (estilo landing) */}
-      <RodapeSite />
+      <RodapeSite aoAbrirPrivacidade={aoAbrirPrivacidade} aoAbrirTermos={aoAbrirTermos} />
     </div>
   );
 }

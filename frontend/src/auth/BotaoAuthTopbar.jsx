@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from 'react';
 //
 // Recebe: user, aoLogin, aoSignup, aoLogout
 
-export default function BotaoAuthTopbar({ user, aoLogin, aoSignup, aoLogout, aoAbrirConta, aoAbrirAdmin }) {
+export default function BotaoAuthTopbar({ user, aoLogin, aoSignup, aoLogout, aoAbrirConta, aoAbrirAdmin, aoAbrirFavoritos }) {
   const [dropdownAberto, setDropdownAberto] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -73,6 +73,9 @@ export default function BotaoAuthTopbar({ user, aoLogin, aoSignup, aoLogout, aoA
           </button>
           <button className="auth-dd-item" onClick={() => { setDropdownAberto(false); aoAbrirConta?.('assinatura'); }}>
             <span>💳</span> Minha Assinatura
+          </button>
+          <button className="auth-dd-item" onClick={() => { setDropdownAberto(false); aoAbrirFavoritos?.(); }}>
+            <span>💖</span> Meus Temas Favoritos
           </button>
           <button className="auth-dd-item" onClick={() => { setDropdownAberto(false); aoAbrirConta?.('pagamentos'); }}>
             <span>📊</span> Histórico de Pagamentos

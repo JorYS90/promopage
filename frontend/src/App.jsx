@@ -24,6 +24,7 @@ import ModalAuth from './auth/ModalAuth.jsx';
 import ModalMeusInteresses from './auth/ModalMeusInteresses.jsx';
 import ModalContaUsuario from './auth/ModalContaUsuario.jsx';
 import ModalPlanos from './auth/ModalPlanos.jsx';
+import ModalPoliticaPrivacidade from './components/ModalPoliticaPrivacidade.jsx';
 import PainelAdmin from './admin/PainelAdmin.jsx';
 import ModalPreviewLayouts from './preview-layouts/ModalPreviewLayouts.jsx';
 
@@ -44,6 +45,11 @@ export default function App() {
   const [canvasFabric, setCanvasFabric] = useState(null);
 
   const [aba, setAba] = useState('produtos');
+  // Ticker pra abrir a view "Meus Favoritos" do PainelTemas direto do menu do
+  // user. Incrementa toda vez que clica "Meus Temas Favoritos" — o useEffect
+  // do PainelTemas dispara em cima da mudança. Counter (em vez de boolean) pra
+  // que cliques REPETIDOS sempre ativem (boolean true→true não dispararia).
+  const [abrirFavoritosTicker, setAbrirFavoritosTicker] = useState(0);
   const [configs, setConfigs] = useState(CONFIGS_DEFAULT);
   const [tema, setTema] = useState(null);
   const [temaId, setTemaId] = useState(null);
@@ -91,6 +97,7 @@ export default function App() {
   const [modalInteresses, setModalInteresses] = useState({ aberto: false, signup: false });
   const [modalConta, setModalConta] = useState({ aberto: false, aba: 'perfil' });
   const [modalPlanos, setModalPlanos] = useState(false);
+  const [modalPrivacidade, setModalPrivacidade] = useState(false);
   const [modalAdmin, setModalAdmin] = useState(false);
   // Modal de preview dos novos layouts SaaS propostos
   const [modalPreviewLayouts, setModalPreviewLayouts] = useState(false);
@@ -748,6 +755,13 @@ export default function App() {
         aoAbrirConta={(aba) => setModalConta({ aberto: true, aba: aba || 'perfil' })}
         aoAbrirPlanos={() => setModalPlanos(true)}
         aoAbrirAdmin={() => setModalAdmin(true)}
+        aoAbrirFavoritos={() => {
+          // Vai pra aba "temas", abre o painel e dispara o ticker pra view "Meus Favoritos"
+          setAba('temas');
+          setPainelAberto(true);
+          try { localStorage.setItem('encarte-builder:painelAberto', 'true'); } catch {}
+          setAbrirFavoritosTicker(n => n + 1);
+        }}
         aoAbrirPreviewLayouts={() => setModalPreviewLayouts(true)}
         aoVoltarHome={voltarHome}
       />
@@ -786,7 +800,13 @@ export default function App() {
           />
         )}
         {aba === 'temas' && (
-          <PainelTemas temaAtivo={temaId} aoEscolher={escolherTema} user={auth.user} fetchAuth={auth.fetchAuth} />
+          <PainelTemas
+            temaAtivo={temaId}
+            aoEscolher={escolherTema}
+            user={auth.user}
+            fetchAuth={auth.fetchAuth}
+            abrirFavoritosTicker={abrirFavoritosTicker}
+          />
         )}
         {aba === 'empresa' && (
           <PainelEmpresa aoAtualizar={setEmpresa} userId={auth.user?.id || null} />
@@ -971,6 +991,7 @@ export default function App() {
         login={auth.login}
         esqueciSenha={auth.esqueciSenha}
         resetarSenha={auth.resetarSenha}
+        aoAbrirPrivacidade={() => setModalPrivacidade(true)}
       />
 
       <ModalMeusInteresses
@@ -987,6 +1008,7 @@ export default function App() {
         user={auth.user}
         fetchAuth={auth.fetchAuth}
         aoAtualizarUser={(novoUser) => { auth.refresh(); }}
+        aoLogout={auth.logout}
       />
 
       <ModalPlanos
@@ -994,6 +1016,7 @@ export default function App() {
         aoFechar={() => setModalPlanos(false)}
         user={auth.user}
         planoAtualSlug={planoAtualSlug}
+        aoAbrirPrivacidade={() => setModalPrivacidade(true)}
         aoAssinarSemConta={(slug) => {
           // Deslogado: fecha planos, abre cadastro
           setModalPlanos(false);
@@ -1045,6 +1068,13 @@ export default function App() {
       <ModalPreviewLayouts
         aberto={modalPreviewLayouts}
         aoFechar={() => setModalPreviewLayouts(false)}
+      />
+
+      {/* Política de Privacidade (LGPD). Aberta pelo rodapé do ModalPlanos
+          ou pelo disclaimer do ModalAuth (cadastro/login). */}
+      <ModalPoliticaPrivacidade
+        aberto={modalPrivacidade}
+        aoFechar={() => setModalPrivacidade(false)}
       />
 
     </div>

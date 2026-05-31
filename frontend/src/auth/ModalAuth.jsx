@@ -13,6 +13,8 @@ import {
 export default function ModalAuth({
   aberto, modoInicial = 'login', aoFechar,
   signup, login, esqueciSenha, resetarSenha,
+  aoAbrirPrivacidade,  // opcional: torna link "Política de Privacidade" do disclaimer clicável
+  aoAbrirTermos,       // opcional: idem pra "Termos de Uso"
 }) {
   const [modo, setModo] = useState(modoInicial);
   const [carregando, setCarregando] = useState(false);
@@ -209,7 +211,18 @@ export default function ModalAuth({
               </button>
             </div>
             <p className="ma-disclaimer">
-              Ao criar sua conta, você aceita nossos Termos de Uso e Política de Privacidade.
+              Ao criar sua conta, você aceita nossos{' '}
+              {aoAbrirTermos ? (
+                <button type="button" className="ma-link-inline" onClick={() => { aoFechar?.(); aoAbrirTermos(); }}>
+                  Termos de Uso
+                </button>
+              ) : 'Termos de Uso'}
+              {' '}e{' '}
+              {aoAbrirPrivacidade ? (
+                <button type="button" className="ma-link-inline" onClick={() => { aoFechar?.(); aoAbrirPrivacidade(); }}>
+                  Política de Privacidade
+                </button>
+              ) : 'Política de Privacidade'}.
             </p>
           </form>
         )}

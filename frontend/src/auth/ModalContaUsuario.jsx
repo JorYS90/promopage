@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 
 export default function ModalContaUsuario({
   aberto, abaInicial = 'perfil', aoFechar, user, fetchAuth, aoAtualizarUser,
+  aoLogout,    // chamado após exclusão de conta bem-sucedida
 }) {
   const [aba, setAba] = useState(abaInicial);
 
@@ -44,7 +45,7 @@ export default function ModalContaUsuario({
 
         <div className="mc-content">
           {aba === 'perfil' && (
-            <AbaPerfil user={user} fetchAuth={fetchAuth} aoAtualizarUser={aoAtualizarUser} />
+            <AbaPerfil user={user} fetchAuth={fetchAuth} aoAtualizarUser={aoAtualizarUser} aoLogout={aoLogout} aoFechar={aoFechar} />
           )}
           {aba === 'assinatura' && (
             <AbaAssinatura fetchAuth={fetchAuth} />
@@ -61,7 +62,7 @@ export default function ModalContaUsuario({
 // ============================================================
 // === ABA: PERFIL ===
 // ============================================================
-function AbaPerfil({ user, fetchAuth, aoAtualizarUser }) {
+function AbaPerfil({ user, fetchAuth, aoAtualizarUser, aoLogout, aoFechar }) {
   const [form, setForm] = useState({
     nome: user?.nome || '',
     empresa: user?.empresa || '',
@@ -72,6 +73,13 @@ function AbaPerfil({ user, fetchAuth, aoAtualizarUser }) {
   const [salvando, setSalvando] = useState(false);
   const [trocandoSenha, setTrocandoSenha] = useState(false);
   const [msg, setMsg] = useState({ tipo: '', texto: '' });
+  // Estado da "zona perigosa" — exclusão de conta.
+  // confirmacaoAberta: mostra/esconde o formulário detalhado de confirmação.
+  // senhaExclusao + textoConfirmacao: campos do form. Texto deve ser literal "EXCLUIR".
+  const [confirmacaoAberta, setConfirmacaoAberta] = useState(false);
+  const [senhaExclusao, setSenhaExclusao] = useState('');
+  const [textoConfirmacao, setTextoConfirmacao] = useState('');
+  const [excluindo, setExcluindo] = useState(false);
 
   useEffect(() => {
     setForm({
@@ -117,6 +125,38 @@ function AbaPerfil({ user, fetchAuth, aoAtualizarUser }) {
     } catch (err) {
       setMsg({ tipo: 'erro', texto: err.message });
     } finally { setTrocandoSenha(false); }
+  };
+
+  // Exclusão definitiva da conta. Backend valida senha + string "EXCLUIR" antes
+  // de remover. Após sucesso: limpa estado local, fecha modal e desloga.
+  const excluirConta = async (e) => {
+    e.preventDefault();
+    if (excluindo) return;
+    if (textoConfirmacao !== 'EXCLUIR') {
+      setMsg({ tipo: 'erro', texto: 'Digite exatamente "EXCLUIR" (em maiúsculas) pra confirmar' });
+      return;
+    }
+    if (!senhaExclusao) {
+      setMsg({ tipo: 'erro', texto: 'Digite sua senha pra confirmar a exclusão' });
+      return;
+    }
+    setExcluindo(true); setMsg({ tipo: '', texto: '' });
+    try {
+      const r = await fetchAuth('/api/users/me', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ senha: senhaExclusao, confirmacao: 'EXCLUIR' }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || 'Falha ao excluir conta');
+      // Sucesso: alerta + fecha modal + logout (limpa token/state)
+      alert('✓ Conta excluída. Todos os seus dados foram removidos da nossa plataforma.');
+      aoFechar?.();
+      aoLogout?.();
+    } catch (err) {
+      setMsg({ tipo: 'erro', texto: err.message });
+      setExcluindo(false);
+    }
   };
 
   return (
@@ -187,6 +227,95 @@ function AbaPerfil({ user, fetchAuth, aoAtualizarUser }) {
           {trocandoSenha ? 'Trocando...' : '🔐 Trocar senha'}
         </button>
       </form>
+
+      {/* ===== ZONA PERIGOSA — Exclusão definitiva da conta (LGPD Art. 18 VI) =====
+          Fica isolada visualmente com borda vermelha + ícone alerta pra evitar
+          click acidental. Confirmação dupla: senha + digitar "EXCLUIR" literal. */}
+      <hr className="mc-sep" />
+
+      <div className="mc-zona-perigo">
+        <div className="mc-zp-header">
+          <span className="mc-zp-icone">⚠</span>
+          <div>
+            <h3 className="mc-zp-titulo">Excluir minha conta</h3>
+            <p className="mc-zp-sub">
+              Ação <b>permanente e irreversível</b>. Seguimos a LGPD (Art. 18, VI):
+              você pode pedir exclusão total dos seus dados a qualquer momento.
+            </p>
+          </div>
+        </div>
+
+        {!confirmacaoAberta ? (
+          <button
+            type="button"
+            className="mc-btn-danger"
+            onClick={() => { setConfirmacaoAberta(true); setMsg({ tipo: '', texto: '' }); }}
+          >
+            🗑 Quero excluir minha conta
+          </button>
+        ) : (
+          <form onSubmit={excluirConta} className="mc-form mc-zp-form">
+            <div className="mc-zp-aviso">
+              <b>O que acontece se você confirmar:</b>
+              <ul>
+                <li>Seus <b>encartes, temas customizados, favoritos e catálogo</b> serão excluídos imediatamente.</li>
+                <li>Suas <b>imagens enviadas</b> serão removidas do nosso servidor.</li>
+                <li>Sua <b>assinatura ativa</b> (se houver) será cancelada sem reembolso proporcional.</li>
+                <li>Você será <b>deslogado de todos os dispositivos</b>.</li>
+                <li>Dados <b>fiscais</b> (notas, pagamentos) ficam guardados por 5 anos por exigência legal.</li>
+                <li>Em até 30 dias, todos os <b>backups</b> com seus dados são apagados.</li>
+              </ul>
+              <p style={{ marginTop: 10, marginBottom: 0 }}>
+                <b>Não dá pra recuperar</b> a conta depois disso. Se quiser voltar, vai precisar
+                cadastrar tudo de novo.
+              </p>
+            </div>
+
+            <label>
+              <span>Digite <b style={{ color: '#dc2626' }}>EXCLUIR</b> (em maiúsculas) pra confirmar</span>
+              <input
+                type="text"
+                value={textoConfirmacao}
+                onChange={e => setTextoConfirmacao(e.target.value)}
+                placeholder="EXCLUIR"
+                autoComplete="off"
+              />
+            </label>
+            <label>
+              <span>Sua senha atual</span>
+              <input
+                type="password"
+                value={senhaExclusao}
+                onChange={e => setSenhaExclusao(e.target.value)}
+                autoComplete="current-password"
+              />
+            </label>
+
+            <div className="mc-zp-actions">
+              <button
+                type="button"
+                className="mc-btn-secondary"
+                onClick={() => {
+                  setConfirmacaoAberta(false);
+                  setSenhaExclusao('');
+                  setTextoConfirmacao('');
+                  setMsg({ tipo: '', texto: '' });
+                }}
+                disabled={excluindo}
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                className="mc-btn-danger"
+                disabled={excluindo || textoConfirmacao !== 'EXCLUIR' || !senhaExclusao}
+              >
+                {excluindo ? 'Excluindo...' : '🗑 Confirmar exclusão definitiva'}
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
     </div>
   );
 }

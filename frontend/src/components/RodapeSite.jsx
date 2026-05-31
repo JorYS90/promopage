@@ -42,19 +42,34 @@ const IconeWhatsapp = () => (
   </svg>
 );
 
-export default function RodapeSite() {
+// Props opcionais:
+//   aoAbrirPrivacidade — se passado, "Política de Privacidade" vira botão
+//                        que abre modal interno (em vez de link externo).
+//   aoAbrirTermos      — idem pra "Termos de Uso".
+export default function RodapeSite({ aoAbrirPrivacidade, aoAbrirTermos } = {}) {
   const anoAtual = new Date().getFullYear();
   const anos = INFO.anoInicio && INFO.anoInicio < anoAtual
     ? `${INFO.anoInicio} - ${anoAtual}`
     : `${anoAtual}`;
 
   const quemSomos = QUEM_SOMOS.trim();
+  // Items podem ter `href` (link externo) OU `onClick` (callback pra modal interno).
+  // Privacidade/Termos preferem callback se disponível (sempre habilitados quando
+  // a página passa o handler — não dependem mais do INFO.*Url estar preenchido).
   const links = [
     INFO.instagram && { href: INFO.instagram, externo: true, icone: <IconeInstagram />, label: 'Siga no Instagram' },
     INFO.facebook && { href: INFO.facebook, externo: true, icone: <IconeFacebook />, label: 'Siga no Facebook' },
     INFO.whatsapp && { href: INFO.whatsapp, externo: true, icone: <IconeWhatsapp />, label: 'Chame no Whatsapp' },
-    INFO.termosUrl && { href: INFO.termosUrl, label: 'Termos de Uso' },
-    INFO.privacidadeUrl && { href: INFO.privacidadeUrl, label: 'Política de Privacidade' },
+    (aoAbrirTermos || INFO.termosUrl) && {
+      href: aoAbrirTermos ? null : INFO.termosUrl,
+      onClick: aoAbrirTermos,
+      label: 'Termos de Uso',
+    },
+    (aoAbrirPrivacidade || INFO.privacidadeUrl) && {
+      href: aoAbrirPrivacidade ? null : INFO.privacidadeUrl,
+      onClick: aoAbrirPrivacidade,
+      label: 'Política de Privacidade',
+    },
     INFO.anuncieUrl && { href: INFO.anuncieUrl, label: 'Quer Anunciar?' },
   ].filter(Boolean);
 
@@ -72,13 +87,24 @@ export default function RodapeSite() {
       {links.length > 0 && (
         <div className="rs-links">
           {links.map((l, i) => (
-            <a
-              key={i}
-              href={l.href}
-              {...(l.externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            >
-              {l.icone}{l.icone ? ' ' : ''}{l.label}
-            </a>
+            l.onClick ? (
+              <button
+                key={i}
+                type="button"
+                className="rs-link-btn"
+                onClick={l.onClick}
+              >
+                {l.icone}{l.icone ? ' ' : ''}{l.label}
+              </button>
+            ) : (
+              <a
+                key={i}
+                href={l.href}
+                {...(l.externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
+                {l.icone}{l.icone ? ' ' : ''}{l.label}
+              </a>
+            )
           ))}
         </div>
       )}
