@@ -58,18 +58,47 @@ function ctx(req) {
   };
 }
 
-// Cookie options (httpOnly = inacessível ao JS — proteção contra XSS roubo de token)
+// Cookie options (httpOnly = inacessível ao JS — proteção contra XSS roubo de token).
 // secure: ON em produção OU quando SECURE_COOKIES=true explicitamente (ex: dev sob HTTPS).
+//
+// domain: configurado via COOKIE_DOMAIN env (em prod: ".promopage.com.br" pra que o
+// cookie seja válido em TODOS os subdomínios — promopage.com.br + videos.promopage.com.br).
+// Em dev (localhost) deixa undefined porque "domain=.localhost" não funciona consistente
+// entre browsers; cada porta vira um "site" separado e o user precisa logar nos 2.
 function cookieOptions(diasExpira) {
   const secure = process.env.NODE_ENV === 'production'
     || process.env.SECURE_COOKIES === 'true';
-  return {
+  const opts = {
     httpOnly: true,
     secure,
     sameSite: 'lax',
     maxAge: diasExpira * 24 * 60 * 60 * 1000,
     path: '/',
   };
+  if (process.env.COOKIE_DOMAIN) {
+    opts.domain = process.env.COOKIE_DOMAIN;
+  }
+  return opts;
+}
+
+// Helper pra setar ACCESS_TOKEN como cookie httpOnly também. Antes o access ia
+// só no body (frontend guardava no localStorage). Agora vai TAMBÉM no cookie
+// pra que requests cross-subdomain (videos.promopage.com.br) funcionem sem
+// passar token via header (que exige proxy ou logic extra).
+// Mantemos o body também — compat retroativa com frontend que ainda usa Bearer.
+function setarCookiesAuth(res, accessToken, refreshToken) {
+  // Access token: vida curta (15 min default no service)
+  res.cookie('access_token', accessToken, cookieOptions(1));     // 1 dia (cap de segurança)
+  // Refresh token: vida longa (30 dias)
+  res.cookie('refresh_token', refreshToken, cookieOptions(30));
+}
+
+function limparCookiesAuth(res) {
+  // clearCookie precisa do mesmo path + domain pra funcionar de verdade
+  const clearOpts = { path: '/' };
+  if (process.env.COOKIE_DOMAIN) clearOpts.domain = process.env.COOKIE_DOMAIN;
+  res.clearCookie('access_token', clearOpts);
+  res.clearCookie('refresh_token', clearOpts);
 }
 
 // === Endpoints ===
@@ -85,7 +114,7 @@ router.post('/signup', async (req, res) => {
     const { accessToken, refreshToken } = await service.login(
       { email: parse.data.email, senha: parse.data.senha }, ctx(req)
     );
-    res.cookie('refresh_token', refreshToken, cookieOptions(30));
+    setarCookiesAuth(res, accessToken, refreshToken);
     res.json({ user, accessToken });
   } catch (e) {
     res.status(400).json({ error: e.message });
@@ -97,7 +126,7 @@ router.post('/login', async (req, res) => {
   if (!parse.success) return res.status(400).json({ error: 'Email ou senha inválidos' });
   try {
     const { user, accessToken, refreshToken } = await service.login(parse.data, ctx(req));
-    res.cookie('refresh_token', refreshToken, cookieOptions(30));
+    setarCookiesAuth(res, accessToken, refreshToken);
     res.json({ user, accessToken });
   } catch (e) {
     res.status(401).json({ error: e.message });
@@ -109,10 +138,10 @@ router.post('/refresh', async (req, res) => {
   if (!refreshToken) return res.status(401).json({ error: 'Refresh token ausente' });
   try {
     const { user, accessToken, refreshToken: novoRefresh } = await service.refresh(refreshToken, ctx(req));
-    res.cookie('refresh_token', novoRefresh, cookieOptions(30));
+    setarCookiesAuth(res, accessToken, novoRefresh);
     res.json({ user, accessToken });
   } catch (e) {
-    res.clearCookie('refresh_token');
+    limparCookiesAuth(res);
     res.status(401).json({ error: e.message });
   }
 });
@@ -120,7 +149,7 @@ router.post('/refresh', async (req, res) => {
 router.post('/logout', (req, res) => {
   const refreshToken = req.cookies?.refresh_token || req.body?.refreshToken;
   service.logout({ refreshToken });
-  res.clearCookie('refresh_token');
+  limparCookiesAuth(res);
   res.json({ ok: true });
 });
 

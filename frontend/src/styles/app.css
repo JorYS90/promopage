@@ -125,6 +125,66 @@ button { font-family: inherit; }
 
 /* (Mantido pra compat. retroativa caso algo ainda use .brand-logo — fica invisível por padrão) */
 .brand-logo { display: none; }
+
+/* ===== Logos lado a lado (PromoPage + PromoVideo) =====
+   Container que agrupa as 2 logos com um divisor sutil entre elas.
+   No mobile pode mostrar só a logo do app atual pra economizar espaço. */
+.topbar-logos {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.topbar-logo-divisor {
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(180deg, transparent, rgba(148,163,184,0.30), transparent);
+  margin: 0 4px;
+}
+@media (max-width: 640px) {
+  /* Mobile: oculta o divisor + a 2ª logo (PromoVideo). Acesso ao PromoVideo
+     no mobile deve vir por outro lugar (ex: link no menu hamburger). */
+  .topbar-logo-divisor,
+  .topbar-logos .logo-promovideo { display: none; }
+}
+
+/* Logo PromoVideo — estilo paralelo ao .logo-promopage, mas com glow azul
+   ESCURO (combina com o gradiente teal/blue do PNG do PromoVideo). */
+.logo-promovideo {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+.logo-promovideo-btn {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  margin: 0;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s, transform 0.1s;
+  text-decoration: none;
+}
+.logo-promovideo-btn:hover {
+  background: rgba(20,184,166,0.10);
+}
+.logo-promovideo-btn:active {
+  transform: translateY(1px);
+}
+.logo-promovideo-btn:focus-visible {
+  outline: 2px solid rgba(20,184,166,0.55);
+  outline-offset: 2px;
+}
+.logo-promovideo-img {
+  display: block;
+  flex-shrink: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(20,184,166,0.30));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.logo-promovideo:hover .logo-promovideo-img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 14px rgba(20,184,166,0.55));
+}
 .topbar-menu {
   display: flex; gap: 8px; align-items: center;
   font-size: 12.5px; color: #94a3b8;
