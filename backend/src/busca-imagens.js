@@ -502,6 +502,16 @@ const STOP_WORDS_REL = new Set([
   'ml', 'l', 'lt', 'litro', 'litros', 'g', 'gr', 'gramas', 'kg', 'kgs',
   'un', 'und', 'unid', 'unidade', 'cx', 'caixa', 'pct', 'pacote',
 ]);
+// Tokens que indicam que a imagem é THUMB de vídeo / post social / outro
+// conteúdo que provavelmente NÃO é a foto limpa do produto. Cada um penaliza
+// em -15 (sobrepõe o +25 de quase-match de relevância, mas pode ser superado
+// por match perfeito +50).
+const TOKENS_RUIM = new Set([
+  'youtube', 'video', 'videos', 'reels', 'reel', 'shorts', 'short', 'tiktok',
+  'instagram', 'facebook', 'twitter', 'pinterest', 'thumbnail', 'thumb',
+  'pride', 'celebration', 'parade',  // bugs reais: query "linguiça" devolvia "pride parade"
+]);
+
 // Tokeniza nome/título removendo acentos, pontuação e stop words.
 // Garante match mesmo se usuário digita "Linguiça Calabresa" e título tem "linguica-calabresa-450g".
 function tokenizar(s) {
@@ -514,6 +524,23 @@ function tokenizar(s) {
     .filter(w => w.length >= 2 && !STOP_WORDS_REL.has(w));
 }
 
+// Extrai tokens do PATH/FILENAME da URL — pega palavras de slugs estilo
+// "/produtos/linguica-seara-toscana-500g.jpg" que NEM sempre aparecem no
+// title da imagem. Sinal muito forte de relevância pra URLs de varejo.
+function tokenizarUrl(url) {
+  if (!url) return [];
+  try {
+    const u = new URL(url);
+    // Pega pathname + última parte (filename antes da extensão)
+    const path = decodeURIComponent(u.pathname);
+    // Remove extensão de imagem comum
+    const limpo = path.replace(/\.(jpg|jpeg|png|webp|gif|avif|bmp)$/i, '');
+    return tokenizar(limpo);
+  } catch {
+    return [];
+  }
+}
+
 // Pontua quão bem o TÍTULO da imagem bate com a QUERY do usuário.
 // CRÍTICO pra evitar bugs tipo: query "Linguiça Seara" devolvendo Pizza Seara
 // como 1ª opção (ambos têm "Seara" mas só a Pizza tem essa palavra dominante).
@@ -523,17 +550,59 @@ function tokenizar(s) {
 //   +25  todas menos uma (ex: query 3 palavras, título tem 2)
 //   +10  por palavra da query encontrada (parcial — ranking sub-fino)
 //   +0   nenhuma palavra bate (raro — pode ser resultado tangencial)
+//   -15  por TOKEN_RUIM presente (youtube, video, instagram, etc — thumbs/social)
 function pontuarRelevancia(titulo, queryTokens) {
   if (!titulo || !queryTokens?.length) return 0;
-  const tituloTokens = new Set(tokenizar(titulo));
+  const tituloTokensArr = tokenizar(titulo);
+  const tituloTokens = new Set(tituloTokensArr);
   let hits = 0;
   for (const qt of queryTokens) {
     if (tituloTokens.has(qt)) hits++;
   }
+  // Penalidade: cada token ruim no título tira pontos
+  let penalidade = 0;
+  for (const tt of tituloTokensArr) {
+    if (TOKENS_RUIM.has(tt)) penalidade -= 15;
+  }
+  let base;
+  if (hits === 0) base = 0;
+  else if (hits === queryTokens.length) base = 50;                                  // match perfeito
+  else if (hits === queryTokens.length - 1 && queryTokens.length >= 2) base = 25;   // quase perfeito
+  else base = hits * 10;                                                            // parcial
+  return base + penalidade;
+}
+
+// Pontua relevância pela URL/slug (sinal complementar — URLs de CDN de varejo
+// costumam ter nome do produto no path). Score menor que título mas não-zero
+// pra desempate fino. Escala:
+//   +30  match perfeito no slug
+//   +15  quase perfeito
+//   +5   por palavra encontrada (parcial)
+function pontuarRelevanciaUrl(url, queryTokens) {
+  if (!url || !queryTokens?.length) return 0;
+  const urlTokens = new Set(tokenizarUrl(url));
+  if (urlTokens.size === 0) return 0;
+  let hits = 0;
+  for (const qt of queryTokens) {
+    if (urlTokens.has(qt)) hits++;
+  }
   if (hits === 0) return 0;
-  if (hits === queryTokens.length) return 50;                   // match perfeito
-  if (hits === queryTokens.length - 1 && queryTokens.length >= 2) return 25;  // quase perfeito
-  return hits * 10;                                             // parcial
+  if (hits === queryTokens.length) return 30;
+  if (hits === queryTokens.length - 1 && queryTokens.length >= 2) return 15;
+  return hits * 5;
+}
+
+// Bônus por FONTE da imagem (independente do domínio em si).
+// OpenFoodFacts: catálogo verificado de produtos alimentícios — extremamente
+// confiável quando devolve. Google CSE: resultado curado pelo motor da Google,
+// mais qualificado que Bing geral.
+function bonusFonte(fonte) {
+  if (!fonte) return 0;
+  const f = String(fonte).toLowerCase();
+  if (f === 'openfoodfacts' || f === 'off') return 15;
+  if (f === 'cse' || f === 'google_cse') return 5;
+  if (f === 'wikimedia') return 2;
+  return 0;
 }
 
 // (exportados no module.exports final lá embaixo)
@@ -773,4 +842,4 @@ function gerarPlaceholderSVG(nome, paleta = 'vermelho') {
   </svg>`;
 }
 
-module.exports = { buscarBingImages, buscarGoogleImages, buscarOpenFoodFacts, buscarYandexImages, buscarDuckDuckGo, buscarWikimedia, buscarGoogleCSE, statsCSE, downloadImagem, gerarPlaceholderUrl, gerarPlaceholderSVG, validarUrlImagem, primeiraUrlValida, pontuarFonte, tokenizar, pontuarRelevancia };
+module.exports = { buscarBingImages, buscarGoogleImages, buscarOpenFoodFacts, buscarYandexImages, buscarDuckDuckGo, buscarWikimedia, buscarGoogleCSE, statsCSE, downloadImagem, gerarPlaceholderUrl, gerarPlaceholderSVG, validarUrlImagem, primeiraUrlValida, pontuarFonte, tokenizar, tokenizarUrl, pontuarRelevancia, pontuarRelevanciaUrl, bonusFonte };
