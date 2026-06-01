@@ -418,30 +418,49 @@ app.post('/api/produtos/buscar-lote', requireAuth, async (req, res) => {
     // (ex: "Saches Heinz" sozinho retorna paleontologia; com contexto retorna o produto)
     const queryWeb = `${nomeDigitado} produto supermercado`;
 
-    // 3) Bing Images — única fonte de web scraping consistente em 2026.
-    //    Filtra por relevância no título antes de validar URL (sem isso vinha lixo
-    //    tipo ícone de arquivo pra "FILE PEITO").
+    // Helper: aplica novo ranking (título + URL + fonte + domínio) e retorna
+    // o melhor candidato com score >= 1 (positivo). Replica a lógica do
+    // /api/produtos/buscar-imagens. SEM isso, /buscar-lote ainda usava o
+    // filtro antigo externoRelevante, deixando Pizza Seara passar pra
+    // queries como "Linguiça Seara" (bug reportado em prod).
+    const queryTokens = tokenizar(nomeDigitado);
+    const rankearPegarMelhor = (candidatos, fonteNome) => {
+      const ranked = candidatos
+        .filter(c => c.imagem && !moderacao.imagemProibida(c.imagem, c.nome))
+        .map(c => ({
+          c,
+          score: pontuarFonte(c.imagem) + pontuarRelevancia(c.nome, queryTokens)
+               + pontuarRelevanciaUrl(c.imagem, queryTokens) + bonusFonte(fonteNome),
+        }))
+        .filter(({ score }) => score >= 1)
+        .sort((a, b) => b.score - a.score);
+      return ranked[0]?.c || null;
+    };
+
+    // 3) Bing Images — agora com ranking novo (não só externoRelevante).
     if (!imagemEncontrada) {
       try {
         const bing = await buscarBingImages(queryWeb, 12);
-        const relevantes = bing.filter(r => externoRelevante(nomeDigitado, r));
-        const valido = await primeiraUrlValida(relevantes, 5);
-        if (valido && valido.imagem) {
-          imagemEncontrada = valido.imagem;
-          fonte = 'bing';
+        const melhor = rankearPegarMelhor(bing, 'bing');
+        if (melhor) {
+          // Valida que URL responde (200) antes de aceitar
+          const valido = await primeiraUrlValida([melhor], 1);
+          if (valido?.imagem) {
+            imagemEncontrada = valido.imagem;
+            fonte = 'bing';
+          }
         }
       } catch (e) { /* segue */ }
     }
 
     // 4) Open Food Facts — produtos BR cadastrados (com código de barras).
-    //    Cobertura BR razoável pra alimentos industrializados.
     if (!imagemEncontrada) {
       try {
         const externos = await buscarOpenFoodFacts(nomeDigitado, 5);
-        const candidato = externos.find(p => externoRelevante(nomeDigitado, p));
-        if (candidato && candidato.imagem) {
-          imagemEncontrada = candidato.imagem;
-          codigoBarras = candidato.codigoBarras || '';
+        const melhor = rankearPegarMelhor(externos, 'openfoodfacts');
+        if (melhor) {
+          imagemEncontrada = melhor.imagem;
+          codigoBarras = melhor.codigoBarras || '';
           fonte = 'openfoodfacts';
         }
       } catch (e) { /* segue */ }
