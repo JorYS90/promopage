@@ -631,7 +631,10 @@ app.get('/api/produtos/buscar-imagens', async (req, res) => {
     }
     // Ordena por score desc
     todasComScore.sort((a, b) => b.score - a.score);
-    const todas = todasComScore.slice(0, limite).map(({ score, _debug, ...resto }) => resto);
+    // PRESERVA score no response — frontend usa pra threshold de auto-pick
+    // (ex: buscarFotosLote do PromoVideo só aplica auto se score >= 10).
+    // _debug fica só pra inspeção (removido). score visível como propriedade.
+    const todas = todasComScore.slice(0, limite).map(({ _debug, ...resto }) => resto);
 
     res.json({ imagens: todas, total: todas.length });
   } catch (e) {

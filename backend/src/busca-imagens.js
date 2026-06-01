@@ -502,14 +502,29 @@ const STOP_WORDS_REL = new Set([
   'ml', 'l', 'lt', 'litro', 'litros', 'g', 'gr', 'gramas', 'kg', 'kgs',
   'un', 'und', 'unid', 'unidade', 'cx', 'caixa', 'pct', 'pacote',
 ]);
-// Tokens que indicam que a imagem é THUMB de vídeo / post social / outro
-// conteúdo que provavelmente NÃO é a foto limpa do produto. Cada um penaliza
-// em -15 (sobrepõe o +25 de quase-match de relevância, mas pode ser superado
-// por match perfeito +50).
+// Tokens que indicam que a imagem é THUMB de vídeo / post social / artigo /
+// foto institucional — qualquer coisa que NÃO seja foto limpa do produto.
+// Cada token penaliza -15. Múltiplos somam (foto com 3 tokens ruins = -45).
+// Lista derivada de bugs reais reportados: "Pride Parade" pra Linguiça,
+// "Meio Ambiente Ipea" pra "Meio da Asa", "Pontiac Michigan" pra Pizza, etc.
 const TOKENS_RUIM = new Set([
+  // Plataformas de vídeo / social
   'youtube', 'video', 'videos', 'reels', 'reel', 'shorts', 'short', 'tiktok',
   'instagram', 'facebook', 'twitter', 'pinterest', 'thumbnail', 'thumb',
-  'pride', 'celebration', 'parade',  // bugs reais: query "linguiça" devolvia "pride parade"
+  // Tópicos institucionais / governamentais (Wikimedia + Bing servem MUITO disso)
+  'ambiente', 'seminario', 'seminario', 'agenda', 'ipea', 'wikipedia', 'wikimedia',
+  'congresso', 'conferencia', 'palestra', 'evento', 'reuniao', 'institucional',
+  // Lugares geográficos (Wikipedia/Bing devolvem cidades aleatórias)
+  'michigan', 'pontiac', 'kodiak', 'naval', 'munich', 'brighton', 'russian',
+  'airlines', 'wikipedia', 'wiki',
+  // Eventos / celebrações (vinham nas buscas de produtos alimentícios)
+  'pride', 'celebration', 'parade', 'screenshot', 'screenshots', 'bambi',
+  // Religioso / inspiracional
+  'psalms', 'pray', 'healing', 'jesus',
+  // Conceitual / abstrato (gera "vislumbre colorido", "dia cinzento", etc)
+  'vislumbre', 'colorido', 'cinzento', 'inspiring', 'powerful',
+  // Roupas / acessórios (off-topic pra alimento)
+  'camiseta', 'shirt', 'algodon', 'cowboy', 'vaquero',
 ]);
 
 // Tokeniza nome/título removendo acentos, pontuação e stop words.
