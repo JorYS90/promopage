@@ -494,6 +494,50 @@ function pontuarFonte(url) {
   return 1; // default neutro
 }
 
+// Stop words que aparecem em queries mas não devem contar (sem informação).
+// "de", "da", "do", "ml", "kg", "un", "litro" — palavras comuns ou unidades.
+const STOP_WORDS_REL = new Set([
+  'de', 'do', 'da', 'dos', 'das', 'a', 'o', 'as', 'os', 'em', 'no', 'na',
+  'com', 'sem', 'e', 'ou', 'para', 'por', 'um', 'uma',
+  'ml', 'l', 'lt', 'litro', 'litros', 'g', 'gr', 'gramas', 'kg', 'kgs',
+  'un', 'und', 'unid', 'unidade', 'cx', 'caixa', 'pct', 'pacote',
+]);
+// Tokeniza nome/título removendo acentos, pontuação e stop words.
+// Garante match mesmo se usuário digita "Linguiça Calabresa" e título tem "linguica-calabresa-450g".
+function tokenizar(s) {
+  if (!s) return [];
+  return s
+    .toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')  // remove acentos
+    .replace(/[^a-z0-9\s]/g, ' ')                      // pontuação → espaço
+    .split(/\s+/)
+    .filter(w => w.length >= 2 && !STOP_WORDS_REL.has(w));
+}
+
+// Pontua quão bem o TÍTULO da imagem bate com a QUERY do usuário.
+// CRÍTICO pra evitar bugs tipo: query "Linguiça Seara" devolvendo Pizza Seara
+// como 1ª opção (ambos têm "Seara" mas só a Pizza tem essa palavra dominante).
+//
+// Escala:
+//   +50  todas as palavras da query estão no título (match completo)
+//   +25  todas menos uma (ex: query 3 palavras, título tem 2)
+//   +10  por palavra da query encontrada (parcial — ranking sub-fino)
+//   +0   nenhuma palavra bate (raro — pode ser resultado tangencial)
+function pontuarRelevancia(titulo, queryTokens) {
+  if (!titulo || !queryTokens?.length) return 0;
+  const tituloTokens = new Set(tokenizar(titulo));
+  let hits = 0;
+  for (const qt of queryTokens) {
+    if (tituloTokens.has(qt)) hits++;
+  }
+  if (hits === 0) return 0;
+  if (hits === queryTokens.length) return 50;                   // match perfeito
+  if (hits === queryTokens.length - 1 && queryTokens.length >= 2) return 25;  // quase perfeito
+  return hits * 10;                                             // parcial
+}
+
+// (exportados no module.exports final lá embaixo)
+
 // Cache em memória de buscas Yandex/Bing/etc — TTL 5 minutos.
 // Evita repetir a mesma chamada externa quando o usuário pesquisa o mesmo termo
 // várias vezes (ex: digitando lista, usando modal de troca, recarregando).
@@ -729,4 +773,4 @@ function gerarPlaceholderSVG(nome, paleta = 'vermelho') {
   </svg>`;
 }
 
-module.exports = { buscarBingImages, buscarGoogleImages, buscarOpenFoodFacts, buscarYandexImages, buscarDuckDuckGo, buscarWikimedia, buscarGoogleCSE, statsCSE, downloadImagem, gerarPlaceholderUrl, gerarPlaceholderSVG, validarUrlImagem, primeiraUrlValida, pontuarFonte };
+module.exports = { buscarBingImages, buscarGoogleImages, buscarOpenFoodFacts, buscarYandexImages, buscarDuckDuckGo, buscarWikimedia, buscarGoogleCSE, statsCSE, downloadImagem, gerarPlaceholderUrl, gerarPlaceholderSVG, validarUrlImagem, primeiraUrlValida, pontuarFonte, tokenizar, pontuarRelevancia };

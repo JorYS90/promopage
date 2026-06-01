@@ -28,7 +28,7 @@ const authRoutes = require('./auth/routes');
 const usersRoutes = require('./auth/users-routes');
 const adminRoutes = require('./admin/routes');
 const { requireAuth, requireRole, optionalAuth } = require('./auth/middleware');
-const { buscarBingImages, buscarGoogleImages, buscarOpenFoodFacts, buscarYandexImages, buscarDuckDuckGo, buscarWikimedia, buscarGoogleCSE, statsCSE, downloadImagem, gerarPlaceholderUrl, gerarPlaceholderSVG, primeiraUrlValida, pontuarFonte } = require('./busca-imagens');
+const { buscarBingImages, buscarGoogleImages, buscarOpenFoodFacts, buscarYandexImages, buscarDuckDuckGo, buscarWikimedia, buscarGoogleCSE, statsCSE, downloadImagem, gerarPlaceholderUrl, gerarPlaceholderSVG, primeiraUrlValida, pontuarFonte, tokenizar, pontuarRelevancia } = require('./busca-imagens');
 const seedProdutos = require('./seed-produtos');
 const seedImagensPopulares = require('./seed-imagens-populares');
 const cacheImagens = require('./db/cache-imagens');
@@ -596,7 +596,15 @@ app.get('/api/produtos/buscar-imagens', async (req, res) => {
     const wmCount = resultadosBrutos[queries.length + 1].length;
     console.log(`[buscar-imagens] q="${query}" (${queries.length} variações) → bing:${bingCount} off:${offCount} wm:${wmCount}`);
 
-    // Achata + dedup + pontua por confiabilidade do domínio.
+    // Achata + dedup + pontua por DOIS critérios combinados:
+    //   1. RELEVÂNCIA do título vs query do usuário (peso maior — 50pts match perfeito)
+    //   2. CONFIABILIDADE do domínio (CDN varejo > genérico > redes sociais)
+    //
+    // BUG-FIX (relatado pelo user): buscar "Linguiça Seara" devolvia Pizza Seara
+    // como 1ª opção. Causa: ambos no mesmo CDN (+10 score) e Bing devolvia pizza
+    // primeiro por popularidade. Agora "Linguiça Seara" no título dá +50 vs +0
+    // pra Pizza, então linguiça ganha por relevância semântica.
+    const queryTokens = tokenizar(query);
     const vistos = new Set();
     const todasComScore = [];
     for (const lista of resultadosBrutos) {
@@ -606,18 +614,21 @@ app.get('/api/produtos/buscar-imagens', async (req, res) => {
         // escapado dos filtros das fontes (domínio/termo explícito).
         if (moderacao.imagemProibida(item.imagem, item.nome)) continue;
         vistos.add(item.imagem);
+        const scoreFonte = pontuarFonte(item.imagem);
+        const scoreRel = pontuarRelevancia(item.nome, queryTokens);
         todasComScore.push({
           url: item.imagem,
           fonte: item.fonte || 'externo',
           titulo: item.nome,
-          score: pontuarFonte(item.imagem),
+          score: scoreFonte + scoreRel,
+          _scoreFonte: scoreFonte,   // debug — removido antes do response
+          _scoreRel: scoreRel,
         });
       }
     }
-    // Ordena por score desc — domínios de varejo (vtexassets, mlstatic) primeiro,
-    // genéricos no meio, redes sociais por último
+    // Ordena por score desc — relevância de título + confiabilidade do domínio
     todasComScore.sort((a, b) => b.score - a.score);
-    const todas = todasComScore.slice(0, limite).map(({ score, ...resto }) => resto);
+    const todas = todasComScore.slice(0, limite).map(({ score, _scoreFonte, _scoreRel, ...resto }) => resto);
 
     res.json({ imagens: todas, total: todas.length });
   } catch (e) {
