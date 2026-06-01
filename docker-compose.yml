@@ -104,10 +104,20 @@ services:
     environment:
       NODE_ENV: production
       PORT: 4020
+      # URL pública DO PRÓPRIO PromoVideo — usada pra montar URLs absolutas dos
+      # uploads (temas, logos, produtos). Sem isso, sai como "http://localhost:4020/..."
+      # que NÃO funciona no browser do user.
+      PUBLIC_BASE_URL: https://videos.promopage.com.br
+      # URL INTERNA do backend PromoPage — videos-api chama /api/auth/me pra
+      # validar cookie e descobrir quem é o user logado. Usa nome do serviço
+      # Docker (api:4010) — rede interna, sem passar por internet/Caddy.
+      PROMOPAGE_AUTH_URL: http://api:4010
     volumes:
       - videos_uploads:/app/backend/uploads
       - videos_out:/app/backend/out             # vídeos MP4 renderizados
       - videos_data:/app/backend/data           # JSON dos temas/jobs
+    depends_on:
+      - api
     # Sem expose externo — só acessível via videos-web (nginx faz proxy interno)
     expose:
       - "4020"
