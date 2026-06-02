@@ -868,7 +868,7 @@ export const LAYOUTS_NOMEADOS = [
         multNome: 3.05,        // 2.77 + 10%
         multFoto: 0.97,        // Pedido do cliente: foto +5% e +5% (0.88 → 0.97) — ainda < 1.0, não estoura o card
         fotoPosY: 0.60,        // Pedido do cliente: foto um pouco mais pra baixo (centraliza melhor no card)
-        nomeOffsetTop: 0.40,   // subiu de 0.60 → 0.40 (nome mais pra cima)
+        nomeOffsetTop: 0.15,   // 0.40 → 0.15 (pedido cliente: subir nome mais perto do topo)
         balaoOffsetY: 0.05,    // Pedido do cliente: balão de preço mais alto
       },
       REELS_INSTAGRAM: {
