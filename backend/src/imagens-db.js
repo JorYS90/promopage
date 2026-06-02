@@ -98,10 +98,20 @@ function normalizarChave(nome) {
 //   - peso 20: upload sem metadata
 //   - peso 25+: upload com metadata (sinal mais forte)
 //
-// Pesos >= 20 ATIVAM "fresh-start mode": a nova imagem garantidamente vira o TOP
-// do ranking, ignorando histórico. Sem isso, uploads novos competem contra
-// imagens com centenas de usos acumulados em sessões anteriores e nunca vencem
-// (UX confusa: "subi minha foto mas o sistema continua mostrando a velha").
+// Pesos >= 10 ATIVAM "fresh-start mode": a nova imagem garantidamente vira o TOP
+// do ranking, ignorando histórico de auto-pick (peso 1) acumulado.
+// Sem isso, escolhas explícitas do user competem contra centenas de usos de
+// auto-pick errado e nunca vencem (UX confusa: "escolhi essa foto 5x mas o
+// sistema continua sugerindo a outra que veio errada do Bing há meses").
+//
+// Pesos:
+//   1  - auto-pick (encarte salvo, escolha automática)
+//   10 - escolha explícita no modal (✓ USAR) → vira TOP com margem PEQUENA (+5)
+//   20 - upload manual do PC (📤 Subir foto minha) → vira TOP com margem GRANDE (+10)
+//
+// Margem diferente entre peso 10 e 20 protege uploads contra "guerra de cliques"
+// (10 escolhas seguidas vão sempre se sobrepor, mas upload manual fica mais
+// estável no topo).
 function registrarUso(nome, url, peso = 1) {
   if (!nome || !url) return;
   const chave = normalizarChave(nome);
@@ -110,21 +120,19 @@ function registrarUso(nome, url, peso = 1) {
   if (!db[chave]) db[chave] = [];
   const agora = new Date().toISOString();
 
-  // Upload manual (peso >= 20): garante que essa URL vire TOP do ranking.
-  // Calcula o usos MÁXIMO atual entre as OUTRAS imagens e dá um boost
-  // proporcional pra essa. Preserva histórico (não zera os outros).
+  // Boost pra virar TOP: peso >= 10 (escolha do user, não auto-pick).
+  // Calcula o usos MÁXIMO atual entre as OUTRAS imagens. Preserva histórico.
   let pesoEfetivo = peso;
-  if (peso >= 20) {
+  if (peso >= 10) {
     const existente = db[chave].find(e => e.url === url);
     const usosAtuais = existente?.usos || 0;
     const maxOutros = db[chave]
       .filter(e => e.url !== url)
       .reduce((m, e) => Math.max(m, e.usos || 0), 0);
-    // Pra ficar acima do máximo dos outros: precisa de (maxOutros + 10) total.
-    // Como vamos somar pesoEfetivo nos usosAtuais, precisamos:
-    //   usosAtuais + pesoEfetivo >= maxOutros + 10
-    //   pesoEfetivo >= maxOutros + 10 - usosAtuais
-    const pesoMinimo = Math.max(peso, maxOutros + 10 - usosAtuais);
+    // Margem: upload (peso 20) = +10 confortável. Escolha (peso 10) = +5 (vence
+    // mas não com tanta folga, dando chance de outra escolha sobrepor depois).
+    const margem = peso >= 20 ? 10 : 5;
+    const pesoMinimo = Math.max(peso, maxOutros + margem - usosAtuais);
     pesoEfetivo = pesoMinimo;
   }
 
