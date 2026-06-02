@@ -6397,15 +6397,13 @@ export async function renderizarEncarte(canvas, { tema, produtos, configs, empre
 
 export function exportarPNG(canvas) {
   // BUG-FIX (mobile baixa qualidade): App.jsx aplica zoom de preview via setWidth/
-  // setHeight, que REDUZ a dimensão interna do canvas pra caber na tela. No mobile
-  // (tela ~412px), zoom fica ~0.38 e o canvas STORIES vira 412×734 pixels (em vez
-  // de 1080×1920). Sem compensação, multiplier 2 dava só 824×1468 no PDF.
+  // setHeight. multiplier = 2 / zoom mantém o export em 2× resolução NATIVA.
   //
-  // multiplier = 2 / zoom mantém o export SEMPRE em 2x da resolução NATIVA do
-  // modelo (ex: STORIES → 2160×3840), independente do zoom de preview atual.
-  // No desktop com zoom 1.0, multiplier = 2 (sem mudança). No mobile com zoom 0.38,
-  // multiplier = 5.26 → recupera a alta resolução.
+  // CAP em 8: se zoom muito baixo (tela pequena + canvas grande tipo TV_VERTICAL),
+  // multiplier pode passar de 13× → fabric.js tenta alocar canvas gigante na
+  // memória do browser → falha silenciosa OU SecurityError no toDataURL.
+  // Cap em 8× = output máximo 8× do canvas atual (~64MB de pixels — seguro).
   const zoom = canvas.getZoom() || 1;
-  const multiplier = 2 / zoom;
+  const multiplier = Math.min(8, 2 / zoom);
   return canvas.toDataURL({ format: 'png', quality: 1, multiplier });
 }

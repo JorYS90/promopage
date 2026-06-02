@@ -726,21 +726,56 @@ export default function App() {
   };
 
   const exportarPng = () => {
-    const dataUrl = exportarPNG(canvasFabric);
-    const a = document.createElement('a');
-    a.href = dataUrl; a.download = `${nomeProjeto || 'encarte'}.png`; a.click();
+    try {
+      if (!canvasFabric) { alert('Aguarde o encarte carregar.'); return; }
+      const dataUrl = exportarPNG(canvasFabric);
+      if (!dataUrl || dataUrl.length < 200) {
+        alert('Erro: imagem gerada está vazia. Recarregue a página e tente de novo.');
+        console.error('[exportarPng] dataUrl inválido:', dataUrl?.length || 0, 'bytes');
+        return;
+      }
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = `${nomeProjeto || 'encarte'}.png`;
+      // Adiciona ao body — alguns browsers (especialmente Safari iOS) exigem
+      // o link estar no DOM pra .click() funcionar.
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (e) {
+      console.error('[exportarPng]', e);
+      if (e.name === 'SecurityError') {
+        alert('Erro de segurança: alguma imagem é de outro domínio (CORS). Troque a imagem problemática (click no produto → escolher outra) e tente de novo.');
+      } else {
+        alert('Erro ao baixar PNG: ' + (e.message || e));
+      }
+    }
   };
 
   const exportarPdf = () => {
-    const dataUrl = exportarPNG(canvasFabric);
-    const pdf = new jsPDF({
-      orientation: tamanho.largura > tamanho.altura ? 'landscape' : 'portrait',
-      unit: 'px',
-      format: [tamanho.largura, tamanho.altura],
-      hotfixes: ['px_scaling'],
-    });
-    pdf.addImage(dataUrl, 'PNG', 0, 0, tamanho.largura, tamanho.altura);
-    pdf.save(`${nomeProjeto || 'encarte'}.pdf`);
+    try {
+      if (!canvasFabric) { alert('Aguarde o encarte carregar.'); return; }
+      const dataUrl = exportarPNG(canvasFabric);
+      if (!dataUrl || dataUrl.length < 200) {
+        alert('Erro: imagem gerada está vazia. Recarregue a página e tente de novo.');
+        return;
+      }
+      const pdf = new jsPDF({
+        orientation: tamanho.largura > tamanho.altura ? 'landscape' : 'portrait',
+        unit: 'px',
+        format: [tamanho.largura, tamanho.altura],
+        hotfixes: ['px_scaling'],
+      });
+      pdf.addImage(dataUrl, 'PNG', 0, 0, tamanho.largura, tamanho.altura);
+      pdf.save(`${nomeProjeto || 'encarte'}.pdf`);
+    } catch (e) {
+      console.error('[exportarPdf]', e);
+      if (e.name === 'SecurityError') {
+        alert('Erro de segurança: alguma imagem é de outro domínio (CORS). Troque a imagem problemática e tente de novo.');
+      } else {
+        alert('Erro ao gerar PDF: ' + (e.message || e));
+      }
+    }
   };
 
   return (
