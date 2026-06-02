@@ -147,6 +147,9 @@ function registrarUso(nome, url, peso = 1) {
   db[chave].sort((a, b) => (b.usos || 0) - (a.usos || 0));
   if (db[chave].length > 20) db[chave] = db[chave].slice(0, 20);
   salvar(db);
+  // Invalida cache de "url owners" — próximo imagemMaisPopular vai recalcular
+  // com os novos pesos. Importante pra fix imediato sem esperar TTL de 30s.
+  invalidarCacheOwners();
 }
 
 // Busca imagens populares para um nome, ordenadas por número de usos (mais usado primeiro).
@@ -184,10 +187,62 @@ function buscarPopulares(nome, limite = 12) {
     .slice(0, limite);
 }
 
-// Retorna a imagem MAIS popular pra um nome (atalho usado pelo buscar-lote).
+// Mapeia URL → produto onde ela tem MAIS usos.
+// Usado pra detectar "URL contaminada": mesma URL marcada como popular em
+// produtos diferentes geralmente significa que alguém escolheu errado em UM
+// dos produtos. A URL "pertence" ao produto onde tem mais usos.
+// Cache em memória (TTL 30s) — DB lido várias vezes/seg.
+let _urlOwnersCache = null;
+let _urlOwnersExp = 0;
+function urlOwners() {
+  const agora = Date.now();
+  if (_urlOwnersCache && _urlOwnersExp > agora) return _urlOwnersCache;
+  const db = carregar();
+  const owners = new Map();
+  for (const [chave, imagens] of Object.entries(db)) {
+    for (const img of imagens) {
+      if (!img.url) continue;
+      const usos = img.usos || 0;
+      const atual = owners.get(img.url);
+      if (!atual || usos > atual.usos) {
+        owners.set(img.url, { produto: chave, usos });
+      }
+    }
+  }
+  _urlOwnersCache = owners;
+  _urlOwnersExp = agora + 30_000; // 30s
+  return owners;
+}
+function invalidarCacheOwners() {
+  _urlOwnersCache = null;
+  _urlOwnersExp = 0;
+}
+
+// Retorna a imagem MAIS popular pra um nome. ANTI-CONTAMINAÇÃO: se a top URL
+// pertence a OUTRO produto com >2× mais usos, pula pra próxima — evita
+// 'Pizza Seara' aparecer como popular em 'Linguiça Seara' (caso real reportado).
+//
+// Limiar 2× é seguro: precisa de evidência FORTE de que a URL pertence ao
+// outro produto (não só 'um pouco mais usado lá'). Imagens legitimamente
+// compartilhadas entre produtos (ex: foto genérica de frango pra coxinha E
+// meio da asa) não são afetadas se uso é parecido.
 function imagemMaisPopular(nome) {
-  const populares = buscarPopulares(nome, 1);
-  return populares.length > 0 ? populares[0] : null;
+  const candidatos = buscarPopulares(nome, 5);
+  if (candidatos.length === 0) return null;
+  const chaveBuscada = normalizarChave(nome);
+  const owners = urlOwners();
+  for (const c of candidatos) {
+    const owner = owners.get(c.url);
+    // URL "pertence" a OUTRO produto com >2× mais usos? Pula.
+    if (owner && owner.produto !== chaveBuscada && owner.usos > (c.usos || 0) * 2) {
+      console.log(`[imagens-db] anti-contaminação: pulando ${c.url} (pertence a "${owner.produto}" com ${owner.usos} usos vs ${c.usos} aqui)`);
+      continue;
+    }
+    return c;
+  }
+  // Fallback: se TODAS as candidatas são contaminadas, retorna a top mesmo assim
+  // (melhor mostrar algo que vazio — user pode trocar manualmente).
+  return candidatos[0];
 }
 
 // Retorna estatísticas do banco (útil pra debug)
