@@ -3861,19 +3861,25 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
   }
 
   // ===== R$ + valor + centavos + unidade dentro do tag =====
-  // Usa ajustarPrecoParaTag pra ENCHER o balão respeitando margem (10% horiz / 18% vert).
-  // Antes começava em tagH * 0.55 e capava — agora usa diretamente o tamanho ótimo
-  // que preenche o balão. Resulta em texto bem maior dentro do mesmo balão.
+  // BUG-FIX: ajustarPrecoParaTag calcula a fonte que cabe EXATO no tagW.
+  // Antes multiplicávamos por multValor DEPOIS — jogando 10-20% pra fora.
+  // Visível em "FILÉ MERLUZA R$ 27,90 KG" no g_1x1 (multValor=1.20) onde o
+  // texto estourava a borda direita do balão.
+  // FIX: passa tagW REDUZIDO pra ajustar (tagW / multValor). Aí multiplica
+  // a fonte por multValor e o resultado CABE no balão real.
   const ctxFonteDM = canvas.contextContainer || canvas.lowerCanvasEl?.getContext('2d');
-  const ajusteFonteDM = ajustarPrecoParaTag(tagW, tagH, produto.preco, produto.unidadeAbrev, configs, ctxFonteDM);
-  let fonteValor = (ajusteFonteDM?.fonteValor || tagH * 0.55) * (box.multValor || 1.0);
-  const fonteRS = fonteValor * 0.50;
-  const fonteUnid = fonteValor * 0.32;
+  const multValorDM = box.multValor || 1.0;
+  const tagWParaCalculo = multValorDM > 1.0 ? tagW / multValorDM : tagW;
+  const ajusteFonteDM = ajustarPrecoParaTag(tagWParaCalculo, tagH, produto.preco, produto.unidadeAbrev, configs, ctxFonteDM);
+  let fonteValor = (ajusteFonteDM?.fonteValor || tagH * 0.55) * multValorDM;
+  // let (não const) porque o safety abaixo pode reduzir proporcionalmente
+  let fonteRS = fonteValor * 0.50;
+  let fonteUnid = fonteValor * 0.32;
   const valorTexto = produto.preco || '0,00';
   const [reaisTexto, centavosNum] = valorTexto.split(',');
   const temCentavos = centavosNum !== undefined;
   const centavosTexto = temCentavos ? ',' + centavosNum : '';
-  const fonteCentavos = configs.precoCentavosMesmoTamanho ? fonteValor : fonteValor * 0.65;
+  let fonteCentavos = configs.precoCentavosMesmoTamanho ? fonteValor : fonteValor * 0.65;
   const unidAbrev = (produto.unidadeAbrev || '').toUpperCase();
 
   // Mede com canvas context
@@ -3898,9 +3904,29 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
     }
   } catch {}
 
-  const espacoRsValor = fonteValor * 0.10;
-  const espacoValorUnid = unidAbrev ? fonteValor * 0.06 : 0;
-  const larguraTextoTotal = larguraRs + espacoRsValor + larguraReais + larguraCentavos + espacoValorUnid + larguraUnid;
+  let espacoRsValor = fonteValor * 0.10;
+  let espacoValorUnid = unidAbrev ? fonteValor * 0.06 : 0;
+  let larguraTextoTotal = larguraRs + espacoRsValor + larguraReais + larguraCentavos + espacoValorUnid + larguraUnid;
+
+  // SAFETY FINAL: se ainda estoura (com 4% margem cada lado), encolhe TUDO
+  // proporcional. Protege contra edge cases não cobertos pelo ajustarPrecoParaTag
+  // (ex: unidade muito grande "BANDEJ", multValor extremo, font fallback diferente).
+  const margemSeg = tagW * 0.04;
+  const limiteSegW = tagW - margemSeg * 2;
+  if (larguraTextoTotal > limiteSegW) {
+    const scale = limiteSegW / larguraTextoTotal;
+    fonteValor *= scale;
+    fonteRS *= scale;
+    fonteUnid *= scale;
+    fonteCentavos *= scale;
+    larguraRs *= scale;
+    larguraReais *= scale;
+    larguraCentavos *= scale;
+    larguraUnid *= scale;
+    espacoRsValor *= scale;
+    espacoValorUnid *= scale;
+    larguraTextoTotal *= scale;
+  }
   const startX = tagX + (tagW - larguraTextoTotal) / 2;
   const centroTagY = tagY + tagH / 2;
 
