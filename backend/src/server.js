@@ -84,6 +84,69 @@ app.use(cookieParser());
 app.use(express.json({ limit: '50mb' }));
 app.use('/uploads', express.static(UPLOADS_DIR));
 
+// === Thumbnails sob demanda (cache em disco) ============================
+// Endpoint: /api/thumb?url=/uploads/temas/abc.png&w=300&q=75
+// Resize com sharp + cache em /app/data/thumbs/<hash>.webp.
+// Cache-Control: 30 dias (imagem nunca muda, só varia por query).
+//
+// Resolve PERFORMANCE do painel de temas: antes carregava arquivos originais
+// de 1-2MB cada. Com thumbs 300px WebP @75%, ficam ~15-30KB cada (50x menor).
+const sharp = require('sharp');
+const THUMBS_DIR = path.join(ROOT, 'data', 'thumbs');
+if (!fs.existsSync(THUMBS_DIR)) fs.mkdirSync(THUMBS_DIR, { recursive: true });
+const crypto = require('crypto');
+app.get('/api/thumb', async (req, res) => {
+  try {
+    const url = (req.query.url || '').toString();
+    const w = Math.min(parseInt(req.query.w || '300', 10) || 300, 1200);  // cap 1200px
+    const q = Math.min(parseInt(req.query.q || '75', 10) || 75, 95);
+    if (!url) return res.status(400).json({ error: 'url ausente' });
+
+    // Resolve URL → path local OU URL externa
+    // Aceita: /uploads/temas/X.png (relativo) OU https://.../X.png (externo)
+    let inputBuffer;
+    if (url.startsWith('/uploads/')) {
+      const localPath = path.join(UPLOADS_DIR, url.replace(/^\/uploads\//, ''));
+      // Segurança: não permite path traversal (../)
+      if (!localPath.startsWith(UPLOADS_DIR)) return res.status(400).json({ error: 'path inválido' });
+      if (!fs.existsSync(localPath)) return res.status(404).json({ error: 'imagem não encontrada' });
+      inputBuffer = fs.readFileSync(localPath);
+    } else if (/^https?:\/\//.test(url)) {
+      // URL externa — fetch via HTTP (não cacheia, mais lento)
+      const r = await fetch(url);
+      if (!r.ok) return res.status(404).json({ error: 'imagem externa falhou' });
+      inputBuffer = Buffer.from(await r.arrayBuffer());
+    } else {
+      return res.status(400).json({ error: 'url deve começar com /uploads/ ou http(s)://' });
+    }
+
+    // Cache key: hash da url + dimensões + qualidade
+    const hash = crypto.createHash('sha256').update(`${url}|${w}|${q}`).digest('hex').slice(0, 16);
+    const cachePath = path.join(THUMBS_DIR, `${hash}.webp`);
+
+    let outputBuffer;
+    if (fs.existsSync(cachePath)) {
+      // Cache hit — serve direto (instantâneo)
+      outputBuffer = fs.readFileSync(cachePath);
+    } else {
+      // Resize com sharp: width=w, height=auto, WebP @q quality
+      outputBuffer = await sharp(inputBuffer)
+        .resize({ width: w, withoutEnlargement: true })
+        .webp({ quality: q })
+        .toBuffer();
+      // Salva no cache (best-effort, não bloqueia se falhar)
+      try { fs.writeFileSync(cachePath, outputBuffer); } catch (e) { console.warn('[thumb] cache write falhou:', e.message); }
+    }
+
+    res.set('Cache-Control', 'public, max-age=2592000, immutable');  // 30 dias
+    res.set('Content-Type', 'image/webp');
+    res.send(outputBuffer);
+  } catch (e) {
+    console.error('[thumb] erro:', e.message);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // === Rate limiting ===
 // Limiter GLOBAL: protege o servidor de abuso geral (scraping, ataque DDoS leve).
 const limiterGlobal = rateLimit({

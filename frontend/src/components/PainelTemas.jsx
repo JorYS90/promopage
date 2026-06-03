@@ -259,10 +259,10 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth, ab
         )}
         <div className={`thumb ${usaImagem ? 'com-imagem' : ''}`} style={styleThumb}>
           {usaImagem && (
-            <img className="thumb-fundo" src={imgFundo} alt="" loading="lazy" decoding="async" />
+            <img className="thumb-fundo" src={`/api/thumb?url=${encodeURIComponent(imgFundo)}&w=300&q=70`} alt="" loading="lazy" decoding="async" />
           )}
           {imgTitulo
-            ? <img className="thumb-titulo" src={imgTitulo} alt={t.nome} loading="lazy" decoding="async" />
+            ? <img className="thumb-titulo" src={`/api/thumb?url=${encodeURIComponent(imgTitulo)}&w=300&q=70`} alt={t.nome} loading="lazy" decoding="async" />
             : <span className="thumb-nome">{t.nome.toUpperCase()}</span>
           }
         </div>
@@ -497,10 +497,10 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth, ab
                     )}
                     <div className={`thumb ${usaImagem ? 'com-imagem' : ''}`} style={styleThumb}>
                       {usaImagem && (
-                        <img className="thumb-fundo" src={imgFundo} alt="" loading="lazy" decoding="async" />
+                        <img className="thumb-fundo" src={`/api/thumb?url=${encodeURIComponent(imgFundo)}&w=300&q=70`} alt="" loading="lazy" decoding="async" />
                       )}
                       {imgTitulo
-                        ? <img className="thumb-titulo" src={imgTitulo} alt={t.nome} loading="lazy" decoding="async" />
+                        ? <img className="thumb-titulo" src={`/api/thumb?url=${encodeURIComponent(imgTitulo)}&w=300&q=70`} alt={t.nome} loading="lazy" decoding="async" />
                         : <span className="thumb-nome">{t.nome.toUpperCase()}</span>
                       }
                     </div>
