@@ -21,41 +21,48 @@ export default function Topbar({
         <LogoPromoVideo size={40} />
       </div>
       <div className="topbar-menu">
+        {/* Cada botão tem ícone (::before via CSS em mobile/tablet) e label.
+            Em telas pequenas o texto some e fica só o ícone — todos os botões
+            permanecem acessíveis. data-icon define o emoji pro ::before. */}
         <button
           type="button"
-          className="topbar-neon-btn"
+          className="topbar-neon-btn topbar-btn-campanhas"
           onClick={aoAbrirCampanhas}
           title="Gerenciar minhas campanhas"
           data-tour="campanhas"
+          data-icon="📋"
         >
-          <span>Minhas Campanhas</span>
+          <span className="topbar-btn-label">Minhas Campanhas</span>
           {qtdCampanhas > 0 && <span className="badge">{qtdCampanhas}</span>}
         </button>
         {aoIniciarTour && (
           <button
             type="button"
-            className="topbar-neon-btn topbar-tour-btn"
+            className="topbar-neon-btn topbar-tour-btn topbar-btn-tour"
             onClick={aoIniciarTour}
             title="Tour guiado: aprenda a usar o PromoPage em 2 minutos"
+            data-icon="🎓"
           >
-            <span>🎓 Tour</span>
+            <span className="topbar-btn-label">🎓 Tour</span>
           </button>
         )}
         <button
           type="button"
-          className="topbar-neon-btn"
+          className="topbar-neon-btn topbar-btn-planos"
           onClick={aoAbrirPlanos}
           title="Ver planos e recursos disponíveis"
+          data-icon="💎"
         >
-          <span>Recursos e Planos</span>
+          <span className="topbar-btn-label">Recursos e Planos</span>
         </button>
         <button
           type="button"
-          className="topbar-neon-btn"
+          className="topbar-neon-btn topbar-btn-atendimento"
           onClick={() => { window.location.href = 'mailto:atendimento@promopage.com.br?subject=Contato%20PromoPage'; }}
           title="Fale com a gente: atendimento@promopage.com.br"
+          data-icon="💬"
         >
-          <span>Central de Atendimento</span>
+          <span className="topbar-btn-label">Central de Atendimento</span>
         </button>
       </div>
       <div className="spacer" />

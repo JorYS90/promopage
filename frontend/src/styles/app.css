@@ -7814,13 +7814,10 @@ button { font-family: inherit; }
   /* (toggle-painel já escondido acima — no mobile o painel é bottom sheet,
      aberto/fechado tocando nos ícones da barra) */
 
-  /* ---------- Topbar mobile ----------
-     Não cabe logo + 3 botões de menu + auth em 375px. Estratégia:
-     - Reduz padding/gaps
-     - Esconde "Recursos e Planos" e "Central de Atendimento" (navegação
-       secundária; ficam acessíveis no desktop). Mantém "Minhas Campanhas"
-       que é o acesso mais usado.
-     - Auth (Entrar/Cadastrar) compacto. */
+  /* ---------- Topbar tablet/mobile ----------
+     Estratégia 2026-06: NÃO esconde botões — todos viram ÍCONES
+     compactos (texto some, emoji do data-icon aparece via ::before).
+     Garante que todas as funções continuam acessíveis em qualquer tela. */
   .topbar {
     padding: 0 8px;
     gap: 6px;
@@ -7830,25 +7827,19 @@ button { font-family: inherit; }
     min-width: 0;
     flex-shrink: 0;
   }
-  /* Esconde 2º e 3º botões (Recursos e Planos / Central de Atendimento) */
-  .topbar-menu .topbar-neon-btn:nth-child(2),
-  .topbar-menu .topbar-neon-btn:nth-child(3) {
-    display: none;
-  }
   .topbar-neon-btn {
-    padding: 7px 9px;
+    padding: 8px 10px;
     font-size: 12px;
     white-space: nowrap;
   }
-  /* "Minhas Campanhas" (1º botão) vira ícone 📋 no mobile (texto não cabe).
-     Esconde o texto via font-size:0 e mostra ícone com ::before. O badge
-     de contagem continua visível. */
-  .topbar-menu .topbar-neon-btn:first-child > span:first-child {
-    font-size: 0;
+  /* Modo ícone: esconde o label e mostra o emoji do data-icon como ::before */
+  .topbar-menu .topbar-neon-btn .topbar-btn-label {
+    display: none;
   }
-  .topbar-menu .topbar-neon-btn:first-child > span:first-child::before {
-    content: '📋';
+  .topbar-menu .topbar-neon-btn[data-icon]::before {
+    content: attr(data-icon);
     font-size: 17px;
+    line-height: 1;
   }
   /* Logo um pouco menor */
   .logo-promopage-img {
