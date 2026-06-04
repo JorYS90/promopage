@@ -11,6 +11,7 @@ import PainelProdutos from './components/PainelProdutos.jsx';
 import PainelEmpresa from './components/PainelEmpresa.jsx';
 import PainelDatas from './components/PainelDatas.jsx';
 import PainelAgenda from './components/PainelAgenda.jsx';
+import { iniciarTour, deveMostrarTourAutomatico } from './tour/tourPromoPage.js';
 import PainelLogo from './components/PainelLogo.jsx';
 import PainelFontes from './components/PainelFontes.jsx';
 import PainelPostar from './components/PainelPostar.jsx';
@@ -178,6 +179,30 @@ export default function App() {
     carregarQtd();
     // Recarrega quando user muda (login/logout) ou modal de campanhas fechar
   }, [modalCampanhas, auth.user, auth.fetchAuth]);
+
+  // === Tour interativo guiado ===
+  // dispararTour(autoTrigger: bool) — `autoTrigger` = true só dispara se user
+  // ainda não viu o tour (1ª vez); false força (botão 🎓 Tour no Topbar).
+  const dispararTour = (autoTrigger = false) => {
+    const userId = auth.user?.id || 'anon';
+    if (autoTrigger && !deveMostrarTourAutomatico(userId)) return;
+    iniciarTour({
+      userId,
+      setAba,
+      setPainelAberto,
+      aoAbrirCampanhas: () => setModalCampanhas(true),
+      aoFecharCampanhas: () => setModalCampanhas(false),
+    });
+  };
+
+  // Auto-dispara tour pro user no 1º login (delay pra layout estabilizar).
+  // Só roda quando auth.user passa de null → algum user (não no logout).
+  useEffect(() => {
+    if (!auth.user?.id) return;
+    const t = setTimeout(() => dispararTour(true), 1200);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.user?.id]);
 
   // Carrega um projeto salvo no app — substitui todos os states relevantes
   const carregarProjeto = (projeto) => {
@@ -800,6 +825,7 @@ export default function App() {
         }}
         aoAbrirPreviewLayouts={() => setModalPreviewLayouts(true)}
         aoVoltarHome={voltarHome}
+        aoIniciarTour={() => dispararTour(false)}
       />
       <SidebarIcons ativa={aba} aoMudar={mudarAba} />
 

@@ -8,6 +8,7 @@ export default function Topbar({
   aoAbrirFavoritos,
   aoAbrirPreviewLayouts,
   aoVoltarHome,
+  aoIniciarTour, // 🎓 dispara tour interativo guiado
 }) {
   return (
     <div className="topbar">
@@ -25,10 +26,21 @@ export default function Topbar({
           className="topbar-neon-btn"
           onClick={aoAbrirCampanhas}
           title="Gerenciar minhas campanhas"
+          data-tour="campanhas"
         >
           <span>Minhas Campanhas</span>
           {qtdCampanhas > 0 && <span className="badge">{qtdCampanhas}</span>}
         </button>
+        {aoIniciarTour && (
+          <button
+            type="button"
+            className="topbar-neon-btn topbar-tour-btn"
+            onClick={aoIniciarTour}
+            title="Tour guiado: aprenda a usar o PromoPage em 2 minutos"
+          >
+            <span>🎓 Tour</span>
+          </button>
+        )}
         <button
           type="button"
           className="topbar-neon-btn"

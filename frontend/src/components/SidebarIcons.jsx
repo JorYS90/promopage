@@ -20,6 +20,7 @@ export default function SidebarIcons({ ativa, aoMudar }) {
           onClick={() => a.habilitado && aoMudar(a.id)}
           disabled={!a.habilitado}
           title={a.habilitado ? a.label : `${a.label} (em breve)`}
+          data-tour={`aba-${a.id}`}
         >
           <span className="icon">{a.icon}</span>
           <span>{a.label}</span>

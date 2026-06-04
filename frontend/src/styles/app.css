@@ -8046,6 +8046,106 @@ button { font-family: inherit; }
 }
 
 /* ============================================================
+   Botão 🎓 Tour no Topbar — destaque sutil
+   ============================================================ */
+.topbar-tour-btn {
+  background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.15)) !important;
+  border-color: rgba(139,92,246,0.4) !important;
+}
+.topbar-tour-btn:hover {
+  background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(59,130,246,0.25)) !important;
+  border-color: rgba(139,92,246,0.7) !important;
+}
+
+/* ============================================================
+   Driver.js — sobrescreve estilos pro tour combinar com o site
+   ============================================================ */
+.driver-popover {
+  background: #0f172a !important;
+  color: #e2e8f0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(139,92,246,0.3) !important;
+  padding: 18px 20px !important;
+  font-family: inherit !important;
+  max-width: 380px !important;
+}
+.driver-popover-title {
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  margin: 0 0 8px !important;
+}
+.driver-popover-description {
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+  color: #cbd5e1 !important;
+  margin: 0 !important;
+}
+.driver-popover-description b { color: #fff; }
+.driver-popover-description small { color: #94a3b8; font-style: italic; }
+
+.driver-popover-footer {
+  margin-top: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+}
+.driver-popover-progress-text {
+  font-size: 11px !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+.driver-popover-navigation-btns {
+  display: flex !important;
+  gap: 8px !important;
+}
+.driver-popover-prev-btn,
+.driver-popover-next-btn {
+  background: linear-gradient(135deg, #1f4ed8, #3b82f6) !important;
+  border: none !important;
+  color: #fff !important;
+  padding: 8px 14px !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.15s !important;
+  text-shadow: none !important;
+}
+.driver-popover-prev-btn {
+  background: rgba(148,163,184,0.15) !important;
+  color: #cbd5e1 !important;
+}
+.driver-popover-prev-btn:hover { background: rgba(148,163,184,0.25) !important; }
+.driver-popover-next-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(59,130,246,0.4) !important;
+}
+.driver-popover-close-btn {
+  color: #64748b !important;
+  font-size: 22px !important;
+  top: 8px !important;
+  right: 12px !important;
+}
+.driver-popover-close-btn:hover { color: #cbd5e1 !important; }
+
+/* Spotlight ao redor do elemento destacado */
+.driver-overlay {
+  background: rgba(15, 23, 42, 0.7) !important;
+}
+.driver-active-element {
+  box-shadow: 0 0 0 4px rgba(139,92,246,0.4), 0 0 30px rgba(139,92,246,0.5) !important;
+}
+
+/* Pequeno ajuste pra mobile */
+@media (max-width: 600px) {
+  .driver-popover { max-width: calc(100vw - 30px) !important; }
+}
+
+/* ============================================================
    PainelAgenda — calendário de datas comemorativas BR
    ============================================================ */
 .painel-agenda {
