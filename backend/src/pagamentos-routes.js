@@ -18,9 +18,19 @@ const agora = () => new Date().toISOString();
 // domínio (mesmo host serve front + /api). Em dev, front=5173 / api via proxy.
 const APP_BASE_URL = (process.env.APP_BASE_URL || 'http://localhost:5173').replace(/\/+$/, '');
 
+// 4 ciclos suportados: mensal (30d) | trimestral (90d) | semestral (180d) | anual (365d)
+const CICLOS_VALIDOS = ['mensal', 'trimestral', 'semestral', 'anual'];
+const DIAS_POR_CICLO = { mensal: 30, trimestral: 90, semestral: 180, anual: 365 };
+const COLUNA_PRECO_POR_CICLO = {
+  mensal: 'preco_mensal_centavos',
+  trimestral: 'preco_trimestral_centavos',
+  semestral: 'preco_semestral_centavos',
+  anual: 'preco_anual_centavos',
+};
+
 function ativarAssinatura(userId, planId, ciclo) {
   const inicio = agora();
-  const dias = ciclo === 'anual' ? 365 : 30;
+  const dias = DIAS_POR_CICLO[ciclo] || 30;
   const vencimento = new Date(Date.now() + dias * 86400000).toISOString();
   // cancela assinatura ativa anterior (troca de plano / renovação)
   db.prepare(`
@@ -41,14 +51,16 @@ router.post('/checkout', requireAuth, async (req, res) => {
       return res.status(503).json({ error: 'Pagamentos indisponíveis no momento.' });
     }
     const slug = (req.body?.slug || '').toString();
-    const ciclo = req.body?.ciclo === 'anual' ? 'anual' : 'mensal';
+    const cicloRaw = (req.body?.ciclo || 'mensal').toString();
+    const ciclo = CICLOS_VALIDOS.includes(cicloRaw) ? cicloRaw : 'mensal';
 
     const plan = db.prepare('SELECT * FROM plans WHERE slug = ? AND ativo = 1').get(slug);
     if (!plan) return res.status(404).json({ error: 'Plano não encontrado' });
 
-    const valorCentavos = ciclo === 'anual' ? plan.preco_anual_centavos : plan.preco_mensal_centavos;
+    const colunaPreco = COLUNA_PRECO_POR_CICLO[ciclo];
+    const valorCentavos = plan[colunaPreco];
     if (!valorCentavos || valorCentavos <= 0) {
-      return res.status(400).json({ error: 'Plano sem preço definido' });
+      return res.status(400).json({ error: `Plano sem preço definido pra ciclo ${ciclo}` });
     }
 
     // Valor de TESTE (somente admin/super_admin): permite validar um pagamento
@@ -72,10 +84,14 @@ router.post('/checkout', requireAuth, async (req, res) => {
     // external_reference: u<userId>:p<planId>:<ciclo>:pay<paymentRowId>
     const externalReference = `u${req.user.id}:p${plan.id}:${ciclo}:pay${payRow}`;
 
+    const labelCiclo = ciclo === 'anual' ? 'Anual'
+      : ciclo === 'semestral' ? 'Semestral'
+      : ciclo === 'trimestral' ? 'Trimestral'
+      : 'Mensal';
     const pref = await mp.criarPreferencia({
       titulo: ehTeste
         ? `PromoPage — Teste de pagamento (${plan.nome})`
-        : `PromoPage ${plan.nome} — ${ciclo === 'anual' ? 'Anual' : 'Mensal'}`,
+        : `PromoPage ${plan.nome} — ${labelCiclo}`,
       valorCentavos: valorCobranca,
       payerEmail: req.user.email,
       externalReference,
@@ -110,7 +126,7 @@ router.post('/webhook', async (req, res) => {
     const pg = await mp.obterPagamento(paymentId);
     const status = pg.status; // approved, pending, in_process, rejected, cancelled, refunded
     const extRef = pg.external_reference || '';
-    const m = /^u(\d+):p(\d+):(mensal|anual):pay(\d+)$/.exec(extRef);
+    const m = /^u(\d+):p(\d+):(mensal|trimestral|semestral|anual):pay(\d+)$/.exec(extRef);
     if (!m) { console.warn('[webhook] external_reference inválido:', extRef); return; }
     const userId = parseInt(m[1], 10);
     const planId = parseInt(m[2], 10);

@@ -4996,11 +4996,19 @@ button { font-family: inherit; }
   border-radius: 100px;
   padding: 4px;
   gap: 2px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.mp-ciclo-hint {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+  text-align: center;
 }
 .mp-ciclo-btn {
   background: transparent;
   border: none;
-  padding: 8px 22px;
+  padding: 8px 18px;
   border-radius: 100px;
   font-size: 13px;
   font-weight: 700;

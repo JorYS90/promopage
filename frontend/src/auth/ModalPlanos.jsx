@@ -25,6 +25,24 @@ const NOMES_LIMITES = {
   encartesPorMes: 'Encartes por mês',
   templatesProprios: 'Templates próprios',
   paginasPorEncarte: 'Páginas por encarte',
+  videosPorMes: 'Vídeos por mês (PromoVideo)',
+};
+
+// Ciclos de cobrança disponíveis. Desconto exibido na UI = mesmo valor
+// configurado no backend (precos_*_centavos já calculados com desconto).
+// "meses" usado pra calcular preço/mês exibido (preço total / N meses).
+const CICLOS = [
+  { id: 'mensal',     label: 'Mensal',     meses: 1,  badge: null },
+  { id: 'trimestral', label: 'Trimestral', meses: 3,  badge: '−3%' },
+  { id: 'semestral',  label: 'Semestral',  meses: 6,  badge: '−7%' },
+  { id: 'anual',      label: 'Anual',      meses: 12, badge: '−10%' },
+];
+
+const COLUNA_PRECO_POR_CICLO = {
+  mensal: 'preco_mensal_centavos',
+  trimestral: 'preco_trimestral_centavos',
+  semestral: 'preco_semestral_centavos',
+  anual: 'preco_anual_centavos',
 };
 
 // Lista de recursos diferenciados do PromoPage — copy intencionalmente diferente
@@ -313,7 +331,7 @@ export default function ModalPlanos({
   const ehAdmin = user?.role_nome === 'admin' || user?.role_nome === 'super_admin';
   const [planos, setPlanos] = useState([]);
   const [carregando, setCarregando] = useState(true);
-  const [ciclo, setCiclo] = useState('mensal');  // 'mensal' ou 'anual'
+  const [ciclo, setCiclo] = useState('mensal');  // 'mensal' | 'trimestral' | 'semestral' | 'anual'
   // FAQ accordion: índice da pergunta aberta no momento (null = todas fechadas).
   // Só uma aberta por vez pra não sobrecarregar visualmente — clica em outra,
   // a anterior fecha automático.
@@ -337,9 +355,10 @@ export default function ModalPlanos({
   const formatarReais = (centavos) =>
     (centavos / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-  const calcularDesconto = (mensal, anual) => {
-    if (!mensal || !anual) return 0;
-    return Math.round((1 - anual / (mensal * 12)) * 100);
+  // Calcula desconto % entre 2 ciclos (ex: mensal*N_meses vs ciclo escolhido)
+  const calcularDesconto = (precoMensal, precoCiclo, meses) => {
+    if (!precoMensal || !precoCiclo || !meses) return 0;
+    return Math.round((1 - precoCiclo / (precoMensal * meses)) * 100);
   };
 
   if (!aberto) return null;
@@ -364,22 +383,22 @@ export default function ModalPlanos({
             Crie encartes profissionais em minutos. Cancele quando quiser, sem multa.
           </p>
 
-          {/* Toggle Mensal/Anual */}
+          {/* Toggle 4 ciclos */}
           <div className="mp-ciclo-toggle">
-            <button
-              className={`mp-ciclo-btn ${ciclo === 'mensal' ? 'ativo' : ''}`}
-              onClick={() => setCiclo('mensal')}
-            >
-              Mensal
-            </button>
-            <button
-              className={`mp-ciclo-btn ${ciclo === 'anual' ? 'ativo' : ''}`}
-              onClick={() => setCiclo('anual')}
-            >
-              Anual
-              <span className="mp-ciclo-badge">−17%</span>
-            </button>
+            {CICLOS.map(c => (
+              <button
+                key={c.id}
+                className={`mp-ciclo-btn ${ciclo === c.id ? 'ativo' : ''}`}
+                onClick={() => setCiclo(c.id)}
+              >
+                {c.label}
+                {c.badge && <span className="mp-ciclo-badge">{c.badge}</span>}
+              </button>
+            ))}
           </div>
+          <p className="mp-ciclo-hint">
+            💳 Parcele no cartão em até 12×. Aceitamos PIX e boleto também.
+          </p>
         </div>
 
         {/* GRID DE PLANOS */}
@@ -389,11 +408,12 @@ export default function ModalPlanos({
           <div className="mp-grid">
             {planos.map(p => {
               const ativo = user && planoAtualSlug === p.slug;
-              const preco = ciclo === 'anual'
-                ? Math.round(p.preco_anual_centavos / 12)
-                : p.preco_mensal_centavos;
-              const economia = calcularDesconto(p.preco_mensal_centavos, p.preco_anual_centavos);
-              const destaque = p.slug === 'pro';
+              const cicloAtual = CICLOS.find(c => c.id === ciclo) || CICLOS[0];
+              const precoTotal = p[COLUNA_PRECO_POR_CICLO[ciclo]] || p.preco_mensal_centavos;
+              const precoPorMes = Math.round(precoTotal / cicloAtual.meses);
+              const economia = calcularDesconto(p.preco_mensal_centavos, precoTotal, cicloAtual.meses);
+              // Destaque: plano do meio (+30 vídeos) por padrão. Suporta slugs novos e antigos.
+              const destaque = p.slug === 'ilimitado_video_30' || p.slug === 'pro';
 
               return (
                 <div key={p.id} className={`mp-card ${destaque ? 'destaque' : ''} ${ativo ? 'ativo' : ''}`}>
@@ -405,17 +425,20 @@ export default function ModalPlanos({
 
                   <div className="mp-preco-bloco">
                     <div className="mp-preco">
-                      {formatarReais(preco)}
+                      {formatarReais(precoPorMes)}
                       <small>/mês</small>
                     </div>
-                    {ciclo === 'anual' && (
+                    {ciclo !== 'mensal' && (
                       <div className="mp-preco-anual">
-                        {formatarReais(p.preco_anual_centavos)} cobrado anualmente
+                        {formatarReais(precoTotal)} cobrado {ciclo === 'anual' ? 'anualmente'
+                          : ciclo === 'semestral' ? 'a cada 6 meses'
+                          : 'a cada 3 meses'}
+                        {economia > 0 && <> · <b>−{economia}%</b></>}
                       </div>
                     )}
-                    {ciclo === 'mensal' && economia > 0 && (
+                    {ciclo === 'mensal' && (
                       <div className="mp-preco-anual">
-                        Economize <b>{economia}%</b> assinando anual
+                        Economize até <b>10%</b> escolhendo anual
                       </div>
                     )}
                   </div>

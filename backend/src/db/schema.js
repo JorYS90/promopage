@@ -266,6 +266,25 @@ function adicionarColunaSeNecessario(tabela, coluna, definicao) {
 }
 adicionarColunaSeNecessario('users', 'interesses', "TEXT NOT NULL DEFAULT '[]'");
 
+// 2026-06-04: ciclos trimestral/semestral nos planos
+adicionarColunaSeNecessario('plans', 'preco_trimestral_centavos', 'INTEGER NOT NULL DEFAULT 0');
+adicionarColunaSeNecessario('plans', 'preco_semestral_centavos', 'INTEGER NOT NULL DEFAULT 0');
+
+// 2026-06-04: cota mensal de vídeos do PromoVideo
+// Tabela `video_usage` — 1 linha por (user, mês). count incrementa a cada vídeo gerado.
+// Reseta automaticamente quando ano_mes muda (mês novo = linha nova).
+db.exec(`
+  CREATE TABLE IF NOT EXISTS video_usage (
+    user_id INTEGER NOT NULL,
+    ano_mes TEXT NOT NULL,        -- "2026-06"
+    count INTEGER NOT NULL DEFAULT 0,
+    atualizado_em TEXT NOT NULL,
+    PRIMARY KEY (user_id, ano_mes),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+  );
+  CREATE INDEX IF NOT EXISTS idx_video_usage_mes ON video_usage(ano_mes);
+`);
+
 // === Seed inicial — só roda se as tabelas estiverem vazias ===
 function seedInicial() {
   const agora = new Date().toISOString();
@@ -289,36 +308,70 @@ function seedInicial() {
     'self:read', 'self:update', 'encartes:create', 'encartes:read', 'encartes:update', 'encartes:delete',
   ]));
 
-  // Planos default — pode editar/desativar via admin depois
-  const countPlans = db.prepare('SELECT COUNT(*) as c FROM plans').get().c;
-  if (countPlans === 0) {
-    const insertPlan = db.prepare(`
-      INSERT INTO plans (slug, nome, descricao, preco_mensal_centavos, preco_anual_centavos, limites, recursos, ordem, ativo, criado_em)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?)
-    `);
-    insertPlan.run(
-      'basico', 'Básico', 'Pra começar a publicar encartes',
-      2990, 29900,
-      JSON.stringify({ encartesPorMes: 10, templatesProprios: 3, paginasPorEncarte: 1 }),
-      JSON.stringify(['pdf_export', 'png_export', 'temas_gratis']),
-      1, agora,
+  // === Planos === Estrutura 2026-06-04 (3 planos, todos ilimitados em encartes):
+  //   1. ilimitado            R$ 99,90/mês  — só encartes (sem vídeos)
+  //   2. ilimitado_video_30   R$ 149,90/mês — encartes + 30 vídeos/mês
+  //   3. ilimitado_video_100  R$ 199,90/mês — encartes + 100 vídeos/mês
+  //
+  // Ciclos: mensal | trimestral (-3%) | semestral (-7%) | anual (-10%)
+  // Preços já calculados em centavos (preco_mensal × N_meses × (1 - desconto)).
+  //
+  // PRESERVA os IDs 1/2/3 das assinaturas existentes — só faz UPDATE dos campos.
+  // Antes: basico/pro/premium → Agora: ilimitado/ilimitado_video_30/ilimitado_video_100.
+  // Quem tava no "pro" agora tem o "ilimitado_video_30" (upgrade implícito, melhor pro user).
+
+  const PLANOS_2026_06 = [
+    {
+      id: 1, slug: 'ilimitado', nome: 'Ilimitado',
+      descricao: 'Tudo do PromoPage liberado — encartes, temas e exportações ilimitados',
+      mensal: 9990, trimestral: 29071, semestral: 55744, anual: 107892,
+      limites: { encartesPorMes: -1, templatesProprios: -1, paginasPorEncarte: -1, videosPorMes: 0 },
+      recursos: ['pdf_export', 'png_export', 'temas_gratis', 'temas_premium', 'remover_fundo', 'busca_avancada', 'whatsapp_post', 'multi_loja', 'api_access'],
+      ordem: 1,
+    },
+    {
+      id: 2, slug: 'ilimitado_video_30', nome: 'Ilimitado + 30 Vídeos',
+      descricao: 'Tudo do Ilimitado + 30 vídeos promocionais por mês no PromoVideo',
+      mensal: 14990, trimestral: 43621, semestral: 83644, anual: 161892,
+      limites: { encartesPorMes: -1, templatesProprios: -1, paginasPorEncarte: -1, videosPorMes: 30 },
+      recursos: ['pdf_export', 'png_export', 'temas_gratis', 'temas_premium', 'remover_fundo', 'busca_avancada', 'whatsapp_post', 'multi_loja', 'api_access', 'promovideo'],
+      ordem: 2,
+    },
+    {
+      id: 3, slug: 'ilimitado_video_100', nome: 'Ilimitado + 100 Vídeos',
+      descricao: 'Tudo do Ilimitado + 100 vídeos promocionais por mês no PromoVideo',
+      mensal: 19990, trimestral: 58171, semestral: 111544, anual: 215892,
+      limites: { encartesPorMes: -1, templatesProprios: -1, paginasPorEncarte: -1, videosPorMes: 100 },
+      recursos: ['pdf_export', 'png_export', 'temas_gratis', 'temas_premium', 'remover_fundo', 'busca_avancada', 'whatsapp_post', 'multi_loja', 'api_access', 'promovideo'],
+      ordem: 3,
+    },
+  ];
+
+  const upsertPlan = db.prepare(`
+    INSERT INTO plans (id, slug, nome, descricao, preco_mensal_centavos, preco_trimestral_centavos, preco_semestral_centavos, preco_anual_centavos, limites, recursos, ordem, ativo, criado_em)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?)
+    ON CONFLICT(id) DO UPDATE SET
+      slug = excluded.slug,
+      nome = excluded.nome,
+      descricao = excluded.descricao,
+      preco_mensal_centavos = excluded.preco_mensal_centavos,
+      preco_trimestral_centavos = excluded.preco_trimestral_centavos,
+      preco_semestral_centavos = excluded.preco_semestral_centavos,
+      preco_anual_centavos = excluded.preco_anual_centavos,
+      limites = excluded.limites,
+      recursos = excluded.recursos,
+      ordem = excluded.ordem,
+      ativo = 1
+  `);
+  for (const p of PLANOS_2026_06) {
+    upsertPlan.run(
+      p.id, p.slug, p.nome, p.descricao,
+      p.mensal, p.trimestral, p.semestral, p.anual,
+      JSON.stringify(p.limites), JSON.stringify(p.recursos),
+      p.ordem, agora,
     );
-    insertPlan.run(
-      'pro', 'Profissional', 'Pra lojistas que postam todos os dias',
-      6990, 69900,
-      JSON.stringify({ encartesPorMes: 50, templatesProprios: 20, paginasPorEncarte: 3 }),
-      JSON.stringify(['pdf_export', 'png_export', 'temas_gratis', 'temas_premium', 'remover_fundo', 'busca_avancada']),
-      2, agora,
-    );
-    insertPlan.run(
-      'premium', 'Premium', 'Pra redes e franquias',
-      14990, 149900,
-      JSON.stringify({ encartesPorMes: -1, templatesProprios: -1, paginasPorEncarte: -1 }),
-      JSON.stringify(['pdf_export', 'png_export', 'temas_gratis', 'temas_premium', 'remover_fundo', 'busca_avancada', 'whatsapp_post', 'multi_loja', 'api_access']),
-      3, agora,
-    );
-    console.log('[db] 3 planos default criados (basico, pro, premium)');
   }
+  console.log('[db] planos sincronizados (ilimitado / +30 vídeos / +100 vídeos)');
 
   console.log('[db] schema inicializado em', DB_FILE);
 }

@@ -1126,7 +1126,7 @@ export default function App() {
             const r = await auth.fetchAuth('/api/pagamentos/checkout', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ slug: 'basico', ciclo: 'mensal', valorTesteCentavos: 100 }),
+              body: JSON.stringify({ slug: 'ilimitado', ciclo: 'mensal', valorTesteCentavos: 100 }),
             });
             const d = await r.json().catch(() => ({}));
             if (!r.ok) throw new Error(d.error || 'Falha ao iniciar o teste');

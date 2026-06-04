@@ -186,6 +186,7 @@ app.use('/api', usersRoutes);  // pra /api/plans (rota pública)
 app.use('/api/admin', adminRoutes);
 // /api/pagamentos/* — checkout + webhook do Mercado Pago
 app.use('/api/pagamentos', require('./pagamentos-routes'));
+app.use('/api/me', require('./me-routes'));
 
 // Multer com destination dinâmico baseado no user logado.
 // Uploads vão pra /uploads/<user_id>/<file> — isolamento físico no FS.
