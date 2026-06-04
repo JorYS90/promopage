@@ -37,7 +37,7 @@ const { enviarSolicitacaoTema } = require('./lib/email');
 
 // E-mail do ADMIN que recebe as solicitações de tema. Configurável via env
 // (ADMIN_EMAIL). Placeholder por enquanto — trocar quando o cliente definir.
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@promopage.com.br';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'atendimento@promopage.com.br';
 const projetosDb = require('./projetos-db');
 
 const ROOT = path.resolve(__dirname, '..');

@@ -252,7 +252,7 @@ export default function ModalPoliticaPrivacidade({ aberto, aoFechar }) {
               </div>
             </div>
             <p className="pp-nota">
-              <b>Como exercer:</b> escreva pra <a href="mailto:privacidade@promopage.com.br">privacidade@promopage.com.br</a> ou
+              <b>Como exercer:</b> escreva pra <a href="mailto:atendimento@promopage.com.br">atendimento@promopage.com.br</a> ou
               chame nosso DPO via WhatsApp. Respondemos em <b>até 15 dias úteis</b>
               (prazo legal LGPD).
             </p>
@@ -328,7 +328,7 @@ export default function ModalPoliticaPrivacidade({ aberto, aoFechar }) {
               A PromoPage <b>não é direcionada a menores de 18 anos</b>. Não coletamos
               conscientemente dados de menores. Se você é responsável legal e descobriu
               que um menor sob sua tutela criou conta sem permissão, escreva pra
-              <a href="mailto:privacidade@promopage.com.br"> privacidade@promopage.com.br</a> que
+              <a href="mailto:atendimento@promopage.com.br"> atendimento@promopage.com.br</a> que
               <b> excluímos a conta e todos os dados associados em até 7 dias úteis</b>.
             </p>
           </section>
@@ -366,7 +366,7 @@ export default function ModalPoliticaPrivacidade({ aberto, aoFechar }) {
             <div className="pp-contato-box">
               <div className="pp-contato-linha">
                 <span className="pp-contato-label">📧 E-mail:</span>
-                <a href="mailto:privacidade@promopage.com.br">privacidade@promopage.com.br</a>
+                <a href="mailto:atendimento@promopage.com.br">atendimento@promopage.com.br</a>
               </div>
               <div className="pp-contato-linha">
                 <span className="pp-contato-label">💬 WhatsApp:</span>

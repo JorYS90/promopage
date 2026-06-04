@@ -40,7 +40,8 @@ export default function Topbar({
         <button
           type="button"
           className="topbar-neon-btn"
-          title="Central de Atendimento"
+          onClick={() => { window.location.href = 'mailto:atendimento@promopage.com.br?subject=Contato%20PromoPage'; }}
+          title="Fale com a gente: atendimento@promopage.com.br"
         >
           <span>Central de Atendimento</span>
         </button>
