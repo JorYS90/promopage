@@ -19,7 +19,21 @@ async function enviarEmail({ to, subject, html }) {
     console.log(`[email][dev] (não enviado) to=${to} subject="${subject}"`);
     return { skipped: true };
   }
-  const result = await resend.emails.send({ from: EMAIL_FROM, to, subject, html });
+  // Headers que melhoram deliverability:
+  // - List-Unsubscribe + List-Unsubscribe-Post: Gmail/Outlook bonificam ~20%
+  //   (mesmo pra transacionais — sinaliza que respeitamos opt-out).
+  // - Reply-To: endereço real de suporte (caso user responda).
+  const result = await resend.emails.send({
+    from: EMAIL_FROM,
+    to,
+    subject,
+    html,
+    reply_to: process.env.SUPPORT_EMAIL || EMAIL_FROM,
+    headers: {
+      'List-Unsubscribe': `<mailto:${process.env.SUPPORT_EMAIL || EMAIL_FROM}?subject=unsubscribe>`,
+      'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+    },
+  });
   if (result.error) {
     throw new Error(`Resend falhou: ${result.error.message || JSON.stringify(result.error)}`);
   }
