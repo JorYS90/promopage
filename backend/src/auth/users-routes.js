@@ -255,7 +255,9 @@ router.put('/me/interesses', requireAuth, (req, res) => {
 // === GET /api/plans — lista planos ativos (público, pra mostrar na página de upgrade) ===
 router.get('/plans', (req, res) => {
   const planos = db.prepare(`
-    SELECT id, slug, nome, descricao, preco_mensal_centavos, preco_anual_centavos,
+    SELECT id, slug, nome, descricao,
+           preco_mensal_centavos, preco_trimestral_centavos,
+           preco_semestral_centavos, preco_anual_centavos,
            limites, recursos, ordem
     FROM plans WHERE ativo = 1 ORDER BY ordem ASC, preco_mensal_centavos ASC
   `).all();
