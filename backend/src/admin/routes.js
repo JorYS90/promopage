@@ -254,16 +254,22 @@ router.post('/users/:id/reactivate', (req, res) => {
 // dar plano de cortesia, etc). Não cobra nada — é só ajuste interno.
 const changePlanSchema = z.object({
   plan_id: z.number().int(),
-  ciclo: z.enum(['mensal', 'anual']).optional().default('mensal'),
-  diasValidade: z.number().int().min(1).max(3650).optional().default(30),
+  ciclo: z.enum(['mensal', 'trimestral', 'semestral', 'anual']).optional().default('mensal'),
+  // diasValidade: se omitido, calculamos automaticamente pelo ciclo (30/90/180/365).
+  // Admin pode forçar custom (ex: trial de 7 dias pro Bruno).
+  diasValidade: z.number().int().min(1).max(3650).optional(),
   status: z.enum(['ativo', 'trial', 'cancelado', 'suspenso']).optional().default('ativo'),
 });
+
+// Dias padrão por ciclo — usado quando admin não força diasValidade custom.
+const DIAS_POR_CICLO = { mensal: 30, trimestral: 90, semestral: 180, anual: 365 };
 
 router.post('/users/:id/change-plan', (req, res) => {
   const parse = changePlanSchema.safeParse(req.body);
   if (!parse.success) return res.status(400).json({ error: 'Dados inválidos', detalhes: parse.error.errors });
   const id = parseInt(req.params.id);
-  const { plan_id, ciclo, diasValidade, status } = parse.data;
+  const { plan_id, ciclo, status } = parse.data;
+  const diasValidade = parse.data.diasValidade ?? DIAS_POR_CICLO[ciclo] ?? 30;
 
   const user = db.prepare('SELECT id FROM users WHERE id = ?').get(id);
   if (!user) return res.status(404).json({ error: 'User não encontrado' });

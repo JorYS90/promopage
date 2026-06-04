@@ -156,6 +156,7 @@ function AbaUsers({ fetchAuth, adminUser }) {
   const [filtroAtivo, setFiltroAtivo] = useState('');
   const [filtroRole, setFiltroRole] = useState('');
   const [userDetalhe, setUserDetalhe] = useState(null);
+  const [trocarPlanoUser, setTrocarPlanoUser] = useState(null); // user obj pra mini-modal
   const [planos, setPlanos] = useState([]);
 
   const carregar = async () => {
@@ -304,6 +305,10 @@ function AbaUsers({ fetchAuth, adminUser }) {
                 <td className="adm-acoes">
                   <button onClick={() => setUserDetalhe(u.id)} title="Ver detalhes">👁</button>
                   <button
+                    onClick={() => setTrocarPlanoUser(u)}
+                    title="Mudar plano / atribuir assinatura"
+                  >💎</button>
+                  <button
                     onClick={() => promoverPremium(u)}
                     title={planoPremium ? `Promover a ${planoPremium.nome}` : 'Promover a Premium'}
                     disabled={!planoPremium || (planoPremium && u.plan_slug === planoPremium.slug)}
@@ -328,16 +333,164 @@ function AbaUsers({ fetchAuth, adminUser }) {
           aoRecarregar={carregar}
         />
       )}
+
+      {trocarPlanoUser && (
+        <ModalTrocarPlano
+          user={trocarPlanoUser}
+          planos={planos}
+          fetchAuth={fetchAuth}
+          aoFechar={() => setTrocarPlanoUser(null)}
+          aoSucesso={() => { carregar(); setTrocarPlanoUser(null); }}
+        />
+      )}
     </div>
   );
 }
+
+// Mini-modal pra trocar plano direto da lista (sem abrir detalhes inteiro).
+// Mais rápido pro fluxo de admin: clica 💎 → escolhe plano + ciclo → aplica.
+function ModalTrocarPlano({ user, planos, fetchAuth, aoFechar, aoSucesso }) {
+  const [planoId, setPlanoId] = useState('');
+  const [ciclo, setCiclo] = useState('mensal');
+  const [dias, setDias] = useState(30);
+  const [enviando, setEnviando] = useState(false);
+
+  const aoTrocarCiclo = (novoCiclo) => {
+    setCiclo(novoCiclo);
+    const padraoAtual = CICLOS_ADMIN.find(c => c.id === ciclo)?.dias;
+    const padraoNovo = CICLOS_ADMIN.find(c => c.id === novoCiclo)?.dias;
+    if (dias === padraoAtual && padraoNovo) setDias(padraoNovo);
+  };
+
+  const aplicar = async () => {
+    if (!planoId) { alert('Escolha um plano'); return; }
+    setEnviando(true);
+    try {
+      const r = await fetchAuth(`/api/admin/users/${user.id}/change-plan`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plan_id: parseInt(planoId),
+          ciclo,
+          diasValidade: dias,
+          status: 'ativo',
+        }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) { alert('Erro: ' + (d.error || `status ${r.status}`)); return; }
+      const planoNome = planos.find(p => p.id === parseInt(planoId))?.nome || 'plano';
+      alert(`✅ ${user.nome} agora tem "${planoNome}" (${ciclo}, ${dias} dias).`);
+      aoSucesso?.();
+    } finally {
+      setEnviando(false);
+    }
+  };
+
+  return (
+    <div className="modal-overlay" onClick={aoFechar} style={{ zIndex: 250 }}>
+      <div className="modal" style={{ maxWidth: 540 }} onClick={e => e.stopPropagation()}>
+        <button className="btn-fechar-x" onClick={aoFechar} aria-label="Fechar">✕</button>
+        <h2 style={{ marginTop: 0 }}>💎 Mudar plano</h2>
+        <p style={{ color: '#6b7280', marginTop: -8 }}>
+          Cliente: <b>{user.nome}</b> (#{user.id})<br />
+          Plano atual: {user.plan_slug ? <code>{user.plan_slug}</code> : <small>—</small>}
+        </p>
+
+        <div style={{ marginTop: 18 }}>
+          <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: '#475569', marginBottom: 4, textTransform: 'uppercase' }}>
+            Plano
+          </label>
+          <select
+            value={planoId}
+            onChange={e => setPlanoId(e.target.value)}
+            style={{ width: '100%', padding: 10, fontSize: 14, border: '1px solid #d1d5db', borderRadius: 6 }}
+          >
+            <option value="">— Selecione um plano —</option>
+            {planos.map(p => (
+              <option key={p.id} value={p.id}>
+                {p.nome} ({p.slug}) — {formatarReais(p.preco_mensal_centavos)}/mês
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 12, marginTop: 14 }}>
+          <div>
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: '#475569', marginBottom: 4, textTransform: 'uppercase' }}>
+              Ciclo de cobrança
+            </label>
+            <select
+              value={ciclo}
+              onChange={e => aoTrocarCiclo(e.target.value)}
+              style={{ width: '100%', padding: 10, fontSize: 14, border: '1px solid #d1d5db', borderRadius: 6 }}
+            >
+              {CICLOS_ADMIN.map(c => (
+                <option key={c.id} value={c.id}>{c.label} ({c.dias} dias)</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: '#475569', marginBottom: 4, textTransform: 'uppercase' }}>
+              Dias custom
+            </label>
+            <input
+              type="number" min={1} max={3650}
+              value={dias} onChange={e => setDias(parseInt(e.target.value) || 30)}
+              style={{ width: '100%', padding: 10, fontSize: 14, border: '1px solid #d1d5db', borderRadius: 6 }}
+              title="Sobrescreve o padrão do ciclo (ex: 365 num plano mensal pra cortesia)"
+            />
+          </div>
+        </div>
+
+        <p style={{ marginTop: 10, fontSize: 12, color: '#6b7280' }}>
+          💡 Cancela qualquer assinatura ativa anterior e cria a nova.
+          Não cobra nada — é ajuste interno (cortesia, suporte, fix).
+        </p>
+
+        <div style={{ display: 'flex', gap: 10, marginTop: 20, justifyContent: 'flex-end' }}>
+          <button
+            onClick={aoFechar}
+            style={{ padding: '10px 18px', background: '#f3f4f6', border: '1px solid #d1d5db', borderRadius: 6, cursor: 'pointer' }}
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={aplicar}
+            disabled={enviando || !planoId}
+            className="mp-btn-primary"
+            style={{ padding: '10px 22px', cursor: enviando ? 'wait' : 'pointer' }}
+          >
+            {enviando ? 'Aplicando...' : '✓ Aplicar plano'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Ciclos suportados pelo backend (precisa bater com pagamentos-routes + admin.changePlanSchema)
+const CICLOS_ADMIN = [
+  { id: 'mensal',     label: 'Mensal',     dias: 30 },
+  { id: 'trimestral', label: 'Trimestral', dias: 90 },
+  { id: 'semestral',  label: 'Semestral',  dias: 180 },
+  { id: 'anual',      label: 'Anual',      dias: 365 },
+];
 
 // === Modal de detalhe de user (dentro do admin) ===
 function ModalUserDetalhe({ id, fetchAuth, aoFechar, aoRecarregar }) {
   const [dados, setDados] = useState(null);
   const [planos, setPlanos] = useState([]);
   const [planoEscolhido, setPlanoEscolhido] = useState('');
+  const [ciclo, setCiclo] = useState('mensal');
   const [dias, setDias] = useState(30);
+  // Auto-preenche dias quando troca o ciclo (mas user pode editar livre depois).
+  // Só sobrescreve se dias estiver no default de OUTRO ciclo (não bagunça custom).
+  const aoTrocarCiclo = (novoCiclo) => {
+    setCiclo(novoCiclo);
+    const padraoAtual = CICLOS_ADMIN.find(c => c.id === ciclo)?.dias;
+    const padraoNovo = CICLOS_ADMIN.find(c => c.id === novoCiclo)?.dias;
+    if (dias === padraoAtual && padraoNovo) setDias(padraoNovo);
+  };
 
   useEffect(() => {
     fetchAuth(`/api/admin/users/${id}`).then(r => r.json()).then(setDados);
@@ -349,7 +502,12 @@ function ModalUserDetalhe({ id, fetchAuth, aoFechar, aoRecarregar }) {
     const r = await fetchAuth(`/api/admin/users/${id}/change-plan`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plan_id: parseInt(planoEscolhido), diasValidade: dias, status: 'ativo' }),
+      body: JSON.stringify({
+        plan_id: parseInt(planoEscolhido),
+        ciclo,
+        diasValidade: dias,
+        status: 'ativo',
+      }),
     });
     if (r.ok) {
       alert('Plano alterado!');
@@ -392,8 +550,8 @@ function ModalUserDetalhe({ id, fetchAuth, aoFechar, aoRecarregar }) {
         </div>
 
         <h3 style={{ marginTop: 24 }}>Forçar mudança de plano</h3>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <select value={planoEscolhido} onChange={e => setPlanoEscolhido(e.target.value)} style={{ flex: 1, padding: 8 }}>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+          <select value={planoEscolhido} onChange={e => setPlanoEscolhido(e.target.value)} style={{ flex: '1 1 240px', padding: 8 }}>
             <option value="">— Selecione um plano —</option>
             {planos.map(p => (
               <option key={p.id} value={p.id}>
@@ -401,12 +559,20 @@ function ModalUserDetalhe({ id, fetchAuth, aoFechar, aoRecarregar }) {
               </option>
             ))}
           </select>
+          <select value={ciclo} onChange={e => aoTrocarCiclo(e.target.value)} style={{ padding: 8 }} title="Ciclo de cobrança">
+            {CICLOS_ADMIN.map(c => (
+              <option key={c.id} value={c.id}>{c.label}</option>
+            ))}
+          </select>
           <input
             type="number" value={dias} onChange={e => setDias(parseInt(e.target.value) || 30)}
-            style={{ width: 80, padding: 8 }} title="Dias de validade"
+            style={{ width: 80, padding: 8 }} title="Dias de validade (sobrescreve o padrão do ciclo)"
           />
           <button className="mp-btn-primary" onClick={trocarPlano}>Aplicar</button>
         </div>
+        <small style={{ display: 'block', marginTop: 6, color: '#6b7280' }}>
+          💡 Dias é auto-preenchido pelo ciclo (30/90/180/365). Edite pra cortesias custom (ex: 365 dias num plano mensal).
+        </small>
 
         <h3 style={{ marginTop: 24 }}>Assinaturas ({dados.subscriptions.length})</h3>
         <table className="adm-tabela adm-tabela-compacta">
