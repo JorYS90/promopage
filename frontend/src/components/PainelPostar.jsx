@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 // Painel "Postar nas Redes Sociais" — gera texto acessível #PraCegoVer
 // a partir dos produtos do encarte. Cada produto vira uma linha com play
@@ -41,8 +41,27 @@ function falar(texto) {
   window.speechSynthesis.speak(u);
 }
 
-export default function PainelPostar({ produtos = [], empresa }) {
+export default function PainelPostar({ produtos = [], empresa, datas, fetchAuth, user }) {
   const [copiado, setCopiado] = useState(false);
+  // IA — gera legenda otimizada pro Instagram via OpenAI no backend.
+  // Fallback: template offline quando OPENAI_API_KEY não tá configurada.
+  const [iaHabilitada, setIaHabilitada] = useState(null); // null = checking
+  const [legendaIA, setLegendaIA] = useState('');
+  const [gerandoIA, setGerandoIA] = useState(false);
+  const [erroIA, setErroIA] = useState(null);
+  const [fonteLegenda, setFonteLegenda] = useState('');
+  const [legendaCopiada, setLegendaCopiada] = useState(false);
+  const httpAuth = fetchAuth || ((url, opts) => fetch(url, opts));
+
+  // Checa status da IA no mount — define o badge ("IA real" vs "Modo offline")
+  useEffect(() => {
+    let vivo = true;
+    fetch('/api/postar/ia-status')
+      .then(r => r.json())
+      .then(j => { if (vivo) setIaHabilitada(!!j.habilitada); })
+      .catch(() => { if (vivo) setIaHabilitada(false); });
+    return () => { vivo = false; };
+  }, []);
 
   const linhas = useMemo(
     () => produtos.filter(p => p && p.nome).map(formatarProduto),
@@ -89,6 +108,63 @@ export default function PainelPostar({ produtos = [], empresa }) {
   const falarTudo = () => {
     if (linhas.length === 0) return;
     falar('Ofertas imperdíveis. ' + linhas.join('. ') + '. Atenção nos valores válidos no combo.');
+  };
+
+  const gerarLegendaIA = async () => {
+    if (!user) { alert('Faça login pra usar a IA.'); return; }
+    if (produtos.filter(p => p && p.nome).length === 0) {
+      alert('Adicione produtos no encarte antes de gerar a legenda.');
+      return;
+    }
+    setGerandoIA(true);
+    setErroIA(null);
+    try {
+      const r = await httpAuth('/api/postar/gerar-legenda', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          produtos: produtos.filter(p => p && p.nome).map(p => ({
+            nome: p.nome,
+            preco: p.preco || '',
+            precoDe: p.precoDe || '',
+            unidadeAbrev: p.unidadeAbrev || '',
+            marca: p.marca || '',
+          })),
+          empresa: { nome: empresa?.nome || '', endereco: empresa?.endereco || '' },
+          datas: { dataInicio: datas?.dataInicio || '', dataFinal: datas?.dataFinal || '' },
+          segmento: empresa?.segmento || '',
+        }),
+      });
+      const json = await r.json();
+      if (!r.ok) {
+        setErroIA(json.error || `Erro (status ${r.status})`);
+        return;
+      }
+      setLegendaIA(json.legenda || '');
+      setFonteLegenda(json.fonte || '');
+      if (json.aviso) setErroIA(json.aviso); // aviso não é fatal — mostra mas legenda existe
+    } catch (e) {
+      setErroIA('Erro de rede: ' + e.message);
+    } finally {
+      setGerandoIA(false);
+    }
+  };
+
+  const copiarLegendaIA = async () => {
+    if (!legendaIA) return;
+    try {
+      await navigator.clipboard.writeText(legendaIA);
+      setLegendaCopiada(true);
+      setTimeout(() => setLegendaCopiada(false), 2500);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = legendaIA;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); setLegendaCopiada(true); setTimeout(() => setLegendaCopiada(false), 2500); }
+      catch { alert('Não foi possível copiar.'); }
+      ta.remove();
+    }
   };
 
   return (
@@ -161,6 +237,59 @@ export default function PainelPostar({ produtos = [], empresa }) {
           </button>
         </div>
       )}
+
+      {/* === Bloco de IA: legenda otimizada pro Instagram === */}
+      <div className="pp-ia-bloco">
+        <div className="pp-ia-header">
+          <div>
+            <h3 className="pp-ia-titulo">✨ Legenda para Instagram</h3>
+            <p className="pp-ia-sub">
+              IA gera uma legenda otimizada (chamativa, com emojis e hashtags) baseada nos seus produtos.
+            </p>
+          </div>
+          {iaHabilitada !== null && (
+            <span className={`pp-ia-badge ${iaHabilitada ? 'on' : 'off'}`}>
+              {iaHabilitada ? '🤖 IA real' : '📝 Modo offline'}
+            </span>
+          )}
+        </div>
+
+        <button
+          type="button"
+          className="pp-ia-btn"
+          onClick={gerarLegendaIA}
+          disabled={gerandoIA || linhas.length === 0}
+        >
+          {gerandoIA ? (
+            <>⏳ Gerando legenda...</>
+          ) : legendaIA ? (
+            <>🔄 Gerar outra legenda</>
+          ) : (
+            <>✨ Gerar legenda com IA</>
+          )}
+        </button>
+
+        {erroIA && (
+          <div className="pp-ia-aviso">{erroIA}</div>
+        )}
+
+        {legendaIA && (
+          <div className="pp-ia-resultado">
+            <pre className="pp-ia-texto">{legendaIA}</pre>
+            <div className="pp-ia-acoes">
+              <button
+                className={`pp-btn-copiar ${legendaCopiada ? 'copiado' : ''}`}
+                onClick={copiarLegendaIA}
+              >
+                {legendaCopiada ? '✓ Copiado!' : '📋 Copiar legenda'}
+              </button>
+              {fonteLegenda && (
+                <small className="pp-ia-fonte">Fonte: {fonteLegenda}</small>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

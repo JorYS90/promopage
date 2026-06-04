@@ -34,6 +34,7 @@ const seedImagensPopulares = require('./seed-imagens-populares');
 const cacheImagens = require('./db/cache-imagens');
 const moderacao = require('./lib/moderacao');
 const { enviarSolicitacaoTema } = require('./lib/email');
+const { gerarLegendaInstagram, temApiKey: temOpenAIKey } = require('./lib/openai');
 
 // E-mail do ADMIN que recebe as solicitações de tema. Configurável via env
 // (ADMIN_EMAIL). Placeholder por enquanto — trocar quando o cliente definir.
@@ -1032,6 +1033,33 @@ app.post('/api/solicitacoes-tema', optionalAuth, async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
+});
+
+// ---------- IA: gerar legenda pra Instagram a partir do encarte ----------
+// POST /api/postar/gerar-legenda
+// body: { produtos: [...], empresa: {...}, datas: {...}, segmento: '' }
+// resp: { legenda: '...', fonte: 'openai:gpt-4o-mini' | 'template-offline' | 'template-fallback', aviso?: '...' }
+//
+// requireAuth — features de IA só pra logados (rate limit natural via login).
+app.post('/api/postar/gerar-legenda', requireAuth, async (req, res) => {
+  try {
+    const { produtos = [], empresa = {}, datas = {}, segmento = '' } = req.body || {};
+    if (!Array.isArray(produtos)) {
+      return res.status(400).json({ error: 'produtos deve ser um array' });
+    }
+    const resultado = await gerarLegendaInstagram({ produtos, empresa, datas, segmento });
+    console.log(`[ia-legenda] user=${req.user?.id} fonte=${resultado.fonte} produtos=${produtos.length}`);
+    res.json(resultado);
+  } catch (e) {
+    console.error('[ia-legenda] erro:', e?.message || e);
+    res.status(500).json({ error: e?.message || 'erro desconhecido' });
+  }
+});
+
+// GET /api/postar/ia-status — frontend descobre se IA real está habilitada
+// (pra mostrar badge "IA real" vs "modo offline" no botão)
+app.get('/api/postar/ia-status', (req, res) => {
+  res.json({ habilitada: temOpenAIKey() });
 });
 
 // ---------- Templates ----------

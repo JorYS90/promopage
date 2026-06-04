@@ -1,6 +1,7 @@
 const ABAS = [
   { id: 'produtos', label: 'Produtos', icon: '+', habilitado: true },
   { id: 'temas', label: 'Temas', icon: '🎨', habilitado: true },
+  { id: 'agenda', label: 'Agenda', icon: '🗓️', habilitado: true },
   { id: 'datas', label: 'Datas', icon: '📅', habilitado: true },
   { id: 'logo', label: 'Sua Logo', icon: '©', habilitado: true },
   { id: 'empresa', label: 'Empresa', icon: '🏪', habilitado: true },

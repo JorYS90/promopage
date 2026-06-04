@@ -10,6 +10,7 @@ import PainelTemas from './components/PainelTemas.jsx';
 import PainelProdutos from './components/PainelProdutos.jsx';
 import PainelEmpresa from './components/PainelEmpresa.jsx';
 import PainelDatas from './components/PainelDatas.jsx';
+import PainelAgenda from './components/PainelAgenda.jsx';
 import PainelLogo from './components/PainelLogo.jsx';
 import PainelFontes from './components/PainelFontes.jsx';
 import PainelPostar from './components/PainelPostar.jsx';
@@ -849,6 +850,44 @@ export default function App() {
         {aba === 'datas' && (
           <PainelDatas aoAtualizar={setDatas} userId={auth.user?.id || null} />
         )}
+        {aba === 'agenda' && (
+          <PainelAgenda
+            aoTrocarAba={setAba}
+            aoCriarEncarte={(item) => {
+              // Pré-preenche datas do encarte com data sugerida (item.dataEfetiva).
+              // Usuário escolhe produtos e o restante na aba Produtos.
+              try {
+                const userId = auth.user?.id || 'anon';
+                const key = `encarte-builder:datas:${userId}`;
+                const raw = localStorage.getItem(key);
+                const datasAtuais = raw ? JSON.parse(raw) : {};
+                // Define janela de campanha: data sugerida ± 3 dias
+                const d = item.dataEfetiva;
+                const inicio = new Date(d); inicio.setDate(inicio.getDate() - 3);
+                const fim = new Date(d); fim.setDate(fim.getDate() + 3);
+                const iso = (x) => x.toISOString().slice(0, 10);
+                const novoEstado = {
+                  ...datasAtuais,
+                  dataInicio: iso(inicio),
+                  dataFinal: iso(fim),
+                  frasePromocional: item.sugestao || '',
+                  mostrar: {
+                    datas: true,
+                    enquantoDurarem: false,
+                    imagensIlustrativas: true,
+                    advertenciaMedicamento: false,
+                    frasePromocional: true,
+                    ...(datasAtuais.mostrar || {}),
+                  },
+                };
+                localStorage.setItem(key, JSON.stringify(novoEstado));
+                setDatas(novoEstado);
+              } catch (e) {
+                console.warn('[PainelAgenda] falha ao pré-preencher datas:', e);
+              }
+            }}
+          />
+        )}
         {aba === 'logo' && (
           <PainelLogo
             aoAtualizar={setLogo}
@@ -861,7 +900,14 @@ export default function App() {
           <PainelFontes aoAtualizar={setFontes} userId={auth.user?.id || null} />
         )}
         {aba === 'postar' && (
-          <PainelPostar produtos={produtos} empresa={empresa} nomeProjeto={nomeProjeto} />
+          <PainelPostar
+            produtos={produtos}
+            empresa={empresa}
+            datas={datas}
+            nomeProjeto={nomeProjeto}
+            fetchAuth={auth.fetchAuth}
+            user={auth.user}
+          />
         )}
         {aba === 'encarte' && (
           <PainelEncarte
