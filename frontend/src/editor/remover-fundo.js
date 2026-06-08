@@ -77,16 +77,25 @@ async function removerFundoChromaKey(blob, opts = {}) {
   ctx.drawImage(img, 0, 0);
 
   const fundo = analisarFundo(ctx, W, H);
-  if (fundo.variacao > 25) {
+  // Threshold relaxado em 2026-06-04: era 25 (muito conservador — fotos de catálogo
+  // com sombra suave ou JPG comprimido têm variação 25-50 e o chroma desistia,
+  // deixando fundo branco visível atrás dos produtos no encarte sobre tema colorido).
+  // Agora aceita até 50 e escalona a tolerância pra capturar mais.
+  if (fundo.variacao > 50) {
     return { sucesso: false, motivo: 'fundo-nao-uniforme', variacao: fundo.variacao };
   }
 
-  // Tolerância conservadora — preserva mais do produto.
-  // Reduzida em 2026-05-17 após caso Nutella: iluminação criava "ponte de cor"
-  // amarelo-pálido entre fundo e branco do produto, e o flood fill seguia.
-  // Trade-off: pode sobrar mais fundo grudado no contorno, mas preserva o produto.
-  // User pode polir com IA (botão "Tentar IA") nos casos difíceis.
-  const tolBase = opts.tolerancia ?? (fundo.variacao < 5 ? 24 : 18);
+  // Tolerância ESCALONADA pela variação do fundo — quanto mais variado o fundo
+  // (sombras, JPG artifact, gradient suave), maior precisa ser a tolerância pra
+  // o flood-fill capturar todo o fundo sem deixar resíduos.
+  // Trade-off: tolerância alta pode invadir bordas do produto. NÚCLEO PROTEGIDO
+  // (tolNucleo abaixo) salvaguarda áreas internas com cor distinta.
+  const tolBase = opts.tolerancia ?? (
+    fundo.variacao < 5  ? 24 :  // fundo super uniforme — agressivo
+    fundo.variacao < 15 ? 18 :  // fundo normal limpo
+    fundo.variacao < 30 ? 28 :  // sombra suave / iluminação irregular
+                          38    // JPG comprimido / gradient suave
+  );
 
   // NÚCLEO PROTEGIDO: pixels com distância de cor MUITO grande do fundo são
   // garantidamente parte do produto e nunca podem virar fundo, mesmo cercados.
