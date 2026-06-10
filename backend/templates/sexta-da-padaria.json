@@ -27,11 +27,12 @@
     "textoPreco": "#ffffff",
     "textoPrecoDestaque": "#ffffff",
     "tagPreco": "#fff9f0",
-    "balaoOferta": "/uploads/1778683105479-FjVpaq.png"
+    "balaoOferta": "/uploads/baloes/09_cinza/09_cinza_01_F5F5F5.png"
   },
   "fundoEncarte": {
     "tipo": "cor",
     "cor": "#ffffff"
   },
-  "criadoEm": "2026-05-19T00:47:44.350Z"
+  "criadoEm": "2026-05-19T00:47:44.350Z",
+  "atualizadoEm": "2026-06-10T21:12:11.104Z"
 }

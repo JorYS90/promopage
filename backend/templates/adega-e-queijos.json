@@ -27,12 +27,13 @@
     "textoNome": "#000000",
     "textoPreco": "#000000",
     "tagPreco": "#180701",
-    "balaoOferta": "/uploads/1777746611068-9hmn0e.png"
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_30_301803.png"
   },
   "fundoEncarte": {
     "tipo": "cor",
     "cor": "#2a0001"
   },
   "criadoEm": "2026-05-03T02:59:27.578Z",
-  "gratis": false
+  "gratis": false,
+  "atualizadoEm": "2026-06-10T21:12:11.090Z"
 }

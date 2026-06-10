@@ -1,0 +1,38 @@
+{
+  "nome": "Festa Junina",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/festa-junina-fundo.png",
+    "imagemTitulo": "/uploads/ai/festa-junina-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#472406",
+    "faixaSuperior": "#fd8114"
+  },
+  "paleta": {
+    "primaria": "#f62930",
+    "secundaria": "#fd8114",
+    "fundoBox": "#fff8e1",
+    "fundoBoxSecundario": "#fd8114",
+    "textoNome": "#3c2514",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffe16b",
+    "tagPreco": "#f62930",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_14_F62930.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#fff8e1"
+  },
+  "criadoEm": "2026-06-10T20:55:00.000Z",
+  "atualizadoEm": "2026-06-10T21:16:11.824Z"
+}

@@ -28,12 +28,13 @@
     "textoPreco": "#000000",
     "textoPrecoDestaque": "#000000",
     "tagPreco": "#e3e3e3",
-    "balaoOferta": "/uploads/1778180210097-_lz0-T.png"
+    "balaoOferta": "/uploads/baloes/09_cinza/09_cinza_03_E5E5E5.png"
   },
   "fundoEncarte": {
     "tipo": "cor",
     "cor": "#ffffff"
   },
   "criadoEm": "2026-05-07T19:17:20.586Z",
-  "gratis": false
+  "gratis": false,
+  "atualizadoEm": "2026-06-10T21:12:11.106Z"
 }

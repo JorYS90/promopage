@@ -13,9 +13,16 @@ dist/
 # Docker Compose override local — cada dev resolve seus conflitos de porta
 docker-compose.override.yml
 
-# Uploads de usuário (NÃO commitar)
+# Uploads de usuário (NÃO commitar) — exceto assets do produto (balões, imagens IA dos temas)
 backend/uploads/*
 !backend/uploads/.gitkeep
+!backend/uploads/baloes/
+backend/uploads/baloes/*
+!backend/uploads/baloes/**/
+!backend/uploads/baloes/**/*.png
+!backend/uploads/baloes/INDEX.md
+!backend/uploads/ai/
+!backend/uploads/ai/*.png
 
 # Projetos salvos (dados de usuário)
 backend/projetos/*

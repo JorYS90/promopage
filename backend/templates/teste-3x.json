@@ -28,11 +28,12 @@
     "textoPreco": "#ffffff",
     "textoPrecoDestaque": "#ffffff",
     "tagPreco": "#ef0000",
-    "balaoOferta": "/uploads/1777687888768-k6jfAv.png"
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_17_E90A11.png"
   },
   "fundoEncarte": {
     "tipo": "cor",
     "cor": "#ffffff"
   },
-  "criadoEm": "2026-05-13T19:36:02.879Z"
+  "criadoEm": "2026-05-13T19:36:02.879Z",
+  "atualizadoEm": "2026-06-10T21:12:11.106Z"
 }

@@ -28,12 +28,13 @@
     "textoPreco": "#000000",
     "textoPrecoDestaque": "#1f2937",
     "tagPreco": "#737a10",
-    "balaoOferta": "/uploads/1778501671089-AFDnFS.png"
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_25_7B6302.png"
   },
   "fundoEncarte": {
     "tipo": "cor",
     "cor": "#2c2e10"
   },
   "criadoEm": "2026-05-11T12:14:33.468Z",
-  "gratis": false
+  "gratis": false,
+  "atualizadoEm": "2026-06-10T21:12:11.095Z"
 }

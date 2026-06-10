@@ -1,0 +1,38 @@
+{
+  "nome": "Festival da Carne",
+  "categoria": "Açougue",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/festival-carne-fundo.png",
+    "imagemTitulo": "/uploads/ai/festival-carne-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#3e0b0b",
+    "faixaSuperior": "#dc2626"
+  },
+  "paleta": {
+    "primaria": "#dc2626",
+    "secundaria": "#dc2626",
+    "fundoBox": "#fef3c7",
+    "fundoBoxSecundario": "#dc2626",
+    "textoNome": "#1f2937",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#fbbf24",
+    "tagPreco": "#dc2626",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_15_F51B22.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#fef3c7"
+  },
+  "criadoEm": "2026-06-10T16:50:00.000Z",
+  "atualizadoEm": "2026-06-10T21:16:11.824Z"
+}

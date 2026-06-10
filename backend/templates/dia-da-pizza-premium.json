@@ -1,0 +1,38 @@
+{
+  "nome": "Dia da Pizza Premium",
+  "categoria": "Pizza",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/dia-da-pizza-premium-fundo.png",
+    "imagemTitulo": "/uploads/ai/dia-da-pizza-premium-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#36100c",
+    "faixaSuperior": "#c0392b"
+  },
+  "paleta": {
+    "primaria": "#c0392b",
+    "secundaria": "#c0392b",
+    "fundoBox": "#fff8e1",
+    "fundoBoxSecundario": "#c0392b",
+    "textoNome": "#2c1810",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#fbbf24",
+    "tagPreco": "#c0392b",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_20_BE090F.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#fff8e1"
+  },
+  "criadoEm": "2026-06-10T21:00:00.000Z",
+  "atualizadoEm": "2026-06-10T21:16:11.822Z"
+}

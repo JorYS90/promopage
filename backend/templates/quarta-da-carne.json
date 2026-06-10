@@ -28,12 +28,13 @@
     "textoPreco": "#ffffff",
     "textoPrecoDestaque": "#f2f2f2",
     "tagPreco": "#67373a",
-    "balaoOferta": "/uploads/1777821557066-X_u7OD.png"
+    "balaoOferta": "/uploads/baloes/10_marrom/10_marrom_24_6C3E1D.png"
   },
   "fundoEncarte": {
     "tipo": "cor",
     "cor": "#0e0b08"
   },
   "criadoEm": "2026-05-03T16:42:16.285Z",
-  "gratis": false
+  "gratis": false,
+  "atualizadoEm": "2026-06-10T21:12:11.099Z"
 }
