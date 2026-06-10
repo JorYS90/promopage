@@ -20,6 +20,56 @@ import {
 const MM_TO_PX_PREVIEW = 96 / 25.4;  // ~3.78 px/mm pra preview tela
 const ESC_KEY = 27;
 
+// === Componente: ícone SVG da grade (cells × rows) que representa a folha ===
+// Mostra visualmente como as artes ficarão distribuídas: 2 = 1×2 vertical,
+// 4 = 2×2, 6 = 2×3, etc. Adapta automaticamente à orientação (paisagem transpõe).
+function IconeGradeArtes({ qtd, orientacao, ativo }) {
+  // Mapeia qtd → combo (cols × rows) na orientação retrato. Paisagem transpõe.
+  const COMBOS_ICONE = {
+    1:  { cols: 1, rows: 1 },
+    2:  { cols: 1, rows: 2 },
+    4:  { cols: 2, rows: 2 },
+    6:  { cols: 2, rows: 3 },
+    9:  { cols: 3, rows: 3 },
+    12: { cols: 3, rows: 4 },
+    16: { cols: 4, rows: 4 },
+    20: { cols: 4, rows: 5 },
+  };
+  const baseCombo = COMBOS_ICONE[qtd] || { cols: 1, rows: qtd };
+  const combo = orientacao === 'paisagem'
+    ? { cols: baseCombo.rows, rows: baseCombo.cols }
+    : baseCombo;
+  // Dimensões SVG — proporção da folha (retrato = mais alto, paisagem = mais largo)
+  const W = orientacao === 'paisagem' ? 30 : 24;
+  const H = orientacao === 'paisagem' ? 24 : 30;
+  const padding = 2;
+  const gap = 1;
+  const innerW = W - padding * 2;
+  const innerH = H - padding * 2;
+  const cellW = (innerW - gap * (combo.cols - 1)) / combo.cols;
+  const cellH = (innerH - gap * (combo.rows - 1)) / combo.rows;
+  const corBorda = ativo ? '#60a5fa' : 'rgba(148,163,184,0.5)';
+  const corCell = ativo ? 'rgba(59,130,246,0.7)' : 'rgba(148,163,184,0.25)';
+  return (
+    <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} fill="none">
+      {/* Contorno da folha */}
+      <rect x="0.75" y="0.75" width={W - 1.5} height={H - 1.5} rx="1.5"
+        stroke={corBorda} strokeWidth="1" fill={ativo ? 'rgba(59,130,246,0.06)' : 'transparent'} />
+      {/* Células da grade */}
+      {Array.from({ length: combo.rows }).map((_, r) =>
+        Array.from({ length: combo.cols }).map((_, c) => (
+          <rect key={`${r}-${c}`}
+            x={padding + c * (cellW + gap)}
+            y={padding + r * (cellH + gap)}
+            width={cellW} height={cellH}
+            fill={corCell} rx="0.5"
+          />
+        ))
+      )}
+    </svg>
+  );
+}
+
 export default function ModalGestorImpressao({
   aberto, aoFechar,
   gerarPngArte,                // (numeroPagina) => Promise<dataUrl>
@@ -269,6 +319,7 @@ export default function ModalGestorImpressao({
                 <div className="gi-grid-papel">
                   {Object.entries(PAPEIS).map(([id, p]) => (
                     <button key={id}
+                      data-papel={id}
                       className={`gi-papel-card ${papel === id ? 'ativo' : ''}`}
                       onClick={() => setPapel(id)}
                       type="button">
@@ -305,7 +356,10 @@ export default function ModalGestorImpressao({
                       className={`gi-qtd-card ${qtdArtes === q.qtd ? 'ativo' : ''}`}
                       onClick={() => setQtdArtes(q.qtd)}>
                       {q.popular && <span className="gi-pop">Popular</span>}
-                      <div className="gi-qtd-icone">{q.qtd}</div>
+                      <div className="gi-qtd-grade">
+                        <IconeGradeArtes qtd={q.qtd} orientacao={orientacao} ativo={qtdArtes === q.qtd} />
+                      </div>
+                      <div className="gi-qtd-num">{q.qtd}</div>
                     </button>
                   ))}
                 </div>

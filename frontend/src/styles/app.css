@@ -8217,14 +8217,19 @@ button { font-family: inherit; }
 }
 .gi-papel-card {
   padding: 12px 8px;
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
 }
 .gi-papel-icone {
-  width: 26px; height: 34px;
   background: rgba(255,255,255,0.05);
   border: 1.5px solid rgba(148,163,184,0.4);
   border-radius: 2px;
+  transition: all 0.15s;
 }
+/* Tamanhos proporcionais ao papel real */
+.gi-papel-card[data-papel="A4"] .gi-papel-icone    { width: 24px; height: 34px; } /* 210×297 */
+.gi-papel-card[data-papel="A3"] .gi-papel-icone    { width: 28px; height: 40px; } /* 297×420 — maior */
+.gi-papel-card[data-papel="A5"] .gi-papel-icone    { width: 20px; height: 28px; } /* 148×210 — menor */
+.gi-papel-card[data-papel="CARTA"] .gi-papel-icone { width: 26px; height: 34px; } /* 216×279 */
 .gi-papel-card.ativo .gi-papel-icone {
   border-color: #3b82f6;
   background: rgba(59,130,246,0.15);
@@ -8259,10 +8264,23 @@ button { font-family: inherit; }
 }
 .gi-qtd-card {
   position: relative;
-  padding: 14px 6px;
-  display: flex; align-items: center; justify-content: center;
-  min-height: 60px;
+  padding: 10px 6px 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  min-height: 76px;
 }
+.gi-qtd-grade {
+  display: flex; align-items: center; justify-content: center;
+  height: 34px;
+}
+.gi-qtd-num {
+  font-size: 13px; font-weight: 800; color: #94a3b8;
+  line-height: 1;
+}
+.gi-qtd-card.ativo .gi-qtd-num {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(59,130,246,0.5);
+}
+/* Legacy (caso ainda use em algum lugar) */
 .gi-qtd-icone { font-size: 18px; font-weight: 800; color: #94a3b8; }
 .gi-qtd-card.ativo .gi-qtd-icone {
   color: #fff;
