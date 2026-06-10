@@ -120,33 +120,36 @@ export function calcularLayoutImpressao({
   const areaW = papelW - margens.left - margens.right;
   const areaH = papelH - margens.top - margens.bottom;
 
-  // Quando aba de dobra está ativa, reservamos `larguraAbaDobra` mm de cada
-  // célula pra faixa lateral. Isso REDUZ a largura útil da arte mantendo
-  // mesma altura. Pra cálculo de aspect, a arte fica numa célula MENOR.
   const reservaAba = abaDobra ? larguraAbaDobra : 0;
 
-  // Pra fazer o combo, considera que cada célula vai ter (celula.w - reservaAba)
-  // disponível pra arte. Mas pra simplificar, calcula combo na área toda e
-  // depois deduz a aba da arte.
-  const combo = escolherMelhorCombo(areaW, areaH, qtdArtes, arteAspectRatio, espacamento);
-
-  // Largura/altura de cada CÉLULA na folha
-  const celulaW = (areaW - espacamento * (combo.cols - 1)) / combo.cols;
-  const celulaH = (areaH - espacamento * (combo.rows - 1)) / combo.rows;
-
-  // Área disponível pra arte DENTRO de cada célula (descontando a aba se houver)
+  // 🔄 ROTAÇÃO AUTOMÁTICA pra melhor aproveitamento da folha:
+  // Avalia tanto o aspect ORIGINAL quanto o ROTACIONADO 90° e escolhe o que
+  // dá maior área de arte. Ex: encarte horizontal (16:9) em folha A4 retrato
+  // (1:1.4): se rotacionar, ganha mais área. Espelha o comportamento qrofertas.
+  const tentarRotacionar = (aspect) => {
+    const combo = escolherMelhorCombo(areaW, areaH, qtdArtes, aspect, espacamento);
+    const celW = (areaW - espacamento * (combo.cols - 1)) / combo.cols;
+    const celH = (areaH - espacamento * (combo.rows - 1)) / combo.rows;
+    const arteAreaW = celW - reservaAba;
+    const arteAreaH = celH;
+    let aw, ah;
+    if (aspect > arteAreaW / arteAreaH) { aw = arteAreaW; ah = aw / aspect; }
+    else { ah = arteAreaH; aw = ah * aspect; }
+    return { combo, celW, celH, arteW: aw, arteH: ah, area: aw * ah };
+  };
+  const normal     = tentarRotacionar(arteAspectRatio);
+  const rotacionado = tentarRotacionar(1 / arteAspectRatio);
+  // Só rotaciona se ganho de área for significativo (>5%). Evita rotações
+  // mínimas que confundem o user.
+  const usarRotacao = rotacionado.area > normal.area * 1.05;
+  const escolhido = usarRotacao ? rotacionado : normal;
+  const combo = escolhido.combo;
+  const celulaW = escolhido.celW;
+  const celulaH = escolhido.celH;
+  const arteW = escolhido.arteW;
+  const arteH = escolhido.arteH;
   const arteAreaW = celulaW - reservaAba;
   const arteAreaH = celulaH;
-
-  // Re-calcula tamanho final da arte respeitando aspect ratio na área reduzida
-  let arteW, arteH;
-  if (arteAspectRatio > arteAreaW / arteAreaH) {
-    arteW = arteAreaW;
-    arteH = arteW / arteAspectRatio;
-  } else {
-    arteH = arteAreaH;
-    arteW = arteH * arteAspectRatio;
-  }
 
   // Centraliza arte dentro da área disponível (à esquerda da aba se houver)
   const offsetX = (arteAreaW - arteW) / 2;
@@ -191,6 +194,7 @@ export function calcularLayoutImpressao({
     arteH,
     celulaW,
     celulaH,
+    arteRotacionada: usarRotacao,  // flag pra render rotacionar a arte 90°
     areaUtil: { x: margens.left, y: margens.top, w: areaW, h: areaH },
     posicoes,
   };

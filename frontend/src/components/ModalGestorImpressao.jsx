@@ -133,6 +133,12 @@ export default function ModalGestorImpressao({
     return () => window.removeEventListener('keydown', onKey);
   }, [aberto, gerando, aoFechar]);
 
+  // Cache de PNGs ORIGINAIS (gerados do canvas) e cache de PNGs ROTACIONADOS
+  // (versões rotacionadas 90° pra exibir quando layout.arteRotacionada=true).
+  // Mantemos separado porque o user pode mudar de configuração e queremos
+  // reusar o PNG original (lento de gerar) e só re-rotacionar (rápido).
+  const [pngsRotacionados, setPngsRotacionados] = useState({});
+
   // Carrega PNGs da página preview atual sob demanda (cacheia)
   useEffect(() => {
     if (!aberto || !gerarPngArte) return;
@@ -162,6 +168,27 @@ export default function ModalGestorImpressao({
     return () => { cancelado = true; setCarregandoPreview(false); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [aberto, paginaPreview, qtdArtes, totalArtes, gerarPngArte, pngsCache, modoRepeticao]);
+
+  // Gera versões ROTACIONADAS dos PNGs quando layout.arteRotacionada muda
+  useEffect(() => {
+    if (!layout.arteRotacionada) { setPngsRotacionados({}); return; }
+    const faltam = Object.keys(pngsCache).filter(k => !pngsRotacionados[k]);
+    if (faltam.length === 0) return;
+    let cancelado = false;
+    (async () => {
+      const novos = {};
+      for (const k of faltam) {
+        if (cancelado) break;
+        const png = await rotacionarPng(pngsCache[k], -90);
+        if (png) novos[k] = png;
+      }
+      if (!cancelado && Object.keys(novos).length) {
+        setPngsRotacionados(prev => ({ ...prev, ...novos }));
+      }
+    })();
+    return () => { cancelado = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layout.arteRotacionada, pngsCache]);
 
   // Reseta cache quando modal abre (config pode ter mudado)
   useEffect(() => {
@@ -206,7 +233,11 @@ export default function ModalGestorImpressao({
         }
         if (png && png.length > 200) {
           // Aplica filtro de cor (cinza/PB) via canvas off-screen se necessário
-          const pngFinal = (modoCor === 'colorido') ? png : await aplicarFiltroCor(png, modoCor);
+          let pngFinal = (modoCor === 'colorido') ? png : await aplicarFiltroCor(png, modoCor);
+          // Se rotação automática está ativa, gira o PNG 90° via canvas antes de embarcar
+          if (layout.arteRotacionada) {
+            pngFinal = await rotacionarPng(pngFinal || png, -90);
+          }
           pdf.addImage(pngFinal || png, 'PNG', pos.x, pos.y, pos.w, pos.h);
           // Aba de dobra LATERAL — faixa vertical à direita da arte
           if (abaDobra && pos.abaW > 0) {
@@ -241,13 +272,32 @@ export default function ModalGestorImpressao({
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       const ctx = canvas.getContext('2d');
-      // CSS filters disponíveis no canvas via ctx.filter
       ctx.filter = modo === 'pb'
         ? 'grayscale(1) contrast(1.6) brightness(0.95)'
         : 'grayscale(1)';
       ctx.drawImage(img, 0, 0);
       return canvas.toDataURL('image/png');
     } catch { return null; }
+  }
+
+  // Helper: rotaciona PNG via canvas. graus = -90 (anti-horário) ou 90 (horário).
+  // Usado quando layout.arteRotacionada=true pra aproveitar melhor a folha.
+  async function rotacionarPng(dataUrl, graus) {
+    try {
+      const img = new Image();
+      img.src = dataUrl;
+      await new Promise((res, rej) => { img.onload = res; img.onerror = rej; });
+      const w = img.naturalWidth, h = img.naturalHeight;
+      const canvas = document.createElement('canvas');
+      // Após rotação 90°, dimensões trocam
+      canvas.width = h;
+      canvas.height = w;
+      const ctx = canvas.getContext('2d');
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate((graus * Math.PI) / 180);
+      ctx.drawImage(img, -w / 2, -h / 2);
+      return canvas.toDataURL('image/png');
+    } catch { return dataUrl; }
   }
 
   const salvarPdf = async () => {
@@ -495,7 +545,7 @@ export default function ModalGestorImpressao({
                 pagina={paginaPreview}
                 modoCor={modoCor}
                 abaDobra={abaDobra}
-                pngsCache={pngsCache}
+                pngsCache={layout.arteRotacionada ? pngsRotacionados : pngsCache}
                 numArteParaCelula={numArteParaCelula}
               />
             </div>
@@ -575,7 +625,6 @@ function FolhaPreview({ layout, zoom, pagina, modoCor, abaDobra, pngsCache, numA
                   <small>Carregando...</small>
                 </div>
               )}
-              <div className="gi-arte-num">{numArte}</div>
             </div>
             {/* Aba de dobra LATERAL — só renderiza se abaDobra e pos.abaW>0 */}
             {abaDobra && pos.abaW > 0 && (
