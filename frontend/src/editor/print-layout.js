@@ -32,35 +32,49 @@ export const QUANTIDADES_ARTES = [
   { qtd: 20, label: '20' },
 ];
 
-// Combinações pré-definidas de (cols × rows) por qtd — escolhemos o que melhor
-// aproveita a folha A4. Pra orientações diferentes invertemos cols/rows.
-const COMBOS = {
-  1:  [{ cols: 1, rows: 1 }],
-  2:  [{ cols: 1, rows: 2 }, { cols: 2, rows: 1 }],
-  4:  [{ cols: 2, rows: 2 }],
-  6:  [{ cols: 2, rows: 3 }, { cols: 3, rows: 2 }],
-  9:  [{ cols: 3, rows: 3 }],
-  12: [{ cols: 3, rows: 4 }, { cols: 4, rows: 3 }],
-  16: [{ cols: 4, rows: 4 }],
-  20: [{ cols: 4, rows: 5 }, { cols: 5, rows: 4 }],
-};
+// Gera TODOS os combos viáveis (cols × rows) pra uma quantidade alvo de artes.
+// Inclui:
+//  - Combos divisíveis exatos (cols × rows = qtd)
+//  - Combos com 1-3 células EXTRAS (sobram vazias) — útil quando combo "irregular"
+//    dá muito mais área por arte (ex: 9 artes em 2×5=10 cells pode aproveitar
+//    melhor que 3×3=9 dependendo do aspect)
+// Limitado a max cols/rows = 10 pra evitar combos absurdos tipo 1×20.
+function gerarCombos(qtdAlvo) {
+  const combos = [];
+  const visto = new Set();
+  // Permite até 3 células extras (overflow controlado)
+  for (let total = qtdAlvo; total <= qtdAlvo + 3; total++) {
+    for (let cols = 1; cols <= Math.min(total, 10); cols++) {
+      if (total % cols !== 0) continue;
+      const rows = total / cols;
+      if (rows > 10) continue;
+      const key = `${cols}x${rows}`;
+      if (visto.has(key)) continue;
+      visto.add(key);
+      combos.push({ cols, rows, totalCells: total });
+    }
+  }
+  return combos;
+}
 
 // Calcula o melhor combo (rows × cols) pra dado:
 //  - papel (largura × altura em mm)
 //  - quantidade de artes
 //  - aspect ratio da arte (largura/altura em pixels)
-// Retorna o combo que dá maior área individual por arte (sobra menos espaço).
+// Retorna o combo que dá maior ÁREA POR ARTE, com leve preferência pela qtd
+// exata (penaliza overflow em 5%) pra não escolher combo com sobras só pra
+// arranhar 2% a mais.
 function escolherMelhorCombo(papelW, papelH, qtdArtes, artAspectRatio, espacamento) {
-  const combos = COMBOS[qtdArtes] || [{ cols: 1, rows: qtdArtes }];
+  const combos = gerarCombos(qtdArtes);
   let melhor = null;
-  let maiorArea = 0;
+  let melhorScore = 0;
   for (const c of combos) {
     const arteW = (papelW - espacamento * (c.cols - 1)) / c.cols;
     const arteH = (papelH - espacamento * (c.rows - 1)) / c.rows;
-    // Aplica aspect ratio: se a arte é "mais alta" que a célula, encolhe pela altura.
+    if (arteW <= 0 || arteH <= 0) continue;
+    // Aplica aspect ratio: se arte é "mais larga" que célula, limita por largura.
     let realW, realH;
     if (artAspectRatio > arteW / arteH) {
-      // arte mais larga que célula — limita largura
       realW = arteW;
       realH = realW / artAspectRatio;
     } else {
@@ -68,9 +82,17 @@ function escolherMelhorCombo(papelW, papelH, qtdArtes, artAspectRatio, espacamen
       realW = realH * artAspectRatio;
     }
     const area = realW * realH;
-    if (area > maiorArea) { maiorArea = area; melhor = { ...c, arteW: realW, arteH: realH }; }
+    // Penaliza combo com mais células que o pedido (cada extra = -5% no score).
+    // Faz combo exato ganhar de combo com 1 extra que dá menos que 5% a mais.
+    const extras = c.totalCells - qtdArtes;
+    const penalidade = 1 - extras * 0.05;
+    const score = area * penalidade;
+    if (score > melhorScore) {
+      melhorScore = score;
+      melhor = { cols: c.cols, rows: c.rows, arteW: realW, arteH: realH };
+    }
   }
-  return melhor;
+  return melhor || { cols: 1, rows: qtdArtes, arteW: 0, arteH: 0 };
 }
 
 // Altura padrão da aba de dobra (em mm). Espaço reservado NO TOPO da arte

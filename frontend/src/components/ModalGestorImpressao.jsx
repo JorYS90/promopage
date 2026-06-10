@@ -108,14 +108,20 @@ export default function ModalGestorImpressao({
   }), [papel, orientacao, qtdArtes, margens, espacamento, arteAspect, abaDobra]);
 
   const totalArtes = totalPaginasProjeto;
-  // Quando o projeto tem 1 arte só E repetirArte está on, preenchemos TODAS
-  // as células da folha com a mesma arte (cópias múltiplas). Sai 1 folha só.
-  // Caso contrário, segue sequencial (cada arte uma vez).
-  const modoRepeticao = repetirArte && totalArtes === 1;
-  const totalFolhas = modoRepeticao ? 1 : Math.ceil(totalArtes / qtdArtes);
+  // Repetição cíclica: quando o projeto tem MENOS artes que a quantidade
+  // pedida por folha, ciclamos as artes pra preencher (1,2,3,1,2,3,...).
+  // Ativo quando totalArtes < qtdArtes (ex: 3 artes em 16/folha → 5 cópias
+  // de cada + 1 da arte 1). User pode desligar pelo toggle.
+  const modoRepeticao = repetirArte && totalArtes < qtdArtes;
+  const totalFolhas = modoRepeticao
+    ? 1                                            // 1 folha só, preenchida ciclicamente
+    : Math.ceil(totalArtes / qtdArtes);            // sequencial: várias folhas com artes únicas
   // Mapeia (folha, slot) → número da arte do projeto a renderizar nessa célula
   const numArteParaCelula = (folha, slot) => {
-    if (modoRepeticao) return 1;          // sempre arte 1
+    if (modoRepeticao) {
+      // Cicla: 1, 2, ..., totalArtes, 1, 2, ...
+      return (slot % totalArtes) + 1;
+    }
     const idx = (folha - 1) * qtdArtes + slot + 1;
     return idx > totalArtes ? null : idx; // null = célula vazia
   };
@@ -421,12 +427,17 @@ export default function ModalGestorImpressao({
                 <div className="gi-aviso">
                   ℹ️ <b>Distribuição automática:</b> {layout.rows} × {layout.cols} ({layout.rows * layout.cols} células) no papel {papel} {orientacao}, com aproveitamento máximo da arte.
                 </div>
-                {totalArtes === 1 && qtdArtes > 1 && (
+                {totalArtes < qtdArtes && qtdArtes > 1 && (
                   <div className="gi-toggle-row" style={{ marginTop: 10 }}
                        onClick={() => setRepetirArte(v => !v)}>
                     <div className="gi-toggle-txt">
-                      <div className="gi-toggle-titulo">Repetir arte na folha</div>
-                      <div className="gi-toggle-sub">Seu encarte tem só 1 arte. Quer imprimir múltiplas cópias da MESMA arte numa folha (economia de papel)?</div>
+                      <div className="gi-toggle-titulo">Repetir artes pra preencher a folha</div>
+                      <div className="gi-toggle-sub">
+                        Seu encarte tem <b>{totalArtes} arte{totalArtes !== 1 ? 's' : ''}</b> e a folha cabe <b>{qtdArtes}</b>.
+                        {repetirArte
+                          ? ` Ativo: ciclamos as ${totalArtes} arte${totalArtes !== 1 ? 's' : ''} pra preencher todas as ${qtdArtes} células.`
+                          : ' Desativado: deixa células vazias após esgotar as artes.'}
+                      </div>
                     </div>
                     <div className={`gi-switch ${repetirArte ? 'on' : ''}`}>
                       <div className="gi-switch-knob" />

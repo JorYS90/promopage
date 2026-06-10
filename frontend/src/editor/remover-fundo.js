@@ -62,6 +62,55 @@ function analisarFundo(ctx, w, h) {
   return { r, g, b, variacao, claro: (r + g + b) / 3 > 200 };
 }
 
+// ---------- Detecção de bordas (Sobel) ----------
+// Cria um mapa de bordas físicas do produto: pixels com gradiente alto
+// (mudança brusca de cor) viram "bordas". Usado como CINTURÃO PROTETOR no
+// flood-fill — o BFS não pode atravessar uma borda detectada, mesmo que o
+// pixel seja "parecido com fundo".
+//
+// Resolve o problema clássico de produtos BRANCOS sobre fundo BRANCO:
+// embalagem da lasanha/sache tem áreas brancas que casam com o fundo, mas
+// SEMPRE tem uma BORDA visível (mesmo sutil) ao redor do produto. A borda
+// para o flood antes dele invadir as áreas brancas internas.
+//
+// Algoritmo: para cada pixel, calcula a magnitude do gradiente em luminância
+// usando vizinhos imediatos (Sobel simplificado 3x3). Bordas dilatadas 1px
+// pra garantir continuidade (sem buracos pra o flood escapar).
+function detectarBordas(px, W, H, threshold = 20) {
+  const lum = new Float32Array(W * H);
+  for (let idx = 0; idx < W * H; idx++) {
+    const i = idx * 4;
+    lum[idx] = 0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2];
+  }
+  const bordas = new Uint8Array(W * H);
+  for (let y = 1; y < H - 1; y++) {
+    for (let x = 1; x < W - 1; x++) {
+      const idx = y * W + x;
+      // Sobel simplificado
+      const gx = -lum[idx - W - 1] + lum[idx - W + 1]
+                 - 2 * lum[idx - 1] + 2 * lum[idx + 1]
+                 - lum[idx + W - 1] + lum[idx + W + 1];
+      const gy = -lum[idx - W - 1] - 2 * lum[idx - W] - lum[idx - W + 1]
+                 + lum[idx + W - 1] + 2 * lum[idx + W] + lum[idx + W + 1];
+      const grad = Math.sqrt(gx * gx + gy * gy);
+      if (grad > threshold) bordas[idx] = 1;
+    }
+  }
+  // Dilatação 1px — engrossa as bordas pra impedir flood "esgueirar"
+  const dilatadas = new Uint8Array(W * H);
+  for (let y = 1; y < H - 1; y++) {
+    for (let x = 1; x < W - 1; x++) {
+      const idx = y * W + x;
+      if (bordas[idx]
+          || bordas[idx - 1] || bordas[idx + 1]
+          || bordas[idx - W] || bordas[idx + W]) {
+        dilatadas[idx] = 1;
+      }
+    }
+  }
+  return dilatadas;
+}
+
 // ---------- Flood fill a partir das bordas ----------
 // Remove APENAS pixels conectados às bordas que combinam com a cor de fundo.
 // Pixels brancos DENTRO do produto (texto, áreas claras) ficam preservados.
@@ -108,6 +157,14 @@ async function removerFundoChromaKey(blob, opts = {}) {
   // mask: 0=não testado, 1=fundo, 2=produto, 3=produto-protegido (núcleo)
   const mask = new Uint8Array(W * H);
 
+  // Detecta bordas físicas do produto pra usar como CINTURÃO PROTETOR.
+  // Bordas baixas (15) capturam até transições suaves entre branco-do-fundo
+  // e branco-do-produto (que sempre tem alguma sombra ou linha sutil).
+  // Pode ser desativado via opts.detectarBordas=false (testes A/B).
+  const usarBordas = opts.detectarBordas !== false;
+  const limiarBorda = opts.limiarBorda ?? 15;
+  const bordas = usarBordas ? detectarBordas(px, W, H, limiarBorda) : null;
+
   const distanciaCor = (idx) => {
     const i = idx * 4;
     const dr = px[i]     - fundo.r;
@@ -132,6 +189,13 @@ async function removerFundoChromaKey(blob, opts = {}) {
   while (cabeca < fila.length) {
     const idx = fila[cabeca++];
     if (mask[idx]) continue;
+    // 🛡️ CINTURÃO DE BORDA: se este pixel é uma borda detectada, marca como
+    // produto e PARA de expandir nessa direção. Impede o flood de invadir
+    // áreas internas brancas do produto (caso lasanha/sache brancos).
+    if (bordas && bordas[idx]) {
+      mask[idx] = 2;
+      continue;
+    }
     if (ehFundo(idx, tolBase)) {
       mask[idx] = 1;
       const x = idx % W;
