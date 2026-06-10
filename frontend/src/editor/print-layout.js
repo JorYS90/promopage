@@ -73,6 +73,11 @@ function escolherMelhorCombo(papelW, papelH, qtdArtes, artAspectRatio, espacamen
   return melhor;
 }
 
+// Largura padrão da aba de dobra (em mm). Espaço reservado na LATERAL da arte
+// pra faixa "Dobre Aqui" — quando dobrada e colada, vira gancho pra pendurar
+// o cartaz na gôndola do supermercado. Padrão 12mm (~1.2cm).
+export const LARGURA_ABA_DOBRA_MM = 12;
+
 // === API principal: calcula tudo o que o PDF precisa saber ===
 //
 // Entrada:
@@ -82,15 +87,20 @@ function escolherMelhorCombo(papelW, papelH, qtdArtes, artAspectRatio, espacamen
 //   - margens: { top, bottom, left, right } em mm
 //   - espacamento: mm entre as artes
 //   - arteAspectRatio: width/height da arte original (px)
+//   - abaDobra: bool — reserva espaço lateral pra faixa "Dobre Aqui"
+//   - larguraAbaDobra: mm de largura da aba (default 12)
 //
 // Saída:
 //   {
 //     papel: { largura, altura },         // mm
-//     orientacao, qtdArtes, margens, espacamento,
+//     orientacao, qtdArtes, margens, espacamento, abaDobra,
 //     cols, rows,                          // distribuição da grade
 //     arteW, arteH,                        // mm de cada arte (já com aspect ratio)
 //     areaUtil: { x, y, w, h },           // área útil dentro das margens (mm)
-//     posicoes: [{ x, y, w, h, idx }],   // posição de cada arte na folha (mm)
+//     posicoes: [{                         // posição de cada arte na folha (mm)
+//       x, y, w, h, idx,                  // arte propriamente dita
+//       abaX, abaY, abaW, abaH,           // posição da faixa "Dobre Aqui" (se abaDobra)
+//     }],
 //   }
 export function calcularLayoutImpressao({
   papel = 'A4',
@@ -99,6 +109,8 @@ export function calcularLayoutImpressao({
   margens = MARGENS_PRESETS.normal,
   espacamento = 0,
   arteAspectRatio = 794 / 1123,  // default A4 retrato em px
+  abaDobra = false,
+  larguraAbaDobra = LARGURA_ABA_DOBRA_MM,
 }) {
   const p = PAPEIS[papel] || PAPEIS.A4;
   const isRetrato = orientacao !== 'paisagem';
@@ -108,26 +120,60 @@ export function calcularLayoutImpressao({
   const areaW = papelW - margens.left - margens.right;
   const areaH = papelH - margens.top - margens.bottom;
 
+  // Quando aba de dobra está ativa, reservamos `larguraAbaDobra` mm de cada
+  // célula pra faixa lateral. Isso REDUZ a largura útil da arte mantendo
+  // mesma altura. Pra cálculo de aspect, a arte fica numa célula MENOR.
+  const reservaAba = abaDobra ? larguraAbaDobra : 0;
+
+  // Pra fazer o combo, considera que cada célula vai ter (celula.w - reservaAba)
+  // disponível pra arte. Mas pra simplificar, calcula combo na área toda e
+  // depois deduz a aba da arte.
   const combo = escolherMelhorCombo(areaW, areaH, qtdArtes, arteAspectRatio, espacamento);
 
-  // Largura/altura de cada CÉLULA (a arte preenche dentro respeitando aspect)
+  // Largura/altura de cada CÉLULA na folha
   const celulaW = (areaW - espacamento * (combo.cols - 1)) / combo.cols;
   const celulaH = (areaH - espacamento * (combo.rows - 1)) / combo.rows;
 
-  // Centraliza arte dentro da célula
-  const offsetX = (celulaW - combo.arteW) / 2;
-  const offsetY = (celulaH - combo.arteH) / 2;
+  // Área disponível pra arte DENTRO de cada célula (descontando a aba se houver)
+  const arteAreaW = celulaW - reservaAba;
+  const arteAreaH = celulaH;
+
+  // Re-calcula tamanho final da arte respeitando aspect ratio na área reduzida
+  let arteW, arteH;
+  if (arteAspectRatio > arteAreaW / arteAreaH) {
+    arteW = arteAreaW;
+    arteH = arteW / arteAspectRatio;
+  } else {
+    arteH = arteAreaH;
+    arteW = arteH * arteAspectRatio;
+  }
+
+  // Centraliza arte dentro da área disponível (à esquerda da aba se houver)
+  const offsetX = (arteAreaW - arteW) / 2;
+  const offsetY = (arteAreaH - arteH) / 2;
 
   const posicoes = [];
   for (let r = 0; r < combo.rows; r++) {
     for (let c = 0; c < combo.cols; c++) {
-      posicoes.push({
-        x: margens.left + c * (celulaW + espacamento) + offsetX,
-        y: margens.top + r * (celulaH + espacamento) + offsetY,
-        w: combo.arteW,
-        h: combo.arteH,
+      const celulaX = margens.left + c * (celulaW + espacamento);
+      const celulaY = margens.top + r * (celulaH + espacamento);
+      const pos = {
+        x: celulaX + offsetX,
+        y: celulaY + offsetY,
+        w: arteW,
+        h: arteH,
         idx: r * combo.cols + c,
-      });
+      };
+      // Aba ocupa a LATERAL DIREITA da célula (encostada na arte ou na borda da célula)
+      if (abaDobra) {
+        // Posiciona aba IMEDIATAMENTE à direita da arte (não na borda da célula)
+        // pra ficar "colada" — assim a linha de dobra fica visível entre arte+aba.
+        pos.abaX = pos.x + arteW;
+        pos.abaY = pos.y;
+        pos.abaW = reservaAba;
+        pos.abaH = arteH;
+      }
+      posicoes.push(pos);
     }
   }
 
@@ -137,10 +183,12 @@ export function calcularLayoutImpressao({
     qtdArtes,
     margens,
     espacamento,
+    abaDobra,
+    larguraAbaDobra: reservaAba,
     cols: combo.cols,
     rows: combo.rows,
-    arteW: combo.arteW,
-    arteH: combo.arteH,
+    arteW,
+    arteH,
     celulaW,
     celulaH,
     areaUtil: { x: margens.left, y: margens.top, w: areaW, h: areaH },

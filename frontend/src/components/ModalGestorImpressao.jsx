@@ -54,7 +54,8 @@ export default function ModalGestorImpressao({
   const layout = useMemo(() => calcularLayoutImpressao({
     papel, orientacao, qtdArtes, margens, espacamento,
     arteAspectRatio: arteAspect,
-  }), [papel, orientacao, qtdArtes, margens, espacamento, arteAspect]);
+    abaDobra,
+  }), [papel, orientacao, qtdArtes, margens, espacamento, arteAspect, abaDobra]);
 
   const totalArtes = totalPaginasProjeto;
   // Quando o projeto tem 1 arte só E repetirArte está on, preenchemos TODAS
@@ -157,14 +158,22 @@ export default function ModalGestorImpressao({
           // Aplica filtro de cor (cinza/PB) via canvas off-screen se necessário
           const pngFinal = (modoCor === 'colorido') ? png : await aplicarFiltroCor(png, modoCor);
           pdf.addImage(pngFinal || png, 'PNG', pos.x, pos.y, pos.w, pos.h);
-          if (abaDobra) {
-            pdf.setLineDashPattern([2, 1], 0);
+          // Aba de dobra LATERAL — faixa vertical à direita da arte
+          if (abaDobra && pos.abaW > 0) {
+            // Fundo branco/cinza claro pra aba
+            pdf.setFillColor(252, 252, 252);
+            pdf.rect(pos.abaX, pos.abaY, pos.abaW, pos.abaH, 'F');
+            // Linha pontilhada vertical separando arte da aba (linha de dobra)
+            pdf.setLineDashPattern([1.5, 1], 0);
             pdf.setDrawColor(120, 120, 120);
-            pdf.line(pos.x, pos.y + 5, pos.x + pos.w, pos.y + 5);
+            pdf.line(pos.abaX, pos.abaY, pos.abaX, pos.abaY + pos.abaH);
             pdf.setLineDashPattern([], 0);
-            pdf.setFontSize(6);
-            pdf.setTextColor(120, 120, 120);
-            pdf.text('— DOBRE AQUI —', pos.x + pos.w / 2, pos.y + 8, { align: 'center' });
+            // Texto "↓ DOBRE AQUI" vertical na faixa (rotacionado 90° anti-horário)
+            pdf.setFontSize(7);
+            pdf.setTextColor(80, 80, 80);
+            const cx = pos.abaX + pos.abaW / 2;
+            const cy = pos.abaY + pos.abaH / 2;
+            pdf.text('↓ DOBRE AQUI ↓', cx, cy, { align: 'center', angle: 90 });
           }
         }
       }
@@ -498,21 +507,31 @@ function FolhaPreview({ layout, zoom, pagina, modoCor, abaDobra, pngsCache, numA
         if (numArte == null) return null; // célula vazia
         const png = pngsCache[numArte];
         return (
-          <div key={i} className="gi-arte-celula" style={{
-            left: mm(pos.x), top: mm(pos.y),
-            width: mm(pos.w), height: mm(pos.h),
-            filter: filtroCor,
-          }}>
-            {png ? (
-              <img src={png} alt={`Arte ${numArte}`} className="gi-arte-png" />
-            ) : (
-              <div className="gi-arte-placeholder">
-                <div className="gi-arte-skeleton" />
-                <small>Carregando...</small>
+          <div key={i}>
+            <div className="gi-arte-celula" style={{
+              left: mm(pos.x), top: mm(pos.y),
+              width: mm(pos.w), height: mm(pos.h),
+              filter: filtroCor,
+            }}>
+              {png ? (
+                <img src={png} alt={`Arte ${numArte}`} className="gi-arte-png" />
+              ) : (
+                <div className="gi-arte-placeholder">
+                  <div className="gi-arte-skeleton" />
+                  <small>Carregando...</small>
+                </div>
+              )}
+              <div className="gi-arte-num">{numArte}</div>
+            </div>
+            {/* Aba de dobra LATERAL — só renderiza se abaDobra e pos.abaW>0 */}
+            {abaDobra && pos.abaW > 0 && (
+              <div className="gi-arte-aba-lateral" style={{
+                left: mm(pos.abaX), top: mm(pos.abaY),
+                width: mm(pos.abaW), height: mm(pos.abaH),
+              }}>
+                <span className="gi-arte-aba-texto">↓ DOBRE AQUI ↓</span>
               </div>
             )}
-            <div className="gi-arte-num">{numArte}</div>
-            {abaDobra && <div className="gi-arte-dobra">— DOBRE AQUI —</div>}
           </div>
         );
       })}
