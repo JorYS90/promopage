@@ -32,10 +32,24 @@ backend/projetos/*
 backend/data/saas.db
 backend/data/saas.db-shm
 backend/data/saas.db-wal
+backend/data/saas.db.bak-*
+backend/data/saas.db.pre-*
+backend/data/saas.db-shm.pre-*
+backend/data/saas.db-wal.pre-*
 backend/data/backups-imagens/
 
 # Backups locais
 backend/backups/
+
+# Backups automáticos criados pelos scripts de deploy/setup
+backend/uploads.bak-*/
+backend/templates.bak-*/
+backend/data/.migration-*
+
+# Cache local de busca de imagens (gerenciado pela app — não versionar)
+backend/data/imagens-produtos.json
+backend/data/google-cse-quota.json
+backend/data/categorias.json.migrated
 
 # Logs
 *.log

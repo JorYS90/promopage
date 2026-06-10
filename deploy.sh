@@ -60,12 +60,18 @@ if [ ! -d .git ]; then
   exit 1
 fi
 
-# --- 3) commit + push se houver mudanças ---
+# --- 3) push pro origin (NÃO commitar automaticamente — perigoso) ---
+#
+# O script ANTES fazia `git add -A` automático, o que pegou backups de banco
+# (.db.bak-*) e pastas de backup gigantes (uploads.bak-*) por engano em
+# 10/06/2026, causando força push de cleanup. Agora exigimos commit manual:
+# se houver mudanças, paramos e pedimos pro dev commitar com escopo certo.
 if [ -n "$(git status --porcelain)" ]; then
-  MSG="${1:-deploy: $(date +'%Y-%m-%d %H:%M')}"
-  echo -e "${CYAN}→ Commit local: ${MSG}${NC}"
-  git add -A
-  git commit -m "$MSG"
+  echo -e "${RED}✗ Há mudanças não-commitadas. Commit manual antes de rodar deploy.${NC}"
+  echo "  Veja o que mudou:  git status"
+  echo "  Stage seletivo:    git add <arquivo1> <arquivo2>"
+  echo "  Commit:            git commit -m 'sua mensagem'"
+  exit 1
 fi
 
 echo -e "${CYAN}→ Push pro origin...${NC}"
