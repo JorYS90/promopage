@@ -1,0 +1,38 @@
+{
+  "nome": "Arraia de ofertas",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/3/1780153426109-iOIb4e.PNG",
+    "imagemTitulo": "/uploads/3/1780153430444-KazJb9.PNG",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#274570",
+    "faixaSuperior": "#274570"
+  },
+  "paleta": {
+    "primaria": "#32588b",
+    "secundaria": "#274570",
+    "fundoBox": "#fbb014",
+    "fundoBoxSecundario": "#274570",
+    "textoNome": "#000000",
+    "textoNomeDestaque": "#000000",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#32588b",
+    "balaoOferta": "/uploads/3/1780153455024-e8DIQH.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#fbdba8"
+  },
+  "criadoEm": "2026-05-30T15:05:15.111Z",
+  "atualizadoEm": "2026-05-30T15:05:15.111Z"
+}

@@ -6,34 +6,33 @@
   "capa": {
     "tipo": "imagens",
     "fundo": "#ef0000",
-    "imagemFundo": "/uploads/1778085167185-XO6CSD.png",
-    "imagemTitulo": "/uploads/1778085168962-XXFZOn.png",
-    "posicaoTitulo": "direita",
+    "imagemFundo": "/uploads/3/1779887940921-P4qaQ6.PNG",
+    "imagemTitulo": "/uploads/3/1779887943852-e_bCLd.PNG",
+    "posicaoTitulo": "centro",
     "elementos": []
   },
   "rodape": {
     "tipo": "redondo-grande",
     "altura": 80,
-    "fundo": "#570000",
-    "faixaSuperior": "#a80000",
-    "textoEsquerdo": "",
-    "textoDireito": "*Imagens Meramente Ilustrativas"
+    "fundo": "#ffef42",
+    "faixaSuperior": "#d1c433"
   },
   "paleta": {
-    "primaria": "#570000",
-    "secundaria": "#a80000",
-    "fundoBox": "#000000",
-    "fundoBoxSecundario": "#a80000",
-    "textoNome": "#ffffff",
+    "primaria": "#2e1800",
+    "secundaria": "#d1c433",
+    "fundoBox": "#ffe357",
+    "fundoBoxSecundario": "#d1c433",
+    "textoNome": "#000000",
+    "textoNomeDestaque": "#000000",
     "textoPreco": "#ffffff",
-    "textoPrecoDestaque": "#1f2937",
-    "tagPreco": "#570000",
-    "balaoOferta": "/uploads/1778085217542-RKgN-R.png"
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#2e1800",
+    "balaoOferta": "/uploads/3/1779888060966-_3mdZ8.png"
   },
   "fundoEncarte": {
     "tipo": "cor",
-    "cor": "#000000"
+    "cor": "#462600"
   },
   "criadoEm": "2026-05-06T16:33:41.016Z",
-  "gratis": false
+  "atualizadoEm": "2026-05-27T14:13:28.693Z"
 }

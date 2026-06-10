@@ -1,0 +1,38 @@
+{
+  "nome": "Dia dos namorados",
+  "categoria": "Dia dos namorados",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/3/1780153234241-XW061T.PNG",
+    "imagemTitulo": "/uploads/3/1780153236817-5kYU8T.PNG",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#6c0000",
+    "faixaSuperior": "#6c0000"
+  },
+  "paleta": {
+    "primaria": "#8f0511",
+    "secundaria": "#6c0000",
+    "fundoBox": "#8f0511",
+    "fundoBoxSecundario": "#6c0000",
+    "textoNome": "#ffffff",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#8f0511",
+    "balaoOferta": "/uploads/3/1780153320321-smyRNs.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#fce0cb"
+  },
+  "criadoEm": "2026-05-30T15:02:03.880Z",
+  "atualizadoEm": "2026-05-30T15:02:03.880Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Cartaz impressão",
+  "categoria": "Cartaz",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ffffff",
+    "imagemFundo": "/uploads/3/1781096349169-y9khnM.png",
+    "modoImagemFundo": "contain",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ffffff",
+    "faixaSuperior": "#ffffff"
+  },
+  "paleta": {
+    "primaria": "#ffffff",
+    "secundaria": "#ffffff",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#ffffff",
+    "textoNome": "#000000",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#ffffff",
+    "balaoOferta": "/uploads/3/1781096376235-rEBNTi.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-06-10T12:59:51.378Z",
+  "atualizadoEm": "2026-06-10T13:02:32.043Z"
+}

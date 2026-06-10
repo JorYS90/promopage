@@ -1,0 +1,38 @@
+{
+  "nome": "Cosméticos em promo",
+  "categoria": "Cosméticos",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/3/1779918612479-zyqegP.png",
+    "imagemTitulo": "/uploads/3/1779918635060-5oeo7Z.png",
+    "posicaoTitulo": "esquerda",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#f53193",
+    "faixaSuperior": "#ab0d4f"
+  },
+  "paleta": {
+    "primaria": "#fea4c0",
+    "secundaria": "#ab0d4f",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#ab0d4f",
+    "textoNome": "#000000",
+    "textoNomeDestaque": "#000000",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#fea4c0",
+    "balaoOferta": "/uploads/3/1779918652616-NT6eSj.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-27T21:51:27.490Z",
+  "atualizadoEm": "2026-05-27T21:51:37.282Z"
+}

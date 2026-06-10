@@ -1,5 +1,5 @@
 {
-  "nome": "Segunda da Padaria",
+  "nome": "Sabado da Padaria",
   "categoria": "Padaria",
   "premium": false,
   "novo": true,
@@ -7,7 +7,7 @@
     "tipo": "imagens",
     "fundo": "#ef0000",
     "imagemFundo": "/uploads/1778683071050-Cxvx8v.png",
-    "imagemTitulo": "/uploads/1779150090211-tGcrbD.png",
+    "imagemTitulo": "/uploads/1779152126516-HHOaZd.png",
     "posicaoTitulo": "direita",
     "elementos": []
   },
@@ -33,5 +33,6 @@
     "tipo": "cor",
     "cor": "#ffffff"
   },
-  "criadoEm": "2026-05-19T00:21:32.504Z"
+  "criadoEm": "2026-05-19T00:55:16.691Z",
+  "atualizadoEm": "2026-05-19T00:55:29.690Z"
 }

@@ -12,6 +12,7 @@ import PainelEmpresa from './components/PainelEmpresa.jsx';
 import PainelDatas from './components/PainelDatas.jsx';
 import PainelAgenda from './components/PainelAgenda.jsx';
 import { iniciarTour, deveMostrarTourAutomatico } from './tour/tourPromoPage.js';
+import ModalGestorImpressao from './components/ModalGestorImpressao.jsx';
 import PainelLogo from './components/PainelLogo.jsx';
 import PainelFontes from './components/PainelFontes.jsx';
 import PainelPostar from './components/PainelPostar.jsx';
@@ -129,6 +130,7 @@ export default function App() {
 
   const [modalEditar, setModalEditar] = useState(false);
   const [modalCampanhas, setModalCampanhas] = useState(false);
+  const [modalImpressao, setModalImpressao] = useState(false);
   const [qtdCampanhas, setQtdCampanhas] = useState(0);
   // Painel de conteúdo (Temas/Produtos/etc.) aberto ou recolhido. Recolher dá
   // mais espaço pro canvas. Persiste a escolha em localStorage (por dispositivo).
@@ -1015,6 +1017,9 @@ export default function App() {
           <button className="ca-btn ca-pdf" onClick={exportarPdf}>
             📄 Exportar PDF
           </button>
+          <button className="ca-btn ca-pdf" onClick={() => setModalImpressao(true)} title="Gestor de Impressões: imprime múltiplas artes por folha">
+            🖨️ Imprimir
+          </button>
         </div>
       </div>
 
@@ -1175,6 +1180,31 @@ export default function App() {
       <ModalPreviewLayouts
         aberto={modalPreviewLayouts}
         aoFechar={() => setModalPreviewLayouts(false)}
+      />
+
+      {/* Gestor de Impressões — imprime múltiplas artes por folha (estilo qrofertas).
+          gerarPngArte: muda a página do canvas, aguarda render, captura PNG.
+          Multi-página REAL: pra projeto com 4 produtos e 2 por folha, gera 2
+          páginas no PDF cada uma com 2 produtos diferentes. */}
+      <ModalGestorImpressao
+        aberto={modalImpressao}
+        aoFechar={() => setModalImpressao(false)}
+        gerarPngArte={async (numPagina) => {
+          if (!canvasFabric) return null;
+          // Se já está na página certa, captura direto
+          const idxAlvo = Math.max(0, Math.min(totalPaginas - 1, numPagina - 1));
+          if (idxAlvo !== paginaAtual) {
+            setPaginaAtual(idxAlvo);
+            // Aguarda 2 frames + buffer pra fabric carregar imagens async
+            await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+            await new Promise(r => setTimeout(r, 350));
+          }
+          try { return exportarPNG(canvasFabric); } catch { return null; }
+        }}
+        totalPaginasProjeto={totalPaginas}
+        arteLarguraPx={tamanho?.largura || 794}
+        arteAlturaPx={tamanho?.altura || 1123}
+        nomeProjeto={nomeProjeto || 'encarte'}
       />
 
       {/* Política de Privacidade (LGPD). Aberta pelo rodapé do ModalPlanos

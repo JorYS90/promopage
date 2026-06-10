@@ -1,0 +1,38 @@
+{
+  "nome": "Dia da Beleza",
+  "categoria": "Cosméticos",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/3/1779281479480-eCucIp.png",
+    "imagemTitulo": "/uploads/3/1779281481417-vqhpYZ.png",
+    "posicaoTitulo": "direita",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#61407c",
+    "faixaSuperior": "#422759"
+  },
+  "paleta": {
+    "primaria": "#cfa6e5",
+    "secundaria": "#422759",
+    "fundoBox": "#f7e1fb",
+    "fundoBoxSecundario": "#422759",
+    "textoNome": "#000000",
+    "textoNomeDestaque": "#000000",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#cfa6e5",
+    "balaoOferta": "/uploads/3/1779293753555-6H1JWJ.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-20T12:52:24.517Z",
+  "atualizadoEm": "2026-05-20T16:15:54.941Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Ofertas imperdíveis",
+  "categoria": "Mercearia",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/3/1779987871652-JZluZ2.png",
+    "imagemTitulo": "/uploads/3/1779987967062-klfwMq.png",
+    "posicaoTitulo": "esquerda",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#344d13",
+    "faixaSuperior": "#20310d"
+  },
+  "paleta": {
+    "primaria": "#576502",
+    "secundaria": "#20310d",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#20310d",
+    "textoNome": "#000000",
+    "textoNomeDestaque": "#000000",
+    "textoPreco": "#000000",
+    "textoPrecoDestaque": "#1f2937",
+    "tagPreco": "#576502",
+    "balaoOferta": "/uploads/3/1779987889433-N1AnGY.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-28T17:06:13.812Z",
+  "atualizadoEm": "2026-05-28T17:06:35.839Z"
+}

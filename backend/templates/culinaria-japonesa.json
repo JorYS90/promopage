@@ -1,0 +1,38 @@
+{
+  "nome": "Culinária Japonesa",
+  "categoria": "Restaurante",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/3/1779371753105-Fs0gxM.png",
+    "imagemTitulo": "/uploads/3/1779371755067-7DYpeZ.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#000000",
+    "faixaSuperior": "#636363"
+  },
+  "paleta": {
+    "primaria": "#616161",
+    "secundaria": "#636363",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#636363",
+    "textoNome": "#000000",
+    "textoNomeDestaque": "#000000",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#616161",
+    "balaoOferta": "/uploads/3/1779371819459-ufFzwN.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-21T13:57:02.793Z",
+  "atualizadoEm": "2026-05-21T13:57:02.793Z"
+}

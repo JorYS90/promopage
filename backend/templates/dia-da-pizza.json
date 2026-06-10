@@ -1,0 +1,38 @@
+{
+  "nome": "Dia da Pizza",
+  "categoria": "Pizza",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/3/1779225728280-TsL9DO.png",
+    "imagemTitulo": "/uploads/3/1779225730353-CZJJkx.png",
+    "posicaoTitulo": "direita",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1f3b09",
+    "faixaSuperior": "#091103"
+  },
+  "paleta": {
+    "primaria": "#7da83e",
+    "secundaria": "#091103",
+    "fundoBox": "#496d0f",
+    "fundoBoxSecundario": "#091103",
+    "textoNome": "#ffffff",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#7da83e",
+    "balaoOferta": "/uploads/3/1779225793994-O-w1ef.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-19T21:23:18.747Z",
+  "atualizadoEm": "2026-05-19T21:23:18.747Z"
+}

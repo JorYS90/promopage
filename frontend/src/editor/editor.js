@@ -830,9 +830,14 @@ function renderizarCapa(canvas, capa, larguraCanvas) {
   aplicarFundoCapa(fundo, capa.fundo);
   canvas.add(fundo);
 
-  // Imagem de fundo (COVER): preenche TODO o retângulo da capa, recortando overflow
+  // Imagem de fundo: respeita modo configurado no template (capa.modoImagemFundo).
+  //   'cover' (default): preenche TODO o retângulo, recortando overflow nas laterais.
+  //     Bom pra fotos de cenário/textura que cobrem o fundo todo.
+  //   'contain': mantém a imagem inteira visível, com bordas vazias (cor capa.fundo).
+  //     Bom pra selos/logos decorativos que NÃO podem ser cortados (ex: OFERTA, NOVO).
   if (capa.imagemFundo) {
-    adicionarImagemCapa(canvas, capa.imagemFundo, 'cover', larguraCanvas, altura, 0, 0, fundo);
+    const modo = capa.modoImagemFundo === 'contain' ? 'contain' : 'cover';
+    adicionarImagemCapa(canvas, capa.imagemFundo, modo, larguraCanvas, altura, 0, 0, fundo);
   }
 
   // Imagem de título/logo (CONTAIN + AUTO-CROP): detecta região não-transparente
@@ -3735,30 +3740,55 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
   // cartazHoriz: nome centralizado VERTICALMENTE na metade esquerda do card.
   // fotoEsq: nome centralizado VERTICALMENTE na metade SUPERIOR direita (entre topo
   // e meio do card) — pra não ficar colado no topo e nem encostar no balão embaixo.
-  // Default: colado no topo.
+  // semFoto vertical (CARTAZ): centraliza verticalmente no ESPAÇO ÚTIL entre o
+  // topo do card e o topo do balão de preço. Antes ficava colado no topo, dando
+  // sensação de "perto do selo OFERTA" e muito longe do preço.
+  // Default: colado no topo (com pequeno padding) — usado quando tem foto.
   const yInicialNome = cartazHoriz
     ? box.y + (box.h - alturaBlocoNome) / 2
     : fotoEsq
       ? box.y + (box.h / 2 - alturaBlocoNome) / 2 + box.h * 0.05
-      : box.y + padding;
-  // CENTRALIZAÇÃO ROBUSTA (2026-06-04): usar originX='center' + leftPos no
-  // CENTRO do card. Mais confiável que medir com canvas.measureText (que pode
-  // falhar quando a fonte custom ainda não está carregada ou quando fontWeight
-  // 900 do measureText não bate com o render do Fabric).
-  // - cartazHoriz: ponto central = box.x + box.w * 0.25 (centro da metade ESQ)
-  // - fotoEsq: ponto central = box.x + box.w * 0.75 (centro da metade DIR)
-  // - default: ponto central = box.x + box.w / 2 (centro do card todo)
+      : box.semFoto
+        ? box.y + (balaoY - box.y - alturaBlocoNome) / 2
+        : box.y + padding;
+  // CENTRALIZAÇÃO ROBUSTA v2 (2026-06-10): mede a largura REAL do texto APÓS
+  // o Fabric instanciar (txt.width já considera a fonte aplicada). Usa esse
+  // valor pra recentralizar com originX:'left'. Mais confiável que originX:'center'
+  // que depende do bbox interno do Fabric (que pode ter side bearing assimétrico
+  // em fontes condensed bold como Anton).
+  // - cartazHoriz: nome na metade ESQUERDA (centro em box.x + box.w * 0.25)
+  // - fotoEsq:     nome na metade DIREITA  (centro em box.x + box.w * 0.75)
+  // - default:     nome no centro do card  (centro em box.x + box.w / 2)
   const nomeCenterX = cartazHoriz
     ? box.x + box.w * 0.25
     : fotoEsq
       ? box.x + box.w * 0.75
       : box.x + box.w / 2;
+
+  // Re-centraliza pós-load da fonte custom — fontes Anton/Bebas Neue podem
+  // não estar carregadas no momento de instanciar, dando largura errada.
+  // document.fonts.ready promete quando todas as fontes carregam.
+  const reposicionarPosFont = (txt, centerX) => {
+    if (typeof document !== 'undefined' && document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        try {
+          // Re-mede com fonte garantidamente carregada
+          txt.initDimensions?.();
+          const w = txt.width || 0;
+          txt.set('left', centerX - w / 2);
+          txt.setCoords?.();
+          if (canvas.getObjects().indexOf(txt) >= 0) canvas.requestRenderAll();
+        } catch {}
+      }).catch(() => {});
+    }
+  };
+
   nomeLinhas.forEach((linha, i) => {
     const yLinha = yInicialNome + i * fonteSizeNome * (1 + lineGap);
     const txt = new fabric.Text(linha, {
-      left: nomeCenterX,
+      left: 0, // setado abaixo após medir width real
       top: yLinha,
-      originX: 'center',    // Fabric centraliza o texto em torno do `left`
+      originX: 'left',
       originY: 'top',
       fontSize: fonteSizeNome,
       fontFamily: fonteFamilia,
@@ -3766,9 +3796,14 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
       fill: corNome,
       selectable: false,
     });
+    // Largura REAL renderizada pelo Fabric (não estimativa do measureText)
+    const larguraReal = txt.width || 0;
+    txt.set('left', nomeCenterX - larguraReal / 2);
     txt.set('boxIdx', idx);
     txt.on('mousedown', () => aoClicar && aoClicar(idx));
     canvas.add(txt);
+    // Re-centraliza quando fonte custom termina de carregar
+    reposicionarPosFont(txt, nomeCenterX);
   });
 
   // ===== BALÃO (bottom-right, GIGANTE — estilo qrofertas) =====

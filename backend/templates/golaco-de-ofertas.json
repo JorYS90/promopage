@@ -1,0 +1,38 @@
+{
+  "nome": "Golaço de Ofertas",
+  "categoria": "COPA DO MUNDO",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/3/1779379432366-j5cOkM.png",
+    "imagemTitulo": "/uploads/3/1779379664254-93I1jw.png",
+    "posicaoTitulo": "esquerda",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#014618",
+    "faixaSuperior": "#000f05"
+  },
+  "paleta": {
+    "primaria": "#089e2e",
+    "secundaria": "#000f05",
+    "fundoBox": "#fde047",
+    "fundoBoxSecundario": "#000f05",
+    "textoNome": "#000000",
+    "textoNomeDestaque": "#000000",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#089e2e",
+    "balaoOferta": "/uploads/3/1779379475322-fQfyrm.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-21T16:05:21.633Z",
+  "atualizadoEm": "2026-05-21T16:07:47.291Z"
+}

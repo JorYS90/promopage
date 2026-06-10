@@ -1,0 +1,38 @@
+{
+  "nome": "Açaí do Dia",
+  "categoria": "Meus Temas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/3/1780517260078-ytUjKk.PNG",
+    "imagemTitulo": "/uploads/3/1780517261864-GHxAP2.PNG",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#61085d",
+    "faixaSuperior": "#530450"
+  },
+  "paleta": {
+    "primaria": "#970e83",
+    "secundaria": "#530450",
+    "fundoBox": "#550555",
+    "fundoBoxSecundario": "#530450",
+    "textoNome": "#ffffff",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#970e83",
+    "balaoOferta": "/uploads/3/1780517280447-83WEa5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#cb95f2"
+  },
+  "criadoEm": "2026-06-03T20:08:46.355Z",
+  "atualizadoEm": "2026-06-03T20:08:46.355Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Árabes Parfum",
+  "categoria": "Cosméticos",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/3/1779378352898-YAN6-T.png",
+    "imagemTitulo": "/uploads/3/1779378405605-uDHOyy.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#350813",
+    "faixaSuperior": "#2b0811"
+  },
+  "paleta": {
+    "primaria": "#e4c58d",
+    "secundaria": "#2b0811",
+    "fundoBox": "#f9e26b",
+    "fundoBoxSecundario": "#2b0811",
+    "textoNome": "#000000",
+    "textoNomeDestaque": "#000000",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#e4c58d",
+    "balaoOferta": "/uploads/3/1779378429725-PPFrrZ.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-21T15:48:42.145Z",
+  "atualizadoEm": "2026-05-21T15:52:23.807Z"
+}

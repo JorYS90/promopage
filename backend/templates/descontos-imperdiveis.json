@@ -1,0 +1,38 @@
+{
+  "nome": "Descontos imperdíveis",
+  "categoria": "Farmácia",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/3/1779544952494-Pf38yY.png",
+    "imagemTitulo": "/uploads/3/1779544956120-vHqJ3-.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#b4bcb4",
+    "faixaSuperior": "#868886"
+  },
+  "paleta": {
+    "primaria": "#e5e5e5",
+    "secundaria": "#868886",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#868886",
+    "textoNome": "#1f2937",
+    "textoNomeDestaque": "#000000",
+    "textoPreco": "#000000",
+    "textoPrecoDestaque": "#000000",
+    "tagPreco": "#e5e5e5",
+    "balaoOferta": "/uploads/3/1779545174205-q-2WTm.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-23T14:04:08.849Z",
+  "atualizadoEm": "2026-05-23T14:06:15.792Z"
+}

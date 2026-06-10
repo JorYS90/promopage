@@ -1,0 +1,38 @@
+{
+  "nome": "Mamma Mia",
+  "categoria": "Restaurante",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/3/1779313853342-wa6w8E.png",
+    "imagemTitulo": "/uploads/3/1779313855552-twPNrD.png",
+    "posicaoTitulo": "esquerda",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#344703",
+    "faixaSuperior": "#283602"
+  },
+  "paleta": {
+    "primaria": "#1d4d0d",
+    "secundaria": "#283602",
+    "fundoBox": "#8d9864",
+    "fundoBoxSecundario": "#283602",
+    "textoNome": "#ffffff",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#1d4d0d",
+    "balaoOferta": "/uploads/3/1779314007973-Wwc0kG.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ede0d0"
+  },
+  "criadoEm": "2026-05-20T21:51:52.536Z",
+  "atualizadoEm": "2026-05-26T00:12:42.068Z"
+}

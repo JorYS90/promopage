@@ -31,8 +31,10 @@ export const LAYOUTS_NOMEADOS = [
     // CARTAZ_*: pôster estilo concorrente — só nome + valor, sem foto.
     // TV_HORIZONTAL: foto esquerda + nome topo direito + balão bottom direito (side-by-side).
     perModelo: {
-      CARTAZ_HORIZONTAL: { semFoto: true },
-      CARTAZ_VERTICAL: { semFoto: true },
+      // Cartazes (semFoto): nome +40% (0.95 × 1.40 = 1.33) pra aproveitar a
+      // área toda do card — sem foto pra ocupar espaço, o nome pode crescer.
+      CARTAZ_HORIZONTAL: { semFoto: true, multNome: 1.33 },
+      CARTAZ_VERTICAL: { semFoto: true, multNome: 1.33 },
       TV_HORIZONTAL: { fotoEsquerda: true, multNome: 1.20, multFoto: 1.30, multValor: 1.40 },
       TV_VERTICAL: { balaoCentralizado: true, multFoto: 1.08, multBalao: 1.16, multValor: 1.32 },
     } },

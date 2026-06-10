@@ -1,0 +1,38 @@
+{
+  "nome": "promoção de 6 estrelas",
+  "categoria": "COPA DO MUNDO",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/1779153303291-eimYrf.png",
+    "imagemTitulo": "/uploads/3/1779195027275-Uh-2py.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#084283",
+    "faixaSuperior": "#03203f"
+  },
+  "paleta": {
+    "primaria": "#109c3a",
+    "secundaria": "#03203f",
+    "fundoBox": "#fde047",
+    "fundoBoxSecundario": "#03203f",
+    "textoNome": "#000000",
+    "textoNomeDestaque": "#000000",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#109c3a",
+    "balaoOferta": "/uploads/1779153342800-FGR3su.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-05-19T01:16:14.459Z",
+  "atualizadoEm": "2026-05-19T12:50:46.864Z"
+}
