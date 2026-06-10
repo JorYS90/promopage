@@ -3741,29 +3741,25 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
     : fotoEsq
       ? box.y + (box.h / 2 - alturaBlocoNome) / 2 + box.h * 0.05
       : box.y + padding;
+  // CENTRALIZAÇÃO ROBUSTA (2026-06-04): usar originX='center' + leftPos no
+  // CENTRO do card. Mais confiável que medir com canvas.measureText (que pode
+  // falhar quando a fonte custom ainda não está carregada ou quando fontWeight
+  // 900 do measureText não bate com o render do Fabric).
+  // - cartazHoriz: ponto central = box.x + box.w * 0.25 (centro da metade ESQ)
+  // - fotoEsq: ponto central = box.x + box.w * 0.75 (centro da metade DIR)
+  // - default: ponto central = box.x + box.w / 2 (centro do card todo)
+  const nomeCenterX = cartazHoriz
+    ? box.x + box.w * 0.25
+    : fotoEsq
+      ? box.x + box.w * 0.75
+      : box.x + box.w / 2;
   nomeLinhas.forEach((linha, i) => {
-    // Mede largura desta linha pra centralizar
-    let largLinha = 0;
-    try {
-      const ctx = canvas.contextContainer || canvas.lowerCanvasEl?.getContext('2d');
-      if (ctx) {
-        ctx.save();
-        ctx.font = `900 ${fonteSizeNome}px ${fonteFamilia}`;
-        largLinha = ctx.measureText(linha).width;
-        ctx.restore();
-      }
-    } catch {}
     const yLinha = yInicialNome + i * fonteSizeNome * (1 + lineGap);
-    // cartazHoriz: nome centralizado na metade ESQUERDA do card.
-    // fotoEsq: nome centralizado na metade DIREITA.
-    const leftPos = cartazHoriz
-      ? box.x + (box.w / 2 - largLinha) / 2
-      : fotoEsq
-        ? box.x + box.w / 2 + (box.w / 2 - largLinha) / 2
-        : box.x + (box.w - largLinha) / 2;
     const txt = new fabric.Text(linha, {
-      left: leftPos,
+      left: nomeCenterX,
       top: yLinha,
+      originX: 'center',    // Fabric centraliza o texto em torno do `left`
+      originY: 'top',
       fontSize: fonteSizeNome,
       fontFamily: fonteFamilia,
       fontWeight: 900,
