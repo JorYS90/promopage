@@ -73,9 +73,9 @@ function escolherMelhorCombo(papelW, papelH, qtdArtes, artAspectRatio, espacamen
   return melhor;
 }
 
-// Largura padrão da aba de dobra (em mm). Espaço reservado na LATERAL da arte
-// pra faixa "Dobre Aqui" — quando dobrada e colada, vira gancho pra pendurar
-// o cartaz na gôndola do supermercado. Padrão 12mm (~1.2cm).
+// Altura padrão da aba de dobra (em mm). Espaço reservado NO TOPO da arte
+// pra faixa "Dobre Aqui" — quando dobrada, vira gancho pra pendurar o cartaz
+// na gôndola do supermercado pelo topo. Padrão 12mm (~1.2cm).
 export const LARGURA_ABA_DOBRA_MM = 12;
 
 // === API principal: calcula tudo o que o PDF precisa saber ===
@@ -120,7 +120,9 @@ export function calcularLayoutImpressao({
   const areaW = papelW - margens.left - margens.right;
   const areaH = papelH - margens.top - margens.bottom;
 
-  const reservaAba = abaDobra ? larguraAbaDobra : 0;
+  // Aba de dobra TOPO: reserva mm no topo de cada célula pra faixa "Dobre Aqui"
+  // (cartaz pendurado pelo topo na gôndola). Reduz altura útil da arte.
+  const reservaAbaTop = abaDobra ? larguraAbaDobra : 0;
 
   // 🔄 ROTAÇÃO AUTOMÁTICA pra melhor aproveitamento da folha:
   // Avalia tanto o aspect ORIGINAL quanto o ROTACIONADO 90° e escolhe o que
@@ -130,8 +132,8 @@ export function calcularLayoutImpressao({
     const combo = escolherMelhorCombo(areaW, areaH, qtdArtes, aspect, espacamento);
     const celW = (areaW - espacamento * (combo.cols - 1)) / combo.cols;
     const celH = (areaH - espacamento * (combo.rows - 1)) / combo.rows;
-    const arteAreaW = celW - reservaAba;
-    const arteAreaH = celH;
+    const arteAreaW = celW;
+    const arteAreaH = celH - reservaAbaTop;
     let aw, ah;
     if (aspect > arteAreaW / arteAreaH) { aw = arteAreaW; ah = aw / aspect; }
     else { ah = arteAreaH; aw = ah * aspect; }
@@ -148,10 +150,10 @@ export function calcularLayoutImpressao({
   const celulaH = escolhido.celH;
   const arteW = escolhido.arteW;
   const arteH = escolhido.arteH;
-  const arteAreaW = celulaW - reservaAba;
-  const arteAreaH = celulaH;
+  const arteAreaW = celulaW;
+  const arteAreaH = celulaH - reservaAbaTop;
 
-  // Centraliza arte dentro da área disponível (à esquerda da aba se houver)
+  // Centraliza arte dentro da área disponível (abaixo da aba se houver)
   const offsetX = (arteAreaW - arteW) / 2;
   const offsetY = (arteAreaH - arteH) / 2;
 
@@ -161,20 +163,21 @@ export function calcularLayoutImpressao({
       const celulaX = margens.left + c * (celulaW + espacamento);
       const celulaY = margens.top + r * (celulaH + espacamento);
       const pos = {
+        // Quando tem aba, a arte fica EMPURRADA pra baixo (após a aba do topo)
         x: celulaX + offsetX,
-        y: celulaY + offsetY,
+        y: celulaY + reservaAbaTop + offsetY,
         w: arteW,
         h: arteH,
         idx: r * combo.cols + c,
       };
-      // Aba ocupa a LATERAL DIREITA da célula (encostada na arte ou na borda da célula)
+      // Aba ocupa o TOPO da célula (acima da arte), full width pra encaixar dobra
       if (abaDobra) {
-        // Posiciona aba IMEDIATAMENTE à direita da arte (não na borda da célula)
-        // pra ficar "colada" — assim a linha de dobra fica visível entre arte+aba.
-        pos.abaX = pos.x + arteW;
-        pos.abaY = pos.y;
-        pos.abaW = reservaAba;
-        pos.abaH = arteH;
+        // Aba ocupa toda largura da arte (não da célula) pra ficar visualmente
+        // ligada à arte abaixo. Posicionada imediatamente acima.
+        pos.abaX = pos.x;
+        pos.abaY = celulaY + offsetY; // mesmo Y onde arte começaria sem aba
+        pos.abaW = arteW;
+        pos.abaH = reservaAbaTop;
       }
       posicoes.push(pos);
     }
@@ -187,7 +190,7 @@ export function calcularLayoutImpressao({
     margens,
     espacamento,
     abaDobra,
-    larguraAbaDobra: reservaAba,
+    larguraAbaDobra: reservaAbaTop,
     cols: combo.cols,
     rows: combo.rows,
     arteW,

@@ -8560,21 +8560,18 @@ button { font-family: inherit; }
   letter-spacing: 1px;
 }
 
-/* Aba de Dobra LATERAL — faixa vertical à direita da arte */
-.gi-arte-aba-lateral {
+/* Aba de Dobra NO TOPO — faixa horizontal acima da arte */
+.gi-arte-aba-topo {
   position: absolute;
   background: #fcfcfc;
-  border-left: 1.5px dashed #9ca3af;
+  border-bottom: 1.5px dashed #9ca3af;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 1px 0 0 rgba(0,0,0,0.05);
   overflow: hidden;
 }
-.gi-arte-aba-texto {
+.gi-arte-aba-texto-topo {
   font-size: 9px;
   font-weight: 700;
   color: #6b7280;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
   letter-spacing: 2px;
   white-space: nowrap;
   text-transform: uppercase;

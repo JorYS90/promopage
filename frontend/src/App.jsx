@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { jsPDF } from 'jspdf';
 import { PAGE_SIZES, createCanvas, renderizarEncarte, exportarPNG } from './editor/editor.js';
 import { LAYOUTS_NOMEADOS } from './editor/auto-layout.js';
@@ -780,6 +780,20 @@ export default function App() {
     }
   };
 
+  // Memoizado: evita criar nova função a cada render do App, o que faria o
+  // ModalGestorImpressao re-disparar useEffects desnecessariamente.
+  const gerarPngArteImpressao = useCallback(async (numPagina) => {
+    if (!canvasFabric) return null;
+    const idxAlvo = Math.max(0, Math.min(totalPaginas - 1, numPagina - 1));
+    if (idxAlvo !== paginaAtual) {
+      setPaginaAtual(idxAlvo);
+      // Aguarda 2 frames + buffer pra fabric carregar imagens async
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+      await new Promise(r => setTimeout(r, 350));
+    }
+    try { return exportarPNG(canvasFabric); } catch { return null; }
+  }, [canvasFabric, totalPaginas, paginaAtual]);
+
   const exportarPdf = () => {
     try {
       if (!canvasFabric) { alert('Aguarde o encarte carregar.'); return; }
@@ -1189,18 +1203,7 @@ export default function App() {
       <ModalGestorImpressao
         aberto={modalImpressao}
         aoFechar={() => setModalImpressao(false)}
-        gerarPngArte={async (numPagina) => {
-          if (!canvasFabric) return null;
-          // Se já está na página certa, captura direto
-          const idxAlvo = Math.max(0, Math.min(totalPaginas - 1, numPagina - 1));
-          if (idxAlvo !== paginaAtual) {
-            setPaginaAtual(idxAlvo);
-            // Aguarda 2 frames + buffer pra fabric carregar imagens async
-            await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-            await new Promise(r => setTimeout(r, 350));
-          }
-          try { return exportarPNG(canvasFabric); } catch { return null; }
-        }}
+        gerarPngArte={gerarPngArteImpressao}
         totalPaginasProjeto={totalPaginas}
         arteLarguraPx={tamanho?.largura || 794}
         arteAlturaPx={tamanho?.altura || 1123}

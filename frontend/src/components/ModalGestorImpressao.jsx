@@ -169,9 +169,14 @@ export default function ModalGestorImpressao({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [aberto, paginaPreview, qtdArtes, totalArtes, gerarPngArte, pngsCache, modoRepeticao]);
 
-  // Gera versões ROTACIONADAS dos PNGs quando layout.arteRotacionada muda
+  // Gera versões ROTACIONADAS dos PNGs quando layout.arteRotacionada muda.
+  // OTIMIZAÇÃO: só limpa pngsRotacionados se de fato tem algo (evita loop quando
+  // pngsCache muda mas arteRotacionada permanece false).
   useEffect(() => {
-    if (!layout.arteRotacionada) { setPngsRotacionados({}); return; }
+    if (!layout.arteRotacionada) {
+      setPngsRotacionados(prev => Object.keys(prev).length ? {} : prev);
+      return;
+    }
     const faltam = Object.keys(pngsCache).filter(k => !pngsRotacionados[k]);
     if (faltam.length === 0) return;
     let cancelado = false;
@@ -239,22 +244,22 @@ export default function ModalGestorImpressao({
             pngFinal = await rotacionarPng(pngFinal || png, -90);
           }
           pdf.addImage(pngFinal || png, 'PNG', pos.x, pos.y, pos.w, pos.h);
-          // Aba de dobra LATERAL — faixa vertical à direita da arte
-          if (abaDobra && pos.abaW > 0) {
+          // Aba de dobra NO TOPO — faixa horizontal acima da arte
+          if (abaDobra && pos.abaH > 0) {
             // Fundo branco/cinza claro pra aba
             pdf.setFillColor(252, 252, 252);
             pdf.rect(pos.abaX, pos.abaY, pos.abaW, pos.abaH, 'F');
-            // Linha pontilhada vertical separando arte da aba (linha de dobra)
+            // Linha pontilhada horizontal entre aba e arte (linha de dobra)
             pdf.setLineDashPattern([1.5, 1], 0);
             pdf.setDrawColor(120, 120, 120);
-            pdf.line(pos.abaX, pos.abaY, pos.abaX, pos.abaY + pos.abaH);
+            pdf.line(pos.abaX, pos.abaY + pos.abaH, pos.abaX + pos.abaW, pos.abaY + pos.abaH);
             pdf.setLineDashPattern([], 0);
-            // Texto "↓ DOBRE AQUI" vertical na faixa (rotacionado 90° anti-horário)
+            // Texto "↓ DOBRE AQUI ↓" HORIZONTAL centralizado na aba
             pdf.setFontSize(7);
             pdf.setTextColor(80, 80, 80);
             const cx = pos.abaX + pos.abaW / 2;
-            const cy = pos.abaY + pos.abaH / 2;
-            pdf.text('↓ DOBRE AQUI ↓', cx, cy, { align: 'center', angle: 90 });
+            const cy = pos.abaY + pos.abaH / 2 + 1.2; // +1.2 pra alinhar baseline
+            pdf.text('↓  DOBRE AQUI  ↓', cx, cy, { align: 'center' });
           }
         }
       }
@@ -417,15 +422,16 @@ export default function ModalGestorImpressao({
                   ℹ️ <b>Distribuição automática:</b> {layout.rows} × {layout.cols} ({layout.rows * layout.cols} células) no papel {papel} {orientacao}, com aproveitamento máximo da arte.
                 </div>
                 {totalArtes === 1 && qtdArtes > 1 && (
-                  <label className="gi-toggle-row" style={{ marginTop: 10 }}>
+                  <div className="gi-toggle-row" style={{ marginTop: 10 }}
+                       onClick={() => setRepetirArte(v => !v)}>
                     <div className="gi-toggle-txt">
                       <div className="gi-toggle-titulo">Repetir arte na folha</div>
                       <div className="gi-toggle-sub">Seu encarte tem só 1 arte. Quer imprimir múltiplas cópias da MESMA arte numa folha (economia de papel)?</div>
                     </div>
-                    <div className={`gi-switch ${repetirArte ? 'on' : ''}`} onClick={() => setRepetirArte(!repetirArte)}>
+                    <div className={`gi-switch ${repetirArte ? 'on' : ''}`}>
                       <div className="gi-switch-knob" />
                     </div>
-                  </label>
+                  </div>
                 )}
               </div>
             </details>
@@ -459,16 +465,15 @@ export default function ModalGestorImpressao({
             <details className="gi-secao">
               <summary><span className="gi-summary-icone">📐</span> Aba de Dobra (Cartaz)</summary>
               <div className="gi-secao-conteudo">
-                <label className="gi-toggle-row">
+                <div className="gi-toggle-row" onClick={() => setAbaDobra(v => !v)}>
                   <div className="gi-toggle-txt">
                     <div className="gi-toggle-titulo">Adicionar Aba "Dobre Aqui"</div>
                     <div className="gi-toggle-sub">Faixa dobrável no topo de cada arte — encaixa o cartaz nas gôndolas</div>
                   </div>
-                  <div className={`gi-switch ${abaDobra ? 'on' : ''}`} onClick={() => setAbaDobra(!abaDobra)}>
+                  <div className={`gi-switch ${abaDobra ? 'on' : ''}`}>
                     <div className="gi-switch-knob" />
                   </div>
-                  <input type="checkbox" checked={abaDobra} onChange={e => setAbaDobra(e.target.checked)} style={{ display: 'none' }} />
-                </label>
+                </div>
               </div>
             </details>
 
@@ -626,13 +631,13 @@ function FolhaPreview({ layout, zoom, pagina, modoCor, abaDobra, pngsCache, numA
                 </div>
               )}
             </div>
-            {/* Aba de dobra LATERAL — só renderiza se abaDobra e pos.abaW>0 */}
-            {abaDobra && pos.abaW > 0 && (
-              <div className="gi-arte-aba-lateral" style={{
+            {/* Aba de dobra NO TOPO — faixa horizontal acima da arte */}
+            {abaDobra && pos.abaH > 0 && (
+              <div className="gi-arte-aba-topo" style={{
                 left: mm(pos.abaX), top: mm(pos.abaY),
                 width: mm(pos.abaW), height: mm(pos.abaH),
               }}>
-                <span className="gi-arte-aba-texto">↓ DOBRE AQUI ↓</span>
+                <span className="gi-arte-aba-texto-topo">↓  DOBRE AQUI  ↓</span>
               </div>
             )}
           </div>
