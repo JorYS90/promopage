@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo Pet",
+  "categoria": "Petshop",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#0ea5e9",
+    "imagemFundo": "/uploads/ai/mundo-pet-fundo.png",
+    "imagemTitulo": "/uploads/ai/mundo-pet-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#083466",
+    "faixaSuperior": "#FD8114"
+  },
+  "paleta": {
+    "primaria": "#FD8114",
+    "secundaria": "#FD8114",
+    "fundoBox": "#eaf6ff",
+    "fundoBoxSecundario": "#FD8114",
+    "textoNome": "#0f2742",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD220",
+    "tagPreco": "#FD8114",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_15_FD8114.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#eaf6ff"
+  },
+  "criadoEm": "2026-06-11T12:00:00.000Z",
+  "atualizadoEm": "2026-06-11T12:00:00.000Z"
+}
