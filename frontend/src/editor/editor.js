@@ -4379,6 +4379,17 @@ function renderizarBoxCardBanner(canvas, box, produto, idx, paleta, tamanhoTexto
           top: bY + (bH - visH * escala) / 2,
           selectable: false, evented: false,
         });
+        // Destaque vermelho no card-banner: o balão custom é da cor primária
+        // (também vermelho) e some no fundo. Adiciona glow branco em volta
+        // pra criar contraste visual e o balão volta a aparecer.
+        if (ehDestaqueCB) {
+          img.set('shadow', new fabric.Shadow({
+            color: 'rgba(255,255,255,0.95)',
+            blur: 18,
+            offsetX: 0,
+            offsetY: 0,
+          }));
+        }
         canvas.add(img);
         sombraCB.set('visible', false);
         banner.set('visible', false);
@@ -5679,13 +5690,18 @@ function renderizarBoxProduto(canvas, box, produto, idx, paleta, tamanhoTexto, a
             const areaImagemContain = (visualW * escalaContain) * (visualH * escalaContain);
             const areaPhoto = photoAreaW * photoAreaH;
             const fillRatio = areaImagemContain / Math.max(1, areaPhoto);
-            const FILL_IDEAL = 0.92;  // alvo agressivo
+            // AJUSTE 2026-06-10: era 0.92, foto da linguiça (horizontal magra) ficava
+            // com fillRatio ~0.55-0.70 mas o boost final era pequeno e visualmente parecia
+            // que nada mudava. Subindo pra 1.0 força boost mais agressivo em fotos pequenas.
+            const FILL_IDEAL = 1.00;  // alvo: foto preenche 100% da área disponível
             if (fillRatio < FILL_IDEAL) {
               smartBoost = Math.sqrt(FILL_IDEAL / fillRatio);
             }
-            // Cap 1.40 (era 1.60) — overflow ainda menor pra evitar foto
-            // descer demais pro balão e dar a impressão de "centro baixo".
-            smartBoost = Math.min(smartBoost, 1.40);
+            // AJUSTE 2026-06-10: cap subido pra 1.65 pra fotos REALMENTE pequenas
+            // (linguiça horizontal magra) terem espaço pra crescer. Fotos que já
+            // estão ok têm fillRatio alto e boost ~1.04 — não atingem o cap, então
+            // não mudam. escalaMaxCardSafe (abaixo) impede foto estourar o card.
+            smartBoost = Math.min(smartBoost, 1.65);
           }
           let escala = escalaContain * fatorDestaque * multFoto * smartBoost;
           // SAFETY CAP: foto NUNCA pode passar das bordas do card. Antes, smartBoost

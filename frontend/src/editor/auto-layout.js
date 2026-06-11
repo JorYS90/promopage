@@ -24,9 +24,12 @@ export const LAYOUTS_NOMEADOS = [
   // === GRADES SIMPLES (1-4) ===
   // 1x1 usa layoutTipo "destaque-maximo": foto grande no topo, nome bottom-left, tag bottom-right
   { id: 'g_1x1', nome: '1 Produto - 1x1', quantidade: 1, cols: 1, rows: 1,
-    multValor: 1.20,   // valor 20% maior que o padrão
-    multNome: 0.95,    // nome -5%
-    multBalao: 1.05,   // balão +5%
+    // AJUSTE 2026-06-10: foto era pequena no centro, balão e preço pequenos.
+    // Grade 1×1 é cartaz DESTAQUE — foto/preço precisam dominar.
+    multValor: 1.35,   // era 1.20 → preço +15pp pra atrair olhar
+    multNome:  1.00,   // era 0.95 → nome volta ao tamanho natural (era reduzido)
+    multBalao: 1.20,   // era 1.05 → balão +15pp (mais imponente)
+    multFoto:  1.15,   // novo    → foto +15% (compensar o ×0.87 do renderer = ~100% área)
     boxes: [{ col: 0, row: 0, colSpan: 1, rowSpan: 1, layoutTipo: 'destaque-maximo' }],
     // CARTAZ_*: pôster estilo concorrente — só nome + valor, sem foto.
     // TV_HORIZONTAL: foto esquerda + nome topo direito + balão bottom direito (side-by-side).
@@ -45,9 +48,11 @@ export const LAYOUTS_NOMEADOS = [
       { col: 1, row: 0, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner' },
     ],
     // BASE — usado quando o modelo não tem override em perModelo
-    multFoto: 0.88,   // foto +10%
-    multBalao: 1.22,  // balão
-    multNome: 0.82,   // nome -10%
+    // AJUSTE 2026-06-10: balão grande demais no Facebook quadrado, foto e nome
+    // ficavam pequenos. Opção B do user: aumentar foto+nome, manter balão.
+    multFoto: 1.05,   // era 0.88 → +19% (foto domina mais o card)
+    multBalao: 1.22,  // mantém — balão já tava ok em proporção
+    multNome: 0.95,   // era 0.82 → +16% (nome mais legível)
     // Overrides per-modelo (só lista o que muda; resto herda do base)
     perModelo: {
       STORIES: {
@@ -137,7 +142,9 @@ export const LAYOUTS_NOMEADOS = [
       { col: 2, row: 0, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner' },
     ],
     multFoto: 1.05,   // foto
-    multNome: 0.65,   // nome
+    // AJUSTE 2026-06-10: nome era -35% (0.65), deixando muito amarelo vazio
+    // entre nome e foto nos cards estreitos do Facebook quadrado. Opção A: nome maior.
+    multNome: 0.85,   // era 0.65 → +31% (nome legível, fecha o vazio)
     multBalao: 1.08,  // balão
     perModelo: {
       REELS_INSTAGRAM: {
@@ -193,7 +200,10 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multFoto: 1.79, multNome: 0.70, multBalao: 1.0, multValor: 1.0, balaoFixo: true, balaoAlignX: 1, nomeOffsetTop: -0.30 },
           ENCARTE_GRANDE: { multFoto: 1.59, fotoOffsetX: 0.20 },
           // Pedido do cliente: nome um pouco mais pra cima só no FACEBOOK_QUADRADO
-          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.5 },
+          // AJUSTE 2026-06-10: smartFoto pra normalizar Pizza (quadrada) vs Contra
+          // Filé (horizontal magro) — sem isso a pizza fica gigante e o filé pequeno.
+          // multBalao reduzido pra deixar balão mais discreto.
+          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.5, smartFoto: true, multBalao: 0.95, multFoto: 1.10 },
           // Pedido do cliente (A4_RETRATO): smartFoto pra normalizar peso visual
           // das fotos (sem isso, PIZZA quadrada fica enorme e COXINHA horizontal
           // pequena — diferenças de aspect ratio).
@@ -212,7 +222,10 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multFoto: 1.79, multNome: 0.70, multBalao: 1.0, multValor: 1.0, balaoFixo: true, balaoAlignX: 1, nomeOffsetTop: -0.30 },
           ENCARTE_GRANDE: { multFoto: 1.59, fotoOffsetX: 0.20 },
           // Pedido do cliente: nome um pouco mais pra cima só no FACEBOOK_QUADRADO
-          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.5 },
+          // AJUSTE 2026-06-10: smartFoto pra normalizar Pizza (quadrada) vs Contra
+          // Filé (horizontal magro) — sem isso a pizza fica gigante e o filé pequeno.
+          // multBalao reduzido pra deixar balão mais discreto.
+          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.5, smartFoto: true, multBalao: 0.95, multFoto: 1.10 },
           // Pedido do cliente (A4_RETRATO): smartFoto pra normalizar peso visual
           // das fotos (sem isso, PIZZA quadrada fica enorme e COXINHA horizontal
           // pequena — diferenças de aspect ratio).
@@ -231,7 +244,10 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multFoto: 1.79, multNome: 0.70, multBalao: 1.0, multValor: 1.0, balaoFixo: true, balaoAlignX: 1, nomeOffsetTop: -0.30 },
           ENCARTE_GRANDE: { multFoto: 1.59, fotoOffsetX: 0.20 },
           // Pedido do cliente: nome um pouco mais pra cima só no FACEBOOK_QUADRADO
-          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.5 },
+          // AJUSTE 2026-06-10: smartFoto pra normalizar Pizza (quadrada) vs Contra
+          // Filé (horizontal magro) — sem isso a pizza fica gigante e o filé pequeno.
+          // multBalao reduzido pra deixar balão mais discreto.
+          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.5, smartFoto: true, multBalao: 0.95, multFoto: 1.10 },
           // Pedido do cliente (A4_RETRATO): smartFoto pra normalizar peso visual
           // das fotos (sem isso, PIZZA quadrada fica enorme e COXINHA horizontal
           // pequena — diferenças de aspect ratio).
@@ -250,7 +266,10 @@ export const LAYOUTS_NOMEADOS = [
           REELS_INSTAGRAM: { multFoto: 1.79, multNome: 0.70, multBalao: 1.0, multValor: 1.0, balaoFixo: true, balaoAlignX: 1, nomeOffsetTop: -0.30 },
           ENCARTE_GRANDE: { multFoto: 1.59, fotoOffsetX: 0.20 },
           // Pedido do cliente: nome um pouco mais pra cima só no FACEBOOK_QUADRADO
-          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.5 },
+          // AJUSTE 2026-06-10: smartFoto pra normalizar Pizza (quadrada) vs Contra
+          // Filé (horizontal magro) — sem isso a pizza fica gigante e o filé pequeno.
+          // multBalao reduzido pra deixar balão mais discreto.
+          FACEBOOK_QUADRADO: { nomeOffsetTop: -0.5, smartFoto: true, multBalao: 0.95, multFoto: 1.10 },
           // Pedido do cliente (A4_RETRATO): smartFoto pra normalizar peso visual
           // das fotos (sem isso, PIZZA quadrada fica enorme e COXINHA horizontal
           // pequena — diferenças de aspect ratio).
@@ -291,6 +310,9 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
           // COXINHA horizontal + nome um pouco mais pra baixo.
           A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 },
+          // AJUSTE 2026-06-10: fotos muito pequenas nos 4 cards pequenos, nomes pequenos.
+          // smartFoto normaliza pizza vs filé. multFoto +22%, multNome +23%.
+          FACEBOOK_QUADRADO: { smartFoto: true, multFoto: 1.30, multNome: 0.80 },
           // Pedido cliente (A4_PAISAGEM): balão maior + foto maior + foto centralizada.
           A4_PAISAGEM: { multBalao: 1.70, multValor: 1.25, multFoto: 1.50, fotoPosY: 0.50, balaoOffsetY: 0.03 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
@@ -301,6 +323,9 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
           // COXINHA horizontal + nome um pouco mais pra baixo.
           A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 },
+          // AJUSTE 2026-06-10: fotos muito pequenas nos 4 cards pequenos, nomes pequenos.
+          // smartFoto normaliza pizza vs filé. multFoto +22%, multNome +23%.
+          FACEBOOK_QUADRADO: { smartFoto: true, multFoto: 1.30, multNome: 0.80 },
           // Pedido cliente (A4_PAISAGEM): balão maior + foto maior + foto centralizada.
           A4_PAISAGEM: { multBalao: 1.70, multValor: 1.25, multFoto: 1.50, fotoPosY: 0.50, balaoOffsetY: 0.03 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
@@ -311,6 +336,9 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
           // COXINHA horizontal + nome um pouco mais pra baixo.
           A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 },
+          // AJUSTE 2026-06-10: fotos muito pequenas nos 4 cards pequenos, nomes pequenos.
+          // smartFoto normaliza pizza vs filé. multFoto +22%, multNome +23%.
+          FACEBOOK_QUADRADO: { smartFoto: true, multFoto: 1.30, multNome: 0.80 },
           // Pedido cliente (A4_PAISAGEM): balão maior + foto maior + foto centralizada.
           A4_PAISAGEM: { multBalao: 1.70, multValor: 1.25, multFoto: 1.50, fotoPosY: 0.50, balaoOffsetY: 0.03 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
@@ -321,6 +349,9 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
           // COXINHA horizontal + nome um pouco mais pra baixo.
           A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 },
+          // AJUSTE 2026-06-10: fotos muito pequenas nos 4 cards pequenos, nomes pequenos.
+          // smartFoto normaliza pizza vs filé. multFoto +22%, multNome +23%.
+          FACEBOOK_QUADRADO: { smartFoto: true, multFoto: 1.30, multNome: 0.80 },
           // Pedido cliente (A4_PAISAGEM): balão maior + foto maior + foto centralizada.
           A4_PAISAGEM: { multBalao: 1.70, multValor: 1.25, multFoto: 1.50, fotoPosY: 0.50, balaoOffsetY: 0.03 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
@@ -396,6 +427,9 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
           // COXINHA horizontal + nome um pouco mais pra baixo.
           A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 },
+          // AJUSTE 2026-06-10: fotos muito pequenas nos 4 cards pequenos, nomes pequenos.
+          // smartFoto normaliza pizza vs filé. multFoto +22%, multNome +23%.
+          FACEBOOK_QUADRADO: { smartFoto: true, multFoto: 1.30, multNome: 0.80 },
           // Pedido cliente (A4_PAISAGEM): balão maior + foto maior + foto centralizada.
           A4_PAISAGEM: { multBalao: 1.70, multValor: 1.25, multFoto: 1.50, fotoPosY: 0.50, balaoOffsetY: 0.03 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
@@ -406,6 +440,9 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
           // COXINHA horizontal + nome um pouco mais pra baixo.
           A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 },
+          // AJUSTE 2026-06-10: fotos muito pequenas nos 4 cards pequenos, nomes pequenos.
+          // smartFoto normaliza pizza vs filé. multFoto +22%, multNome +23%.
+          FACEBOOK_QUADRADO: { smartFoto: true, multFoto: 1.30, multNome: 0.80 },
           // Pedido cliente (A4_PAISAGEM): balão maior + foto maior + foto centralizada.
           A4_PAISAGEM: { multBalao: 1.70, multValor: 1.25, multFoto: 1.50, fotoPosY: 0.50, balaoOffsetY: 0.03 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
@@ -416,6 +453,9 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
           // COXINHA horizontal + nome um pouco mais pra baixo.
           A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 },
+          // AJUSTE 2026-06-10: fotos muito pequenas nos 4 cards pequenos, nomes pequenos.
+          // smartFoto normaliza pizza vs filé. multFoto +22%, multNome +23%.
+          FACEBOOK_QUADRADO: { smartFoto: true, multFoto: 1.30, multNome: 0.80 },
           // Pedido cliente (A4_PAISAGEM): balão maior + foto maior + foto centralizada.
           A4_PAISAGEM: { multBalao: 1.70, multValor: 1.25, multFoto: 1.50, fotoPosY: 0.50, balaoOffsetY: 0.03 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
@@ -426,6 +466,9 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido cliente (A4_RETRATO): smartFoto pra normalizar PIZZA quadrada vs
           // COXINHA horizontal + nome um pouco mais pra baixo.
           A4_RETRATO: { smartFoto: true, nomeOffsetTop: 0.10 },
+          // AJUSTE 2026-06-10: fotos muito pequenas nos 4 cards pequenos, nomes pequenos.
+          // smartFoto normaliza pizza vs filé. multFoto +22%, multNome +23%.
+          FACEBOOK_QUADRADO: { smartFoto: true, multFoto: 1.30, multNome: 0.80 },
           // Pedido cliente (A4_PAISAGEM): balão maior + foto maior + foto centralizada.
           A4_PAISAGEM: { multBalao: 1.70, multValor: 1.25, multFoto: 1.50, fotoPosY: 0.50, balaoOffsetY: 0.03 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
@@ -507,36 +550,60 @@ export const LAYOUTS_NOMEADOS = [
       { col: 0, row: 0, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.63, multValor: 1.0, multBalao: 1.68, multFoto: 1.25,
         perModelo: { STORIES: { nomeOffsetTop: 0.30 }, ENCARTE_GRANDE: { nomeOffsetTop: 0.20, multNome: 0.72 },
+          // AJUSTE 2026-06-10: smartFoto + reduz balão (era 1.68, ocupava muito espaço
+          // vertical e comia a área da foto). Balão 1.20 libera ~30% mais altura pra
+          // foto crescer. Linguiça Seara (mais quadrada) precisava de mais altura.
+          FACEBOOK_QUADRADO: { smartFoto: true, multBalao: 1.20, multFoto: 1.45 },
           A4_PAISAGEM: { multFoto: 1.63, fotoPosY: 0.50 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
           TV_VERTICAL: { nomeOffsetTop: 0.20 } } },
       { col: 1, row: 0, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.63, multValor: 1.0, multBalao: 1.68, multFoto: 1.25,
         perModelo: { STORIES: { nomeOffsetTop: 0.30 }, ENCARTE_GRANDE: { nomeOffsetTop: 0.20, multNome: 0.72 },
+          // AJUSTE 2026-06-10: smartFoto + reduz balão (era 1.68, ocupava muito espaço
+          // vertical e comia a área da foto). Balão 1.20 libera ~30% mais altura pra
+          // foto crescer. Linguiça Seara (mais quadrada) precisava de mais altura.
+          FACEBOOK_QUADRADO: { smartFoto: true, multBalao: 1.20, multFoto: 1.45 },
           A4_PAISAGEM: { multFoto: 1.63, fotoPosY: 0.50 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
           TV_VERTICAL: { nomeOffsetTop: 0.20 } } },
       { col: 2, row: 0, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.63, multValor: 1.0, multBalao: 1.68, multFoto: 1.25,
         perModelo: { STORIES: { nomeOffsetTop: 0.30 }, ENCARTE_GRANDE: { nomeOffsetTop: 0.20, multNome: 0.72 },
+          // AJUSTE 2026-06-10: smartFoto + reduz balão (era 1.68, ocupava muito espaço
+          // vertical e comia a área da foto). Balão 1.20 libera ~30% mais altura pra
+          // foto crescer. Linguiça Seara (mais quadrada) precisava de mais altura.
+          FACEBOOK_QUADRADO: { smartFoto: true, multBalao: 1.20, multFoto: 1.45 },
           A4_PAISAGEM: { multFoto: 1.63, fotoPosY: 0.50 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
           TV_VERTICAL: { nomeOffsetTop: 0.20 } } },
       { col: 0, row: 1, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.63, multValor: 1.0, multBalao: 1.68, multFoto: 1.25,
         perModelo: { STORIES: { nomeOffsetTop: 0.30 }, ENCARTE_GRANDE: { nomeOffsetTop: 0.20, multNome: 0.72 },
+          // AJUSTE 2026-06-10: smartFoto + reduz balão (era 1.68, ocupava muito espaço
+          // vertical e comia a área da foto). Balão 1.20 libera ~30% mais altura pra
+          // foto crescer. Linguiça Seara (mais quadrada) precisava de mais altura.
+          FACEBOOK_QUADRADO: { smartFoto: true, multBalao: 1.20, multFoto: 1.45 },
           A4_PAISAGEM: { multFoto: 1.63, fotoPosY: 0.50 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
           TV_VERTICAL: { nomeOffsetTop: 0.20 } } },
       { col: 1, row: 1, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.63, multValor: 1.0, multBalao: 1.68, multFoto: 1.25,
         perModelo: { STORIES: { nomeOffsetTop: 0.30 }, ENCARTE_GRANDE: { nomeOffsetTop: 0.20, multNome: 0.72 },
+          // AJUSTE 2026-06-10: smartFoto + reduz balão (era 1.68, ocupava muito espaço
+          // vertical e comia a área da foto). Balão 1.20 libera ~30% mais altura pra
+          // foto crescer. Linguiça Seara (mais quadrada) precisava de mais altura.
+          FACEBOOK_QUADRADO: { smartFoto: true, multBalao: 1.20, multFoto: 1.45 },
           A4_PAISAGEM: { multFoto: 1.63, fotoPosY: 0.50 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
           TV_VERTICAL: { nomeOffsetTop: 0.20 } } },
       { col: 2, row: 1, colSpan: 1, rowSpan: 1, layoutTipo: 'card-banner',
         multNome: 0.63, multValor: 1.0, multBalao: 1.68, multFoto: 1.25,
         perModelo: { STORIES: { nomeOffsetTop: 0.30 }, ENCARTE_GRANDE: { nomeOffsetTop: 0.20, multNome: 0.72 },
+          // AJUSTE 2026-06-10: smartFoto + reduz balão (era 1.68, ocupava muito espaço
+          // vertical e comia a área da foto). Balão 1.20 libera ~30% mais altura pra
+          // foto crescer. Linguiça Seara (mais quadrada) precisava de mais altura.
+          FACEBOOK_QUADRADO: { smartFoto: true, multBalao: 1.20, multFoto: 1.45 },
           A4_PAISAGEM: { multFoto: 1.63, fotoPosY: 0.50 },
           TV_HORIZONTAL: { layoutTipo: 'destaque-maximo', fotoEsquerda: true, multNome: 1.15, multFoto: 1.40, multValor: 1.30 },
           TV_VERTICAL: { nomeOffsetTop: 0.20 } } },
@@ -584,7 +651,9 @@ export const LAYOUTS_NOMEADOS = [
         multNome: 0.55, multValor: 1.0, multBalao: 1.50, multFoto: 1.09,
         perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 }, ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome maior + mais baixo + foto melhor centralizada
-          FACEBOOK_QUADRADO: { multNome: 0.72, nomeOffsetTop: 0.22, fotoPosY: 0.60 },
+          // AJUSTE 2026-06-10: smartFoto + foto maior + balão menor — linguiça (horizontal magra)
+          // ficava pequena nessa grade pq não tinha smartFoto ativo.
+          FACEBOOK_QUADRADO: { multNome: 0.72, nomeOffsetTop: 0.22, fotoPosY: 0.60, smartFoto: true, multFoto: 1.40, multBalao: 1.20 },
           // Pedido cliente (A4_PAISAGEM): foto +30% (1.09 → 1.42), foto centralizada.
           A4_PAISAGEM: { multFoto: 1.42, fotoPosY: 0.50 },
           CARTAZ_VERTICAL: { nomeOffsetTop: 0.20 },
@@ -594,7 +663,9 @@ export const LAYOUTS_NOMEADOS = [
         multNome: 0.55, multValor: 1.0, multBalao: 1.50, multFoto: 1.09,
         perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 }, ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome maior + mais baixo + foto melhor centralizada
-          FACEBOOK_QUADRADO: { multNome: 0.72, nomeOffsetTop: 0.22, fotoPosY: 0.60 },
+          // AJUSTE 2026-06-10: smartFoto + foto maior + balão menor — linguiça (horizontal magra)
+          // ficava pequena nessa grade pq não tinha smartFoto ativo.
+          FACEBOOK_QUADRADO: { multNome: 0.72, nomeOffsetTop: 0.22, fotoPosY: 0.60, smartFoto: true, multFoto: 1.40, multBalao: 1.20 },
           // Pedido cliente (A4_PAISAGEM): foto +30% (1.09 → 1.42), foto centralizada.
           A4_PAISAGEM: { multFoto: 1.42, fotoPosY: 0.50 },
           CARTAZ_VERTICAL: { nomeOffsetTop: 0.20 },
@@ -604,7 +675,9 @@ export const LAYOUTS_NOMEADOS = [
         multNome: 0.55, multValor: 1.0, multBalao: 1.50, multFoto: 1.09,
         perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 }, ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome maior + mais baixo + foto melhor centralizada
-          FACEBOOK_QUADRADO: { multNome: 0.72, nomeOffsetTop: 0.22, fotoPosY: 0.60 },
+          // AJUSTE 2026-06-10: smartFoto + foto maior + balão menor — linguiça (horizontal magra)
+          // ficava pequena nessa grade pq não tinha smartFoto ativo.
+          FACEBOOK_QUADRADO: { multNome: 0.72, nomeOffsetTop: 0.22, fotoPosY: 0.60, smartFoto: true, multFoto: 1.40, multBalao: 1.20 },
           // Pedido cliente (A4_PAISAGEM): foto +30% (1.09 → 1.42), foto centralizada.
           A4_PAISAGEM: { multFoto: 1.42, fotoPosY: 0.50 },
           CARTAZ_VERTICAL: { nomeOffsetTop: 0.20 },
@@ -614,7 +687,9 @@ export const LAYOUTS_NOMEADOS = [
         multNome: 0.55, multValor: 1.0, multBalao: 1.50, multFoto: 1.09,
         perModelo: { REELS_INSTAGRAM: { nomeOffsetTop: 0.25 }, ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome maior + mais baixo + foto melhor centralizada
-          FACEBOOK_QUADRADO: { multNome: 0.72, nomeOffsetTop: 0.22, fotoPosY: 0.60 },
+          // AJUSTE 2026-06-10: smartFoto + foto maior + balão menor — linguiça (horizontal magra)
+          // ficava pequena nessa grade pq não tinha smartFoto ativo.
+          FACEBOOK_QUADRADO: { multNome: 0.72, nomeOffsetTop: 0.22, fotoPosY: 0.60, smartFoto: true, multFoto: 1.40, multBalao: 1.20 },
           // Pedido cliente (A4_PAISAGEM): foto +30% (1.09 → 1.42), foto centralizada.
           A4_PAISAGEM: { multFoto: 1.42, fotoPosY: 0.50 },
           CARTAZ_VERTICAL: { nomeOffsetTop: 0.20 },
@@ -681,7 +756,9 @@ export const LAYOUTS_NOMEADOS = [
         multNome: 0.65, multValor: 1.0, multBalao: 1.38, multFoto: 1.09,
         perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome dos 4 produtos menor (espelho de g_7_4_prod_3_dest_baixo)
-          FACEBOOK_QUADRADO: { multNome: 0.72 },
+          // AJUSTE 2026-06-10: smartFoto pra normalizar peso visual (linguiça
+          // horizontal magra ficava muito pequena no card-banner).
+          FACEBOOK_QUADRADO: { multNome: 0.72, smartFoto: true, multFoto: 1.30 },
           // Pedido cliente (A4_RETRATO): nome dos 4 produtos um pouco mais pra baixo
           A4_RETRATO: { nomeOffsetTop: 0.15 },
           A4_PAISAGEM: { multFoto: 1.42, fotoPosY: 0.50, nomeOffsetTop: 0.10 } } },
@@ -689,7 +766,9 @@ export const LAYOUTS_NOMEADOS = [
         multNome: 0.65, multValor: 1.0, multBalao: 1.38, multFoto: 1.09,
         perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome dos 4 produtos menor (espelho de g_7_4_prod_3_dest_baixo)
-          FACEBOOK_QUADRADO: { multNome: 0.72 },
+          // AJUSTE 2026-06-10: smartFoto pra normalizar peso visual (linguiça
+          // horizontal magra ficava muito pequena no card-banner).
+          FACEBOOK_QUADRADO: { multNome: 0.72, smartFoto: true, multFoto: 1.30 },
           // Pedido cliente (A4_RETRATO): nome dos 4 produtos um pouco mais pra baixo
           A4_RETRATO: { nomeOffsetTop: 0.15 },
           A4_PAISAGEM: { multFoto: 1.42, fotoPosY: 0.50, nomeOffsetTop: 0.10 } } },
@@ -697,7 +776,9 @@ export const LAYOUTS_NOMEADOS = [
         multNome: 0.65, multValor: 1.0, multBalao: 1.38, multFoto: 1.09,
         perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome dos 4 produtos menor (espelho de g_7_4_prod_3_dest_baixo)
-          FACEBOOK_QUADRADO: { multNome: 0.72 },
+          // AJUSTE 2026-06-10: smartFoto pra normalizar peso visual (linguiça
+          // horizontal magra ficava muito pequena no card-banner).
+          FACEBOOK_QUADRADO: { multNome: 0.72, smartFoto: true, multFoto: 1.30 },
           // Pedido cliente (A4_RETRATO): nome dos 4 produtos um pouco mais pra baixo
           A4_RETRATO: { nomeOffsetTop: 0.15 },
           A4_PAISAGEM: { multFoto: 1.42, fotoPosY: 0.50, nomeOffsetTop: 0.10 } } },
@@ -705,7 +786,9 @@ export const LAYOUTS_NOMEADOS = [
         multNome: 0.65, multValor: 1.0, multBalao: 1.38, multFoto: 1.09,
         perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.20 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome dos 4 produtos menor (espelho de g_7_4_prod_3_dest_baixo)
-          FACEBOOK_QUADRADO: { multNome: 0.72 },
+          // AJUSTE 2026-06-10: smartFoto pra normalizar peso visual (linguiça
+          // horizontal magra ficava muito pequena no card-banner).
+          FACEBOOK_QUADRADO: { multNome: 0.72, smartFoto: true, multFoto: 1.30 },
           // Pedido cliente (A4_RETRATO): nome dos 4 produtos um pouco mais pra baixo
           A4_RETRATO: { nomeOffsetTop: 0.15 },
           A4_PAISAGEM: { multFoto: 1.42, fotoPosY: 0.50, nomeOffsetTop: 0.10 } } },
@@ -769,7 +852,9 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido cliente (CARTAZ_VERTICAL): mesma dims do A4_RETRATO, mesmo nome destaque maior.
           CARTAZ_VERTICAL: { multNome: 0.65, multFoto: 1.24 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (chamar mais atenção)
-          FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
+          // AJUSTE 2026-06-10: smartFoto + multFoto pra normalizar peso visual
+          // (linguiça horizontal magra ficava muito pequena nos destaques).
+          FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70, smartFoto: true, multFoto: 1.30 },
           // Pedido do cliente (REELS): nome do destaque +35% (espelho de g_7_3_dest_topo, multNome 0.49)
           REELS_INSTAGRAM: { multNome: 0.59 } } },
       { col: 4, row: 2, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
@@ -782,7 +867,9 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido cliente (CARTAZ_VERTICAL): mesma dims do A4_RETRATO, mesmo nome destaque maior.
           CARTAZ_VERTICAL: { multNome: 0.65, multFoto: 1.24 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (chamar mais atenção)
-          FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
+          // AJUSTE 2026-06-10: smartFoto + multFoto pra normalizar peso visual
+          // (linguiça horizontal magra ficava muito pequena nos destaques).
+          FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70, smartFoto: true, multFoto: 1.30 },
           // Pedido do cliente (REELS): nome do destaque +35% (espelho de g_7_3_dest_topo, multNome 0.49)
           REELS_INSTAGRAM: { multNome: 0.59 } } },
       { col: 8, row: 2, colSpan: 4, rowSpan: 2, layoutTipo: 'card-banner', destaque: true,
@@ -795,7 +882,9 @@ export const LAYOUTS_NOMEADOS = [
           // Pedido cliente (CARTAZ_VERTICAL): mesma dims do A4_RETRATO, mesmo nome destaque maior.
           CARTAZ_VERTICAL: { multNome: 0.65, multFoto: 1.24 },
           // Pedido do cliente (FACEBOOK_QUADRADO): nome + balão do destaque maiores (chamar mais atenção)
-          FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70 },
+          // AJUSTE 2026-06-10: smartFoto + multFoto pra normalizar peso visual
+          // (linguiça horizontal magra ficava muito pequena nos destaques).
+          FACEBOOK_QUADRADO: { multNome: 0.62, multBalao: 1.70, smartFoto: true, multFoto: 1.30 },
           // Pedido do cliente (REELS): nome do destaque +35% (espelho de g_7_3_dest_topo, multNome 0.49)
           REELS_INSTAGRAM: { multNome: 0.59 } } },
     ]},
@@ -817,22 +906,46 @@ export const LAYOUTS_NOMEADOS = [
       // 6 produtos pequenos: destaque: false EXPLÍCITO (fundo amarelo normal)
       { col: 2, row: 0, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 } } },
+        // AJUSTE 2026-06-10: smartFoto + balão menor (1.90 → 1.40 libera ~25%
+        // de altura pra foto crescer). Linguiça e outras horizontais magras
+        // ficavam pequenas pq o balão gigante comia a área da foto.
+        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 },
+          FACEBOOK_QUADRADO: { smartFoto: true, multBalao: 1.40 } } },
       { col: 4, row: 0, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 } } },
+        // AJUSTE 2026-06-10: smartFoto + balão menor (1.90 → 1.40 libera ~25%
+        // de altura pra foto crescer). Linguiça e outras horizontais magras
+        // ficavam pequenas pq o balão gigante comia a área da foto.
+        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 },
+          FACEBOOK_QUADRADO: { smartFoto: true, multBalao: 1.40 } } },
       { col: 2, row: 1, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 } } },
+        // AJUSTE 2026-06-10: smartFoto + balão menor (1.90 → 1.40 libera ~25%
+        // de altura pra foto crescer). Linguiça e outras horizontais magras
+        // ficavam pequenas pq o balão gigante comia a área da foto.
+        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 },
+          FACEBOOK_QUADRADO: { smartFoto: true, multBalao: 1.40 } } },
       { col: 4, row: 1, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 } } },
+        // AJUSTE 2026-06-10: smartFoto + balão menor (1.90 → 1.40 libera ~25%
+        // de altura pra foto crescer). Linguiça e outras horizontais magras
+        // ficavam pequenas pq o balão gigante comia a área da foto.
+        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 },
+          FACEBOOK_QUADRADO: { smartFoto: true, multBalao: 1.40 } } },
       { col: 2, row: 2, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 } } },
+        // AJUSTE 2026-06-10: smartFoto + balão menor (1.90 → 1.40 libera ~25%
+        // de altura pra foto crescer). Linguiça e outras horizontais magras
+        // ficavam pequenas pq o balão gigante comia a área da foto.
+        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 },
+          FACEBOOK_QUADRADO: { smartFoto: true, multBalao: 1.40 } } },
       { col: 4, row: 2, colSpan: 2, rowSpan: 1, layoutTipo: 'card-banner', destaque: false,
         multNome: 0.70, multValor: 1.0, multFoto: 1.73, multBalao: 1.90,
-        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 } } },
+        // AJUSTE 2026-06-10: smartFoto + balão menor (1.90 → 1.40 libera ~25%
+        // de altura pra foto crescer). Linguiça e outras horizontais magras
+        // ficavam pequenas pq o balão gigante comia a área da foto.
+        perModelo: { ENCARTE_GRANDE: { nomeOffsetTop: 0.10 },
+          FACEBOOK_QUADRADO: { smartFoto: true, multBalao: 1.40 } } },
     ]},
   // 7 produtos (STORIES): estilo qrofertas — 1 destaque grande no topo (foto esquerda +
   // nome+balão amarelo grande à direita) + 6 produtos card-banner abaixo em grid 3×2.
@@ -1072,7 +1185,12 @@ export const LAYOUTS_NOMEADOS = [
           A4_RETRATO: { multBalao: 0.85, multNome: 1.39, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           A4_PAISAGEM: { multBalao: 0.55, multValor: 0.75, multNome: 1.40, multFoto: 1.25, fotoPosY: 0.50, nomeOffsetTop: 0.05, balaoOffsetY: 0.03 }, CARTAZ_VERTICAL: { multBalao: 0.85, multValor: 1.10, multNome: 1.39, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque maior (espelho de g_8_3_dest_topo_5)
-          FACEBOOK_QUADRADO: { multBalao: 0.75, multValor: 1.0 },
+          // AJUSTE 2026-06-10: balão menor (0.75→0.55). multFoto 1.25 + smartFoto
+          // ficou EXAGERADO. multFoto reduzido pra 1.05 — o smartFoto já normaliza,
+          // o boost direto extra estava estourando as fotos.
+          // valorConsistente: true — preço "7,49" crescia mais que "13,99" / "21,99"
+          // (auto-fit por largura), fazia o balão da Coxa Sobrecoxa parecer maior.
+          FACEBOOK_QUADRADO: { multBalao: 0.55, multValor: 1.0, multFoto: 1.05, smartFoto: true, valorConsistente: true },
         } },
       { col: 5,  row: 2, colSpan: 5, rowSpan: 2, destaque: true,
         multBalao: 0.52, multValor: 0.80, multNome: 1.19,
@@ -1082,7 +1200,12 @@ export const LAYOUTS_NOMEADOS = [
           A4_RETRATO: { multBalao: 0.85, multNome: 1.39, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           A4_PAISAGEM: { multBalao: 0.55, multValor: 0.75, multNome: 1.40, multFoto: 1.25, fotoPosY: 0.50, nomeOffsetTop: 0.05, balaoOffsetY: 0.03 }, CARTAZ_VERTICAL: { multBalao: 0.85, multValor: 1.10, multNome: 1.39, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque maior (espelho de g_8_3_dest_topo_5)
-          FACEBOOK_QUADRADO: { multBalao: 0.75, multValor: 1.0 },
+          // AJUSTE 2026-06-10: balão menor (0.75→0.55). multFoto 1.25 + smartFoto
+          // ficou EXAGERADO. multFoto reduzido pra 1.05 — o smartFoto já normaliza,
+          // o boost direto extra estava estourando as fotos.
+          // valorConsistente: true — preço "7,49" crescia mais que "13,99" / "21,99"
+          // (auto-fit por largura), fazia o balão da Coxa Sobrecoxa parecer maior.
+          FACEBOOK_QUADRADO: { multBalao: 0.55, multValor: 1.0, multFoto: 1.05, smartFoto: true, valorConsistente: true },
         } },
       { col: 10, row: 2, colSpan: 5, rowSpan: 2, destaque: true,
         multBalao: 0.52, multValor: 0.80, multNome: 1.19,
@@ -1092,7 +1215,12 @@ export const LAYOUTS_NOMEADOS = [
           A4_RETRATO: { multBalao: 0.85, multNome: 1.39, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           A4_PAISAGEM: { multBalao: 0.55, multValor: 0.75, multNome: 1.40, multFoto: 1.25, fotoPosY: 0.50, nomeOffsetTop: 0.05, balaoOffsetY: 0.03 }, CARTAZ_VERTICAL: { multBalao: 0.85, multValor: 1.10, multNome: 1.39, multFoto: 1.15, fotoPosY: 0.50, nomeOffsetTop: 0.20, balaoOffsetY: 0.03 },
           // Pedido do cliente (FACEBOOK_QUADRADO): balão do destaque maior (espelho de g_8_3_dest_topo_5)
-          FACEBOOK_QUADRADO: { multBalao: 0.75, multValor: 1.0 },
+          // AJUSTE 2026-06-10: balão menor (0.75→0.55). multFoto 1.25 + smartFoto
+          // ficou EXAGERADO. multFoto reduzido pra 1.05 — o smartFoto já normaliza,
+          // o boost direto extra estava estourando as fotos.
+          // valorConsistente: true — preço "7,49" crescia mais que "13,99" / "21,99"
+          // (auto-fit por largura), fazia o balão da Coxa Sobrecoxa parecer maior.
+          FACEBOOK_QUADRADO: { multBalao: 0.55, multValor: 1.0, multFoto: 1.05, smartFoto: true, valorConsistente: true },
         } },
     ]},
 
