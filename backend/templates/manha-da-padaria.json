@@ -1,0 +1,38 @@
+{
+  "nome": "Manhã da Padaria",
+  "categoria": "Padaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#B5762A",
+    "imagemFundo": "/uploads/ai/manha-da-padaria-fundo.png",
+    "imagemTitulo": "/uploads/ai/manha-da-padaria-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#6B3F12",
+    "faixaSuperior": "#E0A800"
+  },
+  "paleta": {
+    "primaria": "#A8631E",
+    "secundaria": "#E0A800",
+    "fundoBox": "#FFF8EC",
+    "fundoBoxSecundario": "#A8631E",
+    "textoNome": "#4A2E12",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFCB2B",
+    "tagPreco": "#A8631E",
+    "balaoOferta": "/uploads/baloes/10_marrom/10_marrom_14_D78143.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF6E6"
+  },
+  "criadoEm": "2026-06-12T06:45:00.000Z",
+  "atualizadoEm": "2026-06-12T06:45:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Aniversário da Loja",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/aniversario-fundo.png",
+    "imagemTitulo": "/uploads/3/1781191756415-b_08gk.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#360C53",
+    "faixaSuperior": "#FFCD03"
+  },
+  "paleta": {
+    "primaria": "#921AE8",
+    "secundaria": "#FFCD03",
+    "fundoBox": "#fbf2ff",
+    "fundoBoxSecundario": "#FFCD03",
+    "textoNome": "#360C53",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFCD03",
+    "tagPreco": "#921AE8",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_16_921AE8.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#fbf2ff"
+  },
+  "criadoEm": "2026-06-11T17:50:00.000Z",
+  "atualizadoEm": "2026-06-11T15:29:17.694Z"
+}

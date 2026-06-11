@@ -1,0 +1,38 @@
+{
+  "nome": "Feirão de Móveis",
+  "categoria": "Móveis e Eletro",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#9BBFA0",
+    "imagemFundo": "/uploads/ai/feirao-de-moveis-fundo.png",
+    "imagemTitulo": "/uploads/ai/feirao-de-moveis-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#244035",
+    "faixaSuperior": "#C9962B"
+  },
+  "paleta": {
+    "primaria": "#4E8C6E",
+    "secundaria": "#C9962B",
+    "fundoBox": "#FBF8F0",
+    "fundoBoxSecundario": "#4E8C6E",
+    "textoNome": "#244035",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#E0A800",
+    "tagPreco": "#4E8C6E",
+    "balaoOferta": "/uploads/baloes/08_ciano/08_ciano_17_0FCFE4.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F7F3EA"
+  },
+  "criadoEm": "2026-06-12T11:15:00.000Z",
+  "atualizadoEm": "2026-06-12T11:15:00.000Z"
+}

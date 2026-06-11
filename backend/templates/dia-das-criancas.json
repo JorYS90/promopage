@@ -1,0 +1,38 @@
+{
+  "nome": "Dia das Crianças",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/dia-das-criancas-fundo.png",
+    "imagemTitulo": "/uploads/3/1781187724186-gqEf-p.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0950A0",
+    "faixaSuperior": "#FFD012"
+  },
+  "paleta": {
+    "primaria": "#14A444",
+    "secundaria": "#FFD012",
+    "fundoBox": "#f3f9ff",
+    "fundoBoxSecundario": "#FFD012",
+    "textoNome": "#123a6b",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE16B",
+    "tagPreco": "#14A444",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_21_14A444.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#eaf4ff"
+  },
+  "criadoEm": "2026-06-11T16:00:00.000Z",
+  "atualizadoEm": "2026-06-11T14:22:08.892Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Festa da Pizza",
+  "categoria": "Restaurante",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#B5762A",
+    "imagemFundo": "/uploads/ai/festa-da-pizza-fundo.png",
+    "imagemTitulo": "/uploads/ai/festa-da-pizza-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#A30E22",
+    "faixaSuperior": "#2E7D32"
+  },
+  "paleta": {
+    "primaria": "#C8102E",
+    "secundaria": "#2E7D32",
+    "fundoBox": "#FFF8EC",
+    "fundoBoxSecundario": "#C8102E",
+    "textoNome": "#4A2A14",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD200",
+    "tagPreco": "#C8102E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_18_DB0A11.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF3E6"
+  },
+  "criadoEm": "2026-06-12T08:20:00.000Z",
+  "atualizadoEm": "2026-06-12T08:20:00.000Z"
+}

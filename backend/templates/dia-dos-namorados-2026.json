@@ -1,0 +1,38 @@
+{
+  "nome": "Dia dos Namorados",
+  "categoria": "Dia dos namorados",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/dia-dos-namorados-2026-fundo.png",
+    "imagemTitulo": "/uploads/ai/dia-dos-namorados-2026-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#8C0A20",
+    "faixaSuperior": "#D9A227"
+  },
+  "paleta": {
+    "primaria": "#C8102E",
+    "secundaria": "#D9A227",
+    "fundoBox": "#FFF6F8",
+    "fundoBoxSecundario": "#D9A227",
+    "textoNome": "#6B0A1C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#F3C200",
+    "tagPreco": "#C8102E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_19_CC0910.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF2F5"
+  },
+  "criadoEm": "2026-06-12T03:00:00.000Z",
+  "atualizadoEm": "2026-06-11T19:46:30.160Z"
+}

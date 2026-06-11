@@ -1,0 +1,38 @@
+{
+  "nome": "Carnaval de Ofertas",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7113B4",
+    "imagemFundo": "/uploads/ai/carnaval-fundo.png",
+    "imagemTitulo": "/uploads/ai/carnaval-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#6812A6",
+    "faixaSuperior": "#F5B800"
+  },
+  "paleta": {
+    "primaria": "#8A16DD",
+    "secundaria": "#F5B800",
+    "fundoBox": "#FFF7E6",
+    "fundoBoxSecundario": "#8A16DD",
+    "textoNome": "#4F0F7C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#8A16DD",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_17_8A16DD.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF7E6"
+  },
+  "criadoEm": "2026-06-11T19:05:00.000Z",
+  "atualizadoEm": "2026-06-11T19:05:00.000Z"
+}

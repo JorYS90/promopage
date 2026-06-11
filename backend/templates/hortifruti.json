@@ -1,0 +1,38 @@
+{
+  "nome": "Hortifruti",
+  "categoria": "Hortaliças",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/hortifruti-fundo.png",
+    "imagemTitulo": "/uploads/ai/hortifruti-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#106D2F",
+    "faixaSuperior": "#FD8114"
+  },
+  "paleta": {
+    "primaria": "#16BF4F",
+    "secundaria": "#FD8114",
+    "fundoBox": "#f1fff4",
+    "fundoBoxSecundario": "#FD8114",
+    "textoNome": "#0D5324",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#16BF4F",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_19_16BF4F.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#f1fff4"
+  },
+  "criadoEm": "2026-06-11T17:10:00.000Z",
+  "atualizadoEm": "2026-06-11T15:17:40.279Z"
+}

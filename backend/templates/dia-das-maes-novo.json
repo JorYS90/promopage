@@ -1,0 +1,38 @@
+{
+  "nome": "Dia das Mães",
+  "categoria": "DIA DAS MAES",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/dia-das-maes-novo-fundo.png",
+    "imagemTitulo": "/uploads/ai/dia-das-maes-novo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C2185B",
+    "faixaSuperior": "#D9A227"
+  },
+  "paleta": {
+    "primaria": "#D6336C",
+    "secundaria": "#D9A227",
+    "fundoBox": "#FFF8FB",
+    "fundoBoxSecundario": "#D9A227",
+    "textoNome": "#6B1F42",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#F3C200",
+    "tagPreco": "#D6336C",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_13_F23C88.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF2F7"
+  },
+  "criadoEm": "2026-06-11T23:15:00.000Z",
+  "atualizadoEm": "2026-06-11T19:46:38.238Z"
+}

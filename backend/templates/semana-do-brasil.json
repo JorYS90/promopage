@@ -1,0 +1,38 @@
+{
+  "nome": "Semana do Brasil",
+  "categoria": "COPA DO MUNDO",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/semana-do-brasil-fundo.png",
+    "imagemTitulo": "/uploads/ai/semana-do-brasil-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#009C3B",
+    "faixaSuperior": "#FFCC00"
+  },
+  "paleta": {
+    "primaria": "#009C3B",
+    "secundaria": "#FFCC00",
+    "fundoBox": "#FFFDF0",
+    "fundoBoxSecundario": "#FFCC00",
+    "textoNome": "#0A3D1E",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#009C3B",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_16_1CE65F.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFFDF0"
+  },
+  "criadoEm": "2026-06-11T20:20:00.000Z",
+  "atualizadoEm": "2026-06-11T19:45:24.276Z"
+}

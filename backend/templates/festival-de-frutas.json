@@ -1,0 +1,38 @@
+{
+  "nome": "Festival de Frutas",
+  "categoria": "Hortifruti",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#9FD957",
+    "imagemFundo": "/uploads/ai/festival-de-frutas-fundo.png",
+    "imagemTitulo": "/uploads/ai/festival-de-frutas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#2E7D1F",
+    "faixaSuperior": "#FF8A1E"
+  },
+  "paleta": {
+    "primaria": "#3DAE2B",
+    "secundaria": "#FF7A1A",
+    "fundoBox": "#FCFFF5",
+    "fundoBoxSecundario": "#3DAE2B",
+    "textoNome": "#1F4D14",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD93B",
+    "tagPreco": "#3DAE2B",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_13_44EA7B.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F2FBEA"
+  },
+  "criadoEm": "2026-06-12T00:05:00.000Z",
+  "atualizadoEm": "2026-06-12T00:05:00.000Z"
+}

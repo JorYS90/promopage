@@ -1,0 +1,38 @@
+{
+  "nome": "Festa do Burger",
+  "categoria": "Hamburgueria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#3A2414",
+    "imagemFundo": "/uploads/ai/festa-do-burger-fundo.png",
+    "imagemTitulo": "/uploads/ai/festa-do-burger-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1F1410",
+    "faixaSuperior": "#FFC107"
+  },
+  "paleta": {
+    "primaria": "#D32F2F",
+    "secundaria": "#FFC107",
+    "fundoBox": "#FFFBEC",
+    "fundoBoxSecundario": "#D32F2F",
+    "textoNome": "#3A2010",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#D32F2F",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_15_FFD012.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF6E4"
+  },
+  "criadoEm": "2026-06-12T08:45:00.000Z",
+  "atualizadoEm": "2026-06-12T08:45:00.000Z"
+}

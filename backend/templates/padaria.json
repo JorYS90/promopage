@@ -1,0 +1,38 @@
+{
+  "nome": "Padaria Artesanal",
+  "categoria": "Padaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#4a2e14",
+    "imagemFundo": "/uploads/ai/padaria-fundo.png",
+    "imagemTitulo": "/uploads/ai/padaria-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#3C2514",
+    "faixaSuperior": "#F3C200"
+  },
+  "paleta": {
+    "primaria": "#925123",
+    "secundaria": "#F3C200",
+    "fundoBox": "#fff8ec",
+    "fundoBoxSecundario": "#925123",
+    "textoNome": "#3C2514",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#925123",
+    "balaoOferta": "/uploads/baloes/10_marrom/10_marrom_21_925123.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#fff8ec"
+  },
+  "criadoEm": "2026-06-11T18:40:00.000Z",
+  "atualizadoEm": "2026-06-11T18:40:00.000Z"
+}

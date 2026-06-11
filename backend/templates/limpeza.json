@@ -1,0 +1,38 @@
+{
+  "nome": "Produtos de Limpeza",
+  "categoria": "Limpeza",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7ec8f0",
+    "imagemFundo": "/uploads/ai/limpeza-fundo.png",
+    "imagemTitulo": "/uploads/ai/limpeza-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#083B75",
+    "faixaSuperior": "#16BF4F"
+  },
+  "paleta": {
+    "primaria": "#0D79F5",
+    "secundaria": "#16BF4F",
+    "fundoBox": "#f0f8ff",
+    "fundoBoxSecundario": "#0D79F5",
+    "textoNome": "#083B75",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#0D79F5",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_16_0D79F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#f0f8ff"
+  },
+  "criadoEm": "2026-06-11T17:30:00.000Z",
+  "atualizadoEm": "2026-06-11T17:30:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Dia dos Pais",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#06264A",
+    "imagemFundo": "/uploads/ai/dia-dos-pais-fundo.png",
+    "imagemTitulo": "/uploads/ai/dia-dos-pais-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#061F3C",
+    "faixaSuperior": "#F3C200"
+  },
+  "paleta": {
+    "primaria": "#0A72E9",
+    "secundaria": "#F3C200",
+    "fundoBox": "#eef4fb",
+    "fundoBoxSecundario": "#0A72E9",
+    "textoNome": "#06264A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD220",
+    "tagPreco": "#0A72E9",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_17_0A72E9.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#eef4fb"
+  },
+  "criadoEm": "2026-06-11T14:00:00.000Z",
+  "atualizadoEm": "2026-06-11T14:00:00.000Z"
+}

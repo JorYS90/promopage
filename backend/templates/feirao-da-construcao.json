@@ -1,0 +1,38 @@
+{
+  "nome": "Feirão da Construção",
+  "categoria": "Material para Construção",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#C98A1E",
+    "imagemFundo": "/uploads/ai/feirao-da-construcao-fundo.png",
+    "imagemTitulo": "/uploads/ai/feirao-da-construcao-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#2E2E2E",
+    "faixaSuperior": "#FFD200"
+  },
+  "paleta": {
+    "primaria": "#F57C00",
+    "secundaria": "#2E2E2E",
+    "fundoBox": "#FFF8EC",
+    "fundoBoxSecundario": "#2E2E2E",
+    "textoNome": "#1A1A1A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD200",
+    "tagPreco": "#F57C00",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_14_FD8823.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F4F2EE"
+  },
+  "criadoEm": "2026-06-12T04:15:00.000Z",
+  "atualizadoEm": "2026-06-12T04:15:00.000Z"
+}

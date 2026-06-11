@@ -1,0 +1,38 @@
+{
+  "nome": "Festival Japonês",
+  "categoria": "Comida Japonesa",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#3A1A14",
+    "imagemFundo": "/uploads/ai/festival-japones-fundo.png",
+    "imagemTitulo": "/uploads/ai/festival-japones-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1A1A1A",
+    "faixaSuperior": "#C8102E"
+  },
+  "paleta": {
+    "primaria": "#C8102E",
+    "secundaria": "#C9962B",
+    "fundoBox": "#FFF8EE",
+    "fundoBoxSecundario": "#1F1410",
+    "textoNome": "#2A1410",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#E0A800",
+    "tagPreco": "#C8102E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_22_A0090E.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF3E8"
+  },
+  "criadoEm": "2026-06-12T10:00:00.000Z",
+  "atualizadoEm": "2026-06-12T10:00:00.000Z"
+}

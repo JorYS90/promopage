@@ -1,0 +1,38 @@
+{
+  "nome": "Festa da Carne",
+  "categoria": "Açougue",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#4A2E18",
+    "imagemFundo": "/uploads/ai/festa-da-carne-fundo.png",
+    "imagemTitulo": "/uploads/ai/festa-da-carne-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#3A1A0E",
+    "faixaSuperior": "#FFD200"
+  },
+  "paleta": {
+    "primaria": "#C81E1E",
+    "secundaria": "#7A4A1E",
+    "fundoBox": "#FFF6EC",
+    "fundoBoxSecundario": "#C81E1E",
+    "textoNome": "#3A1A0E",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD200",
+    "tagPreco": "#C81E1E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_15_F51B22.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF3EA"
+  },
+  "criadoEm": "2026-06-12T06:20:00.000Z",
+  "atualizadoEm": "2026-06-12T06:20:00.000Z"
+}

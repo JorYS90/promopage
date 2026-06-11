@@ -1,0 +1,38 @@
+{
+  "nome": "Bebidas Geladas",
+  "categoria": "Bebidas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#06292D",
+    "imagemFundo": "/uploads/ai/bebidas-fundo.png",
+    "imagemTitulo": "/uploads/ai/bebidas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#07363B",
+    "faixaSuperior": "#FFD012"
+  },
+  "paleta": {
+    "primaria": "#0DA8BA",
+    "secundaria": "#FFD012",
+    "fundoBox": "#eefcff",
+    "fundoBoxSecundario": "#0DA8BA",
+    "textoNome": "#06292D",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#0DA8BA",
+    "balaoOferta": "/uploads/baloes/08_ciano/08_ciano_20_0DA8BA.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#eefcff"
+  },
+  "criadoEm": "2026-06-11T16:45:00.000Z",
+  "atualizadoEm": "2026-06-11T16:45:00.000Z"
+}

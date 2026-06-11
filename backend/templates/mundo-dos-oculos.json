@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo dos Óculos",
+  "categoria": "Óticas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#5BAEF0",
+    "imagemFundo": "/uploads/ai/mundo-dos-oculos-fundo.png",
+    "imagemTitulo": "/uploads/ai/mundo-dos-oculos-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0D3A6B",
+    "faixaSuperior": "#29C7FF"
+  },
+  "paleta": {
+    "primaria": "#1565D8",
+    "secundaria": "#29C7FF",
+    "fundoBox": "#FBFDFF",
+    "fundoBoxSecundario": "#1565D8",
+    "textoNome": "#0D2E5A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD200",
+    "tagPreco": "#1565D8",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_16_0D79F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EFF6FE"
+  },
+  "criadoEm": "2026-06-12T11:40:00.000Z",
+  "atualizadoEm": "2026-06-12T11:40:00.000Z"
+}

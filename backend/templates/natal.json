@@ -1,0 +1,38 @@
+{
+  "nome": "Natal",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/natal-fundo.png",
+    "imagemTitulo": "/uploads/3/1781185755717-ikdPwx.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0d5324",
+    "faixaSuperior": "#F3C200"
+  },
+  "paleta": {
+    "primaria": "#E90A11",
+    "secundaria": "#F3C200",
+    "fundoBox": "#fff8e1",
+    "fundoBoxSecundario": "#F3C200",
+    "textoNome": "#0d5324",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#E90A11",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_17_E90A11.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#fff8e1"
+  },
+  "criadoEm": "2026-06-11T15:00:00.000Z",
+  "atualizadoEm": "2026-06-11T13:56:10.581Z"
+}

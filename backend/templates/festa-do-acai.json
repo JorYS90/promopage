@@ -1,0 +1,38 @@
+{
+  "nome": "Festa do Açaí",
+  "categoria": "Sorvetes",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#6B2C91",
+    "imagemFundo": "/uploads/ai/festa-do-acai-fundo.png",
+    "imagemTitulo": "/uploads/ai/festa-do-acai-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#4A1572",
+    "faixaSuperior": "#7DD321"
+  },
+  "paleta": {
+    "primaria": "#6A1B9A",
+    "secundaria": "#7DD321",
+    "fundoBox": "#FBF6FD",
+    "fundoBoxSecundario": "#6A1B9A",
+    "textoNome": "#3D1257",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#C6F432",
+    "tagPreco": "#6A1B9A",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_19_7914C2.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F6EFFB"
+  },
+  "criadoEm": "2026-06-12T09:35:00.000Z",
+  "atualizadoEm": "2026-06-12T09:35:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Festa do Salgado",
+  "categoria": "Salgadaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#D9962E",
+    "imagemFundo": "/uploads/ai/festa-do-salgado-fundo.png",
+    "imagemTitulo": "/uploads/ai/festa-do-salgado-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#B5360F",
+    "faixaSuperior": "#FFC107"
+  },
+  "paleta": {
+    "primaria": "#D8432A",
+    "secundaria": "#FFC107",
+    "fundoBox": "#FFF8EC",
+    "fundoBoxSecundario": "#D8432A",
+    "textoNome": "#5A2E12",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#D8432A",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_19_D5AB00.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF6E0"
+  },
+  "criadoEm": "2026-06-12T12:30:00.000Z",
+  "atualizadoEm": "2026-06-12T12:30:00.000Z"
+}

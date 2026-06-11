@@ -1,0 +1,38 @@
+{
+  "nome": "Higiene e Beleza",
+  "categoria": "Beleza",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#b07fd0",
+    "imagemFundo": "/uploads/ai/beleza-fundo.png",
+    "imagemTitulo": "/uploads/ai/beleza-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#2D0A46",
+    "faixaSuperior": "#F12E7F"
+  },
+  "paleta": {
+    "primaria": "#9F35EB",
+    "secundaria": "#F12E7F",
+    "fundoBox": "#faf3ff",
+    "fundoBoxSecundario": "#9F35EB",
+    "textoNome": "#2D0A46",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD220",
+    "tagPreco": "#9F35EB",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_14_9F35EB.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#faf3ff"
+  },
+  "criadoEm": "2026-06-11T19:20:00.000Z",
+  "atualizadoEm": "2026-06-11T19:20:00.000Z"
+}

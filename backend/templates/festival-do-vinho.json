@@ -1,0 +1,38 @@
+{
+  "nome": "Festival do Vinho",
+  "categoria": "Bebidas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#6B1228",
+    "imagemFundo": "/uploads/ai/festival-do-vinho-fundo.png",
+    "imagemTitulo": "/uploads/ai/festival-do-vinho-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#4A0A1C",
+    "faixaSuperior": "#C9962B"
+  },
+  "paleta": {
+    "primaria": "#7B1330",
+    "secundaria": "#C9962B",
+    "fundoBox": "#FFF7EE",
+    "fundoBoxSecundario": "#7B1330",
+    "textoNome": "#4A0A1C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#E0A800",
+    "tagPreco": "#7B1330",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_24_83080C.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF3EC"
+  },
+  "criadoEm": "2026-06-12T01:20:00.000Z",
+  "atualizadoEm": "2026-06-12T01:20:00.000Z"
+}

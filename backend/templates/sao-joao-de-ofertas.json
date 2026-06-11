@@ -1,0 +1,38 @@
+{
+  "nome": "São João de Ofertas",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#16224F",
+    "imagemFundo": "/uploads/ai/sao-joao-de-ofertas-fundo.png",
+    "imagemTitulo": "/uploads/ai/sao-joao-de-ofertas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#B5360F",
+    "faixaSuperior": "#FFCD03"
+  },
+  "paleta": {
+    "primaria": "#E8730F",
+    "secundaria": "#FFCD03",
+    "fundoBox": "#FFF8E8",
+    "fundoBoxSecundario": "#E8730F",
+    "textoNome": "#5A2E12",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E8730F",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_12_FC9841.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF4DC"
+  },
+  "criadoEm": "2026-06-12T05:55:00.000Z",
+  "atualizadoEm": "2026-06-12T05:55:00.000Z"
+}

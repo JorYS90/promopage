@@ -1,0 +1,38 @@
+{
+  "nome": "Primavera de Ofertas",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#F6D7E6",
+    "imagemFundo": "/uploads/ai/primavera-de-ofertas-fundo.png",
+    "imagemTitulo": "/uploads/ai/primavera-de-ofertas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#D63384",
+    "faixaSuperior": "#7AC74F"
+  },
+  "paleta": {
+    "primaria": "#E84B97",
+    "secundaria": "#7AC74F",
+    "fundoBox": "#FFFBFE",
+    "fundoBoxSecundario": "#E84B97",
+    "textoNome": "#7A1F4F",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD93B",
+    "tagPreco": "#E84B97",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_11_F35899.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF3F9"
+  },
+  "criadoEm": "2026-06-11T22:50:00.000Z",
+  "atualizadoEm": "2026-06-11T22:50:00.000Z"
+}

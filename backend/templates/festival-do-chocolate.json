@@ -1,0 +1,38 @@
+{
+  "nome": "Festival do Chocolate",
+  "categoria": "Doces",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#6B3A1C",
+    "imagemFundo": "/uploads/ai/festival-do-chocolate-fundo.png",
+    "imagemTitulo": "/uploads/ai/festival-do-chocolate-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#3D2410",
+    "faixaSuperior": "#D9A227"
+  },
+  "paleta": {
+    "primaria": "#7B4A1E",
+    "secundaria": "#D9A227",
+    "fundoBox": "#FFF8EE",
+    "fundoBoxSecundario": "#5A3018",
+    "textoNome": "#3D2410",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#F3C200",
+    "tagPreco": "#7B4A1E",
+    "balaoOferta": "/uploads/baloes/10_marrom/10_marrom_24_6C3E1D.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF8EE"
+  },
+  "criadoEm": "2026-06-12T01:45:00.000Z",
+  "atualizadoEm": "2026-06-12T01:45:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Páscoa",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/pascoa-fundo.png",
+    "imagemTitulo": "/uploads/ai/pascoa-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#9d0c49",
+    "faixaSuperior": "#FFD012"
+  },
+  "paleta": {
+    "primaria": "#F12E7F",
+    "secundaria": "#FFD012",
+    "fundoBox": "#fff7fb",
+    "fundoBoxSecundario": "#FFD012",
+    "textoNome": "#6b1f3a",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#F12E7F",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_14_F12E7F.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#fff7fb"
+  },
+  "criadoEm": "2026-06-11T15:15:00.000Z",
+  "atualizadoEm": "2026-06-11T13:56:23.924Z"
+}

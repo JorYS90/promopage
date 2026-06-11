@@ -1,0 +1,38 @@
+{
+  "nome": "Festa do Pet",
+  "categoria": "Pet Shop",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#6FCEDA",
+    "imagemFundo": "/uploads/ai/festa-do-pet-fundo.png",
+    "imagemTitulo": "/uploads/ai/festa-do-pet-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0A6573",
+    "faixaSuperior": "#FF8A1E"
+  },
+  "paleta": {
+    "primaria": "#0FA9BD",
+    "secundaria": "#FF8A1E",
+    "fundoBox": "#FBFEFF",
+    "fundoBoxSecundario": "#0FA9BD",
+    "textoNome": "#0A4750",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD93B",
+    "tagPreco": "#0FA9BD",
+    "balaoOferta": "/uploads/baloes/08_ciano/08_ciano_16_12DAF0.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EBFAFC"
+  },
+  "criadoEm": "2026-06-12T12:05:00.000Z",
+  "atualizadoEm": "2026-06-12T12:05:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Farmácia em Oferta",
+  "categoria": "Farmácia",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#CDEFD8",
+    "imagemFundo": "/uploads/ai/farmacia-em-oferta-fundo.png",
+    "imagemTitulo": "/uploads/ai/farmacia-em-oferta-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E7A38",
+    "faixaSuperior": "#1E88E5"
+  },
+  "paleta": {
+    "primaria": "#17A34A",
+    "secundaria": "#1E88E5",
+    "fundoBox": "#F4FBF6",
+    "fundoBoxSecundario": "#17A34A",
+    "textoNome": "#0E4A2A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#17A34A",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_20_15B249.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F1FAF3"
+  },
+  "criadoEm": "2026-06-12T03:50:00.000Z",
+  "atualizadoEm": "2026-06-12T03:50:00.000Z"
+}

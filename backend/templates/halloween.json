@@ -1,0 +1,38 @@
+{
+  "nome": "Halloween",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#2d0a46",
+    "imagemFundo": "/uploads/ai/halloween-fundo.png",
+    "imagemTitulo": "/uploads/ai/halloween-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1d072c",
+    "faixaSuperior": "#F07203"
+  },
+  "paleta": {
+    "primaria": "#F07203",
+    "secundaria": "#921AE8",
+    "fundoBox": "#f7f0fa",
+    "fundoBoxSecundario": "#F07203",
+    "textoNome": "#2d0a46",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#F07203",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_17_F07203.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#241036"
+  },
+  "criadoEm": "2026-06-11T15:30:00.000Z",
+  "atualizadoEm": "2026-06-11T15:30:00.000Z"
+}

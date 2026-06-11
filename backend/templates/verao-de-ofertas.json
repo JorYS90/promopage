@@ -1,0 +1,38 @@
+{
+  "nome": "Verão de Ofertas",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#FDB813",
+    "imagemFundo": "/uploads/ai/verao-de-ofertas-fundo.png",
+    "imagemTitulo": "/uploads/ai/verao-de-ofertas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#00A6B8",
+    "faixaSuperior": "#FFC107"
+  },
+  "paleta": {
+    "primaria": "#FF7A00",
+    "secundaria": "#00B8C4",
+    "fundoBox": "#FFF9F0",
+    "fundoBoxSecundario": "#FF7A00",
+    "textoNome": "#6B2E00",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#FF7A00",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_13_FD9032.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF7E8"
+  },
+  "criadoEm": "2026-06-11T21:10:00.000Z",
+  "atualizadoEm": "2026-06-11T21:10:00.000Z"
+}

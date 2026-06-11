@@ -1,0 +1,38 @@
+{
+  "nome": "Outono de Ofertas",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#B5702A",
+    "imagemFundo": "/uploads/ai/outono-de-ofertas-fundo.png",
+    "imagemTitulo": "/uploads/ai/outono-de-ofertas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#7A3D12",
+    "faixaSuperior": "#D9A227"
+  },
+  "paleta": {
+    "primaria": "#C2410C",
+    "secundaria": "#D9A227",
+    "fundoBox": "#FFF6E9",
+    "fundoBoxSecundario": "#C2410C",
+    "textoNome": "#5A2E0E",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFCB2B",
+    "tagPreco": "#C2410C",
+    "balaoOferta": "/uploads/baloes/10_marrom/10_marrom_16_D1712C.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF7EC"
+  },
+  "criadoEm": "2026-06-11T22:25:00.000Z",
+  "atualizadoEm": "2026-06-11T22:25:00.000Z"
+}

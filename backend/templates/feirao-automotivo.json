@@ -1,0 +1,38 @@
+{
+  "nome": "Feirão Automotivo",
+  "categoria": "Autopeças",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#23303F",
+    "imagemFundo": "/uploads/ai/feirao-automotivo-fundo.png",
+    "imagemTitulo": "/uploads/ai/feirao-automotivo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1A2430",
+    "faixaSuperior": "#D32F2F"
+  },
+  "paleta": {
+    "primaria": "#1565D8",
+    "secundaria": "#D32F2F",
+    "fundoBox": "#F2F5F9",
+    "fundoBoxSecundario": "#23303F",
+    "textoNome": "#1A2430",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD200",
+    "tagPreco": "#1565D8",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_13_3891F6.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EEF2F6"
+  },
+  "criadoEm": "2026-06-12T10:25:00.000Z",
+  "atualizadoEm": "2026-06-12T10:25:00.000Z"
+}

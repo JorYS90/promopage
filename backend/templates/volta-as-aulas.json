@@ -1,0 +1,38 @@
+{
+  "nome": "Volta às Aulas",
+  "categoria": "Papelaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/volta-as-aulas-fundo.png",
+    "imagemTitulo": "/uploads/3/1781192007910-_t_Wbw.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#083B75",
+    "faixaSuperior": "#F62930"
+  },
+  "paleta": {
+    "primaria": "#1B81F5",
+    "secundaria": "#F62930",
+    "fundoBox": "#f2f8ff",
+    "fundoBoxSecundario": "#F62930",
+    "textoNome": "#083B75",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#1B81F5",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_15_1B81F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#f2f8ff"
+  },
+  "criadoEm": "2026-06-11T18:10:00.000Z",
+  "atualizadoEm": "2026-06-11T15:33:30.122Z"
+}

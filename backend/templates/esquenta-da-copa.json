@@ -1,0 +1,38 @@
+{
+  "nome": "Esquenta da Copa",
+  "categoria": "COPA DO MUNDO",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1E9E42",
+    "imagemFundo": "/uploads/ai/esquenta-da-copa-fundo.png",
+    "imagemTitulo": "/uploads/ai/esquenta-da-copa-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0A6B2C",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#17A34A",
+    "secundaria": "#FFD400",
+    "fundoBox": "#FCFFF5",
+    "fundoBoxSecundario": "#17A34A",
+    "textoNome": "#0A3D1E",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#17A34A",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_18_17CD54.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F8FFF2"
+  },
+  "criadoEm": "2026-06-12T02:35:00.000Z",
+  "atualizadoEm": "2026-06-12T02:35:00.000Z"
+}

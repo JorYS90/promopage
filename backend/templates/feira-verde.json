@@ -1,0 +1,38 @@
+{
+  "nome": "Feira Verde",
+  "categoria": "Hortifrúti",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#A8D957",
+    "imagemFundo": "/uploads/ai/feira-verde-fundo.png",
+    "imagemTitulo": "/uploads/ai/feira-verde-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#2E7D1F",
+    "faixaSuperior": "#F47A1F"
+  },
+  "paleta": {
+    "primaria": "#43A047",
+    "secundaria": "#F47A1F",
+    "fundoBox": "#FCFFF2",
+    "fundoBoxSecundario": "#43A047",
+    "textoNome": "#1F4D14",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD93B",
+    "tagPreco": "#43A047",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_14_37E972.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F3FBEA"
+  },
+  "criadoEm": "2026-06-12T07:55:00.000Z",
+  "atualizadoEm": "2026-06-12T07:55:00.000Z"
+}

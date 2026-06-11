@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Sorvete",
+  "categoria": "Doces",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7FD9E8",
+    "imagemFundo": "/uploads/ai/dia-do-sorvete-fundo.png",
+    "imagemTitulo": "/uploads/ai/dia-do-sorvete-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E8FA8",
+    "faixaSuperior": "#F0479A"
+  },
+  "paleta": {
+    "primaria": "#14B8D4",
+    "secundaria": "#F0479A",
+    "fundoBox": "#FFFDFE",
+    "fundoBoxSecundario": "#14B8D4",
+    "textoNome": "#0A4A57",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD93B",
+    "tagPreco": "#14B8D4",
+    "balaoOferta": "/uploads/baloes/08_ciano/08_ciano_14_2EDEF1.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EBFAFD"
+  },
+  "criadoEm": "2026-06-12T02:05:00.000Z",
+  "atualizadoEm": "2026-06-12T02:05:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Frios e Laticínios",
+  "categoria": "Queijo",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ef0000",
+    "imagemFundo": "/uploads/ai/frios-fundo.png",
+    "imagemTitulo": "/uploads/ai/frios-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#58070A",
+    "faixaSuperior": "#FFCD03"
+  },
+  "paleta": {
+    "primaria": "#DB0A11",
+    "secundaria": "#FFCD03",
+    "fundoBox": "#fffdf0",
+    "fundoBoxSecundario": "#FFCD03",
+    "textoNome": "#58070A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#DB0A11",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_18_DB0A11.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#fffdf0"
+  },
+  "criadoEm": "2026-06-11T19:00:00.000Z",
+  "atualizadoEm": "2026-06-11T16:04:31.893Z"
+}

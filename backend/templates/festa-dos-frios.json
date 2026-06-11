@@ -1,0 +1,38 @@
+{
+  "nome": "Festa dos Frios",
+  "categoria": "Frios e Laticínios",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#D9A94E",
+    "imagemFundo": "/uploads/ai/festa-dos-frios-fundo.png",
+    "imagemTitulo": "/uploads/ai/festa-dos-frios-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#A30E22",
+    "faixaSuperior": "#F3C200"
+  },
+  "paleta": {
+    "primaria": "#C8102E",
+    "secundaria": "#F3C200",
+    "fundoBox": "#FFFBEC",
+    "fundoBoxSecundario": "#C8102E",
+    "textoNome": "#5A3318",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#C8102E",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_17_F3C200.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF7E6"
+  },
+  "criadoEm": "2026-06-12T09:10:00.000Z",
+  "atualizadoEm": "2026-06-12T09:10:00.000Z"
+}

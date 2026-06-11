@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Cliente",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#F0126E",
+    "imagemFundo": "/uploads/ai/dia-do-cliente-fundo.png",
+    "imagemTitulo": "/uploads/ai/dia-do-cliente-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C80E5B",
+    "faixaSuperior": "#F5B800"
+  },
+  "paleta": {
+    "primaria": "#E40F68",
+    "secundaria": "#F5B800",
+    "fundoBox": "#FFF5FA",
+    "fundoBoxSecundario": "#E40F68",
+    "textoNome": "#7A0A38",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD220",
+    "tagPreco": "#E40F68",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_17_E40F68.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF0F6"
+  },
+  "criadoEm": "2026-06-11T19:55:00.000Z",
+  "atualizadoEm": "2026-06-11T19:55:00.000Z"
+}

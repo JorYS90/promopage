@@ -1,0 +1,38 @@
+{
+  "nome": "Flores e Jardim",
+  "categoria": "Floricultura e Jardim",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#CDEBC0",
+    "imagemFundo": "/uploads/ai/flores-e-jardim-fundo.png",
+    "imagemTitulo": "/uploads/ai/flores-e-jardim-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#2E7D1F",
+    "faixaSuperior": "#E8569B"
+  },
+  "paleta": {
+    "primaria": "#3DAE2B",
+    "secundaria": "#E8569B",
+    "fundoBox": "#FFFEFC",
+    "fundoBoxSecundario": "#3DAE2B",
+    "textoNome": "#1F4D14",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD93B",
+    "tagPreco": "#3DAE2B",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_10_F467A1.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F4FBF0"
+  },
+  "criadoEm": "2026-06-12T04:40:00.000Z",
+  "atualizadoEm": "2026-06-12T04:40:00.000Z"
+}

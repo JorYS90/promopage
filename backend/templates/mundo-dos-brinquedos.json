@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo dos Brinquedos",
+  "categoria": "Brinquedos",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#6BB8F0",
+    "imagemFundo": "/uploads/ai/mundo-dos-brinquedos-fundo.png",
+    "imagemTitulo": "/uploads/ai/mundo-dos-brinquedos-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1976D2",
+    "faixaSuperior": "#FFC107"
+  },
+  "paleta": {
+    "primaria": "#2196F3",
+    "secundaria": "#FFC107",
+    "fundoBox": "#F4FAFF",
+    "fundoBoxSecundario": "#2196F3",
+    "textoNome": "#0D3A66",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD93B",
+    "tagPreco": "#2196F3",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_14_2989F6.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EEF7FE"
+  },
+  "criadoEm": "2026-06-12T10:50:00.000Z",
+  "atualizadoEm": "2026-06-12T10:50:00.000Z"
+}

@@ -2,7 +2,6 @@
   "nome": "Ofertas Relâmpago",
   "categoria": "Temas Grátis",
   "premium": false,
-  "gratis": true,
   "novo": false,
   "capa": {
     "tipo": "imagens",
@@ -28,12 +27,12 @@
     "textoPreco": "#ffffff",
     "textoPrecoDestaque": "#ffffff",
     "tagPreco": "#ef0000",
-    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_17_E90A11.png"
+    "balaoOferta": "/uploads/3/1781179659980-u0SnmQ.png"
   },
   "fundoEncarte": {
     "tipo": "cor",
     "cor": "#ffffff"
   },
   "criadoEm": "2026-05-13T19:36:02.879Z",
-  "atualizadoEm": "2026-06-10T21:12:11.106Z"
+  "atualizadoEm": "2026-06-11T12:07:41.732Z"
 }

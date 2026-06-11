@@ -1,0 +1,38 @@
+{
+  "nome": "Moda em Oferta",
+  "categoria": "Roupas e Acessórios",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#D98FC8",
+    "imagemFundo": "/uploads/ai/moda-em-oferta-fundo.png",
+    "imagemTitulo": "/uploads/ai/moda-em-oferta-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#6B1675",
+    "faixaSuperior": "#D9A227"
+  },
+  "paleta": {
+    "primaria": "#A21CAF",
+    "secundaria": "#D9A227",
+    "fundoBox": "#FFF8FC",
+    "fundoBoxSecundario": "#A21CAF",
+    "textoNome": "#4A1051",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#F3C200",
+    "tagPreco": "#A21CAF",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_13_A542EC.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FCF2FA"
+  },
+  "criadoEm": "2026-06-12T05:05:00.000Z",
+  "atualizadoEm": "2026-06-12T05:05:00.000Z"
+}

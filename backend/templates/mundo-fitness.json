@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo Fitness",
+  "categoria": "Suplementos Alimentares",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1A1A1A",
+    "imagemFundo": "/uploads/ai/mundo-fitness-fundo.png",
+    "imagemTitulo": "/uploads/ai/mundo-fitness-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1A1A1A",
+    "faixaSuperior": "#52EB85"
+  },
+  "paleta": {
+    "primaria": "#22C55E",
+    "secundaria": "#1E88E5",
+    "fundoBox": "#F2FAF4",
+    "fundoBoxSecundario": "#1A1A1A",
+    "textoNome": "#16241A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#A3E635",
+    "tagPreco": "#22C55E",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_12_52EB85.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EFF6F0"
+  },
+  "criadoEm": "2026-06-12T05:30:00.000Z",
+  "atualizadoEm": "2026-06-12T05:30:00.000Z"
+}

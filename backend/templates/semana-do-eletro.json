@@ -1,0 +1,38 @@
+{
+  "nome": "Semana do Eletro",
+  "categoria": "Eletro",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#23272E",
+    "imagemFundo": "/uploads/ai/semana-do-eletro-fundo.png",
+    "imagemTitulo": "/uploads/ai/semana-do-eletro-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#23272E",
+    "faixaSuperior": "#1565D8"
+  },
+  "paleta": {
+    "primaria": "#1565D8",
+    "secundaria": "#C8CDD4",
+    "fundoBox": "#F4F6F9",
+    "fundoBoxSecundario": "#23272E",
+    "textoNome": "#1B1F24",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD220",
+    "tagPreco": "#1565D8",
+    "balaoOferta": "/uploads/baloes/09_cinza/09_cinza_18_707070.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EEF1F5"
+  },
+  "criadoEm": "2026-06-11T21:35:00.000Z",
+  "atualizadoEm": "2026-06-11T21:35:00.000Z"
+}

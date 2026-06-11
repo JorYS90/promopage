@@ -1,0 +1,38 @@
+{
+  "nome": "Festival da Cerveja",
+  "categoria": "Bebidas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#0E6FD1",
+    "imagemFundo": "/uploads/ai/festival-da-cerveja-fundo.png",
+    "imagemTitulo": "/uploads/ai/festival-da-cerveja-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#094992",
+    "faixaSuperior": "#E0A800"
+  },
+  "paleta": {
+    "primaria": "#0964CC",
+    "secundaria": "#E0A800",
+    "fundoBox": "#FFFBF0",
+    "fundoBoxSecundario": "#0964CC",
+    "textoNome": "#0A3A6B",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFC107",
+    "tagPreco": "#0964CC",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_19_0964CC.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFFBF0"
+  },
+  "criadoEm": "2026-06-12T00:30:00.000Z",
+  "atualizadoEm": "2026-06-12T00:30:00.000Z"
+}

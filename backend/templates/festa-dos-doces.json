@@ -1,0 +1,38 @@
+{
+  "nome": "Festa dos Doces",
+  "categoria": "Confeitaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#F2A6CC",
+    "imagemFundo": "/uploads/ai/festa-dos-doces-fundo.png",
+    "imagemTitulo": "/uploads/ai/festa-dos-doces-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#D63384",
+    "faixaSuperior": "#7DD3C8"
+  },
+  "paleta": {
+    "primaria": "#E84B97",
+    "secundaria": "#7DD3C8",
+    "fundoBox": "#FFFCFE",
+    "fundoBoxSecundario": "#E84B97",
+    "textoNome": "#7A1F52",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD93B",
+    "tagPreco": "#E84B97",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_16_F0126E.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF1F8"
+  },
+  "criadoEm": "2026-06-12T07:05:00.000Z",
+  "atualizadoEm": "2026-06-12T07:05:00.000Z"
+}

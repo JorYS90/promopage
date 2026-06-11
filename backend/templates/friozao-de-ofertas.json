@@ -1,0 +1,38 @@
+{
+  "nome": "Friozão de Ofertas",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#0E5A7D",
+    "imagemFundo": "/uploads/ai/friozao-de-ofertas-fundo.png",
+    "imagemTitulo": "/uploads/ai/friozao-de-ofertas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E5A7D",
+    "faixaSuperior": "#20DCF1"
+  },
+  "paleta": {
+    "primaria": "#0E7BA8",
+    "secundaria": "#20DCF1",
+    "fundoBox": "#F2FAFE",
+    "fundoBoxSecundario": "#0E7BA8",
+    "textoNome": "#0A3A52",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD220",
+    "tagPreco": "#0E7BA8",
+    "balaoOferta": "/uploads/baloes/08_ciano/08_ciano_15_20DCF1.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF6FC"
+  },
+  "criadoEm": "2026-06-11T20:45:00.000Z",
+  "atualizadoEm": "2026-06-11T20:45:00.000Z"
+}

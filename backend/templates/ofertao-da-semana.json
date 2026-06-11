@@ -1,0 +1,38 @@
+{
+  "nome": "Ofertão da Semana",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E11919",
+    "imagemFundo": "/uploads/ai/ofertao-da-semana-fundo.png",
+    "imagemTitulo": "/uploads/ai/ofertao-da-semana-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#B81212",
+    "faixaSuperior": "#FFCC00"
+  },
+  "paleta": {
+    "primaria": "#E11919",
+    "secundaria": "#FFCC00",
+    "fundoBox": "#FFFBEC",
+    "fundoBoxSecundario": "#E11919",
+    "textoNome": "#5A1010",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11919",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_13_F6383E.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF9EA"
+  },
+  "criadoEm": "2026-06-12T07:30:00.000Z",
+  "atualizadoEm": "2026-06-12T07:30:00.000Z"
+}

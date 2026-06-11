@@ -1,0 +1,38 @@
+{
+  "nome": "Semana do Bebê",
+  "categoria": "Infantil",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#BDE0FB",
+    "imagemFundo": "/uploads/ai/semana-do-bebe-fundo.png",
+    "imagemTitulo": "/uploads/ai/semana-do-bebe-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#3E91E0",
+    "faixaSuperior": "#F7A8C4"
+  },
+  "paleta": {
+    "primaria": "#55A0F7",
+    "secundaria": "#F7A8C4",
+    "fundoBox": "#FBFCFF",
+    "fundoBoxSecundario": "#55A0F7",
+    "textoNome": "#1E5A8A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFC94D",
+    "tagPreco": "#55A0F7",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_11_55A0F7.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F0F7FE"
+  },
+  "criadoEm": "2026-06-12T00:55:00.000Z",
+  "atualizadoEm": "2026-06-12T00:55:00.000Z"
+}

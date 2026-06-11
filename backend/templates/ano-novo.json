@@ -1,0 +1,38 @@
+{
+  "nome": "Ofertas de Ano Novo",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#0B1733",
+    "imagemFundo": "/uploads/ai/ano-novo-fundo.png",
+    "imagemTitulo": "/uploads/ai/ano-novo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0B1733",
+    "faixaSuperior": "#E4B700"
+  },
+  "paleta": {
+    "primaria": "#C9962B",
+    "secundaria": "#0B1733",
+    "fundoBox": "#FFFDF5",
+    "fundoBoxSecundario": "#0B1733",
+    "textoNome": "#0B1733",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD220",
+    "tagPreco": "#0B1733",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_18_E4B700.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#0B1733"
+  },
+  "criadoEm": "2026-06-11T19:30:00.000Z",
+  "atualizadoEm": "2026-06-11T19:30:00.000Z"
+}

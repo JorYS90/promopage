@@ -1,0 +1,38 @@
+{
+  "nome": "Mega Liquidação",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#FFC400",
+    "imagemFundo": "/uploads/ai/mega-liquidacao-fundo.png",
+    "imagemTitulo": "/uploads/ai/mega-liquidacao-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1A1A1A",
+    "faixaSuperior": "#FFD200"
+  },
+  "paleta": {
+    "primaria": "#D90429",
+    "secundaria": "#FFD200",
+    "fundoBox": "#FFFDF2",
+    "fundoBoxSecundario": "#D90429",
+    "textoNome": "#1A1A1A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#D90429",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_14_FFD220.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFFBEC"
+  },
+  "criadoEm": "2026-06-11T23:40:00.000Z",
+  "atualizadoEm": "2026-06-11T23:40:00.000Z"
+}
