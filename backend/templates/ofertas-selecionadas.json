@@ -1,0 +1,38 @@
+{
+  "nome": "Ofertas Selecionadas",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#3E8E29",
+    "imagemFundo": "/uploads/ai/selecionadas-fundo.png",
+    "imagemTitulo": "/uploads/ai/selecionadas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#2A6B1A",
+    "faixaSuperior": "#E11D2A"
+  },
+  "paleta": {
+    "primaria": "#3E8E29",
+    "secundaria": "#E11D2A",
+    "fundoBox": "#F6FBF0",
+    "fundoBoxSecundario": "#3E8E29",
+    "textoNome": "#21490F",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_23_128939.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F1F8E8"
+  },
+  "criadoEm": "2026-06-14T20:55:00.000Z",
+  "atualizadoEm": "2026-06-14T20:55:00.000Z"
+}

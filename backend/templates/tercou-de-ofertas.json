@@ -1,0 +1,38 @@
+{
+  "nome": "Terçou de Ofertas",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E8A21C",
+    "imagemFundo": "/uploads/ai/tercou-fundo.png",
+    "imagemTitulo": "/uploads/ai/tercou-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C8102E",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#E11D2A",
+    "secundaria": "#FFC400",
+    "fundoBox": "#FFFBEC",
+    "fundoBoxSecundario": "#E11D2A",
+    "textoNome": "#5C1208",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_16_FFCD03.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF7E6"
+  },
+  "criadoEm": "2026-06-14T20:10:00.000Z",
+  "atualizadoEm": "2026-06-14T20:10:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Fecha Mês Ofertão",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E11D2A",
+    "imagemFundo": "/uploads/ai/fechames-fundo.png",
+    "imagemTitulo": "/uploads/ai/fechames-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#A4152A",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#E11D2A",
+    "secundaria": "#FFD400",
+    "fundoBox": "#FFF8EC",
+    "fundoBoxSecundario": "#E11D2A",
+    "textoNome": "#5C0F1B",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBEEF0"
+  },
+  "criadoEm": "2026-06-14T18:40:00.000Z",
+  "atualizadoEm": "2026-06-14T18:40:00.000Z"
+}

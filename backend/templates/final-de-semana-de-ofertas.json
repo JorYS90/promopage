@@ -1,0 +1,38 @@
+{
+  "nome": "Final de Semana de Ofertas",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E8511C",
+    "imagemFundo": "/uploads/ai/fimsemana-fundo.png",
+    "imagemTitulo": "/uploads/ai/fimsemana-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#B83A12",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#E11D2A",
+    "secundaria": "#FFC400",
+    "fundoBox": "#FFF8EC",
+    "fundoBoxSecundario": "#E11D2A",
+    "textoNome": "#5C1208",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF4E6"
+  },
+  "criadoEm": "2026-06-14T20:25:00.000Z",
+  "atualizadoEm": "2026-06-14T20:25:00.000Z"
+}

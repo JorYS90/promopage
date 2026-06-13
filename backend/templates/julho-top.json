@@ -1,0 +1,38 @@
+{
+  "nome": "Julho Top",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1E78D6",
+    "imagemFundo": "/uploads/ai/julho-fundo.png",
+    "imagemTitulo": "/uploads/ai/julhotop-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0F4C8C",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#1565C0",
+    "secundaria": "#FFD400",
+    "fundoBox": "#F3F8FF",
+    "fundoBoxSecundario": "#1565C0",
+    "textoNome": "#0E3461",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_16_0D79F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EEF4FC"
+  },
+  "criadoEm": "2026-06-14T20:40:00.000Z",
+  "atualizadoEm": "2026-06-14T20:40:00.000Z"
+}

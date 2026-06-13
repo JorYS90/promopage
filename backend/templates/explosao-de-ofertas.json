@@ -1,0 +1,38 @@
+{
+  "nome": "Explosão de Ofertas",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E8511C",
+    "imagemFundo": "/uploads/ai/explosao-fundo.png",
+    "imagemTitulo": "/uploads/ai/explosao-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#B83A12",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#F2620E",
+    "secundaria": "#FFD400",
+    "fundoBox": "#FFF7EC",
+    "fundoBoxSecundario": "#F2620E",
+    "textoNome": "#5C2408",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#F2620E",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_15_FD8114.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF0E6"
+  },
+  "criadoEm": "2026-06-14T18:55:00.000Z",
+  "atualizadoEm": "2026-06-14T18:55:00.000Z"
+}
