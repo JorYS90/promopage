@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo dos Pisos",
+  "categoria": "Pisos e Revestimentos",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#5A6B7A",
+    "imagemFundo": "/uploads/ai/pisos-fundo.png",
+    "imagemTitulo": "/uploads/ai/pisos-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#33414E",
+    "faixaSuperior": "#0A72E9"
+  },
+  "paleta": {
+    "primaria": "#1565C0",
+    "secundaria": "#7E8C99",
+    "fundoBox": "#F5F8FB",
+    "fundoBoxSecundario": "#1565C0",
+    "textoNome": "#2A3742",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD400",
+    "tagPreco": "#1565C0",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_17_0A72E9.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EEF2F6"
+  },
+  "criadoEm": "2026-06-13T00:00:00.000Z",
+  "atualizadoEm": "2026-06-13T00:00:00.000Z"
+}

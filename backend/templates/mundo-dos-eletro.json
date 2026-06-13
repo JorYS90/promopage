@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo dos Eletro",
+  "categoria": "Móveis e Eletro",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#10254A",
+    "imagemFundo": "/uploads/ai/eletro-fundo.png",
+    "imagemTitulo": "/uploads/ai/eletro-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0A1733",
+    "faixaSuperior": "#E11D2A"
+  },
+  "paleta": {
+    "primaria": "#1E5BC6",
+    "secundaria": "#E11D2A",
+    "fundoBox": "#F3F7FF",
+    "fundoBoxSecundario": "#1E5BC6",
+    "textoNome": "#0E2348",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD400",
+    "tagPreco": "#1E5BC6",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_16_0D79F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ECF2FC"
+  },
+  "criadoEm": "2026-06-13T03:50:00.000Z",
+  "atualizadoEm": "2026-06-13T03:50:00.000Z"
+}

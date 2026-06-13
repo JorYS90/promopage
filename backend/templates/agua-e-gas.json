@@ -1,0 +1,38 @@
+{
+  "nome": "Água e Gás",
+  "categoria": "Água e Gás",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#5BAEF0",
+    "imagemFundo": "/uploads/ai/agua-e-gas-fundo.png",
+    "imagemTitulo": "/uploads/ai/agua-e-gas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0D5A9E",
+    "faixaSuperior": "#F57C00"
+  },
+  "paleta": {
+    "primaria": "#0288D1",
+    "secundaria": "#F57C00",
+    "fundoBox": "#F8FCFF",
+    "fundoBoxSecundario": "#0288D1",
+    "textoNome": "#0D3A6B",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FF8A1E",
+    "tagPreco": "#0288D1",
+    "balaoOferta": "/uploads/baloes/08_ciano/08_ciano_14_2EDEF1.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EFF7FE"
+  },
+  "criadoEm": "2026-06-12T19:15:00.000Z",
+  "atualizadoEm": "2026-06-12T19:15:00.000Z"
+}

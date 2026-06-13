@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Marmita",
+  "categoria": "Restaurante",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#A82318",
+    "imagemFundo": "/uploads/ai/marmita-fundo.png",
+    "imagemTitulo": "/uploads/ai/marmita-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#7A180F",
+    "faixaSuperior": "#FFC107"
+  },
+  "paleta": {
+    "primaria": "#D32F2F",
+    "secundaria": "#43A047",
+    "fundoBox": "#FFF8EC",
+    "fundoBoxSecundario": "#D32F2F",
+    "textoNome": "#4A1410",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#D32F2F",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_17_E90A11.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF1E6"
+  },
+  "criadoEm": "2026-06-13T04:20:00.000Z",
+  "atualizadoEm": "2026-06-13T04:20:00.000Z"
+}

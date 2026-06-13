@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Barba",
+  "categoria": "Barbearia",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#2A1E14",
+    "imagemFundo": "/uploads/ai/mundo-da-barba-fundo.png",
+    "imagemTitulo": "/uploads/ai/mundo-da-barba-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#15100C",
+    "faixaSuperior": "#C9962B"
+  },
+  "paleta": {
+    "primaria": "#9F5724",
+    "secundaria": "#C9962B",
+    "fundoBox": "#FBF6EC",
+    "fundoBoxSecundario": "#2A1E14",
+    "textoNome": "#2A1810",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#E0A800",
+    "tagPreco": "#9F5724",
+    "balaoOferta": "/uploads/baloes/10_marrom/10_marrom_20_9F5724.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F7F1E6"
+  },
+  "criadoEm": "2026-06-12T19:35:00.000Z",
+  "atualizadoEm": "2026-06-12T19:35:00.000Z"
+}

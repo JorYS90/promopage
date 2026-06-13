@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo das Chaves",
+  "categoria": "Utilidades",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1C1C1C",
+    "imagemFundo": "/uploads/ai/chaves-fundo.png",
+    "imagemTitulo": "/uploads/ai/chaves-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0F0F0F",
+    "faixaSuperior": "#D4A017"
+  },
+  "paleta": {
+    "primaria": "#D4A017",
+    "secundaria": "#2A2A2A",
+    "fundoBox": "#FFFCF0",
+    "fundoBoxSecundario": "#2A2A2A",
+    "textoNome": "#3A2E00",
+    "textoNomeDestaque": "#E6C200",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE26B",
+    "tagPreco": "#2A2A2A",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_18_E4B700.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F5F2E8"
+  },
+  "criadoEm": "2026-06-13T06:20:00.000Z",
+  "atualizadoEm": "2026-06-13T06:20:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo das Ferramentas",
+  "categoria": "Ferragens",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1F1F1F",
+    "imagemFundo": "/uploads/ai/ferragens-fundo.png",
+    "imagemTitulo": "/uploads/ai/ferragens-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#111111",
+    "faixaSuperior": "#FFC400"
+  },
+  "paleta": {
+    "primaria": "#F2A900",
+    "secundaria": "#1F1F1F",
+    "fundoBox": "#FFFBF0",
+    "fundoBoxSecundario": "#1F1F1F",
+    "textoNome": "#2A2200",
+    "textoNomeDestaque": "#FFD200",
+    "textoPreco": "#FFD200",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#1F1F1F",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_15_FFD012.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F5F2EA"
+  },
+  "criadoEm": "2026-06-12T23:00:00.000Z",
+  "atualizadoEm": "2026-06-12T23:00:00.000Z"
+}

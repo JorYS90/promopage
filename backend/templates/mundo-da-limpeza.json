@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Limpeza",
+  "categoria": "Limpeza",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#5AB0E8",
+    "imagemFundo": "/uploads/ai/limpeza-fundo.png",
+    "imagemTitulo": "/uploads/ai/limpeza-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E5FA0",
+    "faixaSuperior": "#3DC46A"
+  },
+  "paleta": {
+    "primaria": "#1976D2",
+    "secundaria": "#3DC46A",
+    "fundoBox": "#F3FAFF",
+    "fundoBoxSecundario": "#1976D2",
+    "textoNome": "#0E3A5C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1976D2",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_22_0950A0.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF5FD"
+  },
+  "criadoEm": "2026-06-13T01:00:00.000Z",
+  "atualizadoEm": "2026-06-13T01:00:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo dos Doces",
+  "categoria": "Confeitaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#F48FC0",
+    "imagemFundo": "/uploads/ai/doces-fundo.png",
+    "imagemTitulo": "/uploads/ai/doces-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#D85FA0",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#F0509E",
+    "secundaria": "#36C5E0",
+    "fundoBox": "#FFF6FB",
+    "fundoBoxSecundario": "#F0509E",
+    "textoNome": "#5C2347",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#F0509E",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_19_C80E5B.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FCEFF6"
+  },
+  "criadoEm": "2026-06-13T08:05:00.000Z",
+  "atualizadoEm": "2026-06-13T08:05:00.000Z"
+}

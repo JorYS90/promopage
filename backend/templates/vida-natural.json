@@ -1,0 +1,38 @@
+{
+  "nome": "Vida Natural",
+  "categoria": "Produtos Naturais",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#5FA63A",
+    "imagemFundo": "/uploads/ai/naturais-fundo.png",
+    "imagemTitulo": "/uploads/ai/naturais-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#3D7222",
+    "faixaSuperior": "#E0A800"
+  },
+  "paleta": {
+    "primaria": "#6BAE2E",
+    "secundaria": "#E0A800",
+    "fundoBox": "#F8FCEF",
+    "fundoBoxSecundario": "#6BAE2E",
+    "textoNome": "#33530F",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#6BAE2E",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_19_16BF4F.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F2F9E6"
+  },
+  "criadoEm": "2026-06-12T21:05:00.000Z",
+  "atualizadoEm": "2026-06-12T21:05:00.000Z"
+}

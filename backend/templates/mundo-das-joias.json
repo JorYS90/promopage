@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo das Joias",
+  "categoria": "Joalheria",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#141210",
+    "imagemFundo": "/uploads/ai/joias-fundo.png",
+    "imagemTitulo": "/uploads/ai/joias-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0B0A08",
+    "faixaSuperior": "#C79F00"
+  },
+  "paleta": {
+    "primaria": "#C79F00",
+    "secundaria": "#1A1A1A",
+    "fundoBox": "#FFFCF2",
+    "fundoBoxSecundario": "#1A1A1A",
+    "textoNome": "#3A2E00",
+    "textoNomeDestaque": "#E6C200",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE26B",
+    "tagPreco": "#1A1A1A",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_20_C79F00.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F5F1E6"
+  },
+  "criadoEm": "2026-06-13T01:15:00.000Z",
+  "atualizadoEm": "2026-06-13T01:15:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo dos Frios",
+  "categoria": "Frios",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#C0392B",
+    "imagemFundo": "/uploads/ai/frios-distrib-fundo.png",
+    "imagemTitulo": "/uploads/ai/frios-distrib-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#922018",
+    "faixaSuperior": "#F1C40F"
+  },
+  "paleta": {
+    "primaria": "#D32F2F",
+    "secundaria": "#F1C40F",
+    "fundoBox": "#FFF9EC",
+    "fundoBoxSecundario": "#D32F2F",
+    "textoNome": "#5C1410",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#D32F2F",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF1E6"
+  },
+  "criadoEm": "2026-06-13T06:50:00.000Z",
+  "atualizadoEm": "2026-06-13T06:50:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo do Enxoval",
+  "categoria": "Cama Mesa e Banho",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#F2C4D4",
+    "imagemFundo": "/uploads/ai/enxoval-fundo.png",
+    "imagemTitulo": "/uploads/ai/enxoval-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C77F96",
+    "faixaSuperior": "#6FA8DC"
+  },
+  "paleta": {
+    "primaria": "#E07599",
+    "secundaria": "#6FA8DC",
+    "fundoBox": "#FFF7FA",
+    "fundoBoxSecundario": "#E07599",
+    "textoNome": "#6E3247",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFF0B0",
+    "tagPreco": "#E07599",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_05_F7ADCC.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FCEFF4"
+  },
+  "criadoEm": "2026-06-13T02:45:00.000Z",
+  "atualizadoEm": "2026-06-13T02:45:00.000Z"
+}

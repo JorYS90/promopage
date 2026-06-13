@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo do Colchão",
+  "categoria": "Móveis e Decoração",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#6E7BD6",
+    "imagemFundo": "/uploads/ai/colchao-fundo.png",
+    "imagemTitulo": "/uploads/ai/colchao-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#3F4BA0",
+    "faixaSuperior": "#8E9BE8"
+  },
+  "paleta": {
+    "primaria": "#5566D4",
+    "secundaria": "#9C8BE0",
+    "fundoBox": "#F5F6FE",
+    "fundoBoxSecundario": "#5566D4",
+    "textoNome": "#2A3270",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE08A",
+    "tagPreco": "#5566D4",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_10_63A8F7.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EFF1FC"
+  },
+  "criadoEm": "2026-06-13T05:20:00.000Z",
+  "atualizadoEm": "2026-06-13T05:20:00.000Z"
+}

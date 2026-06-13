@@ -1,0 +1,38 @@
+{
+  "nome": "Disk Gás",
+  "categoria": "Água e Gás",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#2C7DD6",
+    "imagemFundo": "/uploads/ai/gas-fundo.png",
+    "imagemTitulo": "/uploads/ai/gas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0F4C8C",
+    "faixaSuperior": "#F57C00"
+  },
+  "paleta": {
+    "primaria": "#1565C0",
+    "secundaria": "#F57C00",
+    "fundoBox": "#F3F9FF",
+    "fundoBoxSecundario": "#1565C0",
+    "textoNome": "#0E3461",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FF9A2E",
+    "tagPreco": "#1565C0",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_18_0A6BDB.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EBF4FD"
+  },
+  "criadoEm": "2026-06-13T02:15:00.000Z",
+  "atualizadoEm": "2026-06-13T02:15:00.000Z"
+}

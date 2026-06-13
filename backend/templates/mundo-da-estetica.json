@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Estética",
+  "categoria": "Cosméticos",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E8C4DE",
+    "imagemFundo": "/uploads/ai/estetica-fundo.png",
+    "imagemTitulo": "/uploads/ai/estetica-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#B07CC0",
+    "faixaSuperior": "#E59ABF"
+  },
+  "paleta": {
+    "primaria": "#C77FD0",
+    "secundaria": "#E59ABF",
+    "fundoBox": "#FBF4FA",
+    "fundoBoxSecundario": "#C77FD0",
+    "textoNome": "#5C3A57",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE9F4",
+    "tagPreco": "#C77FD0",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_09_BE79F0.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FAF1F8"
+  },
+  "criadoEm": "2026-06-13T04:35:00.000Z",
+  "atualizadoEm": "2026-06-13T04:35:00.000Z"
+}

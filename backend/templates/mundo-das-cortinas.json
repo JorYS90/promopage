@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo das Cortinas",
+  "categoria": "Móveis e Decoração",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#C9A86A",
+    "imagemFundo": "/uploads/ai/cortinas-fundo.png",
+    "imagemTitulo": "/uploads/ai/cortinas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#9C7B3E",
+    "faixaSuperior": "#D4A017"
+  },
+  "paleta": {
+    "primaria": "#C29A4E",
+    "secundaria": "#8A6D3A",
+    "fundoBox": "#FBF7EE",
+    "fundoBoxSecundario": "#C29A4E",
+    "textoNome": "#4A3A18",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE8B0",
+    "tagPreco": "#C29A4E",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_21_B89300.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F8F3E8"
+  },
+  "criadoEm": "2026-06-13T08:50:00.000Z",
+  "atualizadoEm": "2026-06-13T08:50:00.000Z"
+}

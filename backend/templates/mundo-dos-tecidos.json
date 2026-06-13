@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo dos Tecidos",
+  "categoria": "Moda",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E5197F",
+    "imagemFundo": "/uploads/ai/tecidos-fundo.png",
+    "imagemTitulo": "/uploads/ai/tecidos-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#B0125F",
+    "faixaSuperior": "#FFC107"
+  },
+  "paleta": {
+    "primaria": "#E5197F",
+    "secundaria": "#FFC107",
+    "fundoBox": "#FFF6FB",
+    "fundoBoxSecundario": "#E5197F",
+    "textoNome": "#4A1240",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E5197F",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_18_D60E61.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBEFF6"
+  },
+  "criadoEm": "2026-06-13T05:05:00.000Z",
+  "atualizadoEm": "2026-06-13T05:05:00.000Z"
+}

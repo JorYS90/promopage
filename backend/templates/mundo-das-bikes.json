@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo das Bikes",
+  "categoria": "Artigos Esportivos",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1C1C1C",
+    "imagemFundo": "/uploads/ai/bikes-fundo.png",
+    "imagemTitulo": "/uploads/ai/bikes-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E0E0E",
+    "faixaSuperior": "#5DBB2E"
+  },
+  "paleta": {
+    "primaria": "#5DBB2E",
+    "secundaria": "#F26C0D",
+    "fundoBox": "#F6FBEF",
+    "fundoBoxSecundario": "#1C1C1C",
+    "textoNome": "#26330A",
+    "textoNomeDestaque": "#A6E000",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FF9430",
+    "tagPreco": "#5DBB2E",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_21_14A444.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F1F6E8"
+  },
+  "criadoEm": "2026-06-13T02:30:00.000Z",
+  "atualizadoEm": "2026-06-13T02:30:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo do Mármore",
+  "categoria": "Pisos e Revestimentos",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#2A2A2A",
+    "imagemFundo": "/uploads/ai/marmore-fundo.png",
+    "imagemTitulo": "/uploads/ai/marmore-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#161616",
+    "faixaSuperior": "#C79F00"
+  },
+  "paleta": {
+    "primaria": "#6E6E6E",
+    "secundaria": "#C79F00",
+    "fundoBox": "#F7F7F5",
+    "fundoBoxSecundario": "#2A2A2A",
+    "textoNome": "#232323",
+    "textoNomeDestaque": "#E6C200",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE26B",
+    "tagPreco": "#2A2A2A",
+    "balaoOferta": "/uploads/baloes/09_cinza/09_cinza_15_878787.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F3F3F1"
+  },
+  "criadoEm": "2026-06-13T03:35:00.000Z",
+  "atualizadoEm": "2026-06-13T03:35:00.000Z"
+}

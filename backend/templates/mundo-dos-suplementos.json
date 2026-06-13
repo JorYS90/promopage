@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo dos Suplementos",
+  "categoria": "Suplementos",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#141414",
+    "imagemFundo": "/uploads/ai/suplementos-fundo.png",
+    "imagemTitulo": "/uploads/ai/suplementos-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0A0A0A",
+    "faixaSuperior": "#8BC400"
+  },
+  "paleta": {
+    "primaria": "#7CB500",
+    "secundaria": "#1E1E1E",
+    "fundoBox": "#F7FBEE",
+    "fundoBoxSecundario": "#1E1E1E",
+    "textoNome": "#27330A",
+    "textoNomeDestaque": "#A6E000",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#B6F000",
+    "tagPreco": "#1E1E1E",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_16_1CE65F.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F1F6E6"
+  },
+  "criadoEm": "2026-06-13T00:15:00.000Z",
+  "atualizadoEm": "2026-06-13T00:15:00.000Z"
+}

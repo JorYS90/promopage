@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Decoração",
+  "categoria": "Móveis e Decoração",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#C2703D",
+    "imagemFundo": "/uploads/ai/decoracao-fundo.png",
+    "imagemTitulo": "/uploads/ai/decoracao-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#8A4A23",
+    "faixaSuperior": "#7A8B5E"
+  },
+  "paleta": {
+    "primaria": "#C2703D",
+    "secundaria": "#7A8B5E",
+    "fundoBox": "#FBF6EF",
+    "fundoBoxSecundario": "#C2703D",
+    "textoNome": "#4A2A14",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE0B0",
+    "tagPreco": "#C2703D",
+    "balaoOferta": "/uploads/baloes/10_marrom/10_marrom_15_D47937.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F7F1E8"
+  },
+  "criadoEm": "2026-06-13T03:00:00.000Z",
+  "atualizadoEm": "2026-06-13T03:00:00.000Z"
+}

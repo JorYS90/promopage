@@ -1,0 +1,38 @@
+{
+  "nome": "Disk Bebidas",
+  "categoria": "Bebidas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1E8FD0",
+    "imagemFundo": "/uploads/ai/bebidas-distrib-fundo.png",
+    "imagemTitulo": "/uploads/ai/bebidas-distrib-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0C5C99",
+    "faixaSuperior": "#E53935"
+  },
+  "paleta": {
+    "primaria": "#1565C0",
+    "secundaria": "#E53935",
+    "fundoBox": "#F3FAFF",
+    "fundoBoxSecundario": "#1565C0",
+    "textoNome": "#0C3A66",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1565C0",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_11_55A0F7.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF5FE"
+  },
+  "criadoEm": "2026-06-12T23:30:00.000Z",
+  "atualizadoEm": "2026-06-12T23:30:00.000Z"
+}

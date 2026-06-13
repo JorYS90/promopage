@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo Tech",
+  "categoria": "Informática",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1A1840",
+    "imagemFundo": "/uploads/ai/mundo-tech-fundo.png",
+    "imagemTitulo": "/uploads/ai/mundo-tech-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#14132E",
+    "faixaSuperior": "#22D3EE"
+  },
+  "paleta": {
+    "primaria": "#7C3AED",
+    "secundaria": "#22D3EE",
+    "fundoBox": "#F4F2FC",
+    "fundoBoxSecundario": "#1A1840",
+    "textoNome": "#1A1840",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#22D3EE",
+    "tagPreco": "#7C3AED",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_16_921AE8.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EFEDFA"
+  },
+  "criadoEm": "2026-06-12T18:55:00.000Z",
+  "atualizadoEm": "2026-06-12T18:55:00.000Z"
+}

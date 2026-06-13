@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Conveniência",
+  "categoria": "Conveniência",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1C1410",
+    "imagemFundo": "/uploads/ai/conveniencia-fundo.png",
+    "imagemTitulo": "/uploads/ai/conveniencia-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0F0A08",
+    "faixaSuperior": "#F5A623"
+  },
+  "paleta": {
+    "primaria": "#E11D2A",
+    "secundaria": "#F5A623",
+    "fundoBox": "#FFF7EE",
+    "fundoBoxSecundario": "#E11D2A",
+    "textoNome": "#3A1208",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD400",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_14_F62930.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F6EFE7"
+  },
+  "criadoEm": "2026-06-13T01:45:00.000Z",
+  "atualizadoEm": "2026-06-13T01:45:00.000Z"
+}

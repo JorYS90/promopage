@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Moto",
+  "categoria": "Motopeças",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#161616",
+    "imagemFundo": "/uploads/ai/motopecas-fundo.png",
+    "imagemTitulo": "/uploads/ai/motopecas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0C0C0C",
+    "faixaSuperior": "#F26C0D"
+  },
+  "paleta": {
+    "primaria": "#F26C0D",
+    "secundaria": "#2B2B2B",
+    "fundoBox": "#FFF6EE",
+    "fundoBoxSecundario": "#2B2B2B",
+    "textoNome": "#2A1405",
+    "textoNomeDestaque": "#F26C0D",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FF9430",
+    "tagPreco": "#F26C0D",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_20_C45D03.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F4F0EC"
+  },
+  "criadoEm": "2026-06-12T23:45:00.000Z",
+  "atualizadoEm": "2026-06-12T23:45:00.000Z"
+}

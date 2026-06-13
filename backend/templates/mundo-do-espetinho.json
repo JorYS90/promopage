@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo do Espetinho",
+  "categoria": "Açougue",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7A1A0C",
+    "imagemFundo": "/uploads/ai/espetinho-fundo.png",
+    "imagemTitulo": "/uploads/ai/espetinho-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#4D0F06",
+    "faixaSuperior": "#F5A623"
+  },
+  "paleta": {
+    "primaria": "#D32F0E",
+    "secundaria": "#F5A623",
+    "fundoBox": "#FFF6EE",
+    "fundoBoxSecundario": "#D32F0E",
+    "textoNome": "#4D0F06",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#D32F0E",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_16_FC7905.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBEFE6"
+  },
+  "criadoEm": "2026-06-12T22:45:00.000Z",
+  "atualizadoEm": "2026-06-12T22:45:00.000Z"
+}

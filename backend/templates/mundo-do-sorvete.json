@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo do Sorvete",
+  "categoria": "Sorvetes",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#67C7E8",
+    "imagemFundo": "/uploads/ai/sorvete-fundo.png",
+    "imagemTitulo": "/uploads/ai/sorvete-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#E0759C",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#F06BAA",
+    "secundaria": "#33B5E5",
+    "fundoBox": "#FFF6FB",
+    "fundoBoxSecundario": "#F06BAA",
+    "textoNome": "#5A2A45",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#F06BAA",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_13_F23C88.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF0F6"
+  },
+  "criadoEm": "2026-06-13T03:20:00.000Z",
+  "atualizadoEm": "2026-06-13T03:20:00.000Z"
+}

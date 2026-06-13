@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo Esportivo",
+  "categoria": "Artigos Esportivos",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#0A2A4A",
+    "imagemFundo": "/uploads/ai/mundo-esportivo-fundo.png",
+    "imagemTitulo": "/uploads/ai/mundo-esportivo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#062038",
+    "faixaSuperior": "#FF7A00"
+  },
+  "paleta": {
+    "primaria": "#0956AF",
+    "secundaria": "#FF7A00",
+    "fundoBox": "#F4F9FF",
+    "fundoBoxSecundario": "#0956AF",
+    "textoNome": "#0A2A4A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD400",
+    "tagPreco": "#0956AF",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_21_0956AF.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EBF3FC"
+  },
+  "criadoEm": "2026-06-12T20:35:00.000Z",
+  "atualizadoEm": "2026-06-12T20:35:00.000Z"
+}

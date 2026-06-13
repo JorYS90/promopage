@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Piscina",
+  "categoria": "Piscina",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#2BB4E0",
+    "imagemFundo": "/uploads/ai/piscina-fundo.png",
+    "imagemTitulo": "/uploads/ai/piscina-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0C6F9E",
+    "faixaSuperior": "#FFC107"
+  },
+  "paleta": {
+    "primaria": "#0CA5D6",
+    "secundaria": "#FFC107",
+    "fundoBox": "#F2FBFF",
+    "fundoBoxSecundario": "#0CA5D6",
+    "textoNome": "#0A3E5C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#0CA5D6",
+    "balaoOferta": "/uploads/baloes/08_ciano/08_ciano_16_12DAF0.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EBF8FE"
+  },
+  "criadoEm": "2026-06-12T21:35:00.000Z",
+  "atualizadoEm": "2026-06-12T21:35:00.000Z"
+}

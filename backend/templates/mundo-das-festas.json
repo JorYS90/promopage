@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo das Festas",
+  "categoria": "Utilidades",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#F39A2E",
+    "imagemFundo": "/uploads/ai/festas-fundo.png",
+    "imagemTitulo": "/uploads/ai/festas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#D2691E",
+    "faixaSuperior": "#FF4FA3"
+  },
+  "paleta": {
+    "primaria": "#FF8A1E",
+    "secundaria": "#FF4FA3",
+    "fundoBox": "#FFF8F0",
+    "fundoBoxSecundario": "#FF8A1E",
+    "textoNome": "#5C3210",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#FF8A1E",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_11_FCA04F.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF4E6"
+  },
+  "criadoEm": "2026-06-13T02:00:00.000Z",
+  "atualizadoEm": "2026-06-13T02:00:00.000Z"
+}

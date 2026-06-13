@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo do Atacado",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1457A8",
+    "imagemFundo": "/uploads/ai/atacado-fundo.png",
+    "imagemTitulo": "/uploads/ai/atacado-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0D3F7C",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#1565C0",
+    "secundaria": "#FFD400",
+    "fundoBox": "#FFFDF2",
+    "fundoBoxSecundario": "#1565C0",
+    "textoNome": "#0E3461",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_12_FFD83E.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EFF4FC"
+  },
+  "criadoEm": "2026-06-13T04:05:00.000Z",
+  "atualizadoEm": "2026-06-13T04:05:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Feirão de Calçados",
+  "categoria": "Calçados",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#3A1414",
+    "imagemFundo": "/uploads/ai/feirao-de-calcados-fundo.png",
+    "imagemTitulo": "/uploads/ai/feirao-de-calcados-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1F0C0C",
+    "faixaSuperior": "#C9962B"
+  },
+  "paleta": {
+    "primaria": "#C8102E",
+    "secundaria": "#C9962B",
+    "fundoBox": "#FFF6EC",
+    "fundoBoxSecundario": "#2A1010",
+    "textoNome": "#2A0E0E",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#E0A800",
+    "tagPreco": "#C8102E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF3E8"
+  },
+  "criadoEm": "2026-06-12T19:55:00.000Z",
+  "atualizadoEm": "2026-06-12T19:55:00.000Z"
+}

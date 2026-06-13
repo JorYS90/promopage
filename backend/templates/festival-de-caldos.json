@@ -1,0 +1,38 @@
+{
+  "nome": "Festival de Caldos",
+  "categoria": "Sazonais",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7A3B12",
+    "imagemFundo": "/uploads/ai/caldos-fundo.png",
+    "imagemTitulo": "/uploads/ai/caldos-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#5C2A0C",
+    "faixaSuperior": "#F5A623"
+  },
+  "paleta": {
+    "primaria": "#D2691E",
+    "secundaria": "#F5A623",
+    "fundoBox": "#FFF7EC",
+    "fundoBoxSecundario": "#D2691E",
+    "textoNome": "#5C2A0C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#D2691E",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_17_F07203.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF1E2"
+  },
+  "criadoEm": "2026-06-12T22:25:00.000Z",
+  "atualizadoEm": "2026-06-12T22:25:00.000Z"
+}

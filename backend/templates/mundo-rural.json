@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo Rural",
+  "categoria": "Agropecuária",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#2E6B1E",
+    "imagemFundo": "/uploads/ai/agropecuaria-fundo.png",
+    "imagemTitulo": "/uploads/ai/agropecuaria-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1C4512",
+    "faixaSuperior": "#E0A800"
+  },
+  "paleta": {
+    "primaria": "#3E8E29",
+    "secundaria": "#E0A800",
+    "fundoBox": "#F6FBF0",
+    "fundoBoxSecundario": "#3E8E29",
+    "textoNome": "#21490F",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#3E8E29",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_23_128939.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EFF7E6"
+  },
+  "criadoEm": "2026-06-12T20:50:00.000Z",
+  "atualizadoEm": "2026-06-12T20:50:00.000Z"
+}

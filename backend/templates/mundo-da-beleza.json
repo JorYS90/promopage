@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Beleza",
+  "categoria": "Cosméticos",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#F4C9D6",
+    "imagemFundo": "/uploads/ai/cosmeticos-fundo.png",
+    "imagemTitulo": "/uploads/ai/cosmeticos-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C77F96",
+    "faixaSuperior": "#D4A03C"
+  },
+  "paleta": {
+    "primaria": "#E0759C",
+    "secundaria": "#D4A03C",
+    "fundoBox": "#FFF7FA",
+    "fundoBoxSecundario": "#E0759C",
+    "textoNome": "#6E3247",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE9B0",
+    "tagPreco": "#E0759C",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_09_F475AA.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FCEFF4"
+  },
+  "criadoEm": "2026-06-12T23:15:00.000Z",
+  "atualizadoEm": "2026-06-12T23:15:00.000Z"
+}

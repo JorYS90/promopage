@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo do Jardim",
+  "categoria": "Floricultura",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#4E9A2E",
+    "imagemFundo": "/uploads/ai/jardim-fundo.png",
+    "imagemTitulo": "/uploads/ai/jardim-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#33701C",
+    "faixaSuperior": "#E0A800"
+  },
+  "paleta": {
+    "primaria": "#4CAF2E",
+    "secundaria": "#E0A800",
+    "fundoBox": "#F6FCEF",
+    "fundoBoxSecundario": "#4CAF2E",
+    "textoNome": "#274D12",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#4CAF2E",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_17_18DB59.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F1F8E8"
+  },
+  "criadoEm": "2026-06-13T07:05:00.000Z",
+  "atualizadoEm": "2026-06-13T07:05:00.000Z"
+}

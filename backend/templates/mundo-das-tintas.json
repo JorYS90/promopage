@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo das Tintas",
+  "categoria": "Tintas e Cores",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1565C0",
+    "imagemFundo": "/uploads/ai/tintas-fundo.png",
+    "imagemTitulo": "/uploads/ai/tintas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0D47A1",
+    "faixaSuperior": "#FFC107"
+  },
+  "paleta": {
+    "primaria": "#1E88E5",
+    "secundaria": "#FFC107",
+    "fundoBox": "#F5FAFF",
+    "fundoBoxSecundario": "#1E88E5",
+    "textoNome": "#0D2E5C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1E88E5",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_15_1B81F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EEF5FD"
+  },
+  "criadoEm": "2026-06-12T21:20:00.000Z",
+  "atualizadoEm": "2026-06-12T21:20:00.000Z"
+}

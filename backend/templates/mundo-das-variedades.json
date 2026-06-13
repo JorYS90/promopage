@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo das Variedades",
+  "categoria": "Utilidades",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#8A16DD",
+    "imagemFundo": "/uploads/ai/variedades-fundo.png",
+    "imagemTitulo": "/uploads/ai/variedades-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#5E0F99",
+    "faixaSuperior": "#FFC107"
+  },
+  "paleta": {
+    "primaria": "#9927EA",
+    "secundaria": "#FFC107",
+    "fundoBox": "#FBF5FF",
+    "fundoBoxSecundario": "#9927EA",
+    "textoNome": "#3D1063",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#9927EA",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_15_9927EA.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F5EBFC"
+  },
+  "criadoEm": "2026-06-13T00:30:00.000Z",
+  "atualizadoEm": "2026-06-13T00:30:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Lavanderia",
+  "categoria": "Limpeza",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#5FC4E8",
+    "imagemFundo": "/uploads/ai/lavanderia-fundo.png",
+    "imagemTitulo": "/uploads/ai/lavanderia-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1E88C7",
+    "faixaSuperior": "#2ECC71"
+  },
+  "paleta": {
+    "primaria": "#2196C9",
+    "secundaria": "#2ECC71",
+    "fundoBox": "#F2FBFE",
+    "fundoBoxSecundario": "#2196C9",
+    "textoNome": "#10455F",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#A8F0C8",
+    "tagPreco": "#2196C9",
+    "balaoOferta": "/uploads/baloes/08_ciano/08_ciano_09_75E8F4.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EBF8FD"
+  },
+  "criadoEm": "2026-06-13T00:45:00.000Z",
+  "atualizadoEm": "2026-06-13T00:45:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo das Bijuterias",
+  "categoria": "Cosméticos",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#F2C0D2",
+    "imagemFundo": "/uploads/ai/bijuterias-fundo.png",
+    "imagemTitulo": "/uploads/ai/bijuterias-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C77F96",
+    "faixaSuperior": "#D4A03C"
+  },
+  "paleta": {
+    "primaria": "#E07599",
+    "secundaria": "#D4A03C",
+    "fundoBox": "#FFF7FA",
+    "fundoBoxSecundario": "#E07599",
+    "textoNome": "#6E3247",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE9B0",
+    "tagPreco": "#E07599",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_10_F467A1.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FCEFF4"
+  },
+  "criadoEm": "2026-06-13T08:20:00.000Z",
+  "atualizadoEm": "2026-06-13T08:20:00.000Z"
+}

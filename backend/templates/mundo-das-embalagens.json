@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo das Embalagens",
+  "categoria": "Utilidades",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#5E8C3A",
+    "imagemFundo": "/uploads/ai/embalagens-fundo.png",
+    "imagemTitulo": "/uploads/ai/embalagens-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#3F6224",
+    "faixaSuperior": "#B86428"
+  },
+  "paleta": {
+    "primaria": "#5E8C3A",
+    "secundaria": "#B86428",
+    "fundoBox": "#F8FBF2",
+    "fundoBoxSecundario": "#5E8C3A",
+    "textoNome": "#3A4A1F",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE6B0",
+    "tagPreco": "#5E8C3A",
+    "balaoOferta": "/uploads/baloes/10_marrom/10_marrom_18_B86428.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F4F8EC"
+  },
+  "criadoEm": "2026-06-13T07:20:00.000Z",
+  "atualizadoEm": "2026-06-13T07:20:00.000Z"
+}

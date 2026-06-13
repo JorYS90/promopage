@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo Gamer",
+  "categoria": "Informática",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1A0E33",
+    "imagemFundo": "/uploads/ai/gamer-fundo.png",
+    "imagemTitulo": "/uploads/ai/gamer-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E0820",
+    "faixaSuperior": "#7CFF2E"
+  },
+  "paleta": {
+    "primaria": "#9927EA",
+    "secundaria": "#7CFF2E",
+    "fundoBox": "#F7F2FF",
+    "fundoBoxSecundario": "#2A1147",
+    "textoNome": "#2A1147",
+    "textoNomeDestaque": "#B6FF6B",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#B6FF6B",
+    "tagPreco": "#9927EA",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_16_921AE8.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F2ECFB"
+  },
+  "criadoEm": "2026-06-13T07:50:00.000Z",
+  "atualizadoEm": "2026-06-13T07:50:00.000Z"
+}

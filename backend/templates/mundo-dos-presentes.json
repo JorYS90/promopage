@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo dos Presentes",
+  "categoria": "Utilidades",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#D8243A",
+    "imagemFundo": "/uploads/ai/presentes-fundo.png",
+    "imagemTitulo": "/uploads/ai/presentes-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#A4152A",
+    "faixaSuperior": "#E0A800"
+  },
+  "paleta": {
+    "primaria": "#E11D3A",
+    "secundaria": "#E0A800",
+    "fundoBox": "#FFF6F2",
+    "fundoBoxSecundario": "#E11D3A",
+    "textoNome": "#5C0F1B",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D3A",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_12_F7464C.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBEEF0"
+  },
+  "criadoEm": "2026-06-13T06:35:00.000Z",
+  "atualizadoEm": "2026-06-13T06:35:00.000Z"
+}

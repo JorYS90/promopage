@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo Kids",
+  "categoria": "Moda",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#F4B8D0",
+    "imagemFundo": "/uploads/ai/kids-fundo.png",
+    "imagemTitulo": "/uploads/ai/kids-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#D87BA6",
+    "faixaSuperior": "#7FD0E8"
+  },
+  "paleta": {
+    "primaria": "#F06DAF",
+    "secundaria": "#36C5E0",
+    "fundoBox": "#FFF7FB",
+    "fundoBoxSecundario": "#F06DAF",
+    "textoNome": "#5C2E48",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE76B",
+    "tagPreco": "#F06DAF",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_07_F591BB.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FCF0F6"
+  },
+  "criadoEm": "2026-06-13T06:05:00.000Z",
+  "atualizadoEm": "2026-06-13T06:05:00.000Z"
+}

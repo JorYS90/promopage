@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Gráfica",
+  "categoria": "Papelaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#16C0DE",
+    "imagemFundo": "/uploads/ai/grafica-fundo.png",
+    "imagemTitulo": "/uploads/ai/grafica-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E7E92",
+    "faixaSuperior": "#E5197F"
+  },
+  "paleta": {
+    "primaria": "#00B4D8",
+    "secundaria": "#E5197F",
+    "fundoBox": "#F2FCFE",
+    "fundoBoxSecundario": "#00B4D8",
+    "textoNome": "#0E3A45",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E5197F",
+    "balaoOferta": "/uploads/baloes/08_ciano/08_ciano_18_0EC2D6.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EBFAFD"
+  },
+  "criadoEm": "2026-06-13T05:35:00.000Z",
+  "atualizadoEm": "2026-06-13T05:35:00.000Z"
+}

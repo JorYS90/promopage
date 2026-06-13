@@ -1,0 +1,38 @@
+{
+  "nome": "Casa e Utilidades",
+  "categoria": "Utilidades Domésticas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#2E6BC9",
+    "imagemFundo": "/uploads/ai/casa-e-utilidades-fundo.png",
+    "imagemTitulo": "/uploads/ai/casa-e-utilidades-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0D3A6B",
+    "faixaSuperior": "#D32F2F"
+  },
+  "paleta": {
+    "primaria": "#1565D8",
+    "secundaria": "#D32F2F",
+    "fundoBox": "#F8FBFF",
+    "fundoBoxSecundario": "#1565D8",
+    "textoNome": "#0D2E5A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD200",
+    "tagPreco": "#1565D8",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_18_0A6BDB.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EEF3FA"
+  },
+  "criadoEm": "2026-06-12T18:35:00.000Z",
+  "atualizadoEm": "2026-06-12T18:35:00.000Z"
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Papelaria",
+  "categoria": "Papelaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7B2FB5",
+    "imagemFundo": "/uploads/ai/papelaria-fundo.png",
+    "imagemTitulo": "/uploads/ai/papelaria-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#5A1E88",
+    "faixaSuperior": "#FFC107"
+  },
+  "paleta": {
+    "primaria": "#E5197F",
+    "secundaria": "#FFC107",
+    "fundoBox": "#FFF6FB",
+    "fundoBoxSecundario": "#E5197F",
+    "textoNome": "#4A1240",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E5197F",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_16_F0126E.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBEFF7"
+  },
+  "criadoEm": "2026-06-12T22:05:00.000Z",
+  "atualizadoEm": "2026-06-12T22:05:00.000Z"
+}

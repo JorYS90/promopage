@@ -1,0 +1,38 @@
+{
+  "nome": "Feirão de Veículos",
+  "categoria": "Concessionária",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1A1A1A",
+    "imagemFundo": "/uploads/ai/concessionaria-fundo.png",
+    "imagemTitulo": "/uploads/ai/concessionaria-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E0E0E",
+    "faixaSuperior": "#C8102E"
+  },
+  "paleta": {
+    "primaria": "#C8102E",
+    "secundaria": "#9AA0A6",
+    "fundoBox": "#F7F7F8",
+    "fundoBoxSecundario": "#C8102E",
+    "textoNome": "#1A1A1A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD400",
+    "tagPreco": "#C8102E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_18_DB0A11.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EFEFF1"
+  },
+  "criadoEm": "2026-06-12T21:50:00.000Z",
+  "atualizadoEm": "2026-06-12T21:50:00.000Z"
+}

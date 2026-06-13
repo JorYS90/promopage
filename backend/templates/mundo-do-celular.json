@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo do Celular",
+  "categoria": "Celulares",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1A1346",
+    "imagemFundo": "/uploads/ai/celular-fundo.png",
+    "imagemTitulo": "/uploads/ai/celular-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E0A2E",
+    "faixaSuperior": "#2EC5F0"
+  },
+  "paleta": {
+    "primaria": "#2563EB",
+    "secundaria": "#22D3EE",
+    "fundoBox": "#F2F7FF",
+    "fundoBoxSecundario": "#2563EB",
+    "textoNome": "#16204A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#5EEAFF",
+    "tagPreco": "#2563EB",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_13_3891F6.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EEF3FE"
+  },
+  "criadoEm": "2026-06-13T01:30:00.000Z",
+  "atualizadoEm": "2026-06-13T01:30:00.000Z"
+}

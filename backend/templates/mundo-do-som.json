@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo do Som",
+  "categoria": "Autopeças",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#0C1430",
+    "imagemFundo": "/uploads/ai/som-fundo.png",
+    "imagemTitulo": "/uploads/ai/som-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#070C1F",
+    "faixaSuperior": "#2196F3"
+  },
+  "paleta": {
+    "primaria": "#2196F3",
+    "secundaria": "#E11D2A",
+    "fundoBox": "#F2F7FF",
+    "fundoBoxSecundario": "#15214A",
+    "textoNome": "#0E1A3A",
+    "textoNomeDestaque": "#5EB8FF",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#5EEAFF",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_14_2989F6.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EEF3FE"
+  },
+  "criadoEm": "2026-06-13T04:50:00.000Z",
+  "atualizadoEm": "2026-06-13T04:50:00.000Z"
+}

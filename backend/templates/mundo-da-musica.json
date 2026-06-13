@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Música",
+  "categoria": "Utilidades",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1A1A2E",
+    "imagemFundo": "/uploads/ai/musica-fundo.png",
+    "imagemTitulo": "/uploads/ai/musica-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E0E1F",
+    "faixaSuperior": "#D4A017"
+  },
+  "paleta": {
+    "primaria": "#D4A017",
+    "secundaria": "#2E5BB8",
+    "fundoBox": "#FFFCF2",
+    "fundoBoxSecundario": "#16213E",
+    "textoNome": "#2A2208",
+    "textoNomeDestaque": "#E6C200",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE26B",
+    "tagPreco": "#16213E",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_17_F3C200.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F4F2E6"
+  },
+  "criadoEm": "2026-06-13T08:35:00.000Z",
+  "atualizadoEm": "2026-06-13T08:35:00.000Z"
+}

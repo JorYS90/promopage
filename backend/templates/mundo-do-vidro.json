@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo do Vidro",
+  "categoria": "Construção",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#8FC4E8",
+    "imagemFundo": "/uploads/ai/vidro-fundo.png",
+    "imagemTitulo": "/uploads/ai/vidro-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#2D6E9E",
+    "faixaSuperior": "#5AA9DC"
+  },
+  "paleta": {
+    "primaria": "#2E8BC0",
+    "secundaria": "#8FA9B8",
+    "fundoBox": "#F3FAFE",
+    "fundoBoxSecundario": "#2E8BC0",
+    "textoNome": "#143F5C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#BFE8FF",
+    "tagPreco": "#2E8BC0",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_09_72B0F7.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EDF6FC"
+  },
+  "criadoEm": "2026-06-13T05:50:00.000Z",
+  "atualizadoEm": "2026-06-13T05:50:00.000Z"
+}

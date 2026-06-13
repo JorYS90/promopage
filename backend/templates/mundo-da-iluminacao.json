@@ -1,0 +1,38 @@
+{
+  "nome": "Mundo da Iluminação",
+  "categoria": "Móveis e Decoração",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#2A2418",
+    "imagemFundo": "/uploads/ai/iluminacao-fundo.png",
+    "imagemTitulo": "/uploads/ai/iluminacao-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#161208",
+    "faixaSuperior": "#E0B400"
+  },
+  "paleta": {
+    "primaria": "#E0B400",
+    "secundaria": "#3A3322",
+    "fundoBox": "#FFFDF2",
+    "fundoBoxSecundario": "#3A3322",
+    "textoNome": "#3A2E00",
+    "textoNomeDestaque": "#FFD200",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE26B",
+    "tagPreco": "#3A3322",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_19_D5AB00.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F6F2E4"
+  },
+  "criadoEm": "2026-06-13T07:35:00.000Z",
+  "atualizadoEm": "2026-06-13T07:35:00.000Z"
+}
