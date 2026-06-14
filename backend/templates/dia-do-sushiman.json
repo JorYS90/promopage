@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Sushiman",
+  "categoria": "Comida Japonesa",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1A1410",
+    "imagemFundo": "/uploads/ai/sushiman-fundo.png",
+    "imagemTitulo": "/uploads/ai/sushiman-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0F0B08",
+    "faixaSuperior": "#C0211C"
+  },
+  "paleta": {
+    "primaria": "#C0211C",
+    "secundaria": "#C9A24B",
+    "fundoBox": "#FFF8F2",
+    "fundoBoxSecundario": "#C0211C",
+    "textoNome": "#1A1410",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#E8C77A",
+    "tagPreco": "#7A1010",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_17_E90A11.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F3ECE4"
+  },
+  "criadoEm": "2026-06-15T20:05:00.000Z",
+  "atualizadoEm": "2026-06-15T20:05:00.000Z"
+}
