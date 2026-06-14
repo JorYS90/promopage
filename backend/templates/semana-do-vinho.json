@@ -1,0 +1,38 @@
+{
+  "nome": "Semana do Vinho",
+  "categoria": "Bebidas",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#4A0609",
+    "imagemFundo": "/uploads/ai/vinho-fundo.png",
+    "imagemTitulo": "/uploads/ai/vinho-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#3C0607",
+    "faixaSuperior": "#C9A24B"
+  },
+  "paleta": {
+    "primaria": "#92090D",
+    "secundaria": "#C9A24B",
+    "fundoBox": "#FBF4F4",
+    "fundoBoxSecundario": "#92090D",
+    "textoNome": "#3C0607",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#E8C77A",
+    "tagPreco": "#1A1A1A",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_23_92090D.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F4EBEB"
+  },
+  "criadoEm": "2026-06-15T16:50:00.000Z",
+  "atualizadoEm": "2026-06-15T16:50:00.000Z"
+}
