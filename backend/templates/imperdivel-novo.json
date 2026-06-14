@@ -1,0 +1,38 @@
+{
+  "nome": "Imperdível",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7A0A0E",
+    "imagemFundo": "/uploads/ai/imperdivel-fundo.png",
+    "imagemTitulo": "/uploads/ai/imperdivel-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#5C0709",
+    "faixaSuperior": "#FFD012"
+  },
+  "paleta": {
+    "primaria": "#D81A1A",
+    "secundaria": "#FFD012",
+    "fundoBox": "#FFFBEF",
+    "fundoBoxSecundario": "#7A2AB0",
+    "textoNome": "#5C0709",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE08A",
+    "tagPreco": "#7A0A0E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_15_F51B22.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF2E6"
+  },
+  "criadoEm": "2026-06-16T00:35:00.000Z",
+  "atualizadoEm": "2026-06-16T00:35:00.000Z"
+}
