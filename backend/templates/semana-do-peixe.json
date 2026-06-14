@@ -1,0 +1,38 @@
+{
+  "nome": "Semana do Peixe",
+  "categoria": "Peixaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1779C4",
+    "imagemFundo": "/uploads/ai/peixe-fundo.png",
+    "imagemTitulo": "/uploads/ai/peixe-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E5A96",
+    "faixaSuperior": "#FF7A1A"
+  },
+  "paleta": {
+    "primaria": "#1488D6",
+    "secundaria": "#FF7A1A",
+    "fundoBox": "#F2FAFF",
+    "fundoBoxSecundario": "#1488D6",
+    "textoNome": "#0E3A5C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#FF7A1A",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_16_0D79F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF5FD"
+  },
+  "criadoEm": "2026-06-15T13:45:00.000Z",
+  "atualizadoEm": "2026-06-15T13:45:00.000Z"
+}
