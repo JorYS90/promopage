@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Pescado",
+  "categoria": "Peixaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#0E3A5A",
+    "imagemFundo": "/uploads/ai/pescado-fundo.png",
+    "imagemTitulo": "/uploads/ai/pescado-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0A2A42",
+    "faixaSuperior": "#1B81F5"
+  },
+  "paleta": {
+    "primaria": "#1273C7",
+    "secundaria": "#5FB0E8",
+    "fundoBox": "#F2F9FF",
+    "fundoBoxSecundario": "#1273C7",
+    "textoNome": "#0E3A5A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD24D",
+    "tagPreco": "#0A4A78",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_16_0D79F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF4FC"
+  },
+  "criadoEm": "2026-06-15T22:35:00.000Z",
+  "atualizadoEm": "2026-06-15T22:35:00.000Z"
+}
