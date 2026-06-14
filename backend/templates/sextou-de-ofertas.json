@@ -1,0 +1,38 @@
+{
+  "nome": "Sextou de Ofertas",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7A1FA8",
+    "imagemFundo": "/uploads/ai/sextou-fundo.png",
+    "imagemTitulo": "/uploads/ai/sextou-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#5A148A",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#A21CAF",
+    "secundaria": "#FF3DAE",
+    "fundoBox": "#FCF4FF",
+    "fundoBoxSecundario": "#A21CAF",
+    "textoNome": "#3D0E52",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E5197F",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_16_F0126E.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F7EBFB"
+  },
+  "criadoEm": "2026-06-14T22:45:00.000Z",
+  "atualizadoEm": "2026-06-14T22:45:00.000Z"
+}

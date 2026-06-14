@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Comerciante",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#15347A",
+    "imagemFundo": "/uploads/ai/comerciante-fundo.png",
+    "imagemTitulo": "/uploads/ai/comerciante-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E2456",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#1A4099",
+    "secundaria": "#F5C518",
+    "fundoBox": "#F4F7FE",
+    "fundoBoxSecundario": "#1A4099",
+    "textoNome": "#0E2456",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_17_0A72E9.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF0FB"
+  },
+  "criadoEm": "2026-06-14T22:35:00.000Z",
+  "atualizadoEm": "2026-06-14T22:35:00.000Z"
+}
