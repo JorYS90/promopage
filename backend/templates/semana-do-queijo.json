@@ -1,0 +1,38 @@
+{
+  "nome": "Semana do Queijo",
+  "categoria": "Frios",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#B8860B",
+    "imagemFundo": "/uploads/ai/queijo-fundo.png",
+    "imagemTitulo": "/uploads/ai/queijo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#8C6608",
+    "faixaSuperior": "#FFCD03"
+  },
+  "paleta": {
+    "primaria": "#D9A40A",
+    "secundaria": "#FFCD03",
+    "fundoBox": "#FFFBF0",
+    "fundoBoxSecundario": "#D9A40A",
+    "textoNome": "#5A3F06",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#5A3F06",
+    "textoPrecoDestaque": "#B8860B",
+    "tagPreco": "#C0451A",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_18_E4B700.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF6E8"
+  },
+  "criadoEm": "2026-06-15T17:35:00.000Z",
+  "atualizadoEm": "2026-06-15T17:35:00.000Z"
+}
