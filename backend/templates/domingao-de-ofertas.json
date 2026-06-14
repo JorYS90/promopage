@@ -1,0 +1,38 @@
+{
+  "nome": "Domingão de Ofertas",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E8631A",
+    "imagemFundo": "/uploads/ai/domingao-fundo.png",
+    "imagemTitulo": "/uploads/ai/domingao-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C24E0F",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#F2731C",
+    "secundaria": "#E11D2A",
+    "fundoBox": "#FFF7EF",
+    "fundoBoxSecundario": "#F2731C",
+    "textoNome": "#5A2A08",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_17_F07203.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FCF0E4"
+  },
+  "criadoEm": "2026-06-15T12:35:00.000Z",
+  "atualizadoEm": "2026-06-15T12:35:00.000Z"
+}
