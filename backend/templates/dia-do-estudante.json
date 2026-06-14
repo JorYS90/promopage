@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Estudante",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1466C4",
+    "imagemFundo": "/uploads/ai/estudante-fundo.png",
+    "imagemTitulo": "/uploads/ai/estudante-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E47A0",
+    "faixaSuperior": "#FF8A1A"
+  },
+  "paleta": {
+    "primaria": "#1466C4",
+    "secundaria": "#FF8A1A",
+    "fundoBox": "#F4F9FF",
+    "fundoBoxSecundario": "#1466C4",
+    "textoNome": "#0E2C66",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#FF8A1A",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_17_0A72E9.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF2FD"
+  },
+  "criadoEm": "2026-06-15T15:35:00.000Z",
+  "atualizadoEm": "2026-06-15T15:35:00.000Z"
+}
