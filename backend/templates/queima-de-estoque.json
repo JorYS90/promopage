@@ -1,0 +1,38 @@
+{
+  "nome": "Queima de Estoque",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#C21A0E",
+    "imagemFundo": "/uploads/ai/queima-fundo.png",
+    "imagemTitulo": "/uploads/ai/queima-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#8E1308",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#E11D12",
+    "secundaria": "#FF8A00",
+    "fundoBox": "#FFF6F0",
+    "fundoBoxSecundario": "#E11D12",
+    "textoNome": "#5A1206",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1A1A1A",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_17_E90A11.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBEDE6"
+  },
+  "criadoEm": "2026-06-15T13:05:00.000Z",
+  "atualizadoEm": "2026-06-15T13:05:00.000Z"
+}
