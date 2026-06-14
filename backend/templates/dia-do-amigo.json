@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Amigo",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#F08A1D",
+    "imagemFundo": "/uploads/ai/amigo-fundo.png",
+    "imagemTitulo": "/uploads/ai/amigo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#D4710F",
+    "faixaSuperior": "#1E88E5"
+  },
+  "paleta": {
+    "primaria": "#F07C1A",
+    "secundaria": "#1E88E5",
+    "fundoBox": "#FFF8EE",
+    "fundoBoxSecundario": "#F07C1A",
+    "textoNome": "#5A2E08",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_14_FD8823.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FCF2E4"
+  },
+  "criadoEm": "2026-06-15T11:45:00.000Z",
+  "atualizadoEm": "2026-06-15T11:45:00.000Z"
+}
