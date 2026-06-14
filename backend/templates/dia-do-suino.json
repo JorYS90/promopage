@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Suíno",
+  "categoria": "Açougue",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#5A1614",
+    "imagemFundo": "/uploads/ai/suino-fundo.png",
+    "imagemTitulo": "/uploads/ai/suino-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#3E0E0C",
+    "faixaSuperior": "#C9A24B"
+  },
+  "paleta": {
+    "primaria": "#C0211C",
+    "secundaria": "#C9A24B",
+    "fundoBox": "#FFF6F2",
+    "fundoBoxSecundario": "#C0211C",
+    "textoNome": "#5A1614",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#E8C77A",
+    "tagPreco": "#7A1010",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_15_F51B22.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F6EAE6"
+  },
+  "criadoEm": "2026-06-15T22:20:00.000Z",
+  "atualizadoEm": "2026-06-15T22:20:00.000Z"
+}
