@@ -1,0 +1,38 @@
+{
+  "nome": "Semana da Carne",
+  "categoria": "Açougue",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7A1208",
+    "imagemFundo": "/uploads/ai/carne-fundo.png",
+    "imagemTitulo": "/uploads/ai/carne-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#5C0E06",
+    "faixaSuperior": "#FFC400"
+  },
+  "paleta": {
+    "primaria": "#C01A0E",
+    "secundaria": "#FFB200",
+    "fundoBox": "#FFF6F2",
+    "fundoBoxSecundario": "#C01A0E",
+    "textoNome": "#4A1206",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1A1A1A",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_15_F51B22.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F7EBE6"
+  },
+  "criadoEm": "2026-06-15T14:05:00.000Z",
+  "atualizadoEm": "2026-06-15T14:05:00.000Z"
+}
