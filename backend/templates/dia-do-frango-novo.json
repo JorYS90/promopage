@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Frango",
+  "categoria": "Açougue",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7A4A0A",
+    "imagemFundo": "/uploads/ai/frango-novo-fundo.png",
+    "imagemTitulo": "/uploads/ai/frango-novo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#5C370D",
+    "faixaSuperior": "#FFB200"
+  },
+  "paleta": {
+    "primaria": "#E03A2E",
+    "secundaria": "#FFB200",
+    "fundoBox": "#FFFBEF",
+    "fundoBoxSecundario": "#E03A2E",
+    "textoNome": "#5C370D",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE08A",
+    "tagPreco": "#A8281E",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_16_FFCD03.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF3DD"
+  },
+  "criadoEm": "2026-06-15T22:50:00.000Z",
+  "atualizadoEm": "2026-06-15T22:50:00.000Z"
+}
