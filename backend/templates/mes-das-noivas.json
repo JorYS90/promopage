@@ -1,0 +1,38 @@
+{
+  "nome": "Mês das Noivas",
+  "categoria": "Datas Comemorativas",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#F6E9E2",
+    "imagemFundo": "/uploads/ai/noivas-fundo.png",
+    "imagemTitulo": "/uploads/ai/noivas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C9A24B",
+    "faixaSuperior": "#F4C9D6"
+  },
+  "paleta": {
+    "primaria": "#C9A24B",
+    "secundaria": "#E59FB8",
+    "fundoBox": "#FFFBF8",
+    "fundoBoxSecundario": "#C9A24B",
+    "textoNome": "#6E5320",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#6E5320",
+    "textoPrecoDestaque": "#B8852F",
+    "tagPreco": "#C9658A",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_06_F69FC4.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF2EE"
+  },
+  "criadoEm": "2026-06-15T15:05:00.000Z",
+  "atualizadoEm": "2026-06-15T15:05:00.000Z"
+}
