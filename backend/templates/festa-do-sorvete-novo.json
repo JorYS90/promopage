@@ -1,0 +1,38 @@
+{
+  "nome": "Festa do Sorvete",
+  "categoria": "Sorveteria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#F06BA8",
+    "imagemFundo": "/uploads/ai/sorvete-fundo.png",
+    "imagemTitulo": "/uploads/ai/sorvete-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#D44A8C",
+    "faixaSuperior": "#5EC8E8"
+  },
+  "paleta": {
+    "primaria": "#F12E7F",
+    "secundaria": "#3FC4E8",
+    "fundoBox": "#FFF6FB",
+    "fundoBoxSecundario": "#F12E7F",
+    "textoNome": "#6E1A47",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1488D6",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_14_F12E7F.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FCEFF6"
+  },
+  "criadoEm": "2026-06-15T17:50:00.000Z",
+  "atualizadoEm": "2026-06-15T17:50:00.000Z"
+}
