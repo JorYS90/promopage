@@ -1,0 +1,38 @@
+{
+  "nome": "Fecha Mês",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#B21218",
+    "imagemFundo": "/uploads/ai/fechames-novo-fundo.png",
+    "imagemTitulo": "/uploads/ai/fechames-novo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#8A0E13",
+    "faixaSuperior": "#FFD012"
+  },
+  "paleta": {
+    "primaria": "#E01E1E",
+    "secundaria": "#FFD012",
+    "fundoBox": "#FFFBEF",
+    "fundoBoxSecundario": "#E01E1E",
+    "textoNome": "#7A0A0E",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE08A",
+    "tagPreco": "#8A0E13",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_14_F62930.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF3E0"
+  },
+  "criadoEm": "2026-06-15T23:05:00.000Z",
+  "atualizadoEm": "2026-06-15T23:05:00.000Z"
+}
