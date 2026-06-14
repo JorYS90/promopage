@@ -1,0 +1,38 @@
+{
+  "nome": "Festa da Cerveja",
+  "categoria": "Bebidas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#3A2406",
+    "imagemFundo": "/uploads/ai/cerveja-novo-fundo.png",
+    "imagemTitulo": "/uploads/ai/cerveja-novo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#2A1A04",
+    "faixaSuperior": "#FFB200"
+  },
+  "paleta": {
+    "primaria": "#C97A12",
+    "secundaria": "#FFB200",
+    "fundoBox": "#FFFAEF",
+    "fundoBoxSecundario": "#C97A12",
+    "textoNome": "#3A2406",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE08A",
+    "tagPreco": "#8A4E0A",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_16_FC7905.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F8EFD9"
+  },
+  "criadoEm": "2026-06-15T19:20:00.000Z",
+  "atualizadoEm": "2026-06-15T19:20:00.000Z"
+}
