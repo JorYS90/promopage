@@ -1,0 +1,38 @@
+{
+  "nome": "Semana do Café",
+  "categoria": "Padaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#5A3115",
+    "imagemFundo": "/uploads/ai/cafe-fundo.png",
+    "imagemTitulo": "/uploads/ai/cafe-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#3E2410",
+    "faixaSuperior": "#E0A982"
+  },
+  "paleta": {
+    "primaria": "#8A4B22",
+    "secundaria": "#D9894F",
+    "fundoBox": "#FBF4EC",
+    "fundoBoxSecundario": "#8A4B22",
+    "textoNome": "#3E2410",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE0B0",
+    "tagPreco": "#3C2514",
+    "balaoOferta": "/uploads/baloes/10_marrom/10_marrom_18_B86428.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F5EBE0"
+  },
+  "criadoEm": "2026-06-15T14:50:00.000Z",
+  "atualizadoEm": "2026-06-15T14:50:00.000Z"
+}
