@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Confeiteiro",
+  "categoria": "Confeitaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E885B0",
+    "imagemFundo": "/uploads/ai/confeiteiro-fundo.png",
+    "imagemTitulo": "/uploads/ai/confeiteiro-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C9618E",
+    "faixaSuperior": "#C9A24B"
+  },
+  "paleta": {
+    "primaria": "#E85FA0",
+    "secundaria": "#B07ED6",
+    "fundoBox": "#FFF7FB",
+    "fundoBoxSecundario": "#E85FA0",
+    "textoNome": "#6E1A47",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE0A0",
+    "tagPreco": "#8A4BBF",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_10_F467A1.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FCEFF5"
+  },
+  "criadoEm": "2026-06-15T18:35:00.000Z",
+  "atualizadoEm": "2026-06-15T18:35:00.000Z"
+}
