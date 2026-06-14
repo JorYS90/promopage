@@ -1,0 +1,38 @@
+{
+  "nome": "Mega Quarta da Limpeza",
+  "categoria": "Limpeza",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#3FA9E0",
+    "imagemFundo": "/uploads/ai/quartalimpeza-fundo.png",
+    "imagemTitulo": "/uploads/ai/quartalimpeza-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1E7FB8",
+    "faixaSuperior": "#3DC46A"
+  },
+  "paleta": {
+    "primaria": "#1E88D6",
+    "secundaria": "#3DC46A",
+    "fundoBox": "#F2FAFF",
+    "fundoBoxSecundario": "#1E88D6",
+    "textoNome": "#0E3A5C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1E88D6",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_12_4699F7.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EBF6FD"
+  },
+  "criadoEm": "2026-06-14T21:25:00.000Z",
+  "atualizadoEm": "2026-06-14T21:25:00.000Z"
+}

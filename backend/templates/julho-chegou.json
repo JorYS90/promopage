@@ -1,0 +1,38 @@
+{
+  "nome": "Julho Chegou",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1452C4",
+    "imagemFundo": "/uploads/ai/julhochegou-fundo.png",
+    "imagemTitulo": "/uploads/ai/julho-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E3A8C",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#1452C4",
+    "secundaria": "#FFC400",
+    "fundoBox": "#F4F8FF",
+    "fundoBoxSecundario": "#1452C4",
+    "textoNome": "#0E2C66",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_12_4699F7.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF1FC"
+  },
+  "criadoEm": "2026-06-14T22:15:00.000Z",
+  "atualizadoEm": "2026-06-14T22:15:00.000Z"
+}

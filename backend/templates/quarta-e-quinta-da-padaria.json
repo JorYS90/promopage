@@ -1,0 +1,38 @@
+{
+  "nome": "Quarta e Quinta da Padaria",
+  "categoria": "Padaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#C2703D",
+    "imagemFundo": "/uploads/ai/padaria-promo-fundo.png",
+    "imagemTitulo": "/uploads/ai/padaria-promo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#8A4A23",
+    "faixaSuperior": "#E0A800"
+  },
+  "paleta": {
+    "primaria": "#C8102E",
+    "secundaria": "#D4A017",
+    "fundoBox": "#FFF8EC",
+    "fundoBoxSecundario": "#C8102E",
+    "textoNome": "#4A2A14",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#C8102E",
+    "balaoOferta": "/uploads/baloes/10_marrom/10_marrom_15_D47937.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF3E8"
+  },
+  "criadoEm": "2026-06-14T21:10:00.000Z",
+  "atualizadoEm": "2026-06-14T21:10:00.000Z"
+}

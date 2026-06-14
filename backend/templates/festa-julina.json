@@ -1,0 +1,38 @@
+{
+  "nome": "Festa Julina",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E8A33D",
+    "imagemFundo": "/uploads/ai/julina-fundo.png",
+    "imagemTitulo": "/uploads/ai/julina-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C8102E",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#C8102E",
+    "secundaria": "#F5A11D",
+    "fundoBox": "#FFF8EC",
+    "fundoBoxSecundario": "#C8102E",
+    "textoNome": "#5A2A0C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#188A3E",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_15_FD8114.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF1DD"
+  },
+  "criadoEm": "2026-06-14T22:25:00.000Z",
+  "atualizadoEm": "2026-06-14T22:25:00.000Z"
+}

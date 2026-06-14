@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Rock",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1A1A1A",
+    "imagemFundo": "/uploads/ai/rock-fundo.png",
+    "imagemTitulo": "/uploads/ai/rock-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#111111",
+    "faixaSuperior": "#E11D2A"
+  },
+  "paleta": {
+    "primaria": "#E11D2A",
+    "secundaria": "#FFD400",
+    "fundoBox": "#FFF6F6",
+    "fundoBoxSecundario": "#E11D2A",
+    "textoNome": "#1A1A1A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1A1A1A",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_18_DB0A11.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F2EDED"
+  },
+  "criadoEm": "2026-06-14T22:05:00.000Z",
+  "atualizadoEm": "2026-06-14T22:05:00.000Z"
+}

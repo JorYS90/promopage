@@ -1,0 +1,38 @@
+{
+  "nome": "Semana das Cores",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#2BB4E0",
+    "imagemFundo": "/uploads/ai/cores-fundo.png",
+    "imagemTitulo": "/uploads/ai/cores-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#E5197F",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#E5197F",
+    "secundaria": "#16BF4F",
+    "fundoBox": "#FFFDF5",
+    "fundoBoxSecundario": "#E5197F",
+    "textoNome": "#3A1240",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#9927EA",
+    "balaoOferta": "/uploads/baloes/08_ciano/08_ciano_14_2EDEF1.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F4FBFE"
+  },
+  "criadoEm": "2026-06-14T21:55:00.000Z",
+  "atualizadoEm": "2026-06-14T21:55:00.000Z"
+}

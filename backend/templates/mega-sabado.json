@@ -1,0 +1,38 @@
+{
+  "nome": "Mega Sábado",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7B2FB5",
+    "imagemFundo": "/uploads/ai/megasabado-fundo.png",
+    "imagemTitulo": "/uploads/ai/megasabado-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#5A1E88",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#9927EA",
+    "secundaria": "#FFD400",
+    "fundoBox": "#FBF5FF",
+    "fundoBoxSecundario": "#9927EA",
+    "textoNome": "#3D1063",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_16_921AE8.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F5EBFC"
+  },
+  "criadoEm": "2026-06-14T21:40:00.000Z",
+  "atualizadoEm": "2026-06-14T21:40:00.000Z"
+}
