@@ -1,0 +1,38 @@
+{
+  "nome": "Semana do Hortifruti",
+  "categoria": "Hortifruti",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1E7A2E",
+    "imagemFundo": "/uploads/ai/hortifruti-fundo.png",
+    "imagemTitulo": "/uploads/ai/hortifruti-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#155C22",
+    "faixaSuperior": "#FF8A1A"
+  },
+  "paleta": {
+    "primaria": "#2E9E3C",
+    "secundaria": "#FF8A1A",
+    "fundoBox": "#F4FBF2",
+    "fundoBoxSecundario": "#2E9E3C",
+    "textoNome": "#1B4E22",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E8431A",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_17_18DB59.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EEF8EC"
+  },
+  "criadoEm": "2026-06-15T15:20:00.000Z",
+  "atualizadoEm": "2026-06-15T15:20:00.000Z"
+}
