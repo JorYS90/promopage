@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Cozinheiro",
+  "categoria": "Restaurante",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#4A0E0E",
+    "imagemFundo": "/uploads/ai/cozinheiro-fundo.png",
+    "imagemTitulo": "/uploads/ai/cozinheiro-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#360909",
+    "faixaSuperior": "#C9A24B"
+  },
+  "paleta": {
+    "primaria": "#C0211C",
+    "secundaria": "#C9A24B",
+    "fundoBox": "#FFF8F2",
+    "fundoBoxSecundario": "#C0211C",
+    "textoNome": "#4A0E0E",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#E8C77A",
+    "tagPreco": "#7A1010",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F7ECE4"
+  },
+  "criadoEm": "2026-06-15T19:50:00.000Z",
+  "atualizadoEm": "2026-06-15T19:50:00.000Z"
+}
