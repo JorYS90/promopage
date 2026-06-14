@@ -1,0 +1,38 @@
+{
+  "nome": "Festa do Milho",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7A4A0A",
+    "imagemFundo": "/uploads/ai/milho-fundo.png",
+    "imagemTitulo": "/uploads/ai/milho-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#1E7A2E",
+    "faixaSuperior": "#FFCD03"
+  },
+  "paleta": {
+    "primaria": "#E03A2E",
+    "secundaria": "#FFCD03",
+    "fundoBox": "#FFFBEC",
+    "fundoBoxSecundario": "#1E7A2E",
+    "textoNome": "#5C3A08",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE08A",
+    "tagPreco": "#A8281E",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_15_FFD012.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF3DD"
+  },
+  "criadoEm": "2026-06-15T22:05:00.000Z",
+  "atualizadoEm": "2026-06-15T22:05:00.000Z"
+}
