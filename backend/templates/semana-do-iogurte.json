@@ -1,0 +1,38 @@
+{
+  "nome": "Semana do Iogurte",
+  "categoria": "Frios",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E0568F",
+    "imagemFundo": "/uploads/ai/iogurte-fundo.png",
+    "imagemTitulo": "/uploads/ai/iogurte-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C13E76",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#E73B82",
+    "secundaria": "#FF6FA3",
+    "fundoBox": "#FFF6FA",
+    "fundoBoxSecundario": "#E73B82",
+    "textoNome": "#6E1A45",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#C01A4A",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_16_F0126E.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FCEEF4"
+  },
+  "criadoEm": "2026-06-15T18:20:00.000Z",
+  "atualizadoEm": "2026-06-15T18:20:00.000Z"
+}
