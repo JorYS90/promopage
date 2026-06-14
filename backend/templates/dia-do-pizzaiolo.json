@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Pizzaiolo",
+  "categoria": "Pizzaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#9E1410",
+    "imagemFundo": "/uploads/ai/pizzaiolo-fundo.png",
+    "imagemTitulo": "/uploads/ai/pizzaiolo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#7A0F0C",
+    "faixaSuperior": "#2E9E3C"
+  },
+  "paleta": {
+    "primaria": "#D52B22",
+    "secundaria": "#2E9E3C",
+    "fundoBox": "#FFF7F5",
+    "fundoBoxSecundario": "#D52B22",
+    "textoNome": "#5A0C0A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1A1A1A",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_17_E90A11.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBECEA"
+  },
+  "criadoEm": "2026-06-15T17:20:00.000Z",
+  "atualizadoEm": "2026-06-15T17:20:00.000Z"
+}
