@@ -1,0 +1,38 @@
+{
+  "nome": "Quintou de Ofertas",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1B9E4B",
+    "imagemFundo": "/uploads/ai/quintou-fundo.png",
+    "imagemTitulo": "/uploads/ai/quintou-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#13743A",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#1B9E4B",
+    "secundaria": "#1E88E5",
+    "fundoBox": "#F3FBF6",
+    "fundoBoxSecundario": "#1B9E4B",
+    "textoNome": "#0E3D22",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_16_1CE65F.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF8EF"
+  },
+  "criadoEm": "2026-06-15T12:25:00.000Z",
+  "atualizadoEm": "2026-06-15T12:25:00.000Z"
+}
