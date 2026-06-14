@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Cliente VIP",
+  "categoria": "Datas Comemorativas",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#C2218A",
+    "imagemFundo": "/uploads/ai/cliente-fundo.png",
+    "imagemTitulo": "/uploads/ai/cliente-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#8A146A",
+    "faixaSuperior": "#F5C518"
+  },
+  "paleta": {
+    "primaria": "#C2218A",
+    "secundaria": "#F5C518",
+    "fundoBox": "#FFF5FB",
+    "fundoBoxSecundario": "#C2218A",
+    "textoNome": "#4A1240",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#7B1FA2",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_19_C80E5B.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F7E9F3"
+  },
+  "criadoEm": "2026-06-15T12:15:00.000Z",
+  "atualizadoEm": "2026-06-15T12:15:00.000Z"
+}
