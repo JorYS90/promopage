@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Padeiro",
+  "categoria": "Padaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7A4A12",
+    "imagemFundo": "/uploads/ai/padeiro-fundo.png",
+    "imagemTitulo": "/uploads/ai/padeiro-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#5C370D",
+    "faixaSuperior": "#FFB200"
+  },
+  "paleta": {
+    "primaria": "#C07818",
+    "secundaria": "#FFB200",
+    "fundoBox": "#FFFAF0",
+    "fundoBoxSecundario": "#C07818",
+    "textoNome": "#5A3A0E",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE0A0",
+    "tagPreco": "#9F5724",
+    "balaoOferta": "/uploads/baloes/10_marrom/10_marrom_15_D47937.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF2E2"
+  },
+  "criadoEm": "2026-06-15T18:05:00.000Z",
+  "atualizadoEm": "2026-06-15T18:05:00.000Z"
+}
