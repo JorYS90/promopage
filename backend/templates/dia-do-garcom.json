@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Garçom",
+  "categoria": "Restaurante",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#3A0A0A",
+    "imagemFundo": "/uploads/ai/garcom-fundo.png",
+    "imagemTitulo": "/uploads/ai/garcom-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#2A0707",
+    "faixaSuperior": "#C9A24B"
+  },
+  "paleta": {
+    "primaria": "#B21218",
+    "secundaria": "#C9A24B",
+    "fundoBox": "#FFF8F0",
+    "fundoBoxSecundario": "#B21218",
+    "textoNome": "#3A0A0A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#E8C77A",
+    "tagPreco": "#7A0A0E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_18_DB0A11.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F6EBE0"
+  },
+  "criadoEm": "2026-06-15T19:05:00.000Z",
+  "atualizadoEm": "2026-06-15T19:05:00.000Z"
+}
