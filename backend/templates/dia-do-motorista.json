@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Motorista",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1456B8",
+    "imagemFundo": "/uploads/ai/motorista-fundo.png",
+    "imagemTitulo": "/uploads/ai/motorista-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E3C84",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#1A63CC",
+    "secundaria": "#FFC400",
+    "fundoBox": "#F3F8FF",
+    "fundoBoxSecundario": "#1A63CC",
+    "textoNome": "#0E2C5C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E11D2A",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_15_1B81F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF1FC"
+  },
+  "criadoEm": "2026-06-15T12:55:00.000Z",
+  "atualizadoEm": "2026-06-15T12:55:00.000Z"
+}
