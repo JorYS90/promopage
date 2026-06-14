@@ -1,0 +1,38 @@
+{
+  "nome": "Dia dos Avós",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#BFE3F0",
+    "imagemFundo": "/uploads/ai/avos-fundo.png",
+    "imagemTitulo": "/uploads/ai/avos-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#3FA9C9",
+    "faixaSuperior": "#7FCF8E"
+  },
+  "paleta": {
+    "primaria": "#3FA9C9",
+    "secundaria": "#7FCF8E",
+    "fundoBox": "#F6FCFE",
+    "fundoBoxSecundario": "#3FA9C9",
+    "textoNome": "#235A6B",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD400",
+    "tagPreco": "#E8A33D",
+    "balaoOferta": "/uploads/baloes/08_ciano/08_ciano_09_75E8F4.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF7FB"
+  },
+  "criadoEm": "2026-06-15T12:05:00.000Z",
+  "atualizadoEm": "2026-06-15T12:05:00.000Z"
+}
