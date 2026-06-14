@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Cabeleireiro",
+  "categoria": "Salão de Beleza",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#9B2486",
+    "imagemFundo": "/uploads/ai/cabelo-fundo.png",
+    "imagemTitulo": "/uploads/ai/cabelo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#6E175F",
+    "faixaSuperior": "#F5C518"
+  },
+  "paleta": {
+    "primaria": "#B5279C",
+    "secundaria": "#F5C518",
+    "fundoBox": "#FDF4FB",
+    "fundoBoxSecundario": "#B5279C",
+    "textoNome": "#451040",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#7B1FA2",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_14_9F35EB.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F8ECF5"
+  },
+  "criadoEm": "2026-06-15T12:45:00.000Z",
+  "atualizadoEm": "2026-06-15T12:45:00.000Z"
+}
