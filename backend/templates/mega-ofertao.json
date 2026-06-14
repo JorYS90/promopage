@@ -1,0 +1,38 @@
+{
+  "nome": "Mega Ofertão",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#0E2E6E",
+    "imagemFundo": "/uploads/ai/megaofertao-fundo.png",
+    "imagemTitulo": "/uploads/ai/megaofertao-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0A2150",
+    "faixaSuperior": "#FFD012"
+  },
+  "paleta": {
+    "primaria": "#1452C7",
+    "secundaria": "#FFD012",
+    "fundoBox": "#FFFBEF",
+    "fundoBoxSecundario": "#E01E1E",
+    "textoNome": "#0E2E6E",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE08A",
+    "tagPreco": "#0A2150",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_15_1B81F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF2FF"
+  },
+  "criadoEm": "2026-06-15T23:35:00.000Z",
+  "atualizadoEm": "2026-06-15T23:35:00.000Z"
+}
