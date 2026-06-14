@@ -1,0 +1,38 @@
+{
+  "nome": "Semana do Salgado",
+  "categoria": "Salgadaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#5C2E08",
+    "imagemFundo": "/uploads/ai/salgado-fundo.png",
+    "imagemTitulo": "/uploads/ai/salgado-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#42210A",
+    "faixaSuperior": "#FFB200"
+  },
+  "paleta": {
+    "primaria": "#D2691E",
+    "secundaria": "#FFB200",
+    "fundoBox": "#FFF9F0",
+    "fundoBoxSecundario": "#D2691E",
+    "textoNome": "#5C2E08",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE08A",
+    "tagPreco": "#9A4B12",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_15_FD8114.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F8EEDD"
+  },
+  "criadoEm": "2026-06-15T19:35:00.000Z",
+  "atualizadoEm": "2026-06-15T19:35:00.000Z"
+}
