@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Frete Grátis",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1B8A3A",
+    "imagemFundo": "/uploads/ai/frete-fundo.png",
+    "imagemTitulo": "/uploads/ai/frete-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#136A2C",
+    "faixaSuperior": "#FF8A1A"
+  },
+  "paleta": {
+    "primaria": "#1F9E3E",
+    "secundaria": "#FF8A1A",
+    "fundoBox": "#F3FBF4",
+    "fundoBoxSecundario": "#1F9E3E",
+    "textoNome": "#11491F",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#E8431A",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_15_29E769.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EEF8EE"
+  },
+  "criadoEm": "2026-06-15T16:05:00.000Z",
+  "atualizadoEm": "2026-06-15T16:05:00.000Z"
+}
