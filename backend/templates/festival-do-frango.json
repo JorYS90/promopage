@@ -1,0 +1,38 @@
+{
+  "nome": "Festival do Frango",
+  "categoria": "Açougue",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#C2350E",
+    "imagemFundo": "/uploads/ai/frango-fundo.png",
+    "imagemTitulo": "/uploads/ai/frango-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#8E2308",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#E14012",
+    "secundaria": "#FFB200",
+    "fundoBox": "#FFF8EE",
+    "fundoBoxSecundario": "#E14012",
+    "textoNome": "#5A1D06",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1A1A1A",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_16_FC7905.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FCEFE6"
+  },
+  "criadoEm": "2026-06-15T13:55:00.000Z",
+  "atualizadoEm": "2026-06-15T13:55:00.000Z"
+}
