@@ -1,0 +1,38 @@
+{
+  "nome": "Festa do Hambúrguer",
+  "categoria": "Hamburgueria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7A1E0C",
+    "imagemFundo": "/uploads/ai/burguer-fundo.png",
+    "imagemTitulo": "/uploads/ai/burguer-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#5C1608",
+    "faixaSuperior": "#FFCD03"
+  },
+  "paleta": {
+    "primaria": "#D32D0E",
+    "secundaria": "#FFC400",
+    "fundoBox": "#FFF8EC",
+    "fundoBoxSecundario": "#D32D0E",
+    "textoNome": "#4A1206",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1A1A1A",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_16_FFCD03.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FBF1E6"
+  },
+  "criadoEm": "2026-06-15T16:35:00.000Z",
+  "atualizadoEm": "2026-06-15T16:35:00.000Z"
+}
