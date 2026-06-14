@@ -1,0 +1,38 @@
+{
+  "nome": "Festival do Churrasco",
+  "categoria": "Açougue",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#6E1206",
+    "imagemFundo": "/uploads/ai/churrasco-fundo.png",
+    "imagemTitulo": "/uploads/ai/churrasco-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#54100A",
+    "faixaSuperior": "#FFB200"
+  },
+  "paleta": {
+    "primaria": "#D32D0E",
+    "secundaria": "#FF9A00",
+    "fundoBox": "#FFF6EE",
+    "fundoBoxSecundario": "#D32D0E",
+    "textoNome": "#4A1206",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1A1A1A",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_17_F07203.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F7EBE3"
+  },
+  "criadoEm": "2026-06-15T14:35:00.000Z",
+  "atualizadoEm": "2026-06-15T14:35:00.000Z"
+}
