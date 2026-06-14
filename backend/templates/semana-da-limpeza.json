@@ -1,0 +1,38 @@
+{
+  "nome": "Semana da Limpeza",
+  "categoria": "Limpeza",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1577C4",
+    "imagemFundo": "/uploads/ai/limpeza-fundo.png",
+    "imagemTitulo": "/uploads/ai/limpeza-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E5896",
+    "faixaSuperior": "#2EDEF1"
+  },
+  "paleta": {
+    "primaria": "#1488D6",
+    "secundaria": "#19C8B0",
+    "fundoBox": "#F2FBFF",
+    "fundoBoxSecundario": "#1488D6",
+    "textoNome": "#0E3A5C",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#0E9E8A",
+    "balaoOferta": "/uploads/baloes/08_ciano/08_ciano_16_12DAF0.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF6FD"
+  },
+  "criadoEm": "2026-06-15T15:50:00.000Z",
+  "atualizadoEm": "2026-06-15T15:50:00.000Z"
+}
