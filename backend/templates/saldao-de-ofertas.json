@@ -1,0 +1,38 @@
+{
+  "nome": "Saldão de Ofertas",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1452C4",
+    "imagemFundo": "/uploads/ai/saldao-fundo.png",
+    "imagemTitulo": "/uploads/ai/saldao-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E3A8C",
+    "faixaSuperior": "#FFD400"
+  },
+  "paleta": {
+    "primaria": "#E11D2A",
+    "secundaria": "#FFC400",
+    "fundoBox": "#FFFDF3",
+    "fundoBoxSecundario": "#E11D2A",
+    "textoNome": "#0E2C66",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE000",
+    "tagPreco": "#1452C4",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_14_FFD220.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF1FC"
+  },
+  "criadoEm": "2026-06-15T13:15:00.000Z",
+  "atualizadoEm": "2026-06-15T13:15:00.000Z"
+}
