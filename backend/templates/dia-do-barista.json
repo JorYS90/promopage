@@ -1,0 +1,38 @@
+{
+  "nome": "Dia do Barista",
+  "categoria": "Padaria",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#3E2410",
+    "imagemFundo": "/uploads/ai/barista-fundo.png",
+    "imagemTitulo": "/uploads/ai/barista-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#2C1A0B",
+    "faixaSuperior": "#C9A24B"
+  },
+  "paleta": {
+    "primaria": "#8A4B22",
+    "secundaria": "#C9A24B",
+    "fundoBox": "#FBF4EC",
+    "fundoBoxSecundario": "#8A4B22",
+    "textoNome": "#3E2410",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#E8C77A",
+    "tagPreco": "#3C2514",
+    "balaoOferta": "/uploads/baloes/10_marrom/10_marrom_22_854B21.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F4EBE0"
+  },
+  "criadoEm": "2026-06-15T18:50:00.000Z",
+  "atualizadoEm": "2026-06-15T18:50:00.000Z"
+}
