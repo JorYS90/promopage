@@ -1,0 +1,37 @@
+{
+  "nome": "Cartaz Páscoa",
+  "categoria": "Cartaz",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ffffff",
+    "imagemTitulo": "/uploads/ai/cartaz-pascoa-selo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ffffff",
+    "faixaSuperior": "#E94E9C"
+  },
+  "paleta": {
+    "primaria": "#E94E9C",
+    "secundaria": "#FFD012",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#E94E9C",
+    "textoNome": "#111111",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#E94E9C",
+    "balaoOferta": "/uploads/baloes/07_rosa/07_rosa_14_F12E7F.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-06-16T08:50:00.000Z",
+  "atualizadoEm": "2026-06-16T08:50:00.000Z"
+}
