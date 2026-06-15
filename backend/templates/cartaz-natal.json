@@ -1,0 +1,37 @@
+{
+  "nome": "Cartaz Natal",
+  "categoria": "Cartaz",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ffffff",
+    "imagemTitulo": "/uploads/ai/cartaz-natal-selo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ffffff",
+    "faixaSuperior": "#C0211C"
+  },
+  "paleta": {
+    "primaria": "#C0211C",
+    "secundaria": "#1E7A2E",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#1E7A2E",
+    "textoNome": "#111111",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#C0211C",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-06-16T07:50:00.000Z",
+  "atualizadoEm": "2026-06-16T07:50:00.000Z"
+}
