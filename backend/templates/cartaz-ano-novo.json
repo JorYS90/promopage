@@ -1,0 +1,37 @@
+{
+  "nome": "Cartaz Ano Novo",
+  "categoria": "Cartaz",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ffffff",
+    "imagemTitulo": "/uploads/ai/cartaz-ano-novo-selo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ffffff",
+    "faixaSuperior": "#C79F00"
+  },
+  "paleta": {
+    "primaria": "#C79F00",
+    "secundaria": "#FFD012",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#C79F00",
+    "textoNome": "#111111",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE08A",
+    "tagPreco": "#C79F00",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_20_C79F00.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-06-16T08:05:00.000Z",
+  "atualizadoEm": "2026-06-16T08:05:00.000Z"
+}
