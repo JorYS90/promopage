@@ -1394,8 +1394,20 @@ button { font-family: inherit; }
   gap: 16px;
   overflow-y: auto;
   flex: 1;
-  padding: 2px;
+  min-height: 0;          /* permite o grid rolar dentro do flex (senão estoura o modal) */
+  padding: 2px 10px 2px 2px;
+  scrollbar-width: thin;  /* Firefox */
+  scrollbar-color: #ef0000 #f1f1f1;
 }
+/* Barra de rolagem visível (Chrome/Edge/Safari) — com 71+ temas fica claro que rola */
+.mvt-grid::-webkit-scrollbar { width: 10px; }
+.mvt-grid::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 8px; }
+.mvt-grid::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ef0000 0%, #b91c1c 100%);
+  border-radius: 8px;
+  border: 2px solid #f1f1f1;
+}
+.mvt-grid::-webkit-scrollbar-thumb:hover { background: #dc2626; }
 @media (max-width: 1000px) {
   .mvt-grid { grid-template-columns: repeat(3, 1fr); }
 }
