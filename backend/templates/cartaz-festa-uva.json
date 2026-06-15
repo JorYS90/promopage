@@ -1,0 +1,37 @@
+{
+  "nome": "Cartaz Festa da Uva",
+  "categoria": "Cartaz",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ffffff",
+    "imagemTitulo": "/uploads/ai/cartaz-festa-uva-selo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ffffff",
+    "faixaSuperior": "#8A16DD"
+  },
+  "paleta": {
+    "primaria": "#8A16DD",
+    "secundaria": "#1E7A2E",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#8A16DD",
+    "textoNome": "#111111",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#8A16DD",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_15_9927EA.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-06-16T11:35:00.000Z",
+  "atualizadoEm": "2026-06-16T11:35:00.000Z"
+}
