@@ -1,0 +1,37 @@
+{
+  "nome": "Cartaz Só Vantagem",
+  "categoria": "Cartaz",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ffffff",
+    "imagemTitulo": "/uploads/ai/cartaz-so-vantagem-selo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ffffff",
+    "faixaSuperior": "#1452C7"
+  },
+  "paleta": {
+    "primaria": "#1452C7",
+    "secundaria": "#1E7A2E",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#1452C7",
+    "textoNome": "#111111",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#1452C7",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_16_0D79F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-06-16T21:45:00.000Z",
+  "atualizadoEm": "2026-06-16T21:45:00.000Z"
+}
