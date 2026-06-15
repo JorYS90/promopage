@@ -1,0 +1,37 @@
+{
+  "nome": "Cartaz Black Friday",
+  "categoria": "Cartaz",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ffffff",
+    "imagemTitulo": "/uploads/ai/cartaz-black-friday-selo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ffffff",
+    "faixaSuperior": "#111111"
+  },
+  "paleta": {
+    "primaria": "#111111",
+    "secundaria": "#D5AB00",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#111111",
+    "textoNome": "#111111",
+    "textoNomeDestaque": "#FFE08A",
+    "textoPreco": "#FFE08A",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#111111",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_20_C79F00.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-06-16T07:35:00.000Z",
+  "atualizadoEm": "2026-06-16T07:35:00.000Z"
+}
