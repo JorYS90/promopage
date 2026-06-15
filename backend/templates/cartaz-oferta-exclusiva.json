@@ -1,0 +1,37 @@
+{
+  "nome": "Cartaz Oferta Exclusiva",
+  "categoria": "Cartaz",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ffffff",
+    "imagemTitulo": "/uploads/ai/cartaz-oferta-exclusiva-selo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ffffff",
+    "faixaSuperior": "#8A16DD"
+  },
+  "paleta": {
+    "primaria": "#8A16DD",
+    "secundaria": "#D5AB00",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#8A16DD",
+    "textoNome": "#111111",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE08A",
+    "tagPreco": "#8A16DD",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_15_9927EA.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-06-16T16:20:00.000Z",
+  "atualizadoEm": "2026-06-16T16:20:00.000Z"
+}
