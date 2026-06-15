@@ -1,0 +1,37 @@
+{
+  "nome": "Cartaz Tudo em Promoção",
+  "categoria": "Cartaz",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ffffff",
+    "imagemTitulo": "/uploads/ai/cartaz-tudo-em-promocao-selo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ffffff",
+    "faixaSuperior": "#F57C00"
+  },
+  "paleta": {
+    "primaria": "#F57C00",
+    "secundaria": "#FFD012",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#F57C00",
+    "textoNome": "#111111",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#F57C00",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_16_FC7905.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-06-15T23:25:00.000Z",
+  "atualizadoEm": "2026-06-15T23:25:00.000Z"
+}
