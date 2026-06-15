@@ -1,0 +1,37 @@
+{
+  "nome": "Cartaz Carnaval",
+  "categoria": "Cartaz",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ffffff",
+    "imagemTitulo": "/uploads/ai/cartaz-carnaval-selo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ffffff",
+    "faixaSuperior": "#8A16DD"
+  },
+  "paleta": {
+    "primaria": "#8A16DD",
+    "secundaria": "#FFD012",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#E94E9C",
+    "textoNome": "#111111",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#8A16DD",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_15_9927EA.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-06-16T10:20:00.000Z",
+  "atualizadoEm": "2026-06-16T10:20:00.000Z"
+}
