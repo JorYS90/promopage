@@ -1,0 +1,37 @@
+{
+  "nome": "Cartaz Segunda do Carrinho Cheio",
+  "categoria": "Cartaz",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ffffff",
+    "imagemTitulo": "/uploads/ai/cartaz-segunda-carrinho-selo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ffffff",
+    "faixaSuperior": "#1E7A2E"
+  },
+  "paleta": {
+    "primaria": "#1E7A2E",
+    "secundaria": "#FFD012",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#1E7A2E",
+    "textoNome": "#111111",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#1E7A2E",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_16_1CE65F.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-06-16T12:20:00.000Z",
+  "atualizadoEm": "2026-06-16T12:20:00.000Z"
+}
