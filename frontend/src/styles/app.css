@@ -7869,6 +7869,12 @@ button { font-family: inherit; }
      grade de imagens de 4 → 3 colunas pra cada thumbnail ficar maior. */
   .modal-overlay {
     padding: 10px;
+    /* Em telas baixas o modal pode ficar mais alto que a viewport. Centralizar
+       (align-items:center) empurrava o TOPO pra cima da tela e cortava o cabeçalho
+       (barra de busca + botão "Subir foto minha"). Fixar no topo + permitir rolar
+       o overlay garante que o cabeçalho sempre apareça. */
+    align-items: flex-start;
+    overflow-y: auto;
   }
   .modal {
     padding: 16px;
@@ -7877,9 +7883,24 @@ button { font-family: inherit; }
   .modal.escolher-imagem {
     padding: 16px;
   }
+  /* Barra de busca empilhada: input ocupa a linha toda; "Pesquisar" e
+     "Subir foto minha" dividem a linha de baixo. Sem isso os 3 itens
+     espremidos numa linha só cortavam o botão de upload. */
+  .modal.escolher-imagem .busca-imagens {
+    flex-wrap: wrap;
+  }
+  .modal.escolher-imagem .busca-imagens input {
+    flex: 1 1 100%;
+  }
+  .modal.escolher-imagem .busca-imagens button {
+    flex: 1 1 0;
+    padding: 12px 10px;
+  }
   .modal.escolher-imagem .grid-imagens {
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
+    /* Sobra altura pro cabeçalho não precisar sair da tela */
+    max-height: 52vh;
   }
   /* Linha de produto no Editar Produtos: empilha tudo numa coluna só. A grade
      desktop (200px 1fr 320px 110px ≈ 846px) estourava em 375px. Aqui vira

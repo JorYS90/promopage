@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, aoEscolher, fetchAuth }) {
   const [query, setQuery] = useState(queryInicial || '');
@@ -151,7 +152,12 @@ export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, ao
 
   if (!aberto) return null;
 
-  return (
+  // Renderiza via portal direto no <body>: este modal é montado dentro do
+  // PainelProdutos (sidebar do editor), e o canvas do editor usa transform (zoom),
+  // que cria um stacking context e prende o position:fixed do overlay dentro do
+  // editor — fazendo o canvas cobrir o topo do modal no mobile. O portal escapa
+  // desse container e garante overlay em tela cheia de verdade.
+  return createPortal(
     <div className="modal-overlay" onClick={aoFechar}>
       <div className="modal escolher-imagem" onClick={e => e.stopPropagation()}>
         <button className="btn-fechar-x" onClick={aoFechar} aria-label="Fechar">✕</button>
@@ -226,6 +232,7 @@ export default function ModalEscolherImagem({ aberto, queryInicial, aoFechar, ao
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
