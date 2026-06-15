@@ -1,0 +1,37 @@
+{
+  "nome": "Cartaz Oferta do Dia",
+  "categoria": "Cartaz",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#ffffff",
+    "imagemTitulo": "/uploads/ai/cartaz-oferta-do-dia-selo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#ffffff",
+    "faixaSuperior": "#E01E1E"
+  },
+  "paleta": {
+    "primaria": "#E01E1E",
+    "secundaria": "#FFD012",
+    "fundoBox": "#ffffff",
+    "fundoBoxSecundario": "#E01E1E",
+    "textoNome": "#111111",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#ffffff",
+    "tagPreco": "#E01E1E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#ffffff"
+  },
+  "criadoEm": "2026-06-16T03:20:00.000Z",
+  "atualizadoEm": "2026-06-16T03:20:00.000Z"
+}
