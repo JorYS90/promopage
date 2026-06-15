@@ -203,6 +203,16 @@ export default function PainelTemas({ temaAtivo, aoEscolher, user, fetchAuth, ab
   });
 
   const corThumb = (t) => {
+    // Cartazes/selos têm fundo sólido (ex.: #ffffff) e o título já traz a explosão
+    // colorida da MESMA cor da paleta. Se pintássemos o card com o gradiente da
+    // paleta, o selo sumiria num fundo de cor igual (só as pontas com contorno
+    // apareceriam). Então respeitamos o fundo REAL da capa quando definido — assim
+    // a prévia bate com o que o cartaz realmente é (selo sobre fundo branco).
+    // Só respeita o fundo da capa quando há imagem de TÍTULO (o selo dá o contraste).
+    // Sem imagem de título o card mostra o nome em texto branco — aí mantemos o
+    // gradiente da paleta pra não sumir texto branco sobre fundo branco.
+    const fundoCapa = t.capa?.fundo;
+    if (fundoCapa && t.capa?.imagemTitulo) return fundoCapa;
     const p = t.paleta || {};
     const fundo = p.primaria || '#ef0000';
     const fundo2 = p.secundaria || '#fbbf24';
