@@ -1,0 +1,38 @@
+{
+  "nome": "Aniversário da Loja",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#15439E",
+    "imagemFundo": "/uploads/ai/aniversario-da-loja-fundo.png",
+    "imagemTitulo": "/uploads/ai/aniversario-da-loja-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E2E70",
+    "faixaSuperior": "#FFC400"
+  },
+  "paleta": {
+    "primaria": "#D81E1E",
+    "secundaria": "#FFC400",
+    "fundoBox": "#FFF8EC",
+    "fundoBoxSecundario": "#1452C7",
+    "textoNome": "#0E2A6B",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#D81E1E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EEF4FF"
+  },
+  "criadoEm": "2026-06-16T07:45:00.000Z",
+  "atualizadoEm": "2026-06-16T07:45:00.000Z"
+}
