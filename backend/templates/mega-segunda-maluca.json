@@ -1,0 +1,38 @@
+{
+  "nome": "Mega Segunda Maluca",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7A1FB0",
+    "imagemFundo": "/uploads/ai/mega-segunda-maluca-fundo.png",
+    "imagemTitulo": "/uploads/ai/mega-segunda-maluca-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#4E1273",
+    "faixaSuperior": "#FFC400"
+  },
+  "paleta": {
+    "primaria": "#8A16DD",
+    "secundaria": "#FF2E9A",
+    "fundoBox": "#FBF2FF",
+    "fundoBoxSecundario": "#8A16DD",
+    "textoNome": "#2A0A40",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#8A16DD",
+    "balaoOferta": "/uploads/baloes/04_roxo/04_roxo_16_921AE8.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#F7ECFF"
+  },
+  "criadoEm": "2026-06-16T06:15:00.000Z",
+  "atualizadoEm": "2026-06-16T06:15:00.000Z"
+}
