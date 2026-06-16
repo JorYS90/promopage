@@ -1,0 +1,38 @@
+{
+  "nome": "Volta às Aulas",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#1452C7",
+    "imagemFundo": "/uploads/ai/volta-as-aulas-full-fundo.png",
+    "imagemTitulo": "/uploads/ai/volta-as-aulas-full-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E3A8C",
+    "faixaSuperior": "#FFC400"
+  },
+  "paleta": {
+    "primaria": "#1452C7",
+    "secundaria": "#FFC400",
+    "fundoBox": "#F2F7FF",
+    "fundoBoxSecundario": "#1452C7",
+    "textoNome": "#0E2A6B",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD94A",
+    "tagPreco": "#1452C7",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_16_0D79F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF1FF"
+  },
+  "criadoEm": "2026-06-16T07:30:00.000Z",
+  "atualizadoEm": "2026-06-16T07:30:00.000Z"
+}
