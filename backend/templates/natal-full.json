@@ -1,0 +1,38 @@
+{
+  "nome": "Natal de Ofertas",
+  "categoria": "Datas Comemorativas",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#B81810",
+    "imagemFundo": "/uploads/ai/natal-full-fundo.png",
+    "imagemTitulo": "/uploads/ai/natal-full-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#7A0F0C",
+    "faixaSuperior": "#0E7A3A"
+  },
+  "paleta": {
+    "primaria": "#C0211C",
+    "secundaria": "#0E7A3A",
+    "fundoBox": "#FFF6EC",
+    "fundoBoxSecundario": "#C0211C",
+    "textoNome": "#2A0000",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD94A",
+    "tagPreco": "#C0211C",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF0EC"
+  },
+  "criadoEm": "2026-06-16T08:15:00.000Z",
+  "atualizadoEm": "2026-06-16T08:15:00.000Z"
+}
