@@ -1,0 +1,38 @@
+{
+  "nome": "Junho Arrasador",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#152A6B",
+    "imagemFundo": "/uploads/ai/junho-arrasador-fundo.png",
+    "imagemTitulo": "/uploads/ai/junho-arrasador-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E1C49",
+    "faixaSuperior": "#E0A800"
+  },
+  "paleta": {
+    "primaria": "#D81E1E",
+    "secundaria": "#FFC400",
+    "fundoBox": "#FFF8EC",
+    "fundoBoxSecundario": "#D81E1E",
+    "textoNome": "#2A1500",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#D81E1E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF3DA"
+  },
+  "criadoEm": "2026-06-16T05:45:00.000Z",
+  "atualizadoEm": "2026-06-16T05:45:00.000Z"
+}
