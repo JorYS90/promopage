@@ -1,0 +1,38 @@
+{
+  "nome": "Detona Preços",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#C0211C",
+    "imagemFundo": "/uploads/ai/detona-precos-fundo.png",
+    "imagemTitulo": "/uploads/ai/detona-precos-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#7A0F0C",
+    "faixaSuperior": "#FFC400"
+  },
+  "paleta": {
+    "primaria": "#D81E1E",
+    "secundaria": "#FFC400",
+    "fundoBox": "#FFF6E6",
+    "fundoBoxSecundario": "#D81E1E",
+    "textoNome": "#2A0000",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#D81E1E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF0E0"
+  },
+  "criadoEm": "2026-06-16T05:15:00.000Z",
+  "atualizadoEm": "2026-06-16T05:15:00.000Z"
+}
