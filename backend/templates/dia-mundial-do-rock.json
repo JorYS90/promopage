@@ -1,0 +1,38 @@
+{
+  "nome": "Dia Mundial do Rock",
+  "categoria": "Datas Comemorativas",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#15080A",
+    "imagemFundo": "/uploads/ai/dia-mundial-do-rock-fundo.png",
+    "imagemTitulo": "/uploads/ai/dia-mundial-do-rock-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0A0406",
+    "faixaSuperior": "#D81E1E"
+  },
+  "paleta": {
+    "primaria": "#C8102E",
+    "secundaria": "#9AA0A6",
+    "fundoBox": "#F4F4F5",
+    "fundoBoxSecundario": "#C8102E",
+    "textoNome": "#1A1A1A",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#C8102E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EDEDED"
+  },
+  "criadoEm": "2026-06-16T06:45:00.000Z",
+  "atualizadoEm": "2026-06-16T06:45:00.000Z"
+}
