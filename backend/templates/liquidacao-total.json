@@ -1,0 +1,38 @@
+{
+  "nome": "Liquidação Total",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E8431C",
+    "imagemFundo": "/uploads/ai/liquidacao-total-fundo.png",
+    "imagemTitulo": "/uploads/ai/liquidacao-total-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#B81810",
+    "faixaSuperior": "#FFC400"
+  },
+  "paleta": {
+    "primaria": "#E8201C",
+    "secundaria": "#FFC400",
+    "fundoBox": "#FFF8E8",
+    "fundoBoxSecundario": "#E8201C",
+    "textoNome": "#3A0A00",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#E8201C",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF3D6"
+  },
+  "criadoEm": "2026-06-16T07:00:00.000Z",
+  "atualizadoEm": "2026-06-16T07:00:00.000Z"
+}
