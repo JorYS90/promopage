@@ -1,0 +1,38 @@
+{
+  "nome": "Ano Novo",
+  "categoria": "Datas Comemorativas",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#0E1C49",
+    "imagemFundo": "/uploads/ai/ano-novo-full-fundo.png",
+    "imagemTitulo": "/uploads/ai/ano-novo-full-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#081234",
+    "faixaSuperior": "#E8B100"
+  },
+  "paleta": {
+    "primaria": "#15296B",
+    "secundaria": "#E8B100",
+    "fundoBox": "#FBF7E8",
+    "fundoBoxSecundario": "#15296B",
+    "textoNome": "#0E1C49",
+    "textoNomeDestaque": "#FFE08A",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE08A",
+    "tagPreco": "#15296B",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_16_0D79F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#10204F"
+  },
+  "criadoEm": "2026-06-16T08:30:00.000Z",
+  "atualizadoEm": "2026-06-16T08:30:00.000Z"
+}
