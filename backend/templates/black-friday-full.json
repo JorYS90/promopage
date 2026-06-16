@@ -1,0 +1,38 @@
+{
+  "nome": "Black Friday",
+  "categoria": "Datas Comemorativas",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#0A0A0A",
+    "imagemFundo": "/uploads/ai/black-friday-full-fundo.png",
+    "imagemTitulo": "/uploads/ai/black-friday-full-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#000000",
+    "faixaSuperior": "#D5AB00"
+  },
+  "paleta": {
+    "primaria": "#111111",
+    "secundaria": "#D5AB00",
+    "fundoBox": "#FAF6E8",
+    "fundoBoxSecundario": "#111111",
+    "textoNome": "#1A1A1A",
+    "textoNomeDestaque": "#FFE08A",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFE08A",
+    "tagPreco": "#111111",
+    "balaoOferta": "/uploads/baloes/06_amarelo/06_amarelo_20_C79F00.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#1A1A1A"
+  },
+  "criadoEm": "2026-06-16T08:00:00.000Z",
+  "atualizadoEm": "2026-06-16T08:00:00.000Z"
+}
