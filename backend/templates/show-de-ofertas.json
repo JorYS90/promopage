@@ -1,0 +1,38 @@
+{
+  "nome": "Show de Ofertas",
+  "categoria": "Supermercado",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#0E2A6B",
+    "imagemFundo": "/uploads/ai/show-de-ofertas-fundo.png",
+    "imagemTitulo": "/uploads/ai/show-de-ofertas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#081C49",
+    "faixaSuperior": "#E8B100"
+  },
+  "paleta": {
+    "primaria": "#1452C7",
+    "secundaria": "#E8B100",
+    "fundoBox": "#F2F7FF",
+    "fundoBoxSecundario": "#1452C7",
+    "textoNome": "#0E2A6B",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD94A",
+    "tagPreco": "#1452C7",
+    "balaoOferta": "/uploads/baloes/01_azul/01_azul_16_0D79F5.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAF1FF"
+  },
+  "criadoEm": "2026-06-16T05:30:00.000Z",
+  "atualizadoEm": "2026-06-16T05:30:00.000Z"
+}
