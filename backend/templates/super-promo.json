@@ -1,0 +1,38 @@
+{
+  "nome": "Super Promo",
+  "categoria": "Supermercado",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E8431C",
+    "imagemFundo": "/uploads/ai/super-promo-fundo.png",
+    "imagemTitulo": "/uploads/ai/super-promo-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C0211C",
+    "faixaSuperior": "#FFC400"
+  },
+  "paleta": {
+    "primaria": "#E8431C",
+    "secundaria": "#FFC400",
+    "fundoBox": "#FFF6E6",
+    "fundoBoxSecundario": "#E8431C",
+    "textoNome": "#3A1200",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#E8431C",
+    "balaoOferta": "/uploads/baloes/05_laranja/05_laranja_16_FC7905.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF3D6"
+  },
+  "criadoEm": "2026-06-16T05:00:00.000Z",
+  "atualizadoEm": "2026-06-16T05:00:00.000Z"
+}
