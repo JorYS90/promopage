@@ -1,0 +1,38 @@
+{
+  "nome": "Seleção de Ofertas",
+  "categoria": "Datas Comemorativas",
+  "premium": true,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#0C5A1E",
+    "imagemFundo": "/uploads/ai/selecao-de-ofertas-fundo.png",
+    "imagemTitulo": "/uploads/ai/selecao-de-ofertas-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#073D13",
+    "faixaSuperior": "#E8B100"
+  },
+  "paleta": {
+    "primaria": "#1B9E3B",
+    "secundaria": "#FFC400",
+    "fundoBox": "#F3FFF4",
+    "fundoBoxSecundario": "#1B9E3B",
+    "textoNome": "#0C3A18",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD94A",
+    "tagPreco": "#1B9E3B",
+    "balaoOferta": "/uploads/baloes/02_verde/02_verde_16_1CE65F.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#EAFBEC"
+  },
+  "criadoEm": "2026-06-16T06:00:00.000Z",
+  "atualizadoEm": "2026-06-16T06:00:00.000Z"
+}
