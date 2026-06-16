@@ -1,0 +1,38 @@
+{
+  "nome": "Especial Festa Julina",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#7FB8E0",
+    "imagemFundo": "/uploads/ai/especial-festa-julina-fundo.png",
+    "imagemTitulo": "/uploads/ai/especial-festa-julina-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#C0211C",
+    "faixaSuperior": "#FFC400"
+  },
+  "paleta": {
+    "primaria": "#D81E1E",
+    "secundaria": "#FFC400",
+    "fundoBox": "#FFFBEF",
+    "fundoBoxSecundario": "#D81E1E",
+    "textoNome": "#5A2A00",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#D81E1E",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF6DE"
+  },
+  "criadoEm": "2026-06-16T06:30:00.000Z",
+  "atualizadoEm": "2026-06-16T06:30:00.000Z"
+}
