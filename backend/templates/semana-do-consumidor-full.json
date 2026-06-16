@@ -1,0 +1,38 @@
+{
+  "nome": "Semana do Consumidor",
+  "categoria": "Datas Comemorativas",
+  "premium": false,
+  "novo": true,
+  "capa": {
+    "tipo": "imagens",
+    "fundo": "#E0201C",
+    "imagemFundo": "/uploads/ai/semana-do-consumidor-full-fundo.png",
+    "imagemTitulo": "/uploads/ai/semana-do-consumidor-full-titulo.png",
+    "posicaoTitulo": "centro",
+    "elementos": []
+  },
+  "rodape": {
+    "tipo": "redondo-grande",
+    "altura": 80,
+    "fundo": "#0E2E70",
+    "faixaSuperior": "#FFC400"
+  },
+  "paleta": {
+    "primaria": "#E0201C",
+    "secundaria": "#1452C7",
+    "fundoBox": "#FFF6F5",
+    "fundoBoxSecundario": "#E0201C",
+    "textoNome": "#0E2A6B",
+    "textoNomeDestaque": "#ffffff",
+    "textoPreco": "#ffffff",
+    "textoPrecoDestaque": "#FFD012",
+    "tagPreco": "#E0201C",
+    "balaoOferta": "/uploads/baloes/03_vermelho/03_vermelho_16_F50D15.png"
+  },
+  "fundoEncarte": {
+    "tipo": "cor",
+    "cor": "#FFF1F0"
+  },
+  "criadoEm": "2026-06-16T08:45:00.000Z",
+  "atualizadoEm": "2026-06-16T08:45:00.000Z"
+}
