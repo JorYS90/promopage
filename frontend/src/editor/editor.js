@@ -3850,6 +3850,11 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
 
   // Se tem balão custom, carrega async e ESCONDE sombra + pílula fallback
   const balaoUrl = produto.balaoCustom || paleta.balaoOferta;
+  // Objetos de texto do preço — preenchido logo abaixo (após criar R$/valor/etc).
+  // O callback async do balão usa essa ref pra RE-TRAVAR o preço na largura REAL
+  // do balão (que, por escala uniforme, pode ser menor que tagW → preço vazava,
+  // ex: "R$ 123,19"). Como balaoRealW <= tagW sempre, só encolhe mais, nunca piora.
+  const _precoObjsDM = [];
   if (balaoUrl) {
     fabric.Image.fromURL(balaoUrl, (img) => {
       try {
@@ -3867,10 +3872,12 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
           visW = bbox.w; visH = bbox.h;
         }
         const escala = Math.min(tagW / visW, tagH / visH);
+        const balaoRealW = visW * escala;
+        const balaoRealH = visH * escala;
         img.set({
           scaleX: escala, scaleY: escala,
-          left: tagX + (tagW - visW * escala) / 2,
-          top: tagY + (tagH - visH * escala) / 2,
+          left: tagX + (tagW - balaoRealW) / 2,
+          top: tagY + (tagH - balaoRealH) / 2,
           selectable: false, evented: false,
         });
         canvas.add(img);
@@ -3884,6 +3891,16 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
           const rsIdx = canvas.getObjects().indexOf(rsRef);
           if (rsIdx >= 0) canvas.moveTo(img, rsIdx);
         }
+        // RE-TRAVA o preço na largura/altura REAL do balão renderizado (centrado
+        // no mesmo eixo do tag). Corrige o overflow quando o balão escala mais
+        // estreito que tagW.
+        clampPrecoNoBalao(
+          _precoObjsDM,
+          tagX + (tagW - balaoRealW) / 2,
+          balaoRealW,
+          tagY + (tagH - balaoRealH) / 2,
+          balaoRealH
+        );
         canvas.requestRenderAll();
       } catch (e) {
         console.warn('[render destaque] balão custom falhou:', e?.message);
@@ -4020,6 +4037,8 @@ function renderizarDestaqueMaximo(canvas, box, produto, idx, paleta, tamanhoText
   }
   // TRAVA: garante que o preço não passe do balão
   clampPrecoNoBalao([rsObj, reaisObj, centavosObj, unidObj], tagX, tagW, tagY, tagH);
+  // Disponibiliza pro callback async do balão re-travar na largura REAL do balão.
+  _precoObjsDM.push(rsObj, reaisObj, centavosObj, unidObj);
 
   // ===== FAIXA DE OBSERVAÇÃO (ABOVE do balão, no topo da balaoStrip) =====
   // Em destaque-máximo o balão fica numa strip inferior — posicionamos a obs
